@@ -1,0 +1,57 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="{i18n>Address}" class="sapUiSizeCompact" contentWidth="25%">
+		<f:SimpleForm minWidth="1024" layout="ResponsiveGridLayout" maxContainerCols="2" editable="true" labelSpanL="4" labelSpanM="4"
+			emptySpanL="1" emptySpanM="1" columnsL="3" columnsM="2" visible="{baseModel>/SearchVisiblity}" class="formCoreClass">
+			<f:content>
+				<core:Title class="formCoreClass"/>
+				<Label text="{i18n>Name4}" design="Bold" required="true"></Label>
+				<Input value="{baseModel>/partnerName4}" maxLength="40" liveChange="onLiveChangeName4" editable="{baseModel>/addressFieldEnable}"/>
+				<Text text="{baseModel>/maxLengthName4}" textAlign="End" class="addressValText"/>
+				<!--{baseModel>/name4MaxLength}-->
+				<Label text="{i18n>Street2}" design="Bold" required="true"></Label>
+				<Input value="{baseModel>/AddressStreet2}" maxLength="40" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeStreet2"/>
+				<Text text="{baseModel>/maxLengthAddressStreet2}" textAlign="End"/>
+				<Label text="{i18n>Street3}" design="Bold"/>
+				<Input value="{baseModel>/AddressStreet3}" maxLength="40" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeStreet3"/>
+				<Text text="{baseModel>/maxLengthAddressStreet3}" textAlign="End"/>
+				<Label text="{i18n>Street5}" design="Bold" required="true"/>
+				<Input value="{baseModel>/AddressStreet5}" maxLength="40" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeStreet5"/>
+				<Text text="{baseModel>/maxLengthAddressStreet5}" textAlign="End"/>
+				<Label text="{i18n>District}" design="Bold" required="true"></Label>
+				<Input value="{baseModel>/District}" maxLength="40" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeDistrict"/>
+				<Text text="{baseModel>/maxLengthDistrict}" textAlign="End"/>
+				<Label text="{i18n>DifferentCity}" design="Bold" required="true"></Label>
+				<Input value="{baseModel>/DifferentCity}" maxLength="40" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeDifferentCity"/>
+				<Text text="{baseModel>/maxLengthDifferentCity}" textAlign="End"/>
+				<Label text="{i18n>PostalCode}" design="Bold" required="true"></Label>
+				<Input value="{baseModel>/postalCode}" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangePostalCode" type="Number"/>
+				<Text text="{baseModel>/maxLengthPostalCode}" textAlign="End"/>
+				<Label text="{i18n>City}" design="Bold" required="true"></Label>
+				<ComboBox showValueStateMessage="false" value="{baseModel>/city}" items="{cityModel>/results}" selectedKey="{baseModel>/city}"
+					change="onCityChange" editable="{baseModel>/addressFieldEnable}">
+					<core:Item key="{cityModel>city}" text="{cityModel>city}"/>
+				</ComboBox>
+				<Text text="" textAlign="End"/>
+				<Label text="{i18n>Telephone}" design="Bold"></Label>
+				<Input value="{baseModel>/telephone}" maxLength="30" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeTelephone"/>
+				<Text text="{baseModel>/maxLengthtelephone}" textAlign="End"/>
+				<Label text="{i18n>MobilePhone}" design="Bold"></Label>
+				<Input value="{baseModel>/mobileNumber}" maxLength="30" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeMobilePhone"/>
+				<Text text="{baseModel>/maxLengthmobileNumber}" textAlign="End"/>
+				<Label text="{i18n>TaxID}" design="Bold" required="true"></Label>
+				<Input value="{baseModel>/taxId}" maxLength="13" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeTaxID"/>
+				<Text text="{baseModel>/maxLengthtaxId}" textAlign="End"/>
+				<Label text="{i18n>BCODE}" design="Bold"></Label>
+				<Input value="{baseModel>/bCode}" maxLength="5" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeBCODE" type="Number"/>
+				<Text text="{baseModel>/maxLengthbCode}" textAlign="End"/>
+				<Label text="{i18n>BPNUMMR}" design="Bold"></Label>
+				<Input value="{baseModel>/bpNummr}" maxLength="1" editable="{baseModel>/addressFieldEnable}" liveChange="onLiveChangeBPNUMMR"/>
+				<Text text="{baseModel>/maxLengthbpNummr}" textAlign="End"/>
+			</f:content>
+		</f:SimpleForm>
+		<buttons>
+			<Button text="{i18n>OK}" press="onOKAddrerss" tooltip="{i18n>OK}"/>
+			<Button text="{i18n>cancel}" press="onCancelAddress" tooltip="{i18n>cancel}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

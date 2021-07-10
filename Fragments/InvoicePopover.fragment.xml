@@ -1,0 +1,78 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Popover placement="Bottom" showHeader="false">
+		<Table alternateRowColors="true" class="sapUiSizeCompact" inset="false" fixedLayout="false" items="{invoiceSearchPopoverModel>/}">
+			<columns>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/1/status}"
+					popinDisplay="Inline">
+					<Label text="{i18n>MG}" wrapping="false" design="Bold" tooltip="{i18n>MG}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/2/status}"
+					popinDisplay="Inline">
+					<Label text="{i18n>MG4}" wrapping="false" design="Bold" tooltip="{i18n>MG4}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationData/userPersonaDto/4/status}"
+					hAlign="Right" popinDisplay="Inline">
+					<Label text="{i18n>Qty}" wrapping="false" design="Bold" tooltip="{i18n>Qty}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline" hAlign="Right"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/21/status}">
+					<Label text="{i18n>ListPrice}" wrapping="false" design="Bold" tooltip="{i18n>ListPrice}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/7/status}" hAlign="Right">
+					<Label text="{i18n>Disc}" wrapping="false" design="Bold" tooltip="{i18n>Disc}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/8/status}" hAlign="Right">
+					<Label text="{i18n>CNAmount}" wrapping="false" design="Bold" tooltip="{i18n>CNAmount}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/10/status}"
+					popinDisplay="Inline">
+					<Label text="{i18n>BillingDate}" wrapping="false" design="Bold" tooltip="{i18n>BillingDate}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/11/status}"
+					popinDisplay="Inline">
+					<Label text="{i18n>Usage}" wrapping="false" design="Bold" tooltip="{i18n>Usage}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" hAlign="Center"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/13/status}" popinDisplay="Inline">
+					<Label text="{i18n>Payer}" wrapping="false" design="Bold" tooltip="{i18n>Payer}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/15/status}">
+					<Label text="{i18n>RefInvItem}" wrapping="false" design="Bold" tooltip="{i18n>RefInvItem}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/19/status}">
+					<Label text="{i18n>HighLvl}" wrapping="false" design="Bold" tooltip="{i18n>HighLvl}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/20/status}">
+					<Label text="{i18n>ItmGrp}" wrapping="false" design="Bold" tooltip="{i18n>ItmGrp}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/16/status}">
+					<Label text="{i18n>Address}" wrapping="false" design="Bold" tooltip="{i18n>Address}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<Text text="{invoiceSearchPopoverModel>/results/MaterialGroup}"/>
+					<Text text="{invoiceSearchPopoverModel>/results/MaterialGroup4}"/>
+					<Text
+						text="{parts: [{path:'invoiceSearchPopoverModel>/results/BillingQty'},{path:'invoiceSearchPopoverModel>/results/SalesUnit'}], formatter:'.formatter.concatenateStrings'}"
+						textAlign="Right"/>
+					<Text text="{invoiceSearchPopoverModel>/results/ListPrice}" wrapping="false" textAlign="Right"/>
+					<Text text="{invoiceSearchPopoverModel>/results/DiscountAmount}" wrapping="false" textAlign="Right"/>
+					<Text text="{invoiceSearchPopoverModel>/results/NetPrice}" wrapping="false" textAlign="Right"/>
+					<Text text="{path:'invoiceSearchPopoverModel>/results/billingDateFrom', formatter:'.formatter.dateTimeFormat1'}" wrapping="false"/>
+					<Text text="{invoiceSearchPopoverModel>/results/ItemUsage}" wrapping="false"/>
+					<Text text="{invoiceSearchPopoverModel>/results/shipToParty}" wrapping="false"/>
+					<Text text="{invoiceSearchPopoverModel>/results/InvoiceLineItem}" wrapping="false"/>
+					<Text text="{invoiceSearchPopoverModel>/results/HigherLvlItem}" wrapping="false"/>
+					<Text text="{invoiceSearchPopoverModel>/results/ItemGroup}" wrapping="false"/>
+					<Button icon="sap-icon://addresses" press="onPressAddress" class="sapUiTinyMarginBegin" tooltip="Address"/>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Popover>
+</core:FragmentDefinition>

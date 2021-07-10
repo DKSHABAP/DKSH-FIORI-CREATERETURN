@@ -1,0 +1,407 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar">
+	<VBox>
+		<OverflowToolbar>
+			<Label text="{i18n>Search}" design="Bold"></Label>
+			<ToolbarSpacer/>
+			<Button text="{i18n>CollapseSearch}" tooltip="{i18n>CollapseSearch}" press="onPressInvCollapse" visible="{baseModel>/InvCollapseVisiblity}"/>
+			<Button text="{i18n>ExpandSearch}" tooltip="{i18n>ExpandSearch}" press="onPressInvOpen" visible="{baseModel>/InvOpenVisiblity}"/>
+		</OverflowToolbar>
+		<fb:FilterBar reset="onReset" search="onSearch" showFilterConfiguration="false" useToolbar="false" showGoOnFB="false"
+			visible="{baseModel>/InvSearchBar}">
+			<fb:filterItems>
+				<fb:FilterItem name="A" label="{i18n>InvoiceNo}">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/invoiceNo}" tooltip="{invoiceSearchModel>/invoiceNo}" placeholder="{i18n>EnterInvoiceNo}"
+							editable="{baseModel>/InvoiceNoIP}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="B" label="{i18n>Material}">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/materialNo}" tooltip="{invoiceSearchModel>/materialNo}" placeholder="{i18n>EnterMaterial}"
+							editable="{baseModel>/InvMat}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="C" label="{i18n>BatchNo}">
+					<fb:control>
+						<Input width="95%" value="{invoiceSearchModel>/batchNo}" tooltip="{invoiceSearchModel>/batchNo}" placeholder="{i18n>EnterBatch}"
+							editable="{baseModel>/InvBatNo}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="k" label="{i18n>SerialNo}">
+					<fb:control>
+						<Input value="{invoiceSearchModel>/SerialNum}" placeholder="{i18n>EnterSerialNo}" tooltip="{invoiceSearchModel>/SerialNum}"
+							editable="{baseModel>/InvSrlIP}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="F" label="{i18n>DisplaySerialNo}">
+					<fb:control>
+						<HBox>
+							<CheckBox select="selectSerialCheckbox" selected="{invoiceSearchModel>/selectedSerialNum}" editable="{baseModel>/InvSrlChbx}"/>
+						</HBox>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="J" label="{i18n>BillingCategory}">
+					<fb:control>
+						<Input
+							value="{parts: [{path:'invoiceSearchModel>/billingCategory'},{path:'invoiceSearchModel>/billingCategoryDesc'}], formatter:'.formatter.concatenateStrings'}"
+							valueHelpOnly="true" showValueHelp="true" valueHelpRequest="valueHelpBillingType" enabled="{baseModel>/billingTypeEnable}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="D" label="{i18n>SalesOrg}">
+					<fb:control>
+						<!--{parts:[{path:'OrderReasonSet>Description'},{path:'OrderReasonSet>Reason'}],formatter:'.formatter.concatenateStrings'}-->
+						<Text
+							text="{parts:[{path:'invoiceSearchModel>/salesOrgNo'},{path:'invoiceSearchModel>/salesOrgDesc'}], formatter:'.formatter.concatenateStrings'}"
+							tooltip="{parts:[{path:'invoiceSearchModel>/salesOrgNo'},{path:'invoiceSearchModel>/salesOrgDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="I" label="{i18n>DistributionChannel}">
+					<fb:control>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>/distChnl'},{path:'invoiceSearchModel>/distChnlDesc'}], formatter:'.formatter.concatenateStrings'}"
+							tooltip="{parts: [{path:'invoiceSearchModel>/distChnl'},{path:'invoiceSearchModel>/distChnlDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="G" label="{i18n>SoldtoParty}">
+					<fb:control>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>/soldToParty'},{path:'invoiceSearchModel>/soldToPartyDesc'}], formatter:'.formatter.concatenateStrings'}"
+							tooltip="{parts: [{path:'invoiceSearchModel>/soldToParty'},{path:'invoiceSearchModel>/soldToPartyDesc'}], formatter:'.formatter.concatenateStrings'}"
+							wrapping="true"/>
+					</fb:control>
+				</fb:FilterItem>
+				<!--<fb:FilterItem name="m" label="Billing Type">-->
+				<!--	<fb:control>-->
+				<!--		<Text text="{invoiceSearchModel>/billingType}"/>-->
+				<!--	</fb:control>-->
+				<!--</fb:FilterItem>-->
+				<fb:FilterItem name="E" label="{i18n>BillingDocDateFrom}">
+					<fb:control>
+						<!--<DateRangeSelection change="onBillDateSelection" value="{invoiceSearchModel>/billingDate}"/>-->
+						<DatePicker value="{invoiceSearchModel>/billingDateFrom}" change="onBillDateSelectionFrom" valueFormat="dd-MM-yyyy"
+							displayFormat="dd-MM-yyyy" placeholder="dd-MM-yyyy" editable="{baseModel>/InvDateFrom}" displayFormatType="Gregorian"
+							secondaryCalendarType="Gregorian"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="r" label="{i18n>BillingDocDateTo}" change="onBillDateSelectionTo">
+					<fb:control>
+						<!--<DateRangeSelection change="onBillDateSelection" value="{invoiceSearchModel>/billingDate}"/>-->
+						<DatePicker value="{invoiceSearchModel>/billingDateTo}" valueFormat="dd-MM-yyyy" displayFormat="dd-MM-yyyy" change="onBillDateSelectionTo"
+							placeholder="dd-MM-yyyy" editable="{baseModel>/InvDateTo}" displayFormatType="Gregorian" secondaryCalendarType="Gregorian"/>
+					</fb:control>
+				</fb:FilterItem>
+				<!--<fb:FilterItem name="H" label="">-->
+				<!--	<fb:control>-->
+				<!--		<Text text=""/>-->
+				<!--	</fb:control>-->
+				<!--</fb:FilterItem>-->
+				<!--<fb:FilterItem name="z" label="">-->
+				<!--	<fb:control>-->
+				<!--		<HBox width="100%" alignContent="SpaceBetween">-->
+				<!--			<Button icon="sap-icon://close-command-field" press="onPressPreviousRange"/>-->
+				<!--			<Button icon="sap-icon://open-command-field" class="sapUiTinyMarginBegin" press="onPressNextRange"/>-->
+				<!--		</HBox>-->
+				<!--	</fb:control>-->
+				<!--</fb:FilterItem>-->
+			</fb:filterItems>
+		</fb:FilterBar>
+		<OverflowToolbar visible="{baseModel>/InvSearchBar}">
+			<ToolbarSpacer/>
+			<Button icon="sap-icon://close-command-field" press="onPressPreviousRange" tooltip="{i18n>PreviousRange}" enabled="{baseModel>/datePrev}"/>
+			<Button icon="sap-icon://open-command-field" class="sapUiTinyMarginBegin" press="onPressNextRange" tooltip="{i18n>NextRange}"
+				enabled="{baseModel>/dateNext}"/>
+			<Button icon="sap-icon://search" text="{i18n>Search}" type="Emphasized" press="onSearchInvoice" tooltip="{i18n>Search}"
+				enabled="{baseModel>/InvSrch}"></Button>
+			<Button icon="sap-icon://refresh" text="{i18n>Clear}" press="onResetSearchInvoice" tooltip="{i18n>Clear}" enabled="{baseModel>/InvReset}"></Button>
+			<ToolbarSpacer visible="false"/>
+		</OverflowToolbar>
+		<VBox visible="{baseModel>/invoiceTableVisiblity}">
+			<OverflowToolbar>
+				<Label text="{invoiceSearchModel>/invoiceItemsLength}"/>
+				<ToolbarSpacer/>
+				<!--<SearchField width="30%" search="liveSearchInvoice" liveChange="liveSearchInvoice"></SearchField>-->
+				<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="{i18n>InvoicePersonalization}"
+					enabled="{baseModel>/InvSetting}"></Button>
+				<Button text="{i18n>Next}" press="onPressReturn" type="Emphasized" enabled="{baseModel>/InvNext}"></Button>
+			</OverflowToolbar>
+			<!--<Table popinLayout="GridSmall" showNoData="false"></Table>-->
+			<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="false" vertical="true"
+				visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/invoiceTableLength}">
+				<Table items="{invoiceSearchModel>/results}" mode="MultiSelect" alternateRowColors="true" selectionChange="onSelectItemsFromInvoice"
+					popinLayout="GridSmall" sticky="ColumnHeaders" id="InvoiceTableId">
+					<columns>
+						<!--<Column>-->
+						<!--	<Text text="Item No"/>-->
+						<!--</Column>-->
+						<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/0/status}">
+							<Label text="{i18n>Material}" wrapping="false" design="Bold" tooltip="{i18n>Material}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/1/status}"
+							popinDisplay="Inline">
+							<Label text="{i18n>MG}" wrapping="false" design="Bold" tooltip="{i18n>MG}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/2/status}"
+							popinDisplay="Inline">
+							<Label text="{i18n>MG4}" wrapping="false" design="Bold" tooltip="{i18n>MG4}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/3/status}">
+							<Label text="{i18n>BatchNoExp}" wrapping="false" design="Bold" tooltip="{i18n>BatchNoExp}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/4/status}"
+							popinDisplay="Inline" hAlign="Right">
+							<Label text="{i18n>Qty}" wrapping="false" design="Bold" tooltip="{i18n>Qty}"/>
+						</Column>
+						<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/5/status}" hAlign="Right">
+							<Label text="{i18n>AvlRetQty}" wrapping="false" design="Bold" tooltip="{i18n>AvlRetQty}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/18/status}"
+							popinDisplay="Inline" hAlign="Right">
+							<Label text="{i18n>ActRetQty}" wrapping="false" design="Bold" tooltip="{i18n>ActRetQty}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/17/status}"
+							popinDisplay="Inline" hAlign="Right">
+							<Label text="{i18n>ActRetUOM}" wrapping="false" design="Bold" tooltip="{i18n>ActRetUOM}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/6/status}" hAlign="Right">
+							<Label text="{i18n>UnitPrice}" wrapping="false" design="Bold" tooltip="{i18n>UnitPrice}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline" hAlign="Right"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/21/status}">
+							<Label text="{i18n>ListPrice}" wrapping="false" design="Bold" tooltip="{i18n>ListPrice}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/7/status}" hAlign="Right">
+							<Label text="{i18n>Disc}" wrapping="false" design="Bold" tooltip="{i18n>Disc}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/8/status}" hAlign="Right">
+							<Label text="{i18n>CNAmount}" wrapping="false" design="Bold" tooltip="{i18n>CNAmount}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/9/status}">
+							<Label text="{i18n>ShiptoName}" wrapping="false" design="Bold" tooltip="{i18n>ShiptoName}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/10/status}"
+							popinDisplay="Inline">
+							<Label text="{i18n>BillingDate}" wrapping="false" design="Bold" tooltip="{i18n>BillingDate}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/11/status}"
+							popinDisplay="Inline">
+							<Label text="{i18n>Usage}" wrapping="false" design="Bold" tooltip="{i18n>Usage}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/12/status}">
+							<Label text="{i18n>SerialNo}" wrapping="false" design="Bold" tooltip="{i18n>SerialNo}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" hAlign="Center"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/13/status}" popinDisplay="Inline">
+							<Label text="{i18n>Payer}" wrapping="false" design="Bold" tooltip="{i18n>Payer}"/>
+						</Column>
+						<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/14/status}">
+							<Label text="{i18n>RefInv}" wrapping="false" design="Bold" tooltip="{i18n>RefInv}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/15/status}">
+							<Label text="{i18n>RefInvItem}" wrapping="false" design="Bold" tooltip="{i18n>RefInvItem}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/19/status}">
+							<Label text="{i18n>HighLvl}" wrapping="false" design="Bold" tooltip="{i18n>HighLvl}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+							visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/20/status}">
+							<Label text="{i18n>ItmGrp}" wrapping="false" design="Bold" tooltip="{i18n>ItmGrp}"/>
+						</Column>
+						<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationInvoiceData/userPersonaDto/16/status}">
+							<Label text="{i18n>Address}" wrapping="false" design="Bold" tooltip="{i18n>Address}"/>
+						</Column>
+					</columns>
+					<ColumnListItem type="Navigation" press="onPressInvoiceDetail"
+						highlight="{path:'invoiceSearchModel>ColorCode', formatter:'.formatter.setColor'}">
+						<customData>
+							<core:CustomData key="Available" value="{invoiceSearchModel>colorCode}" writeToDom="true"></core:CustomData>
+						</customData>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>MaterialCode'},{path:'invoiceSearchModel>MaterialDesc'}], formatter:'.formatter.concatenateStrings'}"
+							wrapping="true"/>
+						<Text text="{invoiceSearchModel>MaterialGroup}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>MaterialGroup4}" wrapping="false"/>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>BatchNumber'},{path:'invoiceSearchModel>ExpiryDate'}], formatter:'.formatter.batchconcatenateStrings'}"/>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>BillingQty'},{path:'invoiceSearchModel>SalesUnit'}], formatter:'.formatter.concatenateStrings'}"
+							textAlign="Right"/>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>AvailRetQtySalesUn'},{path:'invoiceSearchModel>SalesUnit'}], formatter:'.formatter.concatenateStrings'}"
+							textAlign="Right"/>
+						<Input value="{invoiceSearchModel>actualRetQty}" editable="{invoiceSearchModel>editablity}" change="onChangeInvQty"
+							tooltip="{invoiceSearchModel>actualRetQty}" textAlign="Right" type="Number"/>
+						<Input value="{invoiceSearchModel>actualRetUOM}" editable="{invoiceSearchModel>editablity}" change="onChangeInvUOM" showValueHelp="true"
+							valueHelpRequest="valueHelpUOM" tooltip="{invoiceSearchModel>actualRetUOM}"/>
+						<Text text="{invoiceSearchModel>UnitPrice}" wrapping="false" textAlign="Right"/>
+						<Text text="{invoiceSearchModel>ListPrice}" wrapping="false" textAlign="Right"/>
+						<Text text="{invoiceSearchModel>DiscountAmount}" wrapping="false" textAlign="Right"/>
+						<Text text="{invoiceSearchModel>NetPrice}" wrapping="false" textAlign="Right"/>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>shipToParty'},{path:'invoiceSearchModel>shipToPartyDesc'}], formatter:'.formatter.concatenateStrings'}"
+							wrapping="true"/>
+						<Text text="{path:'invoiceSearchModel>billingDateFrom', formatter:'.formatter.dateTimeFormat1'}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>ItemUsage}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>SerialNum}" wrapping="false"/>
+						<Text text="{baseModel>/payer}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>InvoiceNum}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>InvoiceLineItem}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>HigherLvlItem}" wrapping="false"/>
+						<Text text="{invoiceSearchModel>ItemGroup}" wrapping="false"/>
+						<Button icon="sap-icon://addresses" press="onPressAddress" class="sapUiTinyMarginBegin" tooltip="Address"/>
+					</ColumnListItem>
+				</Table>
+			</ScrollContainer>
+		</VBox>
+		<VBox visible="{baseModel>/addressVisiblity}">
+			<OverflowToolbar class="dkshToolbarStyle customTitle">
+				<Label text="{i18n>Address}" design="Bold"></Label>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://nav-back" press="onPressNavBackToItems"/>
+			</OverflowToolbar>
+			<f:SimpleForm minWidth="1024" layout="ResponsiveGridLayout" maxContainerCols="2" editable="true" labelSpanL="4" labelSpanM="4"
+				emptySpanL="1" emptySpanM="1" columnsL="4" columnsM="2" visible="{baseModel>/SearchVisiblity}">
+				<f:content>
+					<core:Title text="{i18n>ShipTo}"/>
+					<Label text="{i18n>Name1}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/shipToAddress/partnerNum'},{path:'addressModel>/shipToAddress/partnerName'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Name4}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/shipToAddress/partnerNum'},{path:'addressModel>/shipToAddress/partnerName4'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Street2}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/AddressStreet2}"/>
+					<Label text="{i18n>Street3}" design="Bold"/>
+					<Text text="{addressModel>/shipToAddress/AddressStreet3}"/>
+					<Label text="{i18n>Street5}" design="Bold"/>
+					<Text text="{addressModel>/shipToAddress/AddressStreet5}"/>
+					<Label text="{i18n>District}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/District}"/>
+					<Label text="{i18n>DifferentCity}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/DifferentCity}"/>
+					<Label text="{i18n>PostalCode}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/postalCode}"/>
+					<Label text="{i18n>City}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/City}"/>
+					<Label text="{i18n>Telephone}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/telephone}"/>
+					<Label text="{i18n>MobilePhone}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/mobileNumber}"/>
+					<Label text="{i18n>TaxID}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/taxId}"/>
+					<Label text="{i18n>BCODE}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/bCode}"/>
+					<Label text="{i18n>BPNUMMR}" design="Bold"></Label>
+					<Text text="{addressModel>/shipToAddress/bpNummr}"/>
+					<!---->
+					<core:Title text="{i18n>SoldTo}"/>
+					<Label text="{i18n>Name1}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/soldToAddress/partnerNum'},{path:'addressModel>/soldToAddress/partnerName'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Name4}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/soldToAddress/partnerNum'},{path:'addressModel>/soldToAddress/partnerName4'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Street2}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/AddressStreet2}"/>
+					<Label text="{i18n>Street3}" design="Bold"/>
+					<Text text="{addressModel>/soldToAddress/AddressStreet3}"/>
+					<Label text="{i18n>Street5}" design="Bold"/>
+					<Text text="{addressModel>/soldToAddress/AddressStreet5}"/>
+					<Label text="{i18n>District}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/District}"/>
+					<Label text="{i18n>DifferentCity}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/DifferentCity}"/>
+					<Label text="{i18n>PostalCode}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/postalCode}"/>
+					<Label text="{i18n>City}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/City}"/>
+					<Label text="{i18n>Telephone}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/telephone}"/>
+					<Label text="{i18n>MobilePhone}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/mobileNumber}"/>
+					<Label text="{i18n>TaxID}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/taxId}"/>
+					<Label text="{i18n>BCODE}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/bCode}"/>
+					<Label text="{i18n>BPNUMMR}" design="Bold"></Label>
+					<Text text="{addressModel>/soldToAddress/bpNummr}"/>
+					<!---->
+					<core:Title text="{i18n>Payer}"/>
+					<Label text="{i18n>Name1}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/payerAddress/partnerNum'},{path:'addressModel>/payerAddress/partnerName'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Name4}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/payerAddress/partnerNum'},{path:'addressModel>/payerAddress/partnerName4'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Street2}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/AddressStreet2}"/>
+					<Label text="{i18n>Street3}" design="Bold"/>
+					<Text text="{addressModel>/payerAddress/AddressStreet3}"/>
+					<Label text="{i18n>Street5}" design="Bold"/>
+					<Text text="{addressModel>/payerAddress/AddressStreet5}"/>
+					<Label text="{i18n>District}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/District}"/>
+					<Label text="{i18n>DifferentCity}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/DifferentCity}"/>
+					<Label text="{i18n>PostalCode}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/postalCode}"/>
+					<Label text="{i18n>City}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/City}"/>
+					<Label text="{i18n>Telephone}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/telephone}"/>
+					<Label text="{i18n>MobilePhone}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/mobileNumber}"/>
+					<Label text="{i18n>TaxID}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/taxId}"/>
+					<Label text="{i18n>BCODE}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/bCode}"/>
+					<Label text="{i18n>BPNUMMR}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/bpNummr}"/>
+					<!---->
+					<core:Title text="{i18n>BillTo}"/>
+					<Label text="{i18n>Name1}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/billToAdress/partnerNum'},{path:'addressModel>/billToAdress/partnerName'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Name4}" design="Bold"></Label>
+					<Text
+						text="{parts: [{path:'addressModel>/billToAdress/partnerNum'},{path:'addressModel>/billToAdress/partnerName4'}], formatter:'.formatter.concatenateStrings'}"/>
+					<Label text="{i18n>Street2}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/AddressStreet2}"/>
+					<Label text="{i18n>Street3}" design="Bold"/>
+					<Text text="{addressModel>/billToAdress/AddressStreet3}"/>
+					<Label text="{i18n>Street5}" design="Bold"/>
+					<Text text="{addressModel>/billToAdress/AddressStreet5}"/>
+					<Label text="{i18n>District}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/District}"/>
+					<Label text="{i18n>DifferentCity}" design="Bold"></Label>
+					<Text text="{addressModel>/payerAddress/DifferentCity}"/>
+					<Label text="{i18n>PostalCode}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/postalCode}"/>
+					<Label text="{i18n>City}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/City}"/>
+					<Label text="{i18n>Telephone}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/telephone}"/>
+					<Label text="{i18n>MobilePhone}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/mobileNumber}"/>
+					<Label text="{i18n>TaxID}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/taxId}"/>
+					<Label text="{i18n>BCODE}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/bCode}"/>
+					<Label text="{i18n>BPNUMMR}" design="Bold"></Label>
+					<Text text="{addressModel>/billToAdress/bpNummr}"/>
+				</f:content>
+			</f:SimpleForm>
+		</VBox>
+	</VBox>
+</core:FragmentDefinition>
