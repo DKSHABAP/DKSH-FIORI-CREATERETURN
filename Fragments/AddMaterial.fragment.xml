@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar">
+	<Dialog title="{i18n>AddMaterial}" class="sapUiSizeCompact custBox">
+		<content>
+			<HBox>
+				<Label text="{i18n>EnterMaterial}" class="sapUiTinyMarginTop sapUiTinyMarginBeginEnd"/>
+				<Input value="{baseModel>/newMaterial}"/>
+			</HBox>
+			</content>
+			<buttons>
+				<Button text="{i18n>OK}" press="addMaterial" tooltip="{i18n>OK}" />
+				<Button text="{i18n>cancelbtntext}" press="closeAddMaterialFrag" tooltip="{i18n>cancelbtntext}"/>
+			</buttons>
+		
+	</Dialog>
+</core:FragmentDefinition>

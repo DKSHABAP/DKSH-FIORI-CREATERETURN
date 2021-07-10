@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<Dialog title="{i18n>Remark}" contentWidth="65%" class="sapUiSizeCompact">
+		<!--<VBox alignItems="Center" width="100%">-->
+		<Label text="{i18n>Remark}" design="Bold" class="sapUiTinyMarginBegin"/>
+		<TextArea enabled="false" value="{baseModel>/remark}" width="90%" class="sapUiTinyMarginBegin" maxLength="250"/>
+		<f:SimpleForm layout="ResponsiveGridLayout" labelSpanL="4" editable="true" labelSpanM="3" emptySpanL="1" emptySpanM="0" columnsL="2"
+			columnsM="2" class="formCoreClass">
+			<f:content>
+				<core:Title class="formCoreClass"/>
+				<Label text="{i18n>ContactTelephone}" design="Bold" required="true"/>
+				<Input value="{baseModel>/contactTelephone}" liveChange="onContactTelephoneChange"/>
+				<Label text="{i18n>ContactPerson}" design="Bold" required="true"/>
+				<Input value="{baseModel>/contactPerson}" liveChange="onContactPersonChange"/>
+				<core:Title class="formCoreClass"/>
+				<Label text="{i18n>ContactDivision}" design="Bold" required="true"/>
+				<Input value="{baseModel>/contactDivision}" liveChange="onContactDivisionChange"/>
+				<Label text="{i18n>Text}" design="Bold"/>
+				<Input value="{baseModel>/comment}" liveChange="onRemarkTextChange"/>
+				<Label></Label>
+				<Label></Label>
+				<Button icon="sap-icon://vds-file" press="onPressViewRemark" visible="{baseModel>/viewRemarkVisiblity}" text="{i18n>View}"/>
+				<Button icon="sap-icon://reset" press="onPressResetRemark" visible="{baseModel>/resetRemarkVisiblity}" text="{i18n>Refresh}"/>
+				<!--<core:Icon src="sap-icon://vds-file" press="onPressViewRemark" visible="{baseModel>/viewRemarkVisiblity}" c/>-->
+				<!--<core:Icon src="sap-icon://reset" press="onPressResetRemark" visible="{baseModel>/resetRemarkVisiblity}"/>-->
+			</f:content>
+		</f:SimpleForm>
+		<!--</VBox>-->
+		<buttons>
+			<Button text="{i18n>OK}" press="onOKRemark"/>
+			<Button text="{i18n>Cancel}" press="onCancelRemark"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

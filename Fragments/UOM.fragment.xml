@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+<SelectDialog title="{i18n>UOM}" liveChange="onLiveChangeBillingType" multiSelect="false" confirm="selectUom"
+		cancel="onCancelChangeDistributionChannel" items="{UOMModel>/results}" class="sapUiSizeCompact"  >
+		<StandardListItem title="{UOMModel>alternateUom}"
+			tooltip="{UOMModel>alternateUom}" type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

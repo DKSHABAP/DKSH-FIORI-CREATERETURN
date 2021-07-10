@@ -1,0 +1,67 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Popover placement="Bottom" showHeader="false">
+		<Table alternateRowColors="true" class="sapUiSizeCompact" inset="false" fixedLayout="false" items="{returnPreviewPopoverModel>/}">
+			<columns>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/0/status}">
+					<Label text="{i18n>Item}" design="Bold" tooltip="{i18n>Item}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/2/status}">
+					<Label text="{i18n>MG}" wrapping="false" design="Bold" tooltip="{i18n>MG}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/3/status}">
+					<Label text="{i18n>MG4}" wrapping="false" design="Bold" tooltip="{i18n>MG4}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/8/status}" hAlign="Right">
+					<Label text="{i18n>UnitPriceINV}" wrapping="false" design="Bold" tooltip="{i18n>UnitPriceINV}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/9/status}" hAlign="Right">
+					<Label text="{i18n>Disc}" wrapping="false" design="Bold" tooltip="{i18n>Disc}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/10/status}" hAlign="Right">
+					<Label text="{i18n>CNAmount}" wrapping="false" design="Bold" tooltip="{i18n>CNAmount}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/11/status}">
+					<Label text="{i18n>SLoc}" wrapping="false" design="Bold" tooltip="{i18n>SLoc}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/12/status}">
+					<Label text="{i18n>HighLevel}" wrapping="false" design="Bold" tooltip="{i18n>HighLevel}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/14/status}">
+					<Label text="{i18n>RefInv}" wrapping="false" design="Bold" tooltip="{i18n>RefInv}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/15/status}">
+					<Label text="{i18n>RefInvItem}" wrapping="false" design="Bold" tooltip="{i18n>RefInvItem}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/16/status}">
+					<Label text="{i18n>RefInvDate}" wrapping="false" design="Bold" tooltip="{i18n>RefInvDate}"/>
+				</Column>
+				<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+					visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/17/status}">
+					<Label text="{i18n>SerialNo}" wrapping="false" design="Bold" tooltip="{i18n>SerialNo}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<Text text="{returnPreviewPopoverModel>/results/itemNumber}"/>
+					<Text text="{returnPreviewPopoverModel>/results/materialGroup}" wrapping="true"/>
+					<Text text="{returnPreviewPopoverModel>/results/materialGroup4}" wrapping="false"/>
+					<Text text="{returnPreviewPopoverModel>/results/unitPriceInv}" wrapping="true"/>
+					<Text text="{returnPreviewPopoverModel>/results/discountAmount}" wrapping="false"/>
+					<Text text="{returnPreviewPopoverModel>/results/netAmount}" textAlign="Right"/>
+					<Input value="{returnPreviewPopoverModel>/results/SLoc}"/>
+					<Text text="{returnPreviewPopoverModel>/results/higherItem}"/>
+					<Text text="{returnPreviewPopoverModel>/results/refInvoice}"/>
+					<Text text="{returnPreviewPopoverModel>/results/refItemNumber}"/>
+					<Text text="{path:'returnPreviewPopoverModel>/results/billingDate', formatter:'.formatter.datePS'}" wrapping="true"/>
+					<Text text="{returnPreviewPopoverModel>/results/serialNumber}" wrapping="false"/>
+				</ColumnListItem>
+			</items>
+		</Table>
+	</Popover>
+</core:FragmentDefinition>

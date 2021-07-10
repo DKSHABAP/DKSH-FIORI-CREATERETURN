@@ -1,0 +1,100 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" class="sapUiSizeCompact" xmlns:fb="sap.ui.comp.filterbar"
+	controllerName="incture.com.ConnectClient_ReturnCreate.controller.Selection" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<html:iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WG969CM" height="0" width="0" style="display:none; visibility:hidden"></html:iframe>
+	<NavContainer id="ID_RETURN_NAVCON">
+		<pages>
+			<Page showHeader="false" id="ID_RETURN_PAGE" navButtonPress="OnPressSelectionNv" showNavButton="true">
+				<content>
+					<Wizard id="ID_WIZARD_RETURN" complete="wizardCompletedHandler" showNextButton="false">
+						<WizardStep title="{i18n>step1ReturntypReqTitle}" validated="{baseModel>/step1Validation}" id="ID_WIZARD_SEL_RET_TYPE">
+							<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="5" labelSpanM="5" columnsL="1" columnsM="1" emptySpanL="4"
+								emptySpanM="4" class="sapUiSizeCompact">
+								<f:content>
+									<Label text="{i18n>step1ReturnTypeLable}" design="Bold" required="true"/>
+									<!--<VBox>-->
+									<SegmentedButton selectedButton="None" id="RotypeSegementedBtnID" width="100%" items="{ROTypeListModel>/results}">
+										<items>
+											<!--<SegmentedButtonItem tooltip="{i18n>salableROType}" key="PhysicalSalableReturn" icon="sap-icon://inspect" class="iconColorGreen"-->
+											<!--	press="onClickROType" width="25%"/>-->
+											<!--	<SegmentedButtonItem tooltip="{i18n>unsalableRoType}" key="PhysicalReturn" icon="sap-icon://inspect-down" class="iconColorRed"-->
+											<!--		press="onClickROType" width="25%"/>-->
+											<!--	<SegmentedButtonItem tooltip="{i18n>RetTypDDBGS}" key="BorrowedGoodsSettlement" icon="sap-icon://paid-leave" press="onClickROType" width="25%"/>-->
+											<!--	<SegmentedButtonItem tooltip="{i18n>RetTypDDIDC}" key="InvoiceDocCorrection" icon="sap-icon://activity-2" press="onClickROType" width="25%"/>-->
+											<!--</items>-->
+											<!--<buttons >-->
+											<SegmentedButtonItem
+												tooltip="{parts:[{path:'ROTypeListModel>roType'},{path:'ROTypeListModel>roTypeDesc'}],formatter:'.formatter.concatenateStrings'}"
+												key="{ROTypeListModel>roType}" icon="{ROTypeListModel>icon}" class="iconColorGreen" press="onClickROType"/>
+										</items>
+										<!--</buttons>-->
+									</SegmentedButton>
+									<Label text="{i18n>step1RetRsnLabel}" design="Bold" required="true"/>
+									<ComboBox placeholder="{i18n>selectreturnreasonPlaceholder}" change="onSelectReturnReason" showValueStateMessage="false"
+										items="{OrderReasonSet>/results}" value="{baseModel>/selectedReturnReason}" tooltip="{baseModel>/selectedReturnReason}"
+										enabled="{baseModel>/enableReturnReason}">
+										<core:Item key="{OrderReasonSet>returnReasonCode}"
+											text="{parts:[{path:'OrderReasonSet>returnReasonCode'},{path:'OrderReasonSet>returnReasonText'}],formatter:'.formatter.concatenateStrings'}"/>
+									</ComboBox>
+								</f:content>
+							</f:SimpleForm>
+						</WizardStep>
+						<WizardStep title="{i18n>step2TitleCustSelec}" validated="{baseModel>/step2Validation}" complete="onCompleteStep2" id="ID_WIZARD_SEL_CUST">
+							<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="5" labelSpanM="5" columnsL="1" columnsM="1" emptySpanL="4"
+								emptySpanM="4" class="sapUiSizeCompact">
+								<f:content>
+									<Label text="{i18n>step2RetTypLabel}" design="Bold"/>
+									<Text text="{parts: ['baseModel>/selectedROTypeCode','baseModel>/selectedROType'], formatter:'.formatter.concatenateStrings'}"/>
+									<Label text="{i18n>salesorgLabel}" design="Bold" required="true"/>
+									<ComboBox placeholder="{i18n>selectSalesOrgPlaceholder}" items="{salesOrgModel>/results}"
+										value="{parts: ['baseModel>/selectedSalesOrg','baseModel>/selectedSalesOrgDesc'], formatter:'.formatter.concatenateStrings'}"
+										change="onSelectSalesOrg"
+										tooltip="{parts: ['baseModel>/SalesOrg','baseModel>/selectedSalesOrgDesc'], formatter:'.formatter.concatenateStrings'}"
+										editable="{baseModel>/salesOrgEditable}">
+										<core:Item key="{salesOrgModel>Salesorg}"
+											text="{parts:[{path:'salesOrgModel>Salesorg'},{path:'salesOrgModel>SalesorgDesc'}],formatter:'.formatter.concatenateStrings'}"/>
+									</ComboBox>
+									<Label text="{i18n>distChnlLabel}" design="Bold"/>
+									<ComboBox placeholder="{i18n>selectDistChnlPlaceholder}" items="{DistChanSet>/results}"
+										value="{parts: ['baseModel>/selectedDistChnl','baseModel>/selectedDistChlDesc'], formatter:'.formatter.concatenateStrings'}"
+										change="onchangeDistChnl" editable="{baseModel>/distChnlEditable}"
+										tooltip="{parts: ['baseModel>/DistChan','baseModel>/selectedDistChlDesc'], formatter:'.formatter.concatenateStrings'}">
+										<core:Item key="{DistChanSet>Name}"
+											text="{parts:[{path:'DistChanSet>DistChl'},{path:'DistChanSet>Name'}],formatter:'.formatter.concatenateStrings'}"/>
+									</ComboBox>
+									<Label text="{i18n>soldtoPartylabel}" design="Bold" tooltip="{i18n>salesOrgTooltip}" required="true"/>
+									<Input showValueHelp="true" valueHelpRequest="valueHelpRequestSoldtoParty"
+										value="{parts: ['baseModel>/selectedSoldtoParty','baseModel>/selectedSoldtoPartyDesc'], formatter:'.formatter.concatenateStrings'}"
+										valueHelpOnly="true"
+										tooltip="{parts: ['baseModel>/selectedSoldtoParty','baseModel>/selectedSoldtoPartyDesc'], formatter:'.formatter.concatenateStrings'}"
+										editable="{baseModel>/disableSoldToParty}" placeholder="{i18n>SelectSoldTo}"/>
+									<Label/>
+								</f:content>
+							</f:SimpleForm>
+						</WizardStep>
+						<WizardStep title="{i18n>step3TitleInvoiceDetails}" complete="onCompleteStep3" id="ID_WIZARD_INV_SRCH">
+							<core:Fragment fragmentName="incture.com.ConnectClient_ReturnCreate.Fragments.InvoiceDetail" type="XML"/>
+						</WizardStep>
+						<WizardStep title="{i18n>Step4ret/excTitle}" complete="onCompleteStep4" id="ID_WIZARD_RTEX">
+							<core:Fragment fragmentName="incture.com.ConnectClient_ReturnCreate.Fragments.Return" type="XML"/>
+						</WizardStep>
+						<WizardStep title="{i18n>Preview}" id="ID_WIZARD_PREVIEW">
+							<core:Fragment fragmentName="incture.com.ConnectClient_ReturnCreate.Fragments.Preview" type="XML"/>
+						</WizardStep>
+					</Wizard>
+				</content>
+				<footer>
+					<OverflowToolbar>
+						<ToolbarSpacer/>
+						<Button text="{i18n>cancelbtntext}" press="handleWizardCancel" visible="{baseModel>/cancelBtnVisiblitys}" tooltip="{i18n>cancelbtntext}"
+							type="Default"/>
+						<Button text="{i18n>savedraftbtntext}" press="onPressSave" visible="{baseModel>/saveAsDraftBtnVisiblitys}" tooltip="{i18n>savedraftbtntext}"
+							type="Default"/>
+						<Button text="{i18n>Preview}" press="onpressPreview" tooltip="{i18n>Preview}" type="Default" visible="{baseModel>/previewBtnVisiblitys}"/>
+						<Button text="{i18n>Submit}" press="onPressSubmit" tooltip="{i18n>Submit}" type="Default" visible="{baseModel>/submitBtnVisiblitys}"/>
+					</OverflowToolbar>
+				</footer>
+			</Page>
+		</pages>
+	</NavContainer>
+</mvc:View>
