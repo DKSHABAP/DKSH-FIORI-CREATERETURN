@@ -1,1834 +1,1545 @@
-sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	"sap/m/MessageBox",
-	"../model/formatter",
-	"sap/m/MessageToast",
-	"sap/ui/core/Fragment",
-	"sap/ui/core/format/DateFormat",
-	"sap/ui/model/Sorter"
-], function (Controller, MessageBox, formatter, MessageToast, Fragment, DateFormat, Sorter) {
+sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/formatter", "sap/m/MessageToast", "sap/ui/core/Fragment",
+	"sap/ui/core/format/DateFormat", "sap/ui/model/Sorter"
+], function (e, t, r, o, s, i, a) {
 	"use strict";
-
-	return Controller.extend("incture.com.ConnectClient_ReturnCreate.controller.Selection", {
-		formatter: formatter,
+	return e.extend("incture.com.ConnectClient_ReturnCreate.controller.Selection", {
+		formatter: r,
 		onInit: function () {
-			var router = sap.ui.core.UIComponent.getRouterFor(this);
-			router.attachRoutePatternMatched(this._handleRouteMatched, this);
-			/*			this.getRouter("Selection").attachRoutePatternMatched(this._handleRouteMatched, this);*/
-			var that = this;
+			/*			var e = sap.ui.core.UIComponent.getRouterFor(this);
+						e.attachRoutePatternMatched(this._handleRouteMatched, this);*/
+			/*			this.getRouter().getRoute("Selection").attachRoutePatternMatched(this._handleRouteMatched, this);*/
+			var t = this;
 			this.selectedRetObjects = [];
 			this.returnItems = [];
 			this.returnConditions = [];
 			this.exchangeItems = [];
 			this.exchangeConditions = [];
 			this.selectedObjects = [];
-			var attachmentObject = [];
-			var exchangeModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(exchangeModel, "exchangeModel");
-			var exchangePreviewModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(exchangePreviewModel, "exchangePreviewModel");
+			var r = [];
+			// ga('send', 'pageview', "/ReturnCreateTest");
+			var o = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(o, "exchangeModel");
+			var s = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(s, "exchangePreviewModel");
 			this.getView().byId("RotypeSegementedBtnID").setEnabled(true);
-			var returnPreviewModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(returnPreviewModel, "returnPreviewModel");
-			var returnModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(returnModel, "returnModel");
-			this.getView().getModel("returnModel").setProperty("/attachmentObject", attachmentObject);
-			var baseModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(baseModel, "baseModel");
-			var baseModel = this.getView().getModel("baseModel");
-			var invoiceSearchModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(invoiceSearchModel, "invoiceSearchModel");
-			var PersonalizationModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(PersonalizationModel, "PersonalizationModel");
-			baseModel.setProperty("/step1Validation", false);
-			baseModel.setProperty("/step2Validation", false);
-			baseModel.setProperty("/enableReturnReason", true);
+			var i = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(i, "returnPreviewModel");
+			var a = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(a, "returnModel");
+			this.getView().getModel("returnModel").setProperty("/attachmentObject", r);
+			var n = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(n, "baseModel");
+			var n = this.getView().getModel("baseModel");
+			var l = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(l, "invoiceSearchModel");
+			var d = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(d, "PersonalizationModel");
+			n.setProperty("/step1Validation", false);
+			n.setProperty("/step2Validation", false);
+			n.setProperty("/enableReturnReason", true);
 			this._wizard = this.byId("ID_WIZARD_RETURN");
 			this._oNavContainer = this.byId("ID_RETURN_NAVCON");
 			this._oWizardContentPage = this.byId("ID_RETURN_PAGE");
-			baseModel.setProperty("/cancelBtnVisiblitys", true);
-			baseModel.setProperty("/submitBtnVisiblitys", false);
-			baseModel.setProperty("/previewBtnVisiblitys", false);
-			baseModel.setProperty("/exchangeBtnVisiblitys", false);
-			baseModel.setProperty("/saveAsDraftBtnVisiblitys", false);
-			baseModel.setProperty("/addressVisiblity", false);
-			baseModel.setProperty("/salesOrgEditable", true);
-			baseModel.setProperty("/distChnlEditable", true);
-			baseModel.setProperty("/attachmentTableVisiblity", false);
-			baseModel.setProperty("/exchangeTabVisiblity", false);
-			baseModel.setProperty("/smsInputVisiblity", false);
-			baseModel.setProperty("/emailInputVisiblity", false);
-			baseModel.setProperty("/commentsLength", 2);
-			baseModel.setProperty("/tableSelMode", "MultiSelect");
-			baseModel.setProperty("/attachmentLength", 0);
-			baseModel.setProperty("/visiblityROTypeSel", true);
-			baseModel.getProperty("/EXOneTimeCustomer", "");
-			baseModel.setProperty("/enableAddAttachment", true);
-			baseModel.setProperty("/enableViewAttachment", false);
-			baseModel.setProperty("/attachmentVisiblity", true);
-			baseModel.setProperty("/retDivEditablity", true);
-			baseModel.setProperty("/retSalesOrgEditablity", true);
-			baseModel.setProperty("/retDistChnlEditablity", true);
+			n.setProperty("/cancelBtnVisiblitys", true);
+			n.setProperty("/submitBtnVisiblitys", false);
+			n.setProperty("/previewBtnVisiblitys", false);
+			n.setProperty("/exchangeBtnVisiblitys", false);
+			n.setProperty("/saveAsDraftBtnVisiblitys", false);
+			n.setProperty("/addressVisiblity", false);
+			n.setProperty("/salesOrgEditable", true);
+			n.setProperty("/distChnlEditable", true);
+			n.setProperty("/attachmentTableVisiblity", false);
+			n.setProperty("/exchangeTabVisiblity", false);
+			n.setProperty("/smsInputVisiblity", false);
+			n.setProperty("/emailInputVisiblity", false);
+			n.setProperty("/commentsLength", 2);
+			n.setProperty("/tableSelMode", "MultiSelect");
+			n.setProperty("/attachmentLength", 0);
+			n.setProperty("/visiblityROTypeSel", true);
+			n.getProperty("/EXOneTimeCustomer", "");
+			n.setProperty("/enableAddAttachment", true);
+			n.setProperty("/enableViewAttachment", false);
+			n.setProperty("/attachmentVisiblity", true);
+			n.setProperty("/retDivEditablity", true);
+			n.setProperty("/retSalesOrgEditablity", true);
+			n.setProperty("/retDistChnlEditablity", true);
 			this.getView().getModel("invoiceSearchModel").setProperty("/billingCategory", "C");
 			this.getView().getModel("invoiceSearchModel").setProperty("/billingCategoryDesc", "Commercial Invoice");
 			this.getView().getModel("baseModel").setProperty("/addressFieldEnable", true);
 			this.getView().getModel("baseModel").setProperty("/EXaddressVisiblity", false);
-			// if(this.discard)
 			this._getUser();
 			this.selectedReturnItems = [];
-			that.salesOrgDataAccess = "No Access";
-			that.SLOCDataAccess = "No Access";
-			that.distrChannelDataAccess = "No Access";
-			that.divisionDataAccess = "No Access";
-			that.materialGroupDataAccess = "No Access";
-			that.materialGroup4DataAccess = "No Access";
-			that.plantDataAccess = "No Access";
+			t.salesOrgDataAccess = "No Access";
+			t.SLOCDataAccess = "No Access";
+			t.distrChannelDataAccess = "No Access";
+			t.divisionDataAccess = "No Access";
+			t.materialGroupDataAccess = "No Access";
+			t.materialGroup4DataAccess = "No Access";
+			t.plantDataAccess = "No Access";
 			this.ranOnce = false;
-			// this.startDateRange = 4;
-			// this.endDateRange = 3;
 			if (sap.ui.getCore().getConfiguration().getLanguage() === "en-US") {
-
-				baseModel.setProperty("/language", "TH");
+				n.setProperty("/language", "TH")
 			} else {
-				baseModel.setProperty("/language", sap.ui.getCore().getConfiguration().getLanguage());
+				n.setProperty("/language", sap.ui.getCore().getConfiguration().getLanguage())
 			}
-			baseModel.setProperty("/languageID", "E");
-			baseModel.setProperty("/invoiceTableLength", "");
-			baseModel.setProperty("/returnTableLength", "");
-			baseModel.setProperty("/exchangeTableLength", "");
-			baseModel.setProperty("/disableSoldToParty", true);
-			this.getOwnerComponent().getService("ShellUIService").then(function (oShellService) {
-				oShellService.setBackNavigation(function () {
-					that._discardChanges();
-					var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-					var oHistory = sap.ui.core.routing.History.getInstance(),
-						sPreviousHash = oHistory.getPreviousHash(),
-						oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-					if (sPreviousHash !== undefined) { // The history contains a previous entry 
-						history.go(-1);
-					} else { // Navigate back to FLP home 
-						oCrossAppNavigator.toExternal({
+			n.setProperty("/languageID", "E");
+			n.setProperty("/invoiceTableLength", "");
+			n.setProperty("/returnTableLength", "");
+			n.setProperty("/exchangeTableLength", "");
+			n.setProperty("/disableSoldToParty", true);
+			this.getOwnerComponent().getService("ShellUIService").then(function (e) {
+				e.setBackNavigation(function () {
+
+					t._discardChanges();
+					t._wizard.discardProgress(t._wizard.getSteps()[0]);
+					var e = sap.ushell.Container.getService("CrossApplicationNavigation");
+					var r = sap.ui.core.routing.History.getInstance(),
+						o = r.getPreviousHash(),
+						e = sap.ushell.Container.getService("CrossApplicationNavigation");
+					if (o !== undefined) {
+						history.go(-1)
+					} else {
+						e.toExternal({
 							target: {
 								shellHash: "#"
 							}
-						});
+						})
 					}
-				});
+				})
 			});
-			baseModel.setProperty("/InvCollapseVisiblity", true);
-			baseModel.setProperty("/InvOpenVisiblity", false);
-			baseModel.setProperty("/InvSearchBar", true);
-			baseModel.setProperty("/ExcCollapseVisiblity", true);
-			baseModel.setProperty("/ExcOpenVisiblity", false);
-			baseModel.setProperty("/ExcSearchBar", true);
-			baseModel.setProperty("/PrevCollapseVisiblity", true);
-			baseModel.setProperty("/PrevopenVisiblity", false);
-			baseModel.setProperty("/PrevSearchBar", true);
-			baseModel.setProperty("/RetCollapseVisiblity", true);
-			baseModel.setProperty("/RetOpenVisiblity", false);
-			baseModel.setProperty("/ReturnSeacrhBar", true);
-			baseModel.setProperty("/EXOneTimeCustomer", "");
-			baseModel.setProperty("/oneTimeCustomer", "");
+			n.setProperty("/InvCollapseVisiblity", true);
+			n.setProperty("/InvOpenVisiblity", false);
+			n.setProperty("/InvSearchBar", true);
+			n.setProperty("/ExcCollapseVisiblity", true);
+			n.setProperty("/ExcOpenVisiblity", false);
+			n.setProperty("/ExcSearchBar", true);
+			n.setProperty("/PrevCollapseVisiblity", true);
+			n.setProperty("/PrevopenVisiblity", false);
+			n.setProperty("/PrevSearchBar", true);
+			n.setProperty("/RetCollapseVisiblity", true);
+			n.setProperty("/RetOpenVisiblity", false);
+			n.setProperty("/ReturnSeacrhBar", true);
+			n.setProperty("/EXOneTimeCustomer", "");
+			n.setProperty("/oneTimeCustomer", "")
+			var e = sap.ui.core.UIComponent.getRouterFor(this);
+			e.attachRoutePatternMatched(this._handleRouteMatched, this);
 		},
-
 		onPressInvCollapse: function () {
 			this.getView().getModel("baseModel").setProperty("/InvCollapseVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/InvOpenVisiblity", true);
-			this.getView().getModel("baseModel").setProperty("/InvSearchBar", false);
+			this.getView().getModel("baseModel").setProperty("/InvSearchBar", false)
 		},
-
 		onPressInvOpen: function () {
 			this.getView().getModel("baseModel").setProperty("/InvCollapseVisiblity", true);
 			this.getView().getModel("baseModel").setProperty("/InvOpenVisiblity", false);
-			this.getView().getModel("baseModel").setProperty("/InvSearchBar", true);
+			this.getView().getModel("baseModel").setProperty("/InvSearchBar", true)
 		},
-
 		onPressRetCollapse: function () {
 			this.getView().getModel("baseModel").setProperty("/RetCollapseVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/RetOpenVisiblity", true);
-			this.getView().getModel("baseModel").setProperty("/ReturnSeacrhBar", false);
+			this.getView().getModel("baseModel").setProperty("/ReturnSeacrhBar", false)
 		},
-
 		onPressRetOpen: function () {
 			this.getView().getModel("baseModel").setProperty("/RetCollapseVisiblity", true);
 			this.getView().getModel("baseModel").setProperty("/RetOpenVisiblity", false);
-			this.getView().getModel("baseModel").setProperty("/ReturnSeacrhBar", true);
+			this.getView().getModel("baseModel").setProperty("/ReturnSeacrhBar", true)
 		},
-
 		onPressExCollapse: function () {
 			this.getView().getModel("baseModel").setProperty("/ExcCollapseVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/ExcOpenVisiblity", true);
-			this.getView().getModel("baseModel").setProperty("/ExcSearchBar", false);
+			this.getView().getModel("baseModel").setProperty("/ExcSearchBar", false)
 		},
-
 		onPressExOpen: function () {
 			this.getView().getModel("baseModel").setProperty("/ExcCollapseVisiblity", true);
 			this.getView().getModel("baseModel").setProperty("/ExcOpenVisiblity", false);
-			this.getView().getModel("baseModel").setProperty("/ExcSearchBar", true);
+			this.getView().getModel("baseModel").setProperty("/ExcSearchBar", true)
 		},
-
 		onPressPreCollapse: function () {
 			this.getView().getModel("baseModel").setProperty("/PrevCollapseVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/PrevopenVisiblity", true);
-			this.getView().getModel("baseModel").setProperty("/PrevSearchBar", false);
+			this.getView().getModel("baseModel").setProperty("/PrevSearchBar", false)
 		},
-
 		onPressPreOpen: function () {
 			this.getView().getModel("baseModel").setProperty("/PrevCollapseVisiblity", true);
 			this.getView().getModel("baseModel").setProperty("/PrevopenVisiblity", false);
-			this.getView().getModel("baseModel").setProperty("/PrevSearchBar", true);
+			this.getView().getModel("baseModel").setProperty("/PrevSearchBar", true)
 		},
-
 		OnPressSelectionNv: function () {
-			var router = sap.ui.core.UIComponent.getRouterFor(this);
-			router.navTo("DraftRecord", true);
+			var e = sap.ui.core.UIComponent.getRouterFor(this);
+			e.navTo("DraftRecord", true)
 		},
-
-		// nav from records page to details on select of a record
 		_handleRouteMatched: function () {
-			var that = this;
-			var baseModel = that.getView().getModel("baseModel");
+			var e = this;
+			var t = e.getView().getModel("baseModel");
 			if (sap.ui.getCore().getModel("globalModel").getProperty("/phone")) {
-				baseModel.setProperty("/phone", sap.ui.getCore().getModel("globalModel").getProperty("/phone"));
+				t.setProperty("/phone", sap.ui.getCore().getModel("globalModel").getProperty("/phone"))
 			} else {
-				baseModel.setProperty("/phone", "");
+				t.setProperty("/phone", "")
 			}
 			if (sap.ui.getCore().getModel("draftItemModel") === undefined || sap.ui.getCore().getModel("draftItemModel").getData() === "") {
-				baseModel.setProperty("/tableSelMode", "MultiSelect");
-				baseModel.setProperty("/step1Validation", false);
-				baseModel.setProperty("/step2Validation", false);
-				baseModel.setProperty("/step3Validation", false);
-				// if(!this.discard)
+				t.setProperty("/tableSelMode", "MultiSelect");
+				t.setProperty("/step1Validation", false);
+				t.setProperty("/step2Validation", false);
+				t.setProperty("/step3Validation", false);
 				this._getUser();
-				return;
+				return
 			}
-			var oBusyDialog = new sap.m.BusyDialog();
-			oBusyDialog.open();
-			var data = sap.ui.getCore().getModel("draftItemModel").getData();
-			// this.getView().getModel("baseModel").setProperty("/phone",data.phone);
-			var sUrl = "/DKSHJavaService/returnRequest/getByReturnReqNum/" + data.returnReqNum + "&" + sap.ui.getCore().getModel("globalModel")
-				.getProperty("/userId") + "&cc";
-			var oModel = new sap.ui.model.json.JSONModel();
-			var that = this;
-			oModel.loadData(sUrl, true, "GET", false, false);
-			oModel.attachRequestCompleted(function (oEvent) {
-				oBusyDialog.close();
-
-				that.editDraftData = oEvent.getSource().getData();
-				var editDraftModel = new sap.ui.model.json.JSONModel({
-					"results": that.editDraftData
+			var r = new sap.m.BusyDialog;
+			r.open();
+			var o = sap.ui.getCore().getModel("draftItemModel").getData();
+			var s = "/DKSHJavaService/returnRequest/getByReturnReqNum/" + o.returnReqNum + "&" + sap.ui.getCore().getModel("globalModel").getProperty(
+				"/userId") + "&cc";
+			var i = new sap.ui.model.json.JSONModel;
+			var e = this;
+			i.loadData(s, true, "GET", false, false);
+			i.attachRequestCompleted(function (o) {
+				r.close();
+				e.editDraftData = o.getSource().getData();
+				var s = new sap.ui.model.json.JSONModel({
+					results: e.editDraftData
 				});
-				that.getView().setModel(editDraftModel, "editDraftModel");
-				that._setDraftData(that.editDraftData.docVersion);
-				baseModel.setProperty("/step1Validation", true);
-				baseModel.setProperty("/step2Validation", true);
-				baseModel.setProperty("/step3Validation", true);
-				baseModel.setProperty("/step4Validation", true);
+				e.getView().setModel(s, "editDraftModel");
+				e._setDraftData(e.editDraftData.docVersion);
+				t.setProperty("/step1Validation", true);
+				t.setProperty("/step2Validation", true);
+				t.setProperty("/step3Validation", true);
+				t.setProperty("/step4Validation", true)
 			});
-			oModel.attachRequestFailed(function (oEvent) {
+			i.attachRequestFailed(function (e) {
 				sap.m.MessageToast.show("Error");
-				oBusyDialog.close();
-			});
+				r.close()
+			})
 		},
-
-		// set record detail data to models and tables
-		_setDraftData: function (docVersion) {
-			this.docVersion = docVersion;
-			var baseModel = this.getView().getModel("baseModel");
+		_setDraftData: function (e) {
+			this.docVersion = e;
+			var t = this.getView().getModel("baseModel");
 			if (this.docVersion === "SUCCESS") {
-				baseModel.setProperty("/visiblityROTypeSel", false);
-
-				baseModel.setProperty("/enableAddAttachment", false);
-				baseModel.setProperty("/enableViewAttachment", true);
+				t.setProperty("/visiblityROTypeSel", false);
+				t.setProperty("/enableAddAttachment", false);
+				t.setProperty("/enableViewAttachment", true);
 				this.getView().byId("RotypeSegementedBtnID").setEnabled(false);
-				baseModel.setProperty("/enableReturnReason", false);
-				baseModel.setProperty("/custSelFormEditablity", false);
-				baseModel.setProperty("/InvoiceNoIP", false);
-				baseModel.setProperty("/InvMat", false);
-				baseModel.setProperty("/InvBatNo", false);
-				baseModel.setProperty("/InvSrlIP", false);
-				baseModel.setProperty("/InvSrlChbx", false);
-				baseModel.setProperty("/InvBillCat", false);
-				baseModel.setProperty("/InvDateFrom", false);
-				baseModel.setProperty("/InvDateTo", false);
-				baseModel.setProperty("/datePrev", false);
-				baseModel.setProperty("/dateNext", false);
-				baseModel.setProperty("/InvSrch", false);
-				baseModel.setProperty("/InvReset", false);
-				baseModel.setProperty("/salesOrgEditable", false);
-				baseModel.setProperty("/distChnlEditable", false);
-				baseModel.setProperty("/disableSoldToParty", false);
-				baseModel.setProperty("/billingTypeEnable", false);
-				baseModel.setProperty("/InvSetting", false);
-				baseModel.setProperty("/InvNext", false);
-				baseModel.setProperty("/selRoTypeEdit", false);
-				baseModel.setProperty("/CopyExcbtn", false);
-				baseModel.setProperty("/RetUndo", false);
-				baseModel.setProperty("/RetDel", false);
-				baseModel.setProperty("/RetRemarkEnable", false);
-				baseModel.setProperty("/RetAddFileEnable", false);
-				baseModel.setProperty("/RetEmailChbxEnable", false);
-				baseModel.setProperty("/RetEmailIPEnable", false);
-				baseModel.setProperty("/RetSmsChbx", false);
-				baseModel.setProperty("/RetPhNoIP", false);
-				baseModel.setProperty("/RetReasonOwnerEnable", false);
-				baseModel.setProperty("/RetRefNo", false);
-				baseModel.setProperty("/RetRequestor", false);
-				baseModel.setProperty("/exShipToEnable", false);
-				baseModel.setProperty("/ExRemarkEnable", false);
-				baseModel.setProperty("/enableAddMat", false);
-				baseModel.setProperty("/enableExDel", false);
-				baseModel.setProperty("/enableExUndo", false);
-				baseModel.setProperty("/enableCompltDel", false);
-				baseModel.setProperty("/saveAsDraftBtnVisiblitys", false);
-				baseModel.setProperty("/previewBtnVisiblitys", false);
-				baseModel.setProperty("/submitBtnVisiblitys", false);
-				baseModel.setProperty("/attachmentDelEnable", false);
-				baseModel.setProperty("/tableSelMode", "None");
-				baseModel.refresh();
+				t.setProperty("/enableReturnReason", false);
+				t.setProperty("/custSelFormEditablity", false);
+				t.setProperty("/InvoiceNoIP", false);
+				t.setProperty("/InvMat", false);
+				t.setProperty("/InvBatNo", false);
+				t.setProperty("/InvSrlIP", false);
+				t.setProperty("/InvSrlChbx", false);
+				t.setProperty("/InvBillCat", false);
+				t.setProperty("/InvDateFrom", false);
+				t.setProperty("/InvDateTo", false);
+				t.setProperty("/datePrev", false);
+				t.setProperty("/dateNext", false);
+				t.setProperty("/InvSrch", false);
+				t.setProperty("/InvReset", false);
+				t.setProperty("/salesOrgEditable", false);
+				t.setProperty("/distChnlEditable", false);
+				t.setProperty("/disableSoldToParty", false);
+				t.setProperty("/billingTypeEnable", false);
+				t.setProperty("/InvSetting", false);
+				t.setProperty("/InvNext", false);
+				t.setProperty("/selRoTypeEdit", false);
+				t.setProperty("/CopyExcbtn", false);
+				t.setProperty("/RetUndo", false);
+				t.setProperty("/RetDel", false);
+				t.setProperty("/RetRemarkEnable", false);
+				t.setProperty("/RetAddFileEnable", false);
+				t.setProperty("/RetEmailChbxEnable", false);
+				t.setProperty("/RetEmailIPEnable", false);
+				t.setProperty("/RetSmsChbx", false);
+				t.setProperty("/RetPhNoIP", false);
+				t.setProperty("/RetReasonOwnerEnable", false);
+				t.setProperty("/RetRefNo", false);
+				t.setProperty("/RetRequestor", false);
+				t.setProperty("/exShipToEnable", false);
+				t.setProperty("/ExRemarkEnable", false);
+				t.setProperty("/enableAddMat", false);
+				t.setProperty("/enableExDel", false);
+				t.setProperty("/enableExUndo", false);
+				t.setProperty("/enableCompltDel", false);
+				t.setProperty("/saveAsDraftBtnVisiblitys", false);
+				t.setProperty("/previewBtnVisiblitys", false);
+				t.setProperty("/submitBtnVisiblitys", false);
+				t.setProperty("/attachmentDelEnable", false);
+				t.setProperty("/tableSelMode", "None");
+				t.refresh()
 			} else {
-				baseModel.setProperty("/visiblityROTypeSel", true);
-				baseModel.setProperty("/enableAddAttachment", true);
-				baseModel.setProperty("/enableViewAttachment", false);
+				t.setProperty("/visiblityROTypeSel", true);
+				t.setProperty("/enableAddAttachment", true);
+				t.setProperty("/enableViewAttachment", false);
 				this.getView().byId("RotypeSegementedBtnID").setEnabled(true);
-				baseModel.setProperty("/tableSelMode", "MultiSelect");
-				baseModel.setProperty("/enableReturnReason", true);
-				baseModel.setProperty("/custSelFormEditablity", true);
-				baseModel.setProperty("/InvoiceNoIP", true);
-				baseModel.setProperty("/InvMat", true);
-				baseModel.setProperty("/InvBatNo", true);
-				baseModel.setProperty("/InvSrlIP", true);
-				baseModel.setProperty("/InvSrlChbx", true);
-				baseModel.setProperty("/InvBillCat", true);
-				baseModel.setProperty("/InvDateFrom", true);
-				baseModel.setProperty("/InvDateTo", true);
-				baseModel.setProperty("/datePrev", true);
-				baseModel.setProperty("/dateNext", true);
-				baseModel.setProperty("/billingTypeEnable", true);
-				baseModel.setProperty("/InvSrch", true);
-				baseModel.setProperty("/InvReset", true);
-				baseModel.setProperty("/salesOrgEditable", true);
-				baseModel.setProperty("/distChnlEditable", true);
-				baseModel.setProperty("/disableSoldToParty", true);
-				baseModel.setProperty("/InvSetting", true);
-				baseModel.setProperty("/InvNext", true);
-				baseModel.setProperty("/selRoTypeEdit", true);
-				baseModel.setProperty("/CopyExcbtn", true);
-				baseModel.setProperty("/RetSetting", true);
-				baseModel.setProperty("/RetUndo", true);
-				baseModel.setProperty("/RetDel", true);
-				baseModel.setProperty("/RetRemarkEnable", true);
-				baseModel.setProperty("/RetAddFileEnable", true);
-				baseModel.setProperty("/RetEmailChbxEnable", true);
-				baseModel.setProperty("/RetEmailIPEnable", true);
-				baseModel.setProperty("/RetSmsChbx", true);
-				baseModel.setProperty("/RetPhNoIP", true);
-				baseModel.setProperty("/RetReasonOwnerEnable", true);
-				baseModel.setProperty("/RetRefNo", true);
-				baseModel.setProperty("/RetRequestor", true);
-				baseModel.setProperty("/exShipToEnable", true);
-				baseModel.setProperty("/ExRemarkEnable", true);
-				baseModel.setProperty("/enableAddMat", true);
-				baseModel.setProperty("/enableExDel", true);
-				baseModel.setProperty("/enableExUndo", true);
-				baseModel.setProperty("/enableExSetting", true);
-				baseModel.setProperty("/enableCompltDel", true);
-				baseModel.setProperty("/saveAsDraftBtnVisiblitys", true);
-				baseModel.setProperty("/previewBtnVisiblitys", true);
-				baseModel.setProperty("/submitBtnVisiblitys", true);
-				baseModel.setProperty("/attachmentDelEnable", true);
+				t.setProperty("/tableSelMode", "MultiSelect");
+				t.setProperty("/enableReturnReason", true);
+				t.setProperty("/custSelFormEditablity", true);
+				t.setProperty("/InvoiceNoIP", true);
+				t.setProperty("/InvMat", true);
+				t.setProperty("/InvBatNo", true);
+				t.setProperty("/InvSrlIP", true);
+				t.setProperty("/InvSrlChbx", true);
+				t.setProperty("/InvBillCat", true);
+				t.setProperty("/InvDateFrom", true);
+				t.setProperty("/InvDateTo", true);
+				t.setProperty("/datePrev", true);
+				t.setProperty("/dateNext", true);
+				t.setProperty("/billingTypeEnable", true);
+				t.setProperty("/InvSrch", true);
+				t.setProperty("/InvReset", true);
+				t.setProperty("/salesOrgEditable", true);
+				t.setProperty("/distChnlEditable", true);
+				t.setProperty("/disableSoldToParty", true);
+				t.setProperty("/InvSetting", true);
+				t.setProperty("/InvNext", true);
+				t.setProperty("/selRoTypeEdit", true);
+				t.setProperty("/CopyExcbtn", true);
+				t.setProperty("/RetSetting", true);
+				t.setProperty("/RetUndo", true);
+				t.setProperty("/RetDel", true);
+				t.setProperty("/RetRemarkEnable", true);
+				t.setProperty("/RetAddFileEnable", true);
+				t.setProperty("/RetEmailChbxEnable", true);
+				t.setProperty("/RetEmailIPEnable", true);
+				t.setProperty("/RetSmsChbx", true);
+				t.setProperty("/RetPhNoIP", true);
+				t.setProperty("/RetReasonOwnerEnable", true);
+				t.setProperty("/RetRefNo", true);
+				t.setProperty("/RetRequestor", true);
+				t.setProperty("/exShipToEnable", true);
+				t.setProperty("/ExRemarkEnable", true);
+				t.setProperty("/enableAddMat", true);
+				t.setProperty("/enableExDel", true);
+				t.setProperty("/enableExUndo", true);
+				t.setProperty("/enableExSetting", true);
+				t.setProperty("/enableCompltDel", true);
+				t.setProperty("/saveAsDraftBtnVisiblitys", true);
+				t.setProperty("/previewBtnVisiblitys", true);
+				t.setProperty("/submitBtnVisiblitys", true);
+				t.setProperty("/attachmentDelEnable", true)
 			}
-			var that = this;
-			baseModel.setProperty("/step1Validation", true);
-			baseModel.setProperty("/step2Validation", true);
-			baseModel.setProperty("/step3Validation", true);
-			var editDraftModel = this.getView().getModel("editDraftModel");
-			var returnItems = this.getView().getModel("editDraftModel").getData().results.listItemDto;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var returnModel = this.getView().getModel("returnModel");
-			var exchangeModel = this.getView().getModel("exchangeModel");
-			baseModel.setProperty("/billTo", editDraftModel.getData().results.billToParty);
-			baseModel.setProperty("/contactDivision", editDraftModel.getData().results.contactDivision);
-			baseModel.setProperty("/contactPerson", editDraftModel.getData().results.contactPerson);
-			baseModel.setProperty("/contactTelephone", editDraftModel.getData().results.contactTelephone);
-			baseModel.setProperty("/DistChan", editDraftModel.getData().results.distributionChannel);
-			invoiceSearchModel.setProperty("/distChnlDesc", editDraftModel.getData().results.distributionChannelDesc);
-			baseModel.setProperty("/selectedDivisionDesc", editDraftModel.getData().results.divisionDesc);
-			if (editDraftModel.getData().results.requestorName.includes("P0000") === true) {
-				baseModel.setProperty("/userName", editDraftModel.getData().results.requestorName.split("(")[1].split(")")[0]);
-
+			var r = this;
+			t.setProperty("/step1Validation", true);
+			t.setProperty("/step2Validation", true);
+			t.setProperty("/step3Validation", true);
+			var o = this.getView().getModel("editDraftModel");
+			var s = this.getView().getModel("editDraftModel").getData().results.listItemDto;
+			var i = this.getView().getModel("invoiceSearchModel");
+			var a = this.getView().getModel("returnModel");
+			var n = this.getView().getModel("exchangeModel");
+			t.setProperty("/billTo", o.getData().results.billToParty);
+			t.setProperty("/contactDivision", o.getData().results.contactDivision);
+			t.setProperty("/contactPerson", o.getData().results.contactPerson);
+			t.setProperty("/contactTelephone", o.getData().results.contactTelephone);
+			t.setProperty("/DistChan", o.getData().results.distributionChannel);
+			i.setProperty("/distChnlDesc", o.getData().results.distributionChannelDesc);
+			t.setProperty("/selectedDivisionDesc", o.getData().results.divisionDesc);
+			if (o.getData().results.requestorName.includes("P0000") === true) {
+				t.setProperty("/userName", o.getData().results.requestorName.split("(")[1].split(")")[0])
 			} else {
-				baseModel.setProperty("/userName", editDraftModel.getData().results.requestorName);
+				t.setProperty("/userName", o.getData().results.requestorName)
 			}
-			// baseModel.setProperty("/oneTimeCustomer", );
-			baseModel.setProperty("/phone", "");
-			invoiceSearchModel.setProperty("/salesOrgDesc", editDraftModel.getData().results.salesOrgDesc);
-			baseModel.setProperty("/selectedSalesOrgDesc", editDraftModel.getData().results.salesOrgDesc);
-			baseModel.setProperty("/selectedDistChlDesc", editDraftModel.getData().results.distributionChannelDesc);
-			baseModel.setProperty("/selectedDistChnl", editDraftModel.getData().results.distributionChannel);
-			baseModel.setProperty("/Division", editDraftModel.getData().results.division);
-			baseModel.setProperty("/selectedReturnReason", editDraftModel.getData().results.orderReason + editDraftModel.getData().results.orderReasonText);
-			baseModel.setProperty("/returnOrderType", editDraftModel.getData().results.orderType);
-			baseModel.setProperty("/payer", editDraftModel.getData().results.payer);
-			baseModel.setProperty("/reasonOwner", editDraftModel.getData().results.reasonOwner + " (" + editDraftModel.getData().results.reasonOwnerDesc +
-				")");
-			if (editDraftModel.getData().results.updatedBy !== null && editDraftModel.getData().results.updatedBy !== "") {
-				baseModel.setProperty("/requestor", editDraftModel.getData().results.updatedBy);
+			t.setProperty("/phone", "");
+			i.setProperty("/salesOrgDesc", o.getData().results.salesOrgDesc);
+			t.setProperty("/selectedSalesOrgDesc", o.getData().results.salesOrgDesc);
+			t.setProperty("/selectedDistChlDesc", o.getData().results.distributionChannelDesc);
+			t.setProperty("/selectedDistChnl", o.getData().results.distributionChannel);
+			t.setProperty("/Division", o.getData().results.division);
+			t.setProperty("/selectedReturnReason", o.getData().results.orderReason + o.getData().results.orderReasonText);
+			t.setProperty("/returnOrderType", o.getData().results.orderType);
+			t.setProperty("/payer", o.getData().results.payer);
+			t.setProperty("/reasonOwner", o.getData().results.reasonOwner + " (" + o.getData().results.reasonOwnerDesc + ")");
+			if (o.getData().results.updatedBy !== null && o.getData().results.updatedBy !== "") {
+				t.setProperty("/requestor", o.getData().results.updatedBy)
 			} else {
-				baseModel.setProperty("/requestor", "");
+				t.setProperty("/requestor", "")
 			}
-			baseModel.setProperty("/returnRemark", editDraftModel.getData().results.requestRemark);
-			baseModel.setProperty("/selectedROTypeCode", editDraftModel.getData().results.roType);
-			baseModel.setProperty("/customerPONumber", editDraftModel.getData().results.customerPo);
-			if (editDraftModel.getData().results.roType === "TG" || editDraftModel.getData().results.roType === "TF") {
-				baseModel.setProperty("/visiblityROTypeSel", true);
-				baseModel.setProperty("/visiblityROTypeText", false);
+			t.setProperty("/returnRemark", o.getData().results.requestRemark);
+			t.setProperty("/selectedROTypeCode", o.getData().results.roType);
+			t.setProperty("/customerPONumber", o.getData().results.customerPo);
+			if (o.getData().results.roType === "TG" || o.getData().results.roType === "TF") {
+				t.setProperty("/visiblityROTypeSel", true);
+				t.setProperty("/visiblityROTypeText", false)
 			} else {
-				baseModel.setProperty("/visiblityROTypeSel", false);
-				baseModel.setProperty("/visiblityROTypeText", true);
+				t.setProperty("/visiblityROTypeSel", false);
+				t.setProperty("/visiblityROTypeText", true)
 			}
-
-			if (editDraftModel.getData().results.oneTimeCustomer === null) {
-				baseModel.setProperty("/oneTimeCustomer", "");
+			if (o.getData().results.oneTimeCustomer === null) {
+				t.setProperty("/oneTimeCustomer", "")
 			} else {
-				baseModel.setProperty("/oneTimeCustomer", editDraftModel.getData().results.oneTimeCustomer);
+				t.setProperty("/oneTimeCustomer", o.getData().results.oneTimeCustomer)
 			}
-			if (editDraftModel.getData().results.listAddressDo && editDraftModel.getData().results.listAddressDo.length > 0) {
-				baseModel.setProperty("/partnerName", editDraftModel.getData().results.listAddressDo[0].name1);
-				baseModel.setProperty("/partnerName4", editDraftModel.getData().results.listAddressDo[0].name4);
-				baseModel.setProperty("/AddressStreet2", editDraftModel.getData().results.listAddressDo[0].street2);
-				baseModel.setProperty("/AddressStreet3", editDraftModel.getData().results.listAddressDo[0].street3);
-				baseModel.setProperty("/AddressStreet5", editDraftModel.getData().results.listAddressDo[0].street5);
-				baseModel.setProperty("/District", editDraftModel.getData().results.listAddressDo[0].district);
-				baseModel.setProperty("/DifferentCity", editDraftModel.getData().results.listAddressDo[0].differentCity);
-				baseModel.setProperty("/postalCode", editDraftModel.getData().results.listAddressDo[0].postalCode);
-				baseModel.setProperty("/refDocNum", editDraftModel.getData().results.listAddressDo[0].refDocNum);
-				baseModel.setProperty("/city", editDraftModel.getData().results.listAddressDo[0].city);
-				baseModel.setProperty("/telephone", editDraftModel.getData().results.listAddressDo[0].telephone);
-				baseModel.setProperty("/mobileNumber", editDraftModel.getData().results.listAddressDo[0].mobilePhone);
-				baseModel.setProperty("/taxId", editDraftModel.getData().results.listAddressDo[0].taxId);
-				baseModel.setProperty("/bCode", editDraftModel.getData().results.listAddressDo[0].b_Codes);
-				baseModel.setProperty("/bpNummr", editDraftModel.getData().results.listAddressDo[0].bpNummr);
+			if (o.getData().results.listAddressDo && o.getData().results.listAddressDo.length > 0) {
+				t.setProperty("/partnerName", o.getData().results.listAddressDo[0].name1);
+				t.setProperty("/partnerName4", o.getData().results.listAddressDo[0].name4);
+				t.setProperty("/AddressStreet2", o.getData().results.listAddressDo[0].street2);
+				t.setProperty("/AddressStreet3", o.getData().results.listAddressDo[0].street3);
+				t.setProperty("/AddressStreet5", o.getData().results.listAddressDo[0].street5);
+				t.setProperty("/District", o.getData().results.listAddressDo[0].district);
+				t.setProperty("/DifferentCity", o.getData().results.listAddressDo[0].differentCity);
+				t.setProperty("/postalCode", o.getData().results.listAddressDo[0].postalCode);
+				t.setProperty("/refDocNum", o.getData().results.listAddressDo[0].refDocNum);
+				t.setProperty("/city", o.getData().results.listAddressDo[0].city);
+				t.setProperty("/telephone", o.getData().results.listAddressDo[0].telephone);
+				t.setProperty("/mobileNumber", o.getData().results.listAddressDo[0].mobilePhone);
+				t.setProperty("/taxId", o.getData().results.listAddressDo[0].taxId);
+				t.setProperty("/bCode", o.getData().results.listAddressDo[0].b_Codes);
+				t.setProperty("/bpNummr", o.getData().results.listAddressDo[0].bpNummr);
+				t.setProperty("/invRetCountry", o.getData().results.listAddressDo[0].country);
+				t.setProperty("/invRetRegion", o.getData().results.listAddressDo[0].region);
+				t.setProperty("/invRetLanguage", o.getData().results.listAddressDo[0].language);
 			}
-
-			baseModel.setProperty("/setRetAddress", editDraftModel.getData().results.listAddressDo);
-
-			baseModel.setProperty("/returnSoldTo", editDraftModel.getData().results.soldToParty);
-			baseModel.setProperty("/returnSoldToDesc", editDraftModel.getData().results.soldToPartyDesc);
-			baseModel.setProperty("/returnShipTo", editDraftModel.getData().results.shipToParty);
-			baseModel.setProperty("/returnShipToDesc", editDraftModel.getData().results.shipToPartyDesc);
-			baseModel.setProperty("/returnPayer", editDraftModel.getData().results.payer);
-			baseModel.setProperty("/returnPayerDesc", editDraftModel.getData().results.payerDesc);
-			baseModel.setProperty("/returnBillTo", editDraftModel.getData().results.billToParty);
-			baseModel.setProperty("/returnBillToDesc", editDraftModel.getData().results.billToDesc);
-
-			// this.onClickROType();
-			baseModel.setProperty("/selectedROType", editDraftModel.getData().results.roType);
-			baseModel.setProperty("/billToDesc", editDraftModel.getData().results.billToDesc);
-			baseModel.setProperty("/shipToDesc", editDraftModel.getData().results.shipToPartyDesc);
-			baseModel.setProperty("/shipTo", editDraftModel.getData().results.shipToParty);
-			baseModel.setProperty("/payerDesc", editDraftModel.getData().results.payerDesc);
-			baseModel.setProperty("/salesOrgForRO", editDraftModel.getData().results.mappingId);
-			if (editDraftModel.getData().results.requestorEmail) {
-				baseModel.setProperty("/userEmailId", editDraftModel.getData().results.requestorEmail);
-				baseModel.setProperty("/emailFlag", true);
-				baseModel.setProperty("/emailInputVisiblity", true);
+			t.setProperty("/setRetAddress", o.getData().results.listAddressDo);
+			t.setProperty("/returnSoldTo", o.getData().results.soldToParty);
+			t.setProperty("/returnSoldToDesc", o.getData().results.soldToPartyDesc);
+			t.setProperty("/returnShipTo", o.getData().results.shipToParty);
+			t.setProperty("/returnShipToDesc", o.getData().results.shipToPartyDesc);
+			t.setProperty("/returnPayer", o.getData().results.payer);
+			t.setProperty("/returnPayerDesc", o.getData().results.payerDesc);
+			t.setProperty("/returnBillTo", o.getData().results.billToParty);
+			t.setProperty("/returnBillToDesc", o.getData().results.billToDesc);
+			t.setProperty("/selectedROType", o.getData().results.roType);
+			t.setProperty("/billToDesc", o.getData().results.billToDesc);
+			t.setProperty("/shipToDesc", o.getData().results.shipToPartyDesc);
+			t.setProperty("/shipTo", o.getData().results.shipToParty);
+			t.setProperty("/payerDesc", o.getData().results.payerDesc);
+			t.setProperty("/salesOrgForRO", o.getData().results.mappingId);
+			if (o.getData().results.requestorEmail) {
+				t.setProperty("/userEmailId", o.getData().results.requestorEmail);
+				t.setProperty("/emailFlag", true);
+				t.setProperty("/emailInputVisiblity", true)
 			}
-			if (editDraftModel.getData().results.contactTelephone) {
-				baseModel.setProperty("/phoneNum", editDraftModel.getData().results.contactTelephone);
-				baseModel.setProperty("/smsInputVisiblity", true);
-				baseModel.setProperty("/phoneNumFlag", true);
+			if (o.getData().results.contactTelephone) {
+				t.setProperty("/phoneNum", o.getData().results.contactTelephone);
+				t.setProperty("/smsInputVisiblity", true);
+				t.setProperty("/phoneNumFlag", true)
 			}
-			if (editDraftModel.getData().results.roType === "TG") {
-				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TG");
-
-			} else if (editDraftModel.getData().results.roType === "TF") {
-				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TF");
-				// baseModel.setProperty("/selectedROType", "UNSALABLE");
-			} else if (editDraftModel.getData().results.roType === "TI") {
-				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TI");
-				// baseModel.setProperty("/selectedROType", "BORROW GOODS");
+			if (o.getData().results.roType === "TG") {
+				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TG")
+			} else if (o.getData().results.roType === "TF") {
+				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TF")
+			} else if (o.getData().results.roType === "TI") {
+				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TI")
 			} else {
-				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TK");
-				// baseModel.setProperty("/selectedROType", "DOC. CORRECTION");
+				this.getView().byId("RotypeSegementedBtnID").setSelectedKey("TK")
 			}
-			baseModel.setProperty("/selectedROType", editDraftModel.getData().results.roTypeText);
-			baseModel.setProperty("/SalesOrg", editDraftModel.getData().results.salesOrg);
-			baseModel.setProperty("/selectedSalesOrg", editDraftModel.getData().results.salesOrg);
-			baseModel.setProperty("/shipToParty", editDraftModel.getData().results.shipToParty);
-			baseModel.setProperty("/exShipTo", editDraftModel.getData().results.shipToParty);
-			baseModel.setProperty("/exchangeOrderType", editDraftModel.getData().results.exchangeOrderType);
-			baseModel.setProperty("/selectedSoldtoParty", editDraftModel.getData().results.soldToParty);
-			baseModel.setProperty("/selectedSoldtoPartyDesc", editDraftModel.getData().results.soldToPartyDesc);
-			var order = editDraftModel.getData().results.orderReason + " (" + editDraftModel.getData().results.orderReasonText + ")";
-			baseModel.setProperty("/selectedReturnReason", order);
-			baseModel.setProperty("/returnReqNum", editDraftModel.getData().results.returnReqNum);
-			baseModel.setProperty("/referenceNo", editDraftModel.getData().results.referenceNum);
-			invoiceSearchModel.setProperty("/distChnl", editDraftModel.getData().results.distributionChannel);
-			invoiceSearchModel.setProperty("/Division", editDraftModel.getData().results.division);
-			invoiceSearchModel.setProperty("/salesOrgNo", editDraftModel.getData().results.salesOrg);
-			invoiceSearchModel.setProperty("/shipTo", editDraftModel.getData().results.shipToParty);
-			invoiceSearchModel.setProperty("/soldToParty", editDraftModel.getData().results.soldToParty);
-			invoiceSearchModel.setProperty("/soldToPartyDesc", editDraftModel.getData().results.soldToPartyDesc);
-
-			baseModel.refresh(true);
+			t.setProperty("/selectedROType", o.getData().results.roTypeText);
+			t.setProperty("/SalesOrg", o.getData().results.salesOrg);
+			t.setProperty("/selectedSalesOrg", o.getData().results.salesOrg);
+			t.setProperty("/shipToParty", o.getData().results.shipToParty);
+			t.setProperty("/exShipTo", o.getData().results.shipToParty);
+			t.setProperty("/exchangeOrderType", o.getData().results.exchangeOrderType);
+			t.setProperty("/selectedSoldtoParty", o.getData().results.soldToParty);
+			t.setProperty("/selectedSoldtoPartyDesc", o.getData().results.soldToPartyDesc);
+			var l = o.getData().results.orderReason + " (" + o.getData().results.orderReasonText + ")";
+			t.setProperty("/selectedReturnReason", l);
+			t.setProperty("/returnReqNum", o.getData().results.returnReqNum);
+			t.setProperty("/referenceNo", o.getData().results.referenceNum);
+			i.setProperty("/distChnl", o.getData().results.distributionChannel);
+			i.setProperty("/Division", o.getData().results.division);
+			i.setProperty("/salesOrgNo", o.getData().results.salesOrg);
+			i.setProperty("/shipTo", o.getData().results.shipToParty);
+			i.setProperty("/soldToParty", o.getData().results.soldToParty);
+			i.setProperty("/soldToPartyDesc", o.getData().results.soldToPartyDesc);
+			t.refresh(true);
 			this.getView().getModel("invoiceSearchModel").refresh(true);
-			if (editDraftModel.getData().results.listAttachementDo !== null) {
-				var attachmentDTO = editDraftModel.getData().results.listAttachementDo;
-				var attachmentObject = [];
-				for (var i = 0; i < attachmentDTO.length; i++) {
-					var Object = {
-						fileName: attachmentDTO[i].docName,
-						fileType: attachmentDTO[i].docType,
-						fileDoc: attachmentDTO[i].docData,
-						compressedFile: attachmentDTO[i].docData,
-						docId: attachmentDTO[i].docId
+			if (o.getData().results.listAttachementDo !== null) {
+				var d = o.getData().results.listAttachementDo;
+				var g = [];
+				for (var p = 0; p < d.length; p++) {
+					var c = {
+						fileName: d[p].docName,
+						fileType: d[p].docType,
+						fileDoc: d[p].docData,
+						compressedFile: d[p].docData,
+						docId: d[p].docId
 					};
-					attachmentObject.push(Object);
+					g.push(c)
 				}
-				this.getView().getModel("returnModel").setProperty("/attachmentObject", attachmentObject);
-				baseModel.setProperty("/enableViewAttachment", true);
-				baseModel.setProperty("/attachmentTableVisiblity", true);
+				this.getView().getModel("returnModel").setProperty("/attachmentObject", g);
+				t.setProperty("/enableViewAttachment", true);
+				t.setProperty("/attachmentTableVisiblity", true)
 			} else {
-				baseModel.setProperty("/enableViewAttachment", false);
-				baseModel.setProperty("/attachmentTableVisiblity", false);
+				t.setProperty("/enableViewAttachment", false);
+				t.setProperty("/attachmentTableVisiblity", false)
 			}
-			//add invoice items
-			var results = [];
-			for (var i = 0; i < returnItems.length; i++) {
-				var Invoiceitem = {
-					"MaterialCode": returnItems[i].material,
-					"MaterialGroup": returnItems[i].materialGroup,
-					"MaterialGroup4": returnItems[i].materialGroup4,
-					"BatchNumber": returnItems[i].batch,
-					"ExpiryDate": returnItems[i].expiryDate,
-					"BillingQty": returnItems[i].avlReturnQty.toString(),
-					"SalesUnit": returnItems[i].returnUom,
-					"AvailRetQtySalesUn": returnItems[i].avlReturnQty.toString(),
-					"actualRetQty": returnItems[i].returnQty.toString(),
-					"UnitPrice": returnItems[i].unitPriceCc.toString(),
-					"ListPrice": returnItems[i].unitPriceCc.toString(),
-					"DiscountAmount": "",
-					"NetPrice": "",
-					"itemVisibility": returnItems[i].itemVisibility.toString(),
-					"storageLocation": returnItems[i].storageLocation,
-					"billingDateFrom": returnItems[i].referenceInvDate,
-					"ItemUsage": "",
-					"SerialNum": "",
-					"shipToParty": editDraftModel.getData().results.shipToParty,
-					"InvoiceNum": returnItems[i].refDocNum,
-					"InvoiceLineItem": returnItems[i].refDocItem,
-					"HigherLvlItem": returnItems[i].higherLevel,
-					"ActiveIndicator": "",
+			var u = [];
+			for (var p = 0; p < s.length; p++) {
+				var h = {
+					MaterialCode: s[p].material,
+					MaterialGroup: s[p].materialGroup,
+					MaterialGroup4: s[p].materialGroup4,
+					BatchNumber: s[p].batch,
+					ExpiryDate: s[p].expiryDate,
+					BillingQty: s[p].avlReturnQty.toString(),
+					SalesUnit: s[p].returnUom,
+					AvailRetQtySalesUn: s[p].avlReturnQty.toString(),
+					actualRetQty: s[p].returnQty.toString(),
+					UnitPrice: s[p].unitPriceCc.toString(),
+					ListPrice: s[p].unitPriceCc.toString(),
+					DiscountAmount: "",
+					NetPrice: "",
+					itemVisibility: s[p].itemVisibility.toString(),
+					storageLocation: s[p].storageLocation,
+					billingDateFrom: s[p].referenceInvDate,
+					ItemUsage: "",
+					SerialNum: "",
+					shipToParty: o.getData().results.shipToParty,
+					InvoiceNum: s[p].refDocNum,
+					InvoiceLineItem: s[p].refDocItem,
+					HigherLvlItem: s[p].higherLevel,
+					ActiveIndicator: ""
 				};
-				this.selectedReturnItems.push(Invoiceitem);
+				this.selectedReturnItems.push(h)
 			}
 			this._pricingSimulation(this.selectedReturnItems, "Returns");
-			// set exchange data
 			if (this.getView().getModel("editDraftModel").getData().results.exchangeDto !== null) {
-				var exchangeItems = this.getView().getModel("editDraftModel").getData().results.exchangeDto.listExhangeItemDto;
-				baseModel.setProperty("/exchangeOrderType", editDraftModel.getData().results.exchangeDto.orderType);
-				baseModel.setProperty("/exchangeReqNum", editDraftModel.getData().results.exchangeDto.exchangeReqNum);
-				baseModel.setProperty("/exchangeRemark", editDraftModel.getData().results.exchangeDto.requestRemark);
-				baseModel.setProperty("/customerPONumberEx", editDraftModel.getData().results.exchangeDto.customerPo);
-				baseModel.setProperty("/setExAddress", editDraftModel.getData().results.exchangeDto.listAddressDo);
-				if (editDraftModel.getData().results.exchangeDto.exoneTimeCustomer === null) {
-					baseModel.setProperty("/EXOneTimeCustomer", "");
+				var m = this.getView().getModel("editDraftModel").getData().results.exchangeDto.listExhangeItemDto;
+				t.setProperty("/exchangeOrderType", o.getData().results.exchangeDto.orderType);
+				t.setProperty("/exchangeReqNum", o.getData().results.exchangeDto.exchangeReqNum);
+				t.setProperty("/exchangeRemark", o.getData().results.exchangeDto.requestRemark);
+				t.setProperty("/customerPONumberEx", o.getData().results.exchangeDto.customerPo);
+				t.setProperty("/setExAddress", o.getData().results.exchangeDto.listAddressDo);
+				if (o.getData().results.exchangeDto.exoneTimeCustomer === null) {
+					t.setProperty("/EXOneTimeCustomer", "")
 				} else {
-					baseModel.setProperty("/EXOneTimeCustomer", editDraftModel.getData().results.exchangeDto.exoneTimeCustomer);
+					t.setProperty("/EXOneTimeCustomer", o.getData().results.exchangeDto.exoneTimeCustomer)
 				}
-				if (editDraftModel.getData().results.exchangeDto.listAddressDo && editDraftModel.getData().results.exchangeDto.listAddressDo.length >
-					0) {
-					baseModel.setProperty("/EXaddressVisiblity", true);
-					baseModel.setProperty("/partnerName", editDraftModel.getData().results.exchangeDto.listAddressDo[0].name1);
-					baseModel.setProperty("/partnerName4", editDraftModel.getData().results.exchangeDto.listAddressDo[0].name4);
-					baseModel.setProperty("/AddressStreet2", editDraftModel.getData().results.exchangeDto.listAddressDo[0].street2);
-					baseModel.setProperty("/AddressStreet3", editDraftModel.getData().results.exchangeDto.listAddressDo[0].street3);
-					baseModel.setProperty("/AddressStreet5", editDraftModel.getData().results.exchangeDto.listAddressDo[0].street5);
-					baseModel.setProperty("/District", editDraftModel.getData().results.exchangeDto.listAddressDo[0].district);
-					baseModel.setProperty("/DifferentCity", editDraftModel.getData().results.exchangeDto.listAddressDo[0].differentCity);
-					baseModel.setProperty("/postalCode", editDraftModel.getData().results.exchangeDto.listAddressDo[0].postalCode);
-					baseModel.setProperty("/city", editDraftModel.getData().results.exchangeDto.listAddressDo[0].city);
-					baseModel.setProperty("/telephone", editDraftModel.getData().results.exchangeDto.listAddressDo[0].telephone);
-					baseModel.setProperty("/mobileNumber", editDraftModel.getData().results.exchangeDto.listAddressDo[0].mobilePhone);
-					baseModel.setProperty("/taxId", editDraftModel.getData().results.exchangeDto.listAddressDo[0].taxId);
-					baseModel.setProperty("/bCode", editDraftModel.getData().results.exchangeDto.listAddressDo[0].b_Codes);
-					baseModel.setProperty("/refDocNum", editDraftModel.getData().results.exchangeDto.listAddressDo[0].refDocNum);
-					baseModel.setProperty("/bpNummr", editDraftModel.getData().results.exchangeDto.listAddressDo[0].bpNummr);
+				if (o.getData().results.exchangeDto.listAddressDo && o.getData().results.exchangeDto.listAddressDo.length > 0) {
+					t.setProperty("/EXaddressVisiblity", true);
+					t.setProperty("/partnerName", o.getData().results.exchangeDto.listAddressDo[0].name1);
+					t.setProperty("/partnerName4", o.getData().results.exchangeDto.listAddressDo[0].name4);
+					t.setProperty("/AddressStreet2", o.getData().results.exchangeDto.listAddressDo[0].street2);
+					t.setProperty("/AddressStreet3", o.getData().results.exchangeDto.listAddressDo[0].street3);
+					t.setProperty("/AddressStreet5", o.getData().results.exchangeDto.listAddressDo[0].street5);
+					t.setProperty("/District", o.getData().results.exchangeDto.listAddressDo[0].district);
+					t.setProperty("/DifferentCity", o.getData().results.exchangeDto.listAddressDo[0].differentCity);
+					t.setProperty("/postalCode", o.getData().results.exchangeDto.listAddressDo[0].postalCode);
+					t.setProperty("/city", o.getData().results.exchangeDto.listAddressDo[0].city);
+					t.setProperty("/telephone", o.getData().results.exchangeDto.listAddressDo[0].telephone);
+					t.setProperty("/mobileNumber", o.getData().results.exchangeDto.listAddressDo[0].mobilePhone);
+					t.setProperty("/taxId", o.getData().results.exchangeDto.listAddressDo[0].taxId);
+					t.setProperty("/bCode", o.getData().results.exchangeDto.listAddressDo[0].b_Codes);
+					t.setProperty("/refDocNum", o.getData().results.exchangeDto.listAddressDo[0].refDocNum);
+					t.setProperty("/bpNummr", o.getData().results.exchangeDto.listAddressDo[0].bpNummr);
+					t.setProperty("/invCountry", o.getData().results.exchangeDto.listAddressDo[0].country);
+					t.setProperty("/invRegion", o.getData().results.exchangeDto.listAddressDo[0].region);
+					t.setProperty("/invLanguage", o.getData().results.exchangeDto.listAddressDo[0].language);
 				}
-				baseModel.setProperty("/exSoldTo", editDraftModel.getData().results.exchangeDto.soldToParty);
-				baseModel.setProperty("/exSoldToDesc", editDraftModel.getData().results.exchangeDto.soldToPartyDesc);
-				baseModel.setProperty("/exShipTo", editDraftModel.getData().results.exchangeDto.shipToParty);
-				baseModel.setProperty("/exShipToDesc", editDraftModel.getData().results.exchangeDto.shipToPartyDesc);
-				baseModel.setProperty("/exPayer", editDraftModel.getData().results.exchangeDto.payer);
-				baseModel.setProperty("/exPayerDesc", editDraftModel.getData().results.exchangeDto.payerDescription);
-				baseModel.setProperty("/exBillTo", editDraftModel.getData().results.exchangeDto.billToParty);
-				baseModel.setProperty("/exBillToDesc", editDraftModel.getData().results.exchangeDto.billToPartyDesc);
-				var Items = [];
-				for (var j = 0; j < exchangeItems.length; j++) {
-					if (editDraftModel.getData().results.roType === "TI") {
-
+				t.setProperty("/exSoldTo", o.getData().results.exchangeDto.soldToParty);
+				t.setProperty("/exSoldToDesc", o.getData().results.exchangeDto.soldToPartyDesc);
+				t.setProperty("/exShipTo", o.getData().results.exchangeDto.shipToParty);
+				t.setProperty("/exShipToDesc", o.getData().results.exchangeDto.shipToPartyDesc);
+				t.setProperty("/exPayer", o.getData().results.exchangeDto.payer);
+				t.setProperty("/exPayerDesc", o.getData().results.exchangeDto.payerDescription);
+				t.setProperty("/exBillTo", o.getData().results.exchangeDto.billToParty);
+				t.setProperty("/exBillToDesc", o.getData().results.exchangeDto.billToPartyDesc);
+				var y = [];
+				for (var P = 0; P < m.length; P++) {
+					if (o.getData().results.roType === "TI") {}
+					if (m[P].manualFoc === null) {
+						m[P].manualFoc = ""
 					}
-					if (exchangeItems[j].manualFoc === null) {
-						exchangeItems[j].manualFoc = "";
-					}
-					var item = {
-						"itemNumber": "",
-						"matNumber": exchangeItems[j].material,
-						"itemShortText": exchangeItems[j].shortText,
-						"materialGroup": exchangeItems[j].materialGroup,
-						"materialGroup4": exchangeItems[j].materialGroup4,
-						"quantity": exchangeItems[j].returnQty.toString(),
-						"salesUnit": exchangeItems[j].returnUom,
-						"unitPrice": exchangeItems[j].unitPriceCc.toString(),
-						"unitPriceInv": exchangeItems[j].unitPriceCc.toString(),
-						"discountAmount": "",
-						"netAmount": "",
-						"listPrice": "",
-						"storageLocation": exchangeItems[j].storageLocation,
-						"higherItem": exchangeItems[j].higherLevel,
-						"batchNumber": exchangeItems[j].batch,
-						"expiryDate": exchangeItems[j].expiryDate,
-						"billingDate": exchangeItems[j].referenceInvDate,
-						"refInvoice": exchangeItems[j].refDocNum,
-						"refItemNumber": exchangeItems[j].refDocItem,
-						"serialNumber": exchangeItems[j].serialNum,
-						"active": "",
-						"manualFoc": exchangeItems[j].manualFoc,
-						"itemVisibility": exchangeItems[j].itemVisibility.toString(),
+					var f = {
+						itemNumber: "",
+						matNumber: m[P].material,
+						itemShortText: m[P].shortText,
+						materialGroup: m[P].materialGroup,
+						materialGroup4: m[P].materialGroup4,
+						quantity: m[P].returnQty.toString(),
+						salesUnit: m[P].returnUom,
+						unitPrice: m[P].unitPriceCc.toString(),
+						unitPriceInv: m[P].unitPriceCc.toString(),
+						discountAmount: "",
+						netAmount: "",
+						listPrice: "",
+						storageLocation: m[P].storageLocation,
+						higherItem: m[P].higherLevel,
+						batchNumber: m[P].batch,
+						expiryDate: m[P].expiryDate,
+						billingDate: m[P].referenceInvDate,
+						refInvoice: m[P].refDocNum,
+						refItemNumber: m[P].refDocItem,
+						serialNumber: m[P].serialNum,
+						active: "",
+						manualFoc: m[P].manualFoc,
+						itemVisibility: m[P].itemVisibility.toString()
 					};
-					Items.push(item);
+					y.push(f)
 				}
-				this._pricingSimulation(Items, "Exchange");
+				this._pricingSimulation(y, "Exchange")
 			}
-			baseModel.setProperty("/step1Validation", true);
-			baseModel.setProperty("/step2Validation", true);
-			baseModel.setProperty("/step3Validation", true);
-			this._getUser();
+			t.setProperty("/step1Validation", true);
+			t.setProperty("/step2Validation", true);
+			t.setProperty("/step3Validation", true);
+			this._getUser()
 		},
-		// nav back confirmation popup when clicked on home btn in launchpad
 		onAfterRendering: function () {
 			this.resourceBundle = this.getView().getModel("i18n").getResourceBundle();
 			var e = this;
-			// var t = false;
-			// if (this.ranOnce === true) {} else {
-			// 	// attach event to launchpad home btn
-			// 	if (sap.ui.getCore().byId("homeBtn")) {
-			// 		sap.ui.getCore().byId("homeBtn").attachPress(function (e) {
-			// 			// prevent from navigating to home btn
-			// 			event.preventDefault();
-			// 			if (location.hash.includes("Selection")) {
-
-			// 				if (t === false) {
-			// 					sap.m.MessageBox.information(this.resourceBundle.getText("homePageValidation"), {
-			// 						actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
-			// 						initialFocus: sap.m.MessageBox.Action.NO,
-			// 						onClose: function (e) {
-			// 							if (e === "YES") {
-			// 								t = true;
-			// 								var r = sap.ushell.Container.getService("CrossApplicationNavigation");
-			// 								r.toExternal({
-			// 									// navigation to home page
-			// 									target: {
-			// 										shellHash: "#"
-			// 									}
-			// 								});
-			// 							} else {
-			// 								t = true;
-			// 								var router = sap.ui.core.UIComponent.getRouterFor(this);
-			// 								router.navTo("Selection");
-			// 								// event.preventDefault()
-			// 							}
-			// 						}
-			// 					}, this);
-			// 				}
-			// 			}
-			// 			// else{}
-			// 		});
-			// 	}
-			// }
-			// this.ranOnce = true;
 			if (e.editDraftData) {
-				var r = new sap.ui.model.json.JSONModel({
+				var t = new sap.ui.model.json.JSONModel({
 					results: e.editDraftData
 				})
 			}
-
 		},
-
 		_getUser: function () {
-			var that = this;
-			var oUserDetailModel = new sap.ui.model.json.JSONModel();
-			that.getView().setModel(oUserDetailModel, "oUserDetailModel");
-			oUserDetailModel.loadData("/services/userapi/attributes", null, true);
-			oUserDetailModel.attachRequestCompleted(function (oEvent) {
-				that.getView().getModel("baseModel").setProperty("/email", that.getView().getModel("oUserDetailModel").getData().email);
-				var userId = that.getView().getModel("oUserDetailModel").getData().name;
-				if (userId) {
-					that._getLoggedInUserDetails(userId);
+			var e = this;
+			var r = new sap.ui.model.json.JSONModel;
+			e.getView().setModel(r, "oUserDetailModel");
+			r.loadData("/services/userapi/attributes", null, true);
+			r.attachRequestCompleted(function (t) {
+				e.getView().getModel("baseModel").setProperty("/email", e.getView().getModel("oUserDetailModel").getData().email);
+				var r = e.getView().getModel("oUserDetailModel").getData().name;
+				if (r) {
+					e._getLoggedInUserDetails(r)
 				}
-				// that._getLoggedInUserDetails1(userId); //Method to get Logged in user PID
 			});
-			oUserDetailModel.attachRequestFailed(function (oEvent) {
-				MessageBox.error(oEvent.getSource().getData().message);
-			});
+			r.attachRequestFailed(function (e) {
+				t.error(e.getSource().getData().message)
+			})
 		},
-
-		// _getLoggedInUserDetails1: function (userId) {
-		// 	var that = this;
-		// 	var oModel = new sap.ui.model.json.JSONModel();
-		// 	that.getView().setModel(oModel, "oModel");
-		// 	var busyDialog = new sap.m.BusyDialog();
-		// 	busyDialog.open();
-		// 	oModel.loadData("/DKSHJavaService/userDetails/findAllRightsForUserInDomain/" + userId + "&cc", null, true);
-		// 	oModel.attachRequestCompleted(function (data) {
-		// 		busyDialog.close();
-		// 		if (!data.getParameters().errorobject) {
-		// 			var custAttribute = data.getSource().getData();
-		// 			if (custAttribute.message)
-		// 				that.allAccess = false;
-		// 			// var custAttribute = data.getSource().getData();
-		// 			if (custAttribute.ATR01 !== null) {
-		// 				that.salesOrgDataAccess = custAttribute.ATR01;
-
-		// 			}
-		// 			if (custAttribute.ATR02 !== null) {
-		// 				that.distrChannelDataAccess = custAttribute.ATR02;
-		// 				// that._distChannelList();
-		// 			}
-		// 			if (custAttribute.ATR03 !== null) {
-		// 				that.divisionDataAccess = custAttribute.ATR03;
-		// 			}
-		// 			if (custAttribute.ATR04 !== null) {
-		// 				that.materialGroupDataAccess = custAttribute.ATR04;
-		// 			}
-		// 			if (custAttribute.ATR05 !== null) {
-		// 				that.materialGroup4DataAccess = custAttribute.ATR05;
-		// 			}
-		// 			if (custAttribute.ATR10 !== null) {
-		// 				that.SLOCDataAccess = custAttribute.ATR10;
-		// 			}
-		// 			if (custAttribute.ATR09 !== null) {
-		// 				that.plantDataAccess = custAttribute.ATR09;
-		// 			}
-		// 			if (custAttribute.ATR07 !== null) {
-		// 				that.materialDataAccess = custAttribute.ATR07;
-		// 			}
-		// 			if (custAttribute.ATR08 !== null) {
-		// 				that.orderTypeDataAccess = custAttribute.ATR08;
-		// 			}
-		// 		}
-		// 		// else {
-
-		// 		// 	sap.m.MessageBox.error(data.getParameters().errorobject.responseText);
-		// 		// }
-		// 	});
-		// 	oModel.attachRequestFailed(function (oEvent) {
-		// 		busyDialog.close();
-		// 		// if (oEvent.status == 409)
-		// 		that.allAccess = false;
-		// 		// else
-		// 		sap.m.MessageBox.error(oEvent.getParameters().responseText);
-		// 	});
-
-		// },
-
 		_getLoggedInUserDetails: function (e) {
-			var that = this;
+			var t = this;
+			var r = new sap.ui.model.json.JSONModel;
+			t.getView().setModel(r, "oLoggedInUserDetailModel");
+			r.loadData("/UserManagement/service/scim/Users/" + e, null, true);
+			r.attachRequestCompleted(function (e) {
+				t.getView().getModel("baseModel").setProperty("/userId", e.getSource().getData().id);
+				t.getView().getModel("baseModel").setProperty("/userName", e.getSource().getData().displayName)
+			});
+			r.attachRequestFailed(function (e) {});
 			var o = new sap.ui.model.json.JSONModel;
-			that.getView().setModel(o, "oLoggedInUserDetailModel");
-			o.loadData("/UserManagement/service/scim/Users/" + e, null, true);
+			t.getView().setModel(o, "oModel");
+			var s = new sap.m.BusyDialog;
+			s.open();
+			o.loadData("/DKSHJavaService/userDetails/findAllRightsForUserInDomain/" + e + "&cc", null, true);
 			o.attachRequestCompleted(function (e) {
-				that.getView().getModel("baseModel").setProperty("/userId", e.getSource().getData().id);
-				that.getView().getModel("baseModel").setProperty("/userName", e.getSource().getData().displayName);
-				// if (e.getSource().getData().phoneNumbers !== undefined) {
-				// 	r.getView().getModel("baseModel").setProperty("/phone", e.getSource().getData().phoneNumbers[0].value)
-				// }
+				s.close();
+				if (!e.getParameters().errorobject) {
+					var r = e.getSource().getData();
+					if (r.message) t.allAccess = false;
+					if (r.ATR01 !== null) {
+						t.salesOrgDataAccess = r.ATR01
+					}
+					if (r.ATR02 !== null) {
+						t.distrChannelDataAccess = r.ATR02
+					}
+					if (r.ATR03 !== null) {
+						t.divisionDataAccess = r.ATR03
+					}
+					if (r.ATR04 !== null) {
+						t.materialGroupDataAccess = r.ATR04
+					}
+					if (r.ATR05 !== null) {
+						t.materialGroup4DataAccess = r.ATR05
+					}
+					if (r.ATR06 !== null) {
+						t.custCodeDataAccess = r.ATR06
+					}
+					if (r.ATR07 !== null) {
+						t.materialDataAccess = r.ATR07
+					}
+				}
+				t._getRoTypeList();
+				t._salesOrgList();
+				t._distChannelList()
 			});
 			o.attachRequestFailed(function (e) {
-				// that.error(e.getSource().getData().message)
-			});
-			var i = new sap.ui.model.json.JSONModel;
-			that.getView().setModel(i, "oModel");
-			var a = new sap.m.BusyDialog;
-			a.open();
-			i.loadData("/DKSHJavaService/userDetails/findAllRightsForUserInDomain/" + e + "&cc", null, true);
-			i.attachRequestCompleted(function (e) {
-				a.close();
-				if (!e.getParameters().errorobject) {
-					var custAttribute = e.getSource().getData();
-					if (custAttribute.message)
-						that.allAccess = false;
-					if (custAttribute.ATR01 !== null) {
-						that.salesOrgDataAccess = custAttribute.ATR01;
-						// that._salesOrgList()
-					}
-					if (custAttribute.ATR02 !== null) {
-						that.distrChannelDataAccess = custAttribute.ATR02;
-						// that._distChannelList()
-					}
-					if (custAttribute.ATR03 !== null) {
-						that.divisionDataAccess = custAttribute.ATR03;
-					}
-					if (custAttribute.ATR04 !== null) {
-						that.materialGroupDataAccess = custAttribute.ATR04;
-					}
-					if (custAttribute.ATR05 !== null) {
-						that.materialGroup4DataAccess = custAttribute.ATR05;
-					}
-					if (custAttribute.ATR06 !== null) {
-						that.custCodeDataAccess = custAttribute.ATR06;
-					}
-					if (custAttribute.ATR07 !== null) {
-						that.materialDataAccess = custAttribute.ATR07;
-					}
-				}
-				that._getRoTypeList();
-				that._salesOrgList();
-				that._distChannelList();
-			});
-			i.attachRequestFailed(function (e) {
-				a.close();
-				that.allAccess = false;
-			});
+				s.close();
+				t.allAccess = false
+			})
 		},
-
 		onCompleteStep2: function () {
 			if (!this.invoiceDetail) {
 				this.invoiceDetail = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.InvoiceDetail", this);
-				this.getView().addDependent(this.invoiceDetail);
+				this.getView().addDependent(this.invoiceDetail)
 			}
-			var screen = "Web";
+			var e = "Web";
 			if (sap.ui.Device.system.phone === true) {
-				screen = "Phone";
+				e = "Phone"
 			}
-			var payload = {
-				"userId": this.getView().getModel("baseModel").getProperty("/userId"),
-				"appId": "keyInvoice",
-				"runType": screen
+			var t = {
+				userId: this.getView().getModel("baseModel").getProperty("/userId"),
+				appId: "keyInvoice",
+				runType: e
 			};
-			this._getPersonalizationDetails("keyInvoice", "Before");
+			this._getPersonalizationDetails("keyInvoice", "Before")
 		},
-		// check the serial no checkbox in invoice search header
-		selectSerialCheckbox: function (oEvent) {
-			var flag = oEvent.getSource().getSelected();
-			if (flag === false) {
+		selectSerialCheckbox: function (e) {
+			var t = e.getSource().getSelected();
+			if (t === false) {
 				this.getView().getModel("invoiceSearchModel").setProperty("/selectedSerialNum", false);
-				this.getView().getModel("invoiceSearchModel").setProperty("/displayBySno", undefined);
+				this.getView().getModel("invoiceSearchModel").setProperty("/displayBySno", undefined)
 			} else {
 				this.getView().getModel("invoiceSearchModel").setProperty("/selectedSerialNum", true);
-				this.getView().getModel("invoiceSearchModel").setProperty("/displayBySno", "X");
+				this.getView().getModel("invoiceSearchModel").setProperty("/displayBySno", "X")
 			}
-			this.getView().getModel("invoiceSearchModel").refresh();
+			this.getView().getModel("invoiceSearchModel").refresh()
 		},
-
 		onPressRemarks: function () {
 			if (this.docVersion === "SUCCESS") {} else {
-				var that = this;
-				if (!that.Remark) {
-					that.Remark = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Remark", this);
-					that.getView().addDependent(that.Remark);
-					that.Remark.addStyleClass("sapUiSizeCompact");
+				var e = this;
+				if (!e.Remark) {
+					e.Remark = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Remark", this);
+					e.getView().addDependent(e.Remark);
+					e.Remark.addStyleClass("sapUiSizeCompact")
 				}
 				if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Exchange" && this.ROtypeCode === "TI") {
-					var baseModel = this.getView().getModel("baseModel");
-					if (baseModel.getProperty("/comment") === "") {
-						baseModel.setProperty("/comment", "ไม่ต้องส่งของ หรือ ส่งของเพิ่มบางส่วน");
+					var t = this.getView().getModel("baseModel");
+					if (t.getProperty("/comment") === "") {
+						t.setProperty("/comment", "ไม่ต้องส่งของ หรือ ส่งของเพิ่มบางส่วน")
 					}
 				}
-
-				that.Remark.open();
+				e.Remark.open()
 			}
 		},
-
 		onOKRemark: function () {
-			// this.onPressViewRemark();
-			var baseModel = this.getView().getModel("baseModel");
-
-			if ((baseModel.getProperty("/comment") === undefined || baseModel.getProperty("/comment") === "") &&
-				(baseModel.getProperty("/contactTelephone") === undefined || baseModel.getProperty("/contactTelephone") === "") &&
-				(baseModel.getProperty("/contactDivision") === undefined || baseModel.getProperty("/contactDivision") === "") &&
-				(baseModel.getProperty("/contactPerson") === undefined || baseModel.getProperty("/contactPerson") === "") &&
-				(baseModel.getProperty("/remark") === undefined || baseModel.getProperty("/remark") === "")) {
-				MessageBox.information(this.resourceBundle.getText("Enterthemadatoryfields"));
-				// MessageBox.information("Enter the madatory fields");
+			var e = this.getView().getModel("baseModel");
+			if ((e.getProperty("/comment") === undefined || e.getProperty("/comment") === "") && (e.getProperty("/contactTelephone") ===
+					undefined || e.getProperty("/contactTelephone") === "") && (e.getProperty("/contactDivision") === undefined || e.getProperty(
+					"/contactDivision") === "") && (e.getProperty("/contactPerson") === undefined || e.getProperty("/contactPerson") === "") && (e.getProperty(
+					"/remark") === undefined || e.getProperty("/remark") === "")) {
+				t.information(this.resourceBundle.getText("Enterthemadatoryfields"))
 			} else {
-				var baseModel = this.getView().getModel("baseModel");
-				var remark = "";
+				var e = this.getView().getModel("baseModel");
+				var r = "";
 				if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Return") {
 					if (this.ROtypeCode === "TI") {
-						var thaiText = "ไม่ต้องส่งของ เคลียร์ใบส่งของชั่วคราว" + " ";
-						var returnItems = this.getView().getModel("returnModel").getProperty("/results");
-						for (var i = 0; i < returnItems.length; i++) {
-
-							if (i === returnItems.length - 1) {
-								if (!thaiText.includes(returnItems[i].refInvoice)) {
-									thaiText = thaiText + returnItems[i].refInvoice + " " + "ส่งบิลที่แผนก ";
+						var s = "ไม่ต้องส่งของ เคลียร์ใบส่งของชั่วคราว" + " ";
+						var i = this.getView().getModel("returnModel").getProperty("/results");
+						for (var a = 0; a < i.length; a++) {
+							if (a === i.length - 1) {
+								if (!s.includes(i[a].refInvoice)) {
+									s = s + i[a].refInvoice + " " + "ส่งบิลที่แผนก "
 								} else {
-									thaiText = thaiText + " " + "ส่งบิลที่แผนก ";
+									s = s + " " + "ส่งบิลที่แผนก "
 								}
 							} else {
-								if (!thaiText.includes(returnItems[i].refInvoice)) {
-									thaiText = thaiText + returnItems[i].refInvoice + ", ";
+								if (!s.includes(i[a].refInvoice)) {
+									s = s + i[a].refInvoice + ", "
 								}
 							}
 						}
-						if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+						if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+							s = s + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-							// MessageToast.show("Contact division mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactPerson");
+						if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+							s = s + " " + e.getProperty("/contactPerson")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-							// MessageToast.show("Contact person mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+							return
 						}
-
-						if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-							thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+						if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+							s = s + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-							// MessageToast.show("Contact Telephone mandatory");
-							return;
+							o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+							return
 						}
-						if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/comment");
+						if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+							s = s + " " + e.getProperty("/comment")
 						}
 					} else if (this.ROtypeCode === "TK") {
-						var thaiText = "ใช้แทนบิล";
-						var returnItems = this.getView().getModel("returnModel").getProperty("/results");
-						for (var i = 0; i < returnItems.length; i++) {
-
-							if (i === returnItems.length - 1) {
-								if (!thaiText.includes(returnItems[i].refInvoice)) {
-									thaiText = thaiText + returnItems[i].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-										"baseModel").getProperty("/selectedReturnReason") + "ส่งบิลที่";
+						var s = "ใช้แทนบิล";
+						var i = this.getView().getModel("returnModel").getProperty("/results");
+						for (var a = 0; a < i.length; a++) {
+							if (a === i.length - 1) {
+								if (!s.includes(i[a].refInvoice)) {
+									s = s + i[a].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty(
+										"/selectedReturnReason") + "ส่งบิลที่"
 								} else {
-									thaiText = thaiText + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-										"baseModel").getProperty("/selectedReturnReason") + "ส่งบิลที่";
+									s = s + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+										"ส่งบิลที่"
 								}
 							} else {
-								if (!thaiText.includes(returnItems[i].refInvoice)) {
-									thaiText = thaiText + returnItems[i].refInvoice + ", ";
+								if (!s.includes(i[a].refInvoice)) {
+									s = s + i[a].refInvoice + ", "
 								}
 							}
 						}
-						if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+						if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+							s = s + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-							// MessageToast.show("Contact division mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactPerson");
+						if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+							s = s + " " + e.getProperty("/contactPerson")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-							// MessageToast.show("Contact person mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+							return
 						}
-
-						if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-							thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+						if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+							s = s + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-							// MessageToast.show("Contact Telephone mandatory");
-							return;
+							o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+							return
 						}
-						if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/comment");
+						if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+							s = s + " " + e.getProperty("/comment")
 						}
 					} else {
-						var thaiText = "สาเหตุการคืน." + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") + " " +
+						var s = "สาเหตุการคืน." + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") + " " +
 							"รับคืนสินค้าที่คุณ ";
-
-						if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactPerson") + "แผนก";
+						if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+							s = s + " " + e.getProperty("/contactPerson") + "แผนก"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-							// MessageToast.show("Contact person mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactDivision");
+						if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+							s = s + " " + e.getProperty("/contactDivision")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-							// MessageToast.show("Contact division mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-							thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+						if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+							s = s + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-							// MessageToast.show("Contact Telephone mandatory");
-							return;
+							o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+							return
 						}
-						if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/comment");
+						if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+							s = s + " " + e.getProperty("/comment")
 						}
 					}
 				} else {
-					// าเนื่องจาก
 					if (this.ROtypeCode === "TI") {
-						var thaiText = "เคลียร์ใบส่งของชั่วคราว" + " ";
-						var exchangeItems = this.getView().getModel("returnModel").getProperty("/results");
-						for (var i = 0; i < exchangeItems.length; i++) {
-
-							if (i === exchangeItems.length - 1) {
-								if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-									thaiText = thaiText + exchangeItems[i].refInvoice + " " + "ส่งบิลที่แผนก";
+						var s = "เคลียร์ใบส่งของชั่วคราว" + " ";
+						var n = this.getView().getModel("returnModel").getProperty("/results");
+						for (var a = 0; a < n.length; a++) {
+							if (a === n.length - 1) {
+								if (!s.includes(n[a].refInvoice)) {
+									s = s + n[a].refInvoice + " " + "ส่งบิลที่แผนก"
 								} else {
-									thaiText = thaiText + " " + "ส่งบิลที่แผน";
+									s = s + " " + "ส่งบิลที่แผน"
 								}
 							} else {
-								if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-									thaiText = thaiText + exchangeItems[i].refInvoice + ", ";
+								if (!s.includes(n[a].refInvoice)) {
+									s = s + n[a].refInvoice + ", "
 								}
 							}
 						}
-						if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+						if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+							s = s + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-							// MessageToast.show("Contact division mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactPerson") + "แผนก";
+						if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+							s = s + " " + e.getProperty("/contactPerson") + "แผนก"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-							// MessageToast.show("Contact person mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+							return
 						}
-
-						if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-							thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+						if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+							s = s + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-							// MessageToast.show("Contact Telephone mandatory");
-							return;
+							o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+							return
 						}
-						if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/comment");
+						if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+							s = s + " " + e.getProperty("/comment")
 						}
 					} else if (this.ROtypeCode === "TK") {
-						var thaiText = "ใช้แทนบิล" + "  ";
-						var exchangeItems = this.getView().getModel("returnModel").getProperty("/results");
-						for (var i = 0; i < exchangeItems.length; i++) {
-
-							if (i === exchangeItems.length - 1) {
-								if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-									thaiText = thaiText + exchangeItems[i].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-										"baseModel").getProperty(
-										"/selectedReturnReason") + " " + "ส่งบิลที่นก";
+						var s = "ใช้แทนบิล" + "  ";
+						var n = this.getView().getModel("returnModel").getProperty("/results");
+						for (var a = 0; a < n.length; a++) {
+							if (a === n.length - 1) {
+								if (!s.includes(n[a].refInvoice)) {
+									s = s + n[a].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty(
+										"/selectedReturnReason") + " " + "ส่งบิลที่นก"
 								} else {
-									thaiText = thaiText + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-										"baseModel").getProperty(
-										"/selectedReturnReason") + " " + "ส่งบิลที่นก";
+									s = s + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+										" " + "ส่งบิลที่นก"
 								}
 							} else {
-								if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-									thaiText = thaiText + exchangeItems[i].refInvoice + ", ";
+								if (!s.includes(n[a].refInvoice)) {
+									s = s + n[a].refInvoice + ", "
 								}
 							}
 						}
-						if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+						if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+							s = s + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-							// MessageToast.show("Contact division mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactPerson");
+						if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+							s = s + " " + e.getProperty("/contactPerson")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-							// MessageToast.show("Contact person mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+							return
 						}
-
-						if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-							thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+						if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+							s = s + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-							// MessageToast.show("Contact Telephone mandatory");
-							return;
+							o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+							return
 						}
-						if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/comment");
+						if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+							s = s + " " + e.getProperty("/comment")
 						}
 					} else {
 						// Start - USer Story STRY0012775 - 30/06/2021
 						if (this.ROtypeCode === "TG" || this.ROtypeCode === "TF") {
-							var thaiText = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty(
-								"/selectedReturnReason") + " " + "ส่งสินค้าที่คุณ"
+							var s = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+								" " +
+								"ส่งสินค้าที่คุณ"
 						} else {
-							var thaiText = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty(
-								"/selectedReturnReason") + " " + "รับคืนที่คุณ"
+							var s = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+								" " +
+								"รับคืนที่คุณ"
 						};
 						// End - USer Story STRY0012775 - 30/06/2021
-						if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactPerson") + "แผนก";
+						if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+							s = s + " " + e.getProperty("/contactPerson") + "แผนก"
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-							// MessageToast.show("Contact person mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/contactDivision");
+						if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+							s = s + " " + e.getProperty("/contactDivision")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-							// MessageToast.show("Contact division mandatory");
-							return;
+							o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+							return
 						}
-						if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-							thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+						if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+							s = s + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 						} else {
-							MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-							// MessageToast.show("Contact Telephone mandatory");
-							return;
+							o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+							return
 						}
-						if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-							thaiText = thaiText + " " + baseModel.getProperty("/comment");
+						if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+							s = s + " " + e.getProperty("/comment")
 						}
 					}
 				}
-				// if (baseModel.getProperty("/STSNotiValue") !== undefined) {
-				// 	remark = thaiText + " " + baseModel.getProperty("/STSNotiValue");
-				// }คุณ"
-				if (thaiText.length > 250) {
-					MessageToast.show(this.resourceBundle.getText("Remarksexceedingmaxlength"));
-					// MessageToast.show("Remarks exceeding max length");
+				if (s.length > 250) {
+					o.show(this.resourceBundle.getText("Remarksexceedingmaxlength"))
 				}
 				if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Return") {
-					this.getView().getModel("baseModel").setProperty("/returnRemark", thaiText);
-					this.getView().getModel("baseModel").setProperty("/remark", thaiText);
-					this.getView().getModel("baseModel").refresh();
+					this.getView().getModel("baseModel").setProperty("/returnRemark", s);
+					this.getView().getModel("baseModel").setProperty("/remark", s);
+					this.getView().getModel("baseModel").refresh()
 				} else {
-					this.getView().getModel("baseModel").setProperty("/exchangeRemark", thaiText);
-					this.getView().getModel("baseModel").setProperty("/remark", thaiText);
-					this.getView().getModel("baseModel").refresh();
+					this.getView().getModel("baseModel").setProperty("/exchangeRemark", s);
+					this.getView().getModel("baseModel").setProperty("/remark", s);
+					this.getView().getModel("baseModel").refresh()
 				}
-				// baseModel.setProperty("/comment", "");
-				// baseModel.setProperty("/contactTelephone", "");
-				// baseModel.setProperty("/contactDivision", "");
-				// baseModel.setProperty("/contactPerson", "");
-				// baseModel.setProperty("/STSNotiValue", "");
-
-				// baseModel.setProperty("/remark", "");
-				this.Remark.close();
+				this.Remark.close()
 			}
 		},
-
-		onSelectSms: function (oEvent) {
-			var flag = oEvent.getSource().getSelected();
-			if (flag === false) {
-				this.getView().getModel("baseModel").setProperty("/smsInputVisiblity", false);
+		onSelectSms: function (e) {
+			var t = e.getSource().getSelected();
+			if (t === false) {
+				this.getView().getModel("baseModel").setProperty("/smsInputVisiblity", false)
 			} else {
-				this.getView().getModel("baseModel").setProperty("/smsInputVisiblity", true);
+				this.getView().getModel("baseModel").setProperty("/smsInputVisiblity", true)
 			}
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		liveSearchUsers: function (oEvent) {
-			if (oEvent.getParameters().newValue === undefined) {
-				var value = oEvent.getParameters().query;
+		liveSearchUsers: function (e) {
+			if (e.getParameters().newValue === undefined) {
+				var t = e.getParameters().query
 			} else {
-				var value = oEvent.getParameters().newValue;
+				var t = e.getParameters().newValue
 			}
-
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("userId", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.Contains, value)
-			]);
-			filters.push(oFilter);
-			var oBinding = this.getView().byId("userListTableId").getBinding("items");
-			// var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("userId", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter(
+				"email", sap.ui.model.FilterOperator.Contains, t)]);
+			r.push(o);
+			var s = this.getView().byId("userListTableId").getBinding("items");
+			s.filter(r)
 		},
-
-		onSelectDelivery: function (oEvent) {
-			var flag = oEvent.getSource().getSelected();
-			if (flag === false) {
-				this.getView().getModel("baseModel").setProperty("/completedDeliveryFLAG", "");
+		onSelectDelivery: function (e) {
+			var t = e.getSource().getSelected();
+			if (t === false) {
+				this.getView().getModel("baseModel").setProperty("/completedDeliveryFLAG", "")
 			} else {
-				this.getView().getModel("baseModel").setProperty("/completedDeliveryFLAG", "X");
+				this.getView().getModel("baseModel").setProperty("/completedDeliveryFLAG", "X")
 			}
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onSelectEmail: function (oEvent) {
-			var flag = oEvent.getSource().getSelected();
-			if (flag === false) {
-				this.getView().getModel("baseModel").setProperty("/emailInputVisiblity", false);
+		onSelectEmail: function (e) {
+			var t = e.getSource().getSelected();
+			if (t === false) {
+				this.getView().getModel("baseModel").setProperty("/emailInputVisiblity", false)
 			} else {
-				this.getView().getModel("baseModel").setProperty("/emailInputVisiblity", true);
+				this.getView().getModel("baseModel").setProperty("/emailInputVisiblity", true)
 			}
-
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").refresh()
 		},
-
 		onPressViewRemark: function () {
-			var baseModel = this.getView().getModel("baseModel");
-			var remark = "";
+			var e = this.getView().getModel("baseModel");
+			var t = "";
 			if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Return") {
 				if (this.ROtypeCode === "TI") {
-					var thaiText = "ไม่ต้องส่งของ เคลียร์ใบส่งของชั่วคราว" + " ";
-					var returnItems = this.getView().getModel("returnModel").getProperty("/results");
-					for (var i = 0; i < returnItems.length; i++) {
-
-						if (i === returnItems.length - 1) {
-							if (!thaiText.includes(returnItems[i].refInvoice)) {
-								thaiText = thaiText + returnItems[i].refInvoice + " " + "ส่งบิลที่แผนก ";
+					var r = "ไม่ต้องส่งของ เคลียร์ใบส่งของชั่วคราว" + " ";
+					var s = this.getView().getModel("returnModel").getProperty("/results");
+					for (var i = 0; i < s.length; i++) {
+						if (i === s.length - 1) {
+							if (!r.includes(s[i].refInvoice)) {
+								r = r + s[i].refInvoice + " " + "ส่งบิลที่แผนก "
 							} else {
-								thaiText = thaiText + " " + "ส่งบิลที่แผนก ";
+								r = r + " " + "ส่งบิลที่แผนก "
 							}
 						} else {
-							if (!thaiText.includes(returnItems[i].refInvoice)) {
-								thaiText = thaiText + returnItems[i].refInvoice + ", ";
+							if (!r.includes(s[i].refInvoice)) {
+								r = r + s[i].refInvoice + ", "
 							}
 						}
 					}
-					if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+					if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+						r = r + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-						// MessageToast.show("Contact division mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactPerson");
+					if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+						r = r + " " + e.getProperty("/contactPerson")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-						// MessageToast.show("Contact person mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+						return
 					}
-
-					if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-						thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+					if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+						r = r + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-						// MessageToast.show("Contact Telephone mandatory");
-						return;
+						o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+						return
 					}
-					if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/comment");
+					if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+						r = r + " " + e.getProperty("/comment")
 					}
 				} else if (this.ROtypeCode === "TK") {
-					var thaiText = "ใช้แทนบิล";
-					var returnItems = this.getView().getModel("returnModel").getProperty("/results");
-					for (var i = 0; i < returnItems.length; i++) {
-
-						if (i === returnItems.length - 1) {
-							if (!thaiText.includes(returnItems[i].refInvoice)) {
-								thaiText = thaiText + returnItems[i].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-									"baseModel").getProperty("/selectedReturnReason") + "ส่งบิลที่";
+					var r = "ใช้แทนบิล";
+					var s = this.getView().getModel("returnModel").getProperty("/results");
+					for (var i = 0; i < s.length; i++) {
+						if (i === s.length - 1) {
+							if (!r.includes(s[i].refInvoice)) {
+								r = r + s[i].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty(
+									"/selectedReturnReason") + "ส่งบิลที่"
 							} else {
-								thaiText = thaiText + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-									"baseModel").getProperty("/selectedReturnReason") + "ส่งบิลที่";
+								r = r + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+									"ส่งบิลที่"
 							}
 						} else {
-							if (!thaiText.includes(returnItems[i].refInvoice)) {
-								thaiText = thaiText + returnItems[i].refInvoice + ", ";
+							if (!r.includes(s[i].refInvoice)) {
+								r = r + s[i].refInvoice + ", "
 							}
 						}
 					}
-					if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+					if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+						r = r + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-						// MessageToast.show("Contact division mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactPerson");
+					if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+						r = r + " " + e.getProperty("/contactPerson")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-						// MessageToast.show("Contact person mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+						return
 					}
-
-					if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-						thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+					if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+						r = r + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-						// MessageToast.show("Contact Telephone mandatory");
-						return;
+						o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+						return
 					}
-					if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/comment");
+					if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+						r = r + " " + e.getProperty("/comment")
 					}
 				} else {
-					var thaiText = "สาเหตุการคืน." + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") + " " +
+					var r = "สาเหตุการคืน." + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") + " " +
 						"รับคืนสินค้าที่คุณ ";
-
-					if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactPerson") + "แผนก";
+					if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+						r = r + " " + e.getProperty("/contactPerson") + "แผนก"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-						// MessageToast.show("Contact person mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactDivision");
+					if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+						r = r + " " + e.getProperty("/contactDivision")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-						// MessageToast.show("Contact division mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-						thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+					if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+						r = r + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-						// MessageToast.show("Contact Telephone mandatory");
-						return;
+						o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+						return
 					}
-					if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/comment");
+					if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+						r = r + " " + e.getProperty("/comment")
 					}
 				}
 			} else {
-				// าเนื่องจาก
 				if (this.ROtypeCode === "TI") {
-					var thaiText = "เคลียร์ใบส่งของชั่วคราว" + " ";
-					var exchangeItems = this.getView().getModel("returnModel").getProperty("/results");
-					for (var i = 0; i < exchangeItems.length; i++) {
-
-						if (i === exchangeItems.length - 1) {
-							if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-								thaiText = thaiText + exchangeItems[i].refInvoice + " " + "ส่งบิลที่แผนก";
+					var r = "เคลียร์ใบส่งของชั่วคราว" + " ";
+					var a = this.getView().getModel("returnModel").getProperty("/results");
+					for (var i = 0; i < a.length; i++) {
+						if (i === a.length - 1) {
+							if (!r.includes(a[i].refInvoice)) {
+								r = r + a[i].refInvoice + " " + "ส่งบิลที่แผนก"
 							} else {
-								thaiText = thaiText + " " + "ส่งบิลที่แผนก";
+								r = r + " " + "ส่งบิลที่แผนก"
 							}
 						} else {
-							if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-								thaiText = thaiText + exchangeItems[i].refInvoice + ", ";
+							if (!r.includes(a[i].refInvoice)) {
+								r = r + a[i].refInvoice + ", "
 							}
 						}
 					}
-					if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+					if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+						r = r + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-						// MessageToast.show("Contact division mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactPerson") + "แผนก";
+					if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+						r = r + " " + e.getProperty("/contactPerson") + "แผนก"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-						// MessageToast.show("Contact person mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+						return
 					}
-
-					if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-						thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+					if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+						r = r + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-						// MessageToast.show("Contact Telephone mandatory");
-						return;
+						o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+						return
 					}
-					if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/comment");
+					if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+						r = r + " " + e.getProperty("/comment")
 					}
 				} else if (this.ROtypeCode === "TK") {
-					var thaiText = "ใช้แทนบิล" + "  ";
-					var exchangeItems = this.getView().getModel("returnModel").getProperty("/results");
-					for (var i = 0; i < exchangeItems.length; i++) {
-
-						if (i === exchangeItems.length - 1) {
-							if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-								thaiText = thaiText + exchangeItems[i].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-									"baseModel").getProperty(
-									"/selectedReturnReason") + " " + "ส่งบิลที่นก";
+					var r = "ใช้แทนบิล" + "  ";
+					var a = this.getView().getModel("returnModel").getProperty("/results");
+					for (var i = 0; i < a.length; i++) {
+						if (i === a.length - 1) {
+							if (!r.includes(a[i].refInvoice)) {
+								r = r + a[i].refInvoice + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty(
+									"/selectedReturnReason") + " " + "ส่งบิลที่นก"
 							} else {
-								thaiText = thaiText + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel(
-									"baseModel").getProperty(
-									"/selectedReturnReason") + " " + "ส่งบิลที่นก";
+								r = r + " " + "ไม่ต้องส่งของ แก้ไขเนื่องจาก" + " " + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+									" " + "ส่งบิลที่นก"
 							}
 						} else {
-							if (!thaiText.includes(exchangeItems[i].refInvoice)) {
-								thaiText = thaiText + exchangeItems[i].refInvoice + ", ";
+							if (!r.includes(a[i].refInvoice)) {
+								r = r + a[i].refInvoice + ", "
 							}
 						}
 					}
-					if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactDivision") + "ติดต่อ";
+					if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+						r = r + " " + e.getProperty("/contactDivision") + "ติดต่อ"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-						// MessageToast.show("Contact division mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactPerson");
+					if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+						r = r + " " + e.getProperty("/contactPerson")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-						// MessageToast.show("Contact person mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+						return
 					}
-
-					if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-						thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+					if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+						r = r + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-						// MessageToast.show("Contact Telephone mandatory");
-						return;
+						o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+						return
 					}
-					if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/comment");
+					if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+						r = r + " " + e.getProperty("/comment")
 					}
 				} else {
 					// Start - USer Story STRY0012775 - 30/06/2021
 					if (this.ROtypeCode === "TG" || this.ROtypeCode === "TF") {
-						var thaiText = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty(
-							"/selectedReturnReason") + " " + "ส่งสินค้าที่คุณ"
+						var r = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+							" " +
+							"ส่งสินค้าที่คุณ"
 					} else {
-						var thaiText = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty(
-							"/selectedReturnReason") + " " + "รับคืนที่คุณ"
+						var r = "มีสินค้าเปลี่ยน รับคืนสินค้าเนื่องจาก" + this.getView().getModel("baseModel").getProperty("/selectedReturnReason") +
+							" " +
+							"รับคืนที่คุณ"
 					};
 					// End - USer Story STRY0012775 - 30/06/2021
-					if (baseModel.getProperty("/contactPerson") !== undefined && baseModel.getProperty("/contactPerson") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactPerson") + "แผนก";
+					if (e.getProperty("/contactPerson") !== undefined && e.getProperty("/contactPerson") !== "") {
+						r = r + " " + e.getProperty("/contactPerson") + "แผนก"
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactpersonmandatory"));
-						// MessageToast.show("Contact person mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactpersonmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactDivision") !== undefined && baseModel.getProperty("/contactDivision") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/contactDivision");
+					if (e.getProperty("/contactDivision") !== undefined && e.getProperty("/contactDivision") !== "") {
+						r = r + " " + e.getProperty("/contactDivision")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("Contactdivisionmandatory"));
-						// MessageToast.show("Contact division mandatory");
-						return;
+						o.show(this.resourceBundle.getText("Contactdivisionmandatory"));
+						return
 					}
-					if (baseModel.getProperty("/contactTelephone") !== undefined && baseModel.getProperty("/contactTelephone") !== "") {
-						thaiText = thaiText + " " + "Tel" + " " + baseModel.getProperty("/contactTelephone");
+					if (e.getProperty("/contactTelephone") !== undefined && e.getProperty("/contactTelephone") !== "") {
+						r = r + " " + "Tel" + " " + e.getProperty("/contactTelephone")
 					} else {
-						MessageToast.show(this.resourceBundle.getText("ContactTelephonemandatory"));
-						// MessageToast.show("Contact Telephone mandatory");
-						return;
+						o.show(this.resourceBundle.getText("ContactTelephonemandatory"));
+						return
 					}
-					if (baseModel.getProperty("/comment") !== undefined && baseModel.getProperty("/comment") !== "") {
-						thaiText = thaiText + " " + baseModel.getProperty("/comment");
+					if (e.getProperty("/comment") !== undefined && e.getProperty("/comment") !== "") {
+						r = r + " " + e.getProperty("/comment")
 					}
 				}
 			}
-			if (thaiText.length > 250) {
-				MessageToast.show(this.resourceBundle.getText("Remarksexceedingmaxlength"));
-				// MessageToast.show("Remarks exceeding max length");
+			if (r.length > 250) {
+				o.show(this.resourceBundle.getText("Remarksexceedingmaxlength"))
 			}
-			this.getView().getModel("baseModel").setProperty("/remark", thaiText);
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").setProperty("/remark", r);
+			this.getView().getModel("baseModel").refresh()
 		},
-
 		onPressResetRemark: function () {
-			var baseModel = this.getView().getModel("baseModel");
+			var e = this.getView().getModel("baseModel");
 			if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Exchange" && this.ROtypeCode === "TI") {
-				baseModel.setProperty("/comment", "ไม่ต้องส่งของ หรือ ส่งของเพิ่มบางส");
+				e.setProperty("/comment", "ไม่ต้องส่งของ หรือ ส่งของเพิ่มบางส")
 			} else {
-				baseModel.setProperty("/comment", "");
-
+				e.setProperty("/comment", "")
 			}
-			baseModel.setProperty("/contactTelephone", "");
-			baseModel.setProperty("/contactDivision", "");
-			baseModel.setProperty("/contactPerson", "");
-			// baseModel.setProperty("/STSNotiValue", "");
-			// baseModel.setProperty("/returnRemark", "");
-			// baseModel.setProperty("/exchangeRemark", "");
-			baseModel.setProperty("/remark", "");
-			baseModel.refresh();
+			e.setProperty("/contactTelephone", "");
+			e.setProperty("/contactDivision", "");
+			e.setProperty("/contactPerson", "");
+			e.setProperty("/remark", "");
+			e.refresh()
 		},
-
 		onCancelRemark: function () {
-			// this.onPressResetRemark();
-			var baseModel = this.getView().getModel("baseModel");
+			var e = this.getView().getModel("baseModel");
 			if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Return") {
-				if (!baseModel.getProperty("/returnRemark")) {
-
-					baseModel.setProperty("/comment", "");
-					baseModel.setProperty("/contactTelephone", "");
-					baseModel.setProperty("/contactDivision", "");
-					baseModel.setProperty("/contactPerson", "");
-					// baseModel.setProperty("/STSNotiValue", "");
-					// baseModel.setProperty("/returnRemark", "");
-					// baseModel.setProperty("/exchangeRemark", "");
-					baseModel.setProperty("/remark", "");
-					baseModel.refresh();
-					this.Remark.close();
+				if (!e.getProperty("/returnRemark")) {
+					e.setProperty("/comment", "");
+					e.setProperty("/contactTelephone", "");
+					e.setProperty("/contactDivision", "");
+					e.setProperty("/contactPerson", "");
+					e.setProperty("/remark", "");
+					e.refresh();
+					this.Remark.close()
 				} else {
-					this.Remark.close();
+					this.Remark.close()
 				}
 			} else {
-				if (!baseModel.getProperty("/exchangeRemark")) {
-
-					baseModel.setProperty("/comment", "");
-					baseModel.setProperty("/contactTelephone", "");
-					baseModel.setProperty("/contactDivision", "");
-					baseModel.setProperty("/contactPerson", "");
-					// baseModel.setProperty("/STSNotiValue", "");
-					// baseModel.setProperty("/returnRemark", "");
-					// baseModel.setProperty("/exchangeRemark", "");
-					baseModel.setProperty("/remark", "");
-					baseModel.refresh();
-					this.Remark.close();
+				if (!e.getProperty("/exchangeRemark")) {
+					e.setProperty("/comment", "");
+					e.setProperty("/contactTelephone", "");
+					e.setProperty("/contactDivision", "");
+					e.setProperty("/contactPerson", "");
+					e.setProperty("/remark", "");
+					e.refresh();
+					this.Remark.close()
 				} else {
-					this.Remark.close();
+					this.Remark.close()
 				}
 			}
-
 		},
-
-		// check presonalization for tab
-		personalizationInvDetails: function (oEvent) {
+		personalizationInvDetails: function (e) {
 			if (!this.FilterPersonalization) {
 				this.FilterPersonalization = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Personalization", this);
-				this.getView().addDependent(this.FilterPersonalization);
+				this.getView().addDependent(this.FilterPersonalization)
 			}
-			if (oEvent.getSource().getTooltip() === this.resourceBundle.getText("InvoicePersonalization")) {
-				this.currentStep = "keyInvoice";
-			} else if (oEvent.getSource().getTooltip() === this.resourceBundle.getText("ReturnPersonalization")) {
-				this.currentStep = "keyReturn";
-			} else if (oEvent.getSource().getTooltip() === this.resourceBundle.getText("ExchangePersonalization")) {
-				this.currentStep = "keyExchange";
+			if (e.getSource().getTooltip() === this.resourceBundle.getText("InvoicePersonalization")) {
+				this.currentStep = "keyInvoice"
+			} else if (e.getSource().getTooltip() === this.resourceBundle.getText("ReturnPersonalization")) {
+				this.currentStep = "keyReturn"
+			} else if (e.getSource().getTooltip() === this.resourceBundle.getText("ExchangePersonalization")) {
+				this.currentStep = "keyExchange"
 			}
 			this._getPersonalizationDetails(this.currentStep);
-			this.FilterPersonalization.open();
+			this.FilterPersonalization.open()
 		},
-
-		// common function call for personalization of all the tab (invoice, return, exchange)
-		_getPersonalizationDetails: function (tabName, before) {
-			var that = this;
-			var PersonalizationModel = that.getView().getModel("PersonalizationModel");
-			var oModel = new sap.ui.model.json.JSONModel();
-			that.getView().setModel(oModel, "oModel");
-			// screen = web ----- for desktop view 
-			var screen = "Web";
-			var oHeader = {
+		_getPersonalizationDetails: function (e, r) {
+			var o = this;
+			var s = o.getView().getModel("PersonalizationModel");
+			var i = new sap.ui.model.json.JSONModel;
+			o.getView().setModel(i, "oModel");
+			var a = "Web";
+			var n = {
 				"Content-Type": "application/json;charset=utf-8"
 			};
-			var payload = {
-				"userId": this.getView().getModel("baseModel").getProperty("/userId"),
-				"appId": tabName,
-				"runType": screen,
-				"emailId": this.getView().getModel("baseModel").getData().email
+			var l = {
+				userId: this.getView().getModel("baseModel").getProperty("/userId"),
+				appId: e,
+				runType: a,
+				emailId: this.getView().getModel("baseModel").getData().email
 			};
-			oModel.loadData("/DKSHJavaService/variant/getVariant", JSON.stringify(payload), true, "POST", false, false, oHeader);
-			oModel.attachRequestCompleted(function (success) {
-				if (success.getSource().getData().userPersonaDto !== null) {
-					if (before) {
-						if (tabName === "keyInvoice") {
-							that.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData", success.getSource().getData());
-						} else if (tabName === "keyExchange") {
-							that.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData", success.getSource().getData());
-						} else if (tabName === "keyReturn") {
-							that.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData", success.getSource().getData());
+			i.loadData("/DKSHJavaService/variant/getVariant", JSON.stringify(l), true, "POST", false, false, n);
+			i.attachRequestCompleted(function (t) {
+				if (t.getSource().getData().userPersonaDto !== null) {
+					if (r) {
+						if (e === "keyInvoice") {
+							o.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData", t.getSource().getData())
+						} else if (e === "keyExchange") {
+							o.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData", t.getSource().getData())
+						} else if (e === "keyReturn") {
+							o.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData", t.getSource().getData())
 						}
-
 					} else {
-						var FilterPersonalization = new sap.ui.model.json.JSONModel({
-							"results": success.getSource().getData()
+						var s = new sap.ui.model.json.JSONModel({
+							results: t.getSource().getData()
 						});
-						// that.getView().getModel("PersonalizationModel").setProperty("/personalizationData", success.getSource().getData());
-						if (tabName === "keyInvoice") {
-							that.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData", success.getSource().getData());
-						} else if (tabName === "keyExchange") {
-							that.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData", success.getSource().getData());
-						} else if (tabName === "keyReturn") {
-							that.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData", success.getSource().getData());
+						if (e === "keyInvoice") {
+							o.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData", t.getSource().getData())
+						} else if (e === "keyExchange") {
+							o.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData", t.getSource().getData())
+						} else if (e === "keyReturn") {
+							o.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData", t.getSource().getData())
 						}
-						that.FilterPersonalization.setModel(FilterPersonalization, "FilterPersonalization");
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/enableCheckBox", false);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/selectVarVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/nameVarVisible", false);
-						that.getView().getModel("PersonalizationModel").refresh();
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/okPersBtnVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/savePersBtnVisible", false);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/cancelPersBtnVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/deletePersBtnVisible", false);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/createPersBtnVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/editPersBtnVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/varinatNameValueState", "None");
-						that.FilterPersonalization.getModel("FilterPersonalization").refresh();
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/results/action", "");
+						o.FilterPersonalization.setModel(s, "FilterPersonalization");
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/enableCheckBox", false);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/selectVarVisible", true);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/nameVarVisible", false);
+						o.getView().getModel("PersonalizationModel").refresh();
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/okPersBtnVisible", true);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/savePersBtnVisible", false);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/cancelPersBtnVisible", true);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/deletePersBtnVisible", false);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/createPersBtnVisible", true);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/editPersBtnVisible", true);
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/varinatNameValueState", "None");
+						o.FilterPersonalization.getModel("FilterPersonalization").refresh();
+						o.FilterPersonalization.getModel("FilterPersonalization").setProperty("/results/action", "")
 					}
 				}
 			});
-			oModel.attachRequestFailed(function (oEvent) {
-				MessageBox.error(oEvent.getSource().getData().message);
-			});
+			i.attachRequestFailed(function (e) {
+				t.error(e.getSource().getData().message)
+			})
 		},
-
-		// select checkbox when editing or creating variant
-		onChangeCheckbox: function (oEvent) {
-			var personalizationData = this.FilterPersonalization.getModel("FilterPersonalization").getData().results.userPersonaDto;
-			var path = parseInt(oEvent.getSource().getBindingContext("FilterPersonalization").getPath().split("/")[3]);
-			if (oEvent.getSource().getSelected() === true) {
-				for (var j = 0; j < personalizationData.length; j++) {
-					if (j === path) {
-						personalizationData[j].status = true;
+		onChangeCheckbox: function (e) {
+			var t = this.FilterPersonalization.getModel("FilterPersonalization").getData().results.userPersonaDto;
+			var r = parseInt(e.getSource().getBindingContext("FilterPersonalization").getPath().split("/")[3]);
+			if (e.getSource().getSelected() === true) {
+				for (var o = 0; o < t.length; o++) {
+					if (o === r) {
+						t[o].status = true
 					}
 					if (this.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/action") === "Create") {
-						personalizationData[j].id = "";
+						t[o].id = ""
 					}
-					this.selectedObjects = personalizationData;
+					this.selectedObjects = t
 				}
 			} else {
-				for (var i = 0; i < personalizationData.length; i++) {
-					if (i === path) {
-						personalizationData[i].status = false;
+				for (var s = 0; s < t.length; s++) {
+					if (s === r) {
+						t[s].status = false
 					}
 				}
-				this.selectedObjects = personalizationData;
+				this.selectedObjects = t
 			}
 		},
-
-		onChangeRetPO: function (oEvent) {
-			var val = oEvent.getSource().getValue();
-			if (val.length > 35) {
+		onChangeRetPO: function (e) {
+			var t = e.getSource().getValue();
+			if (t.length > 35) {
 				messageToast.show(this.resourceBundle.getText("maxLengthPO"));
-				return;
+				return
 			}
 		},
-
-		onSelectvarian: function (oEvent) {
-			var that = this;
-			var pID = this.getView().getModel("baseModel").getData().userId;
-			var oModel = new sap.ui.model.json.JSONModel();
-			that.getView().setModel(oModel, "oModel");
-			if (oEvent) {
-				var varinatName = oEvent.getSource().getSelectedKey();
+		onSelectvarian: function (e) {
+			var r = this;
+			var s = this.getView().getModel("baseModel").getData().userId;
+			var i = new sap.ui.model.json.JSONModel;
+			r.getView().setModel(i, "oModel");
+			if (e) {
+				var a = e.getSource().getSelectedKey()
 			} else {
-				var varinatName = this.FilterPersonalization.getModel("FilterPersonalization").getData().results.currentVariant;
+				var a = this.FilterPersonalization.getModel("FilterPersonalization").getData().results.currentVariant
 			}
-			var oHeader = {
+			var n = {
 				"Content-Type": "application/json;charset=utf-8"
 			};
-			var screen = "Web";
+			var l = "Web";
 			if (sap.ui.Device.system.phone === true) {
-				screen = "Phone";
+				l = "Phone"
 			}
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oModel.loadData("/DKSHJavaService/variant/getvariantLists/" + pID + "/" + this.currentStep + "/" + varinatName + "/" + screen,
-				true,
-				"POST", false,
-				false, oHeader);
-			oModel.attachRequestCompleted(function (success) {
-				busyDialog.close();
-				var success = success.getSource().getData().userPersonaDto;
-				if (that.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/action") === "Edit") {
-					if (that.currentStep === "keyInvoice") {
-						that.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData/userPersonaDto", success);
-					} else if (that.currentStep === "keyExchange") {
-						that.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData/userPersonaDto", success);
-					} else if (that.currentStep === "keyReturn") {
-						that.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData/userPersonaDto", success);
+			var d = new sap.m.BusyDialog;
+			d.open();
+			i.loadData("/DKSHJavaService/variant/getvariantLists/" + s + "/" + this.currentStep + "/" + a + "/" + l, true, "POST", false, false,
+				n);
+			i.attachRequestCompleted(function (e) {
+				d.close();
+				var e = e.getSource().getData().userPersonaDto;
+				if (r.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/action") === "Edit") {
+					if (r.currentStep === "keyInvoice") {
+						r.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData/userPersonaDto", e)
+					} else if (r.currentStep === "keyExchange") {
+						r.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData/userPersonaDto", e)
+					} else if (r.currentStep === "keyReturn") {
+						r.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData/userPersonaDto", e)
 					}
-					that.FilterPersonalization.getModel("FilterPersonalization").setProperty(
-						"/results/userPersonaDto", success);
-					that.FilterPersonalization.getModel("FilterPersonalization").refresh();
-					that.getView().getModel("PersonalizationModel").refresh();
-					if (that.FilterPersonalization.getModel("FilterPersonalization").getProperty(
-							"/results/currentVariant") ===
-						"Default") {
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/results/action", "");
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/enableCheckBox", false);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/savePersBtnVisible", false);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/okPersBtnVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/deletePersBtnVisible", false);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/selectVarVisible", true);
-						that.FilterPersonalization.getModel("FilterPersonalization").setProperty("/nameVarVisible", false);
-						MessageToast.show(this.resourceBundle.getText("Cannoteditdefaultvariant"));
-						// MessageToast.show("Cannot edit default variant");
-						that.FilterPersonalization.getModel("FilterPersonalization").refresh();
+					r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/results/userPersonaDto", e);
+					r.FilterPersonalization.getModel("FilterPersonalization").refresh();
+					r.getView().getModel("PersonalizationModel").refresh();
+					if (r.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/currentVariant") === "Default") {
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/results/action", "");
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/enableCheckBox", false);
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/savePersBtnVisible", false);
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/okPersBtnVisible", true);
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/deletePersBtnVisible", false);
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/selectVarVisible", true);
+						r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/nameVarVisible", false);
+						o.show(this.resourceBundle.getText("Cannoteditdefaultvariant"));
+						r.FilterPersonalization.getModel("FilterPersonalization").refresh()
 					}
 				} else {
-					if (that.currentStep === "keyInvoice") {
-						that.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData/userPersonaDto", success);
-					} else if (that.currentStep === "keyExchange") {
-						that.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData/userPersonaDto", success);
-					} else if (that.currentStep === "keyReturn") {
-						that.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData/userPersonaDto", success);
+					if (r.currentStep === "keyInvoice") {
+						r.getView().getModel("PersonalizationModel").setProperty("/personalizationInvoiceData/userPersonaDto", e)
+					} else if (r.currentStep === "keyExchange") {
+						r.getView().getModel("PersonalizationModel").setProperty("/personalizationExchangeData/userPersonaDto", e)
+					} else if (r.currentStep === "keyReturn") {
+						r.getView().getModel("PersonalizationModel").setProperty("/personalizationReturnData/userPersonaDto", e)
 					}
-					that.FilterPersonalization.getModel("FilterPersonalization").setProperty(
-						"/results/userPersonaDto", success);
-					that.FilterPersonalization.getModel("FilterPersonalization").refresh();
-					that.getView().getModel("PersonalizationModel").refresh();
+					r.FilterPersonalization.getModel("FilterPersonalization").setProperty("/results/userPersonaDto", e);
+					r.FilterPersonalization.getModel("FilterPersonalization").refresh();
+					r.getView().getModel("PersonalizationModel").refresh()
 				}
 			});
-			oModel.attachRequestFailed(function (oEvent) {
-				MessageBox.error(oEvent.getSource().getData().message);
-			});
+			i.attachRequestFailed(function (e) {
+				t.error(e.getSource().getData().message)
+			})
 		},
-
-		onVariantSave: function (oEvent) {
+		onVariantSave: function (e) {
 			if (this.selectedObjects.length === 0) {
-				MessageToast.show(this.resourceBundle.getText("Saveonlyafteredit"));
-				// MessageToast.show("Save only after edit");
-				return;
+				o.show(this.resourceBundle.getText("Saveonlyafteredit"));
+				return
 			}
-			var that = this;
-			var oModel = new sap.ui.model.json.JSONModel();
-			var selected = oEvent.getSource();
-			var PersonalizationModel = this.FilterPersonalization.getModel("FilterPersonalization");
-			if (PersonalizationModel.getProperty("/results/action") === "Create") {
-				if (PersonalizationModel.getData().newVariantName !== undefined && PersonalizationModel.getData().newVariantName !==
-					"") {
-					for (var j = 0; j < PersonalizationModel.getData().results.variantName.length; j++) {
-						if (PersonalizationModel.getData().results.variantName[j].name === PersonalizationModel.getData().newVariantName) {
+			var r = this;
+			var s = new sap.ui.model.json.JSONModel;
+			var i = e.getSource();
+			var a = this.FilterPersonalization.getModel("FilterPersonalization");
+			if (a.getProperty("/results/action") === "Create") {
+				if (a.getData().newVariantName !== undefined && a.getData().newVariantName !== "") {
+					for (var n = 0; n < a.getData().results.variantName.length; n++) {
+						if (a.getData().results.variantName[n].name === a.getData().newVariantName) {
 							this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/varinatNameValueState", "Error");
-							MessageToast.show(this.resourceBundle.getText("Newvariantnamecannotbesame"));
-							// MessageBox.error("New variant name cannot be same as the existing variant");
-							return;
+							o.show(this.resourceBundle.getText("Newvariantnamecannotbesame"));
+							return
 						}
 					}
-
 					this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/varinatNameValueState", "None");
-					var VariantName = PersonalizationModel.getData().newVariantName;
-					for (var i = 0; i < this.selectedObjects.length; i++) {
-						this.selectedObjects[i].variantId = VariantName;
+					var l = a.getData().newVariantName;
+					for (var d = 0; d < this.selectedObjects.length; d++) {
+						this.selectedObjects[d].variantId = l
 					}
-
 				} else {
 					this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/varinatNameValueState", "Error");
 					sap.m.MessageBox.error(this.resourceBundle.getText("EnterVariantName"));
-					// sap.m.MessageBox.error("Enter Variant Name");
-					return;
+					return
 				}
 			}
-
-			var pID = this.getView().getModel("baseModel").getData().userId;
-			// var tab = "keyInvoice";
-			var varinatName;
-			var payload = {
-				"varaiantObject": this.selectedObjects,
-				"userId": pID,
-				"applicationId": this.currentStep,
-				"varaintId": this.selectedObjects[0].variantId
+			var g = this.getView().getModel("baseModel").getData().userId;
+			var p;
+			var c = {
+				varaiantObject: this.selectedObjects,
+				userId: g,
+				applicationId: this.currentStep,
+				varaintId: this.selectedObjects[0].variantId
 			};
-			var oHeader = {
+			var u = {
 				"Content-Type": "application/json;charset=utf-8"
 			};
-			var url = "";
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			// this._doAjax(url, "PUT", payload).then(success => {
-			oModel.loadData("/DKSHJavaService/variant/UpdateVariant", JSON.stringify(payload), true, "PUT", false,
-				false, oHeader);
-			oModel.attachRequestCompleted(function (success) {
-				busyDialog.close();
-				that.selectedObjects = [];
-				that.FilterPersonalization.close();
+			var h = "";
+			var m = new sap.m.BusyDialog;
+			m.open();
+			s.loadData("/DKSHJavaService/variant/UpdateVariant", JSON.stringify(c), true, "PUT", false, false, u);
+			s.attachRequestCompleted(function (e) {
+				m.close();
+				r.selectedObjects = [];
+				r.FilterPersonalization.close();
 				sap.m.MessageBox.success(this.resourceBundle.getText("CreatedSuccessfully"), {
 					actions: [sap.m.MessageBox.Action.OK],
-					onClose: function (sAction) {
-						if (sAction === MessageBox.Action.OK) {
-							that._getPersonalizationDetails(that.currentStep, "Before");
+					onClose: function (e) {
+						if (e === t.Action.OK) {
+							r._getPersonalizationDetails(r.currentStep, "Before")
 						}
 					}
-				});
+				})
 			});
-			oModel.attachRequestFailed(function (oEvent) {
-				MessageBox.error(oEvent.getSource().getData().message);
-			});
+			s.attachRequestFailed(function (e) {
+				t.error(e.getSource().getData().message)
+			})
 		},
-
 		onVariantDelete: function () {
-			var that = this;
-			var pID = this.getView().getModel("baseModel").getData().userId;
-			// var tab = this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey();
-			var data = this.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/userPersonaDto");
-			var varinatName;
-			var payload = {
-				"varaiantObject": data,
-				"userId": pID,
-				"applicationId": this.currentStep,
-				"varaintId": this.FilterPersonalization.getModel("FilterPersonalization").getProperty(
-					"/results/userPersonaDto")[0].variantId
+			var e = this;
+			var r = this.getView().getModel("baseModel").getData().userId;
+			var o = this.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/userPersonaDto");
+			var s;
+			var i = {
+				varaiantObject: o,
+				userId: r,
+				applicationId: this.currentStep,
+				varaintId: this.FilterPersonalization.getModel("FilterPersonalization").getProperty("/results/userPersonaDto")[0].variantId
 			};
-			var oHeader = {
+			var a = {
 				"Content-Type": "application/json;charset=utf-8"
 			};
-			var oModel = new sap.ui.model.json.JSONModel();
-			// var url = "/DKSHJavaService/variant/deleteVariant";
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oModel.loadData("/DKSHJavaService/variant/deleteVariant", JSON.stringify(payload), true, "DELETE", false,
-				false, oHeader);
-			oModel.attachRequestCompleted(function (success) {
-				busyDialog.close();
-				that.FilterPersonalization.close();
-				// 	// var message = oNewEvent.getSource().getData().message;
-				sap.m.MessageBox.success(success.getSource().getData().name, {
+			var n = new sap.ui.model.json.JSONModel;
+			var l = new sap.m.BusyDialog;
+			l.open();
+			n.loadData("/DKSHJavaService/variant/deleteVariant", JSON.stringify(i), true, "DELETE", false, false, a);
+			n.attachRequestCompleted(function (r) {
+				l.close();
+				e.FilterPersonalization.close();
+				sap.m.MessageBox.success(r.getSource().getData().name, {
 					actions: [sap.m.MessageBox.Action.OK],
-					onClose: function (sAction) {
-						if (sAction === MessageBox.Action.OK) {
-							that._getPersonalizationDetails(that.currentStep, "Before");
+					onClose: function (r) {
+						if (r === t.Action.OK) {
+							e._getPersonalizationDetails(e.currentStep, "Before")
 						}
 					}
-				});
+				})
 			});
-			oModel.attachRequestFailed(function (oEvent) {
-				MessageBox.error(oEvent.getSource().getData().name);
-			});
+			n.attachRequestFailed(function (e) {
+				t.error(e.getSource().getData().name)
+			})
 		},
-
 		onVariantCreate: function () {
-			var PersonalizationModel = this.FilterPersonalization.getModel("FilterPersonalization");
-			PersonalizationModel.setProperty("/results/action", "Create");
-			PersonalizationModel.setProperty("/selectVarVisible", false);
-			PersonalizationModel.setProperty("/nameVarVisible", true);
-			PersonalizationModel.setProperty("/enableCheckBox", true);
-			PersonalizationModel.setProperty("/okPersBtnVisible", false);
-			// this.getView().getModel("PersonalizationModel").setProperty("/okPersBtnVisible", false);
-			PersonalizationModel.setProperty("/savePersBtnVisible", true);
-			PersonalizationModel.setProperty("/newVariantName", "");
-			var fieldData = PersonalizationModel.getData().results.userPersonaDto;
-			for (var i = 0; i < fieldData.length; i++) {
-				fieldData[i].status = false;
+			var e = this.FilterPersonalization.getModel("FilterPersonalization");
+			e.setProperty("/results/action", "Create");
+			e.setProperty("/selectVarVisible", false);
+			e.setProperty("/nameVarVisible", true);
+			e.setProperty("/enableCheckBox", true);
+			e.setProperty("/okPersBtnVisible", false);
+			e.setProperty("/savePersBtnVisible", true);
+			e.setProperty("/newVariantName", "");
+			var t = e.getData().results.userPersonaDto;
+			for (var r = 0; r < t.length; r++) {
+				t[r].status = false
 			}
-			PersonalizationModel.setProperty("/results/userPersonaDto", fieldData);
-			this.FilterPersonalization.getModel("FilterPersonalization").refresh();
+			e.setProperty("/results/userPersonaDto", t);
+			this.FilterPersonalization.getModel("FilterPersonalization").refresh()
 		},
-
 		onVariantEdit: function () {
-			var PersonalizationModel = this.FilterPersonalization.getModel("FilterPersonalization");
-			if (PersonalizationModel.getData().results.currentVariant === "Default") {
-				MessageToast.show(this.resourceBundle.getText("Cannoteditdefaultvariant"));
-				// MessageToast.show("Cannot edit default variant");
-				return;
+			var e = this.FilterPersonalization.getModel("FilterPersonalization");
+			if (e.getData().results.currentVariant === "Default") {
+				o.show(this.resourceBundle.getText("Cannoteditdefaultvariant"));
+				return
 			}
-			PersonalizationModel.setProperty("/results/action", "Edit");
+			e.setProperty("/results/action", "Edit");
 			this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/okPersBtnVisible", false);
-			PersonalizationModel.setProperty("/enableCheckBox", true);
-			PersonalizationModel.setProperty("/savePersBtnVisible", true);
-			PersonalizationModel.setProperty("/deletePersBtnVisible", true);
-			PersonalizationModel.setProperty("/selectVarVisible", true);
-			PersonalizationModel.setProperty("/nameVarVisible", false);
-			PersonalizationModel.refresh();
+			e.setProperty("/enableCheckBox", true);
+			e.setProperty("/savePersBtnVisible", true);
+			e.setProperty("/deletePersBtnVisible", true);
+			e.setProperty("/selectVarVisible", true);
+			e.setProperty("/nameVarVisible", false);
+			e.refresh();
 			this.onSelectvarian();
-			MessageToast.show(this.resourceBundle.getText("Selectavarianttoedit"));
-			// MessageToast.show("Select a variant to edit");
+			o.show(this.resourceBundle.getText("Selectavarianttoedit"))
 		},
-
 		onPersonlizationClose: function () {
-			var that = this;
-			var PersonalizationModel = this.getView().getModel("PersonalizationModel");
+			var e = this;
+			var t = this.getView().getModel("PersonalizationModel");
 			this.selectedObjects = [];
-			this.FilterPersonalization.close();
+			this.FilterPersonalization.close()
 		},
-
 		onVariantOK: function () {
-			var that = this;
-			var PersonalizationModel = this.getView().getModel("PersonalizationModel");
-			var FilterPersonalization = new sap.ui.model.json.JSONModel({
-				"results": this.getView().getModel("PersonalizationModel").getData()
+			var e = this;
+			var t = this.getView().getModel("PersonalizationModel");
+			var r = new sap.ui.model.json.JSONModel({
+				results: this.getView().getModel("PersonalizationModel").getData()
 			});
-			this.FilterPersonalization.setModel(FilterPersonalization, "FilterPersonalization");
+			this.FilterPersonalization.setModel(r, "FilterPersonalization");
 			this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/selectVarVisible", true);
 			this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/nameVarVisible", false);
 			this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/enableCheckBox", false);
@@ -1843,1488 +1554,1368 @@ sap.ui.define([
 			this.FilterPersonalization.getModel("FilterPersonalization").setProperty("/varinatNameValueState", "None");
 			this.selectedObjects = [];
 			this.getView().getModel("PersonalizationModel").refresh();
-			this.FilterPersonalization.close();
+			this.FilterPersonalization.close()
 		},
-
-		onSelectItemsFromInvoice: function (oEvent) {
-			var selectedContext = [];
-			var selectedObject = oEvent.getParameter("listItem").getBindingContext("invoiceSearchModel");
-			if (oEvent.getParameters().selected === true) {
-				if (oEvent.getParameters().selectAll === true) {
-					selectedContext = oEvent.getSource().getSelectedContexts();
+		onSelectItemsFromInvoice: function (e) {
+			var t = [];
+			var r = e.getParameter("listItem").getBindingContext("invoiceSearchModel");
+			if (e.getParameters().selected === true) {
+				if (e.getParameters().selectAll === true) {
+					t = e.getSource().getSelectedContexts()
 				}
-				if (oEvent.getParameters().selectAll === false) {
-					selectedContext.push(selectedObject);
+				if (e.getParameters().selectAll === false) {
+					t.push(r)
 				}
-				// check if selected invoices are of same ship to party, avail ret qty > 0, not color coded red ,not repeated and available for return or exchange
-				for (var i = 0; i < selectedContext.length; i++) {
-					var count = 0;
-					if (this.selectedReturnItems.length === 0 && parseInt(selectedContext[i].getObject().AvailRetQtySalesUn) > 0 && selectedContext[
-							i]
-						.getObject().ColorCode !== "R") {
-						if (selectedContext[i].getObject().ActiveIndicator !== "X") {
-							// selectedContext[i].getObject().SLoc = this.getView().getModel("baseModel").getProperty("/roTypeSLoc");
-							this.selectedReturnItems.push(selectedContext[i].getObject());
-							this.selectedInvoice.push(selectedContext[i].getObject());
-							this.getView().getModel("baseModel").setProperty("/returnShipTo", selectedContext[i].getObject().shipToAddress.partnerNum);
-							this.getView().getModel("baseModel").setProperty("/shipToDesc", selectedContext[i].getObject().shipToAddress.partnerName);
-							this.getView().getModel("baseModel").setProperty("/returnSoldTo", selectedContext[i].getObject().soldToAddress.partnerNum);
-							this.getView().getModel("baseModel").setProperty("/returnSoldToDesc", selectedContext[i].getObject().soldToAddress.partnerName);
-							this.getView().getModel("baseModel").setProperty("/returnBillTo", selectedContext[i].getObject().billToAdress.partnerNum);
-							this.getView().getModel("baseModel").setProperty("/returnBillToDesc", selectedContext[i].getObject().billToAdress.partnerName);
-							this.getView().getModel("baseModel").setProperty("/returnPayer", selectedContext[i].getObject().payerAddress.partnerNum);
-							this.getView().getModel("baseModel").setProperty("/returnPayerDesc", selectedContext[i].getObject().payerAddress.partnerName);
+				for (var s = 0; s < t.length; s++) {
+					var i = 0;
+					if (this.selectedReturnItems.length === 0 && parseInt(t[s].getObject().AvailRetQtySalesUn) > 0 && t[s].getObject().ColorCode !==
+						"R") {
+						if (t[s].getObject().ActiveIndicator !== "X") {
+							this.selectedReturnItems.push(t[s].getObject());
+							this.selectedInvoice.push(t[s].getObject());
+							this.getView().getModel("baseModel").setProperty("/returnShipTo", t[s].getObject().shipToAddress.partnerNum);
+							this.getView().getModel("baseModel").setProperty("/shipToDesc", t[s].getObject().shipToAddress.partnerName);
+							this.getView().getModel("baseModel").setProperty("/returnSoldTo", t[s].getObject().soldToAddress.partnerNum);
+							this.getView().getModel("baseModel").setProperty("/returnSoldToDesc", t[s].getObject().soldToAddress.partnerName);
+							this.getView().getModel("baseModel").setProperty("/returnBillTo", t[s].getObject().billToAdress.partnerNum);
+							this.getView().getModel("baseModel").setProperty("/returnBillToDesc", t[s].getObject().billToAdress.partnerName);
+							this.getView().getModel("baseModel").setProperty("/returnPayer", t[s].getObject().payerAddress.partnerNum);
+							this.getView().getModel("baseModel").setProperty("/returnPayerDesc", t[s].getObject().payerAddress.partnerName)
 						} else {
-							++count;
-							this.getView().byId("InvoiceTableId").getItems()[parseInt(selectedContext[i].sPath.split("/")[2])].setSelected(false);
-							MessageToast.show(this.resourceBundle.getText("Returnnotallowed"));
-							// MessageToast.show("Return not allowed");
+							++i;
+							this.getView().byId("InvoiceTableId").getItems()[parseInt(t[s].sPath.split("/")[2])].setSelected(false);
+							o.show(this.resourceBundle.getText("Returnnotallowed"))
 						}
 					} else if (this.selectedReturnItems.length > 0) {
-
-						for (var j = 0; j < this.selectedReturnItems.length; j++) {
-							// this.selectedReturnItems[j].shipToParty
-							if (parseInt(selectedContext[i].getObject().AvailRetQtySalesUn) > 0 && this.selectedReturnItems[j].shipToParty ===
-								selectedContext[i].getObject().shipToParty && this.selectedReturnItems[j].billToAdress.partnerNum === selectedContext[i].getObject()
-								.billToAdress.partnerNum &&
-								this.selectedReturnItems[j].payerAddress.partnerNum === selectedContext[i].getObject().payerAddress.partnerNum &&
-								selectedContext[i].getObject().ColorCode !==
-								"R") {
-								//
-								if (selectedContext[i].getObject().ActiveIndicator !== "X") {
-									if ((selectedContext[i].getObject().InvoiceLineItem === this.selectedReturnItems[j]
-											.InvoiceLineItem &&
-											selectedContext[i].getObject().InvoiceNum === this.selectedReturnItems[j]
-											.InvoiceNum)) {
-										++count;
-										this.getView().byId("InvoiceTableId").getItems()[parseInt(selectedContext[i].sPath.split("/")[2])].setSelected(false);
-										MessageToast.show(this.resourceBundle.getText("ItemisalreadyaddedtoReturns"));
-										// MessageToast.show("Item is already added to Returns");
-									} else {
-
-									}
+						for (var a = 0; a < this.selectedReturnItems.length; a++) {
+							if (parseInt(t[s].getObject().AvailRetQtySalesUn) > 0 && this.selectedReturnItems[a].shipToParty === t[s].getObject().shipToParty &&
+								this.selectedReturnItems[a].billToAdress.partnerNum === t[s].getObject().billToAdress.partnerNum && this.selectedReturnItems[a]
+								.payerAddress.partnerNum === t[s].getObject().payerAddress.partnerNum && t[s].getObject().ColorCode !== "R") {
+								if (t[s].getObject().ActiveIndicator !== "X") {
+									if (t[s].getObject().InvoiceLineItem === this.selectedReturnItems[a].InvoiceLineItem && t[s].getObject().InvoiceNum === this.selectedReturnItems[
+											a].InvoiceNum) {
+										++i;
+										this.getView().byId("InvoiceTableId").getItems()[parseInt(t[s].sPath.split("/")[2])].setSelected(false);
+										o.show(this.resourceBundle.getText("ItemisalreadyaddedtoReturns"))
+									} else {}
 								} else {
-									MessageToast.show(this.resourceBundle.getText("Returnnotallowed"));
-									// MessageToast.show("Return not allowed");
-									++count;
-									this.getView().byId("InvoiceTableId").getItems()[parseInt(selectedContext[i].sPath.split("/")[2])].setSelected(false);
+									o.show(this.resourceBundle.getText("Returnnotallowed"));
+									++i;
+									this.getView().byId("InvoiceTableId").getItems()[parseInt(t[s].sPath.split("/")[2])].setSelected(false)
 								}
 							} else {
-								MessageToast.show(this.resourceBundle.getText("Itemcannotbeadded"));
-								// MessageToast.show("Item cannot be added");
-								++count;
-								this.getView().byId("InvoiceTableId").getItems()[parseInt(selectedContext[i].sPath.split("/")[2])].setSelected(false);
+								o.show(this.resourceBundle.getText("Itemcannotbeadded"));
+								++i;
+								this.getView().byId("InvoiceTableId").getItems()[parseInt(t[s].sPath.split("/")[2])].setSelected(false)
 							}
 						}
-						if (count === 0) {
-							this.selectedReturnItems.push(selectedContext[i].getObject());
-
-							this.selectedInvoice.push(selectedContext[i].getObject());
+						if (i === 0) {
+							this.selectedReturnItems.push(t[s].getObject());
+							this.selectedInvoice.push(t[s].getObject())
 						}
 					} else {
-						this.getView().byId("InvoiceTableId").getItems()[parseInt(selectedContext[i].sPath.split("/")[2])].setSelected(false);
-						MessageToast.show(this.resourceBundle.getText("Itemcannotbeadded"));
-						// MessageToast.show("Item cannot be added");
+						this.getView().byId("InvoiceTableId").getItems()[parseInt(t[s].sPath.split("/")[2])].setSelected(false);
+						o.show(this.resourceBundle.getText("Itemcannotbeadded"))
 					}
 				}
 			} else {
-
-				if (oEvent.getParameters().selectAll === false) {
+				if (e.getParameters().selectAll === false) {
 					if (this.getView().byId("InvoiceTableId").getSelectedItems().length === 0) {
-						for (var k = this.selectedInvoice.length - 1; k >= 0; k--) {
-							for (var r = this.selectedReturnItems.length - 1; r >= 0; r--) {
+						for (var n = this.selectedInvoice.length - 1; n >= 0; n--) {
+							for (var l = this.selectedReturnItems.length - 1; l >= 0; l--) {
 								if (this.selectedReturnItems.length > 0) {
-									if (this.selectedInvoice[k].InvoiceLineItem === this.selectedReturnItems[r].InvoiceLineItem && this.selectedInvoice[k].InvoiceNum ===
-										this.selectedReturnItems[
-											r].InvoiceNum) {
-										this.selectedReturnItems.splice(r, 1);
+									if (this.selectedInvoice[n].InvoiceLineItem === this.selectedReturnItems[l].InvoiceLineItem && this.selectedInvoice[n].InvoiceNum ===
+										this.selectedReturnItems[l].InvoiceNum) {
+										this.selectedReturnItems.splice(l, 1)
 									}
 								} else {
-									break;
+									break
 								}
 							}
 						}
-						this.selectedInvoice = [];
+						this.selectedInvoice = []
 					} else {
-						for (var r = this.selectedReturnItems.length - 1; r >= 0; r--) {
-							if (selectedObject.getObject().InvoiceLineItem === this.selectedReturnItems[r].InvoiceLineItem && selectedObject.getObject().InvoiceNum ===
-								this.selectedReturnItems[
-									r].InvoiceNum) {
-								this.selectedReturnItems.splice(r, 1);
-								this.selectedInvoice.splice(r, 1);
+						for (var l = this.selectedReturnItems.length - 1; l >= 0; l--) {
+							if (r.getObject().InvoiceLineItem === this.selectedReturnItems[l].InvoiceLineItem && r.getObject().InvoiceNum === this.selectedReturnItems[
+									l].InvoiceNum) {
+								this.selectedReturnItems.splice(l, 1);
+								this.selectedInvoice.splice(l, 1)
 							}
 						}
 					}
 				}
 			}
 			if (this.selectedReturnItems.length > 10) {
-				this.getView().getModel("baseModel").setProperty("/returnTableLength", "60vh");
+				this.getView().getModel("baseModel").setProperty("/returnTableLength", "60vh")
 			} else {
-				this.getView().getModel("baseModel").setProperty("/returnTableLength", "");
+				this.getView().getModel("baseModel").setProperty("/returnTableLength", "")
 			}
 		},
-
-		// on copying selected items from invoice to return
 		onPressReturn: function () {
-			var that = this;
-			var returnsData = this.getView().getModel("returnModel").getProperty("/results");
-			var results = [];
-			var object;
-			var returnAmountTotal = 0;
+			var e = this;
+			var r = this.getView().getModel("returnModel").getProperty("/results");
+			var s = [];
+			var i;
+			var a = 0;
 			if (this.getView().getModel("invoiceSearchModel").getProperty("/results") === "") {
-				MessageBox.information("Search invoice to procced");
+				t.information("Search invoice to procced")
 			} else if (this.getView().getModel("invoiceSearchModel").getProperty("/results") !== "") {
 				if (this.selectedReturnItems.length > 0) {
 					if (this.InvQtyCount > 0) {
-						MessageBox.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
-						// MessageBox.information("Entered Returned Qty cannot be greater than Available Return Qty");
-						return;
+						t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+						return
 					}
-					that.getView().getModel("baseModel").setProperty("/disableSoldToParty", false);
-					for (var i = 0; i < this.selectedReturnItems.length; i++) {
-						returnAmountTotal = returnAmountTotal + parseFloat(this.selectedReturnItems[i].netAmount);
-						object = {
-							"refNum": "1234",
-							"itmNum": "001",
-							"matGrp": this.selectedReturnItems[i].MaterialGroup,
-							"matGrp4": this.selectedReturnItems[i].MaterialGroup4,
-							"itemRoType": "",
-							"roTypeDesc": "",
-							"material": this.selectedReturnItems[i].MaterialCode
+					e.getView().getModel("baseModel").setProperty("/disableSoldToParty", false);
+					for (var n = 0; n < this.selectedReturnItems.length; n++) {
+						a = a + parseFloat(this.selectedReturnItems[n].netAmount);
+						i = {
+							refNum: "1234",
+							itmNum: "001",
+							matGrp: this.selectedReturnItems[n].MaterialGroup,
+							matGrp4: this.selectedReturnItems[n].MaterialGroup4,
+							itemRoType: "",
+							roTypeDesc: "",
+							material: this.selectedReturnItems[n].MaterialCode
 						};
-						results.push(object);
+						s.push(i)
 					}
 					if (this._oPopover) {
-						this._oPopover = undefined;
+						this._oPopover = undefined
 					}
-					//  check if Foc items have their parents also selected 
-					var invoice = [];
-					var data = [];
-					var count = 0;
-					for (var i = 0; i < this.selectedInvoice.length; i++) {
-						if (this.selectedInvoice[i].HigherLvlItem !== "000000") {
-							for (var j = 0; j < this.selectedInvoice.length; j++) {
-								if (this.selectedInvoice[j].InvoiceNum === this.selectedInvoice[i].InvoiceNum && this.selectedInvoice[j].ItemGroup === this.selectedInvoice[
-										i].HigherLvlItem) {
-									if (this.selectedInvoice[j].HigherLvlItem === "000000") {
-										count++;
+					var l = [];
+					var d = [];
+					var g = 0;
+					for (var n = 0; n < this.selectedInvoice.length; n++) {
+						if (this.selectedInvoice[n].HigherLvlItem !== "000000") {
+							for (var p = 0; p < this.selectedInvoice.length; p++) {
+								if (this.selectedInvoice[p].InvoiceNum === this.selectedInvoice[n].InvoiceNum && this.selectedInvoice[p].ItemGroup === this.selectedInvoice[
+										n].HigherLvlItem) {
+									if (this.selectedInvoice[p].HigherLvlItem === "000000") {
+										g++
 									} else {}
 								}
 							}
 						} else {
-							count++;
+							g++
 						}
 					}
-					if (count === 0) {
-						MessageToast.show(this.resourceBundle.getText("Selectparentitem"));
-						// MessageToast.show("Select parent item");
+					if (g === 0) {
+						o.show(this.resourceBundle.getText("Selectparentitem"))
 					} else {
 						if (this.getView().getModel("baseModel").getProperty("/selectedROTypeCode") === "TI" || this.getView().getModel("baseModel").getProperty(
 								"/selectedROTypeCode") === "TK") {
-							this._getSLoc();
+							this._getSLoc()
 						} else {
-							this._ROType(results);
-
+							this._ROType(s)
 						}
-
 					}
 				} else {
-					MessageBox.information(this.resourceBundle.getText("Selectatleastoneitem"));
-					// MessageBox.information("");
+					t.information(this.resourceBundle.getText("Selectatleastoneitem"))
 				}
 			}
 		},
-
-		// fetch xsrf token for post to odata ----- to get return order type based on special mapping
-		_ROType: function (results) {
-			var that = this;
-			var payload = {
-				"d": {
-					"refNum": "1234",
-					"roType": that.ROtypeCode,
-					"roTypeDesc": "",
-					"roTyMatchingToRoTyItem": {
-						"results": results
+		_ROType: function (e) {
+			var t = this;
+			var r = {
+				d: {
+					refNum: "1234",
+					roType: t.ROtypeCode,
+					roTypeDesc: "",
+					roTyMatchingToRoTyItem: {
+						results: e
 					}
 				}
 			};
-
-			var oDataModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var url1 =
+			var o = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var s =
 				"/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_MANAGEMENT_SRV/roTypeMatchingSet(refNum='5700000669')?$expand=roTyMatchingToRoTyItem&$format=json";
-			var url = "/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_MANAGEMENT_SRV/roTypeMatchingSet";
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			var token;
+			var i = "/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_MANAGEMENT_SRV/roTypeMatchingSet";
+			var a = new sap.m.BusyDialog;
+			a.open();
+			var n;
 			$.ajax({
-				url: url1,
+				url: s,
 				type: "GET",
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("X-CSRF-Token", "Fetch");
+				beforeSend: function (e) {
+					e.setRequestHeader("X-CSRF-Token", "Fetch")
 				},
-				complete: function (xhr) {
-					token = xhr.getResponseHeader("X-CSRF-Token");
+				complete: function (e) {
+					n = e.getResponseHeader("X-CSRF-Token");
 					$.ajax({
-						url: url,
+						url: i,
 						method: "POST",
 						async: true,
-						data: JSON.stringify(payload),
-
-						beforeSend: function (xhr) {
-							xhr.setRequestHeader('X-CSRF-Token', token);
+						data: JSON.stringify(r),
+						beforeSend: function (e) {
+							e.setRequestHeader("X-CSRF-Token", n)
 						},
 						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'application/json'
+							Accept: "application/json",
+							"Content-Type": "application/json"
 						},
-
-						success: function (result, xhr, data) {
-							busyDialog.close();
-							if (result.d.roType === "TG" || result.d.roType === "TF") {
-								that.ROtypeCode = result.d.roType;
-								that.getView().getModel("baseModel").setProperty("/newSelectedROType", result.d.roTypeDesc);
-								that.getView().getModel("baseModel").setProperty("/newSelectedROTypeCode", result.d.roType);
-								that.getView().getModel("baseModel").refresh();
-							} else {
-
-							}
-							that._getSLoc();
+						success: function (e, r, o) {
+							a.close();
+							if (e.d.roType === "TG" || e.d.roType === "TF") {
+								t.ROtypeCode = e.d.roType;
+								t.getView().getModel("baseModel").setProperty("/newSelectedROType", e.d.roTypeDesc);
+								t.getView().getModel("baseModel").setProperty("/newSelectedROTypeCode", e.d.roType);
+								t.getView().getModel("baseModel").refresh()
+							} else {}
+							t._getSLoc()
 						},
-						error: function (result, xhr, data) {
-							busyDialog.close();
-							var errorMsg = "";
-							if (result.status === 504) {
-								errorMsg = that.resourceBundle.getText("timeOut");
-								// errorMsg = "Connection Fail To Fetch The Data";
-								that.errorMsg(errorMsg);
+						error: function (e, r, o) {
+							a.close();
+							var s = "";
+							if (e.status === 504) {
+								s = t.resourceBundle.getText("timeOut");
+								t.errorMsg(s)
 							} else {
-								var error = result.responseJSON.error.innererror.errordetails;
-								// errorMsg = errorMsg.error.message.value;
-
-								for (var i = 0; i < error.length; i++) {
-									if (i < error.length - 1) {
-										errorMsg = errorMsg + error[i].message;
+								var i = e.responseJSON.error.innererror.errordetails;
+								for (var n = 0; n < i.length; n++) {
+									if (n < i.length - 1) {
+										s = s + i[n].message
 									}
 								}
-								that.errorMsg(errorMsg);
+								t.errorMsg(s)
 							}
 						}
-					});
+					})
 				}
-			});
+			})
 		},
-
-		// get order type
-		_getOrderType: function (billType, CountryCode, rotype) {
-			var that = this;
-			var filters = [];
-			if (billType === undefined && CountryCode === undefined && rotype === undefined) {
-				var billingType = this.getView().getModel("invoiceSearchModel").getProperty("/billingType");
-				var countryCode = this.getView().getModel("invoiceSearchModel").getProperty("/salesOrgNo").slice(0, 2);
-				var oFilter = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter("billingType", sap.ui.model.FilterOperator.EQ, billingType),
-						new sap.ui.model.Filter("countryCode", sap.ui.model.FilterOperator.EQ, countryCode),
-						new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode),
-					],
+		_getOrderType: function (e, t, r) {
+			var o = this;
+			var s = [];
+			if (e === undefined && t === undefined && r === undefined) {
+				var i = this.getView().getModel("invoiceSearchModel").getProperty("/billingType");
+				var a = this.getView().getModel("invoiceSearchModel").getProperty("/salesOrgNo").slice(0, 2);
+				var n = new sap.ui.model.Filter({
+					filters: [new sap.ui.model.Filter("billingType", sap.ui.model.FilterOperator.EQ, i), new sap.ui.model.Filter("countryCode", sap
+						.ui.model.FilterOperator.EQ, a), new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode)],
 					and: true
-				});
+				})
 			} else {
-				var oFilter = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter("billingType", sap.ui.model.FilterOperator.EQ, billingType),
-						new sap.ui.model.Filter("countryCode", sap.ui.model.FilterOperator.EQ, countryCode),
-						new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, rotype),
-					],
+				var n = new sap.ui.model.Filter({
+					filters: [new sap.ui.model.Filter("billingType", sap.ui.model.FilterOperator.EQ, i), new sap.ui.model.Filter("countryCode", sap
+						.ui.model.FilterOperator.EQ, a), new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, r)],
 					and: true
-				});
+				})
 			}
-
-			filters.push(oFilter);
-			var oDataModel = that.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/billingTypeMappingSet", {
-				filters: filters,
+			s.push(n);
+			var l = o.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var d = new sap.m.BusyDialog;
+			d.open();
+			l.read("/billingTypeMappingSet", {
+				filters: s,
 				async: false,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					that.getView().getModel("baseModel").setProperty("/returnOrderType", oData.results[0].returnOrderType);
-					that.getView().getModel("baseModel").setProperty("/exchangeOrderType", oData.results[0].exchangeOrderType);
-					that._pricingSimulation(that.selectedReturnItems, "Returns");
+				success: function (e, t) {
+					d.close();
+					o.getView().getModel("baseModel").setProperty("/returnOrderType", e.results[0].returnOrderType);
+					o.getView().getModel("baseModel").setProperty("/exchangeOrderType", e.results[0].exchangeOrderType);
+					o._pricingSimulation(o.selectedReturnItems, "Returns")
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = JSON.parse(error.responseText);
-					errorMsg = errorMsg.error.message.value;
-					that.errorMsg(errorMsg);
+				error: function (e) {
+					d.close();
+					var t = JSON.parse(e.responseText);
+					t = t.error.message.value;
+					o.errorMsg(t)
 				}
-
-			});
+			})
 		},
-
-		// price simulation to calculate price, discount
-		_pricingSimulation: function (data, tab) {
-			var that = this;
-			var baseModel = that.getView().getModel("baseModel");
-			var returnModel = that.getView().getModel("returnModel");
-			var exchangeModel = that.getView().getModel("exchangeModel");
-			var invoiceSearchModel = that.getView().getModel("invoiceSearchModel");
-			var url = "/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_ORDERCREATION_SRV/priceSimulationHeaderSet";
-			var orderType;
-			var results = [];
-			if (tab === "Returns" || tab === "ReturnsTab") {
-				orderType = this.getView().getModel("baseModel").getData().returnOrderType;
-				var flag = "R";
+		_pricingSimulation: function (e, o) {
+			var s = this;
+			var i = s.getView().getModel("baseModel");
+			var a = s.getView().getModel("returnModel");
+			var n = s.getView().getModel("exchangeModel");
+			var l = s.getView().getModel("invoiceSearchModel");
+			var d = "/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_ORDERCREATION_SRV/priceSimulationHeaderSet";
+			var g;
+			var p = [];
+			if (o === "Returns" || o === "ReturnsTab") {
+				g = this.getView().getModel("baseModel").getData().returnOrderType;
+				var c = "R"
 			} else {
-
-				orderType = this.getView().getModel("baseModel").getData().exchangeOrderType;
-				var flag = "E";
+				g = this.getView().getModel("baseModel").getData().exchangeOrderType;
+				var c = "E"
 			}
-			for (var i = 0; i < data.length; i++) {
-				if (tab === "ReturnsTab" || tab === "Exchange" || tab === "ExchangeTab" || tab === "ExchangeDelete") {
-					if (data[i].avlRetQty === "") {
-						data[i].avlRetQty = data[i].quantity;
+			for (var u = 0; u < e.length; u++) {
+				if (o === "ReturnsTab" || o === "Exchange" || o === "ExchangeTab" || o === "ExchangeDelete") {
+					if (e[u].avlRetQty === "") {
+						e[u].avlRetQty = e[u].quantity
 					}
-					if (data[i].unitPriceInv === "") {
-						data[i].unitPriceInv = data[i].unitPrice;
+					if (e[u].unitPriceInv === "") {
+						e[u].unitPriceInv = e[u].unitPrice
 					}
-					if (data[i].listPrice !== undefined && data[i].listPrice === "") {
-						data[i].listPrice = "0.00";
+					if (e[u].listPrice !== undefined && e[u].listPrice === "") {
+						e[u].listPrice = "0.00"
 					}
-					if (data[i].expiryDate === null) {
-						data[i].expiryDate = "";
+					if (e[u].expiryDate === null) {
+						e[u].expiryDate = ""
 					}
-					if (data[i].storageLocation === null) {
-						data[i].storageLocation = "";
+					if (e[u].storageLocation === null) {
+						e[u].storageLocation = ""
 					}
-					if (data[i].itemVisibility === undefined || data[i].itemVisibility === null) {
-						data[i].itemVisibility = "false";
+					if (e[u].itemVisibility === undefined || e[u].itemVisibility === null) {
+						e[u].itemVisibility = "false"
 					}
-					if (data[i].expiryDate.includes("(")) {
-						var expDate = formatter.dateTimeFormatPS(data[i].expiryDate);
-						var billDate = formatter.dateTimeFormatPS(data[i].billingDate);
+					if (e[u].expiryDate.includes("(")) {
+						var h = r.dateTimeFormatPS(e[u].expiryDate);
+						var m = r.dateTimeFormatPS(e[u].billingDate)
 					} else {
-						var expDate = formatter.dateTimeFormat(data[i].expiryDate);
-						var billDate = formatter.dateTimeFormat(data[i].billingDate);
+						var h = r.dateTimeFormat(e[u].expiryDate);
+						var m = r.dateTimeFormat(e[u].billingDate)
 					}
-					if (data[i].manualFoc === null) {
-						data[i].manualFoc = "";
+					if (e[u].manualFoc === null) {
+						e[u].manualFoc = ""
 					}
-					if (data[i].expiryDate === "" || data[i].billingDate === "") {
-						var object = {
-							"refInvoice": data[i].refInvoice,
-							"refItemNumber": data[i].refItemNumber,
-							"matNumber": data[i].matNumber,
-							"quantity": data[i].quantity,
-							"salesUnit": data[i].salesUnit,
-							"unitPrice": data[i].unitPrice,
-							"materialGroup": data[i].materialGroup,
-							"materialGroup4": data[i].materialGroup4,
-							"avlRetQty": data[i].avlRetQty,
-							"billingQty": data[i].avlRetQty,
-							"baseUnit": data[i].salesUnit,
-							"batchNumber": data[i].batchNumber,
-							"storageLocation": data[i].storageLocation,
-							// "expiryDate": formatter.dateTimeFormatPS(data[i].expiryDate),
-							"serialNumber": data[i].serialNumber,
-							// "billingDate": formatter.dateTimeFormatPS(data[i].billingDate),
-							"unitPriceInv": data[i].unitPriceInv,
-							"listPrice": data[i].listPrice,
-							"active": data[i].active,
-							"manualFoc": data[i].manualFoc,
-							"itemVisibility": data[i].itemVisibility
-						};
+					if (e[u].expiryDate === "" || e[u].billingDate === "") {
+						var y = {
+							refInvoice: e[u].refInvoice,
+							refItemNumber: e[u].refItemNumber,
+							matNumber: e[u].matNumber,
+							quantity: e[u].quantity,
+							salesUnit: e[u].salesUnit,
+							unitPrice: e[u].unitPrice,
+							materialGroup: e[u].materialGroup,
+							materialGroup4: e[u].materialGroup4,
+							avlRetQty: e[u].avlRetQty,
+							billingQty: e[u].avlRetQty,
+							baseUnit: e[u].salesUnit,
+							batchNumber: e[u].batchNumber,
+							storageLocation: e[u].storageLocation,
+							serialNumber: e[u].serialNumber,
+							unitPriceInv: e[u].unitPriceInv,
+							listPrice: e[u].listPrice,
+							active: e[u].active,
+							manualFoc: e[u].manualFoc,
+							itemVisibility: e[u].itemVisibility
+						}
 					} else {
-						var object = {
-							"refInvoice": data[i].refInvoice,
-							"refItemNumber": data[i].refItemNumber,
-							"matNumber": data[i].matNumber,
-							"quantity": data[i].quantity,
-							"salesUnit": data[i].salesUnit,
-							"unitPrice": data[i].unitPrice,
-							"materialGroup": data[i].materialGroup,
-							"materialGroup4": data[i].materialGroup4,
-							"avlRetQty": data[i].avlRetQty,
-							"billingQty": data[i].avlRetQty,
-							"baseUnit": data[i].salesUnit,
-							"batchNumber": data[i].batchNumber,
-							"expiryDate": expDate,
-							"storageLocation": data[i].storageLocation,
-							"serialNumber": data[i].serialNumber,
-							"billingDate": billDate,
-							"unitPriceInv": data[i].unitPriceInv,
-							"listPrice": data[i].listPrice,
-							"active": data[i].active,
-							"manualFoc": data[i].manualFoc,
-							"itemVisibility": data[i].itemVisibility
-						};
+						var y = {
+							refInvoice: e[u].refInvoice,
+							refItemNumber: e[u].refItemNumber,
+							matNumber: e[u].matNumber,
+							quantity: e[u].quantity,
+							salesUnit: e[u].salesUnit,
+							unitPrice: e[u].unitPrice,
+							materialGroup: e[u].materialGroup,
+							materialGroup4: e[u].materialGroup4,
+							avlRetQty: e[u].avlRetQty,
+							billingQty: e[u].avlRetQty,
+							baseUnit: e[u].salesUnit,
+							batchNumber: e[u].batchNumber,
+							expiryDate: h,
+							storageLocation: e[u].storageLocation,
+							serialNumber: e[u].serialNumber,
+							billingDate: m,
+							unitPriceInv: e[u].unitPriceInv,
+							listPrice: e[u].listPrice,
+							active: e[u].active,
+							manualFoc: e[u].manualFoc,
+							itemVisibility: e[u].itemVisibility
+						}
 					}
 				} else {
-					var Expdate = formatter.dateTimeFormat(data[i].ExpiryDate);
-					var billingDate = formatter.dateTimeFormat(data[i].billingDateFrom);
-					var object = {
-						"refInvoice": data[i].InvoiceNum,
-						"refItemNumber": data[i].InvoiceLineItem,
-						"matNumber": data[i].MaterialCode,
-						"quantity": data[i].actualRetQty,
-						"salesUnit": data[i].actualRetUOM,
-						"unitPrice": data[i].UnitPrice,
-						"materialGroup": data[i].MaterialGroup,
-						"materialGroup4": data[i].MaterialGroup4,
-						"avlRetQty": data[i].AvailRetQtySalesUn,
-						"billingQty": data[i].BillingQty,
-						"baseUnit": data[i].BaseUnit,
-						"batchNumber": data[i].BatchNumber,
-						"expiryDate": Expdate,
-						"serialNumber": data[i].SerialNum,
-						"billingDate": billingDate,
-						"unitPriceInv": data[i].UnitPrice,
-						"listPrice": data[i].ListPrice,
-						"storageLocation": data[i].storageLocation,
-						"active": data[i].ActiveIndicator,
-						"itemVisibility": data[i].itemVisibility
-					};
+					var P = r.dateTimeFormat(e[u].ExpiryDate);
+					var f = r.dateTimeFormat(e[u].billingDateFrom);
+					var y = {
+						refInvoice: e[u].InvoiceNum,
+						refItemNumber: e[u].InvoiceLineItem,
+						matNumber: e[u].MaterialCode,
+						quantity: e[u].actualRetQty,
+						salesUnit: e[u].actualRetUOM,
+						unitPrice: e[u].UnitPrice,
+						materialGroup: e[u].MaterialGroup,
+						materialGroup4: e[u].MaterialGroup4,
+						avlRetQty: e[u].AvailRetQtySalesUn,
+						billingQty: e[u].BillingQty,
+						baseUnit: e[u].BaseUnit,
+						batchNumber: e[u].BatchNumber,
+						expiryDate: P,
+						serialNumber: e[u].SerialNum,
+						billingDate: f,
+						unitPriceInv: e[u].UnitPrice,
+						listPrice: e[u].ListPrice,
+						storageLocation: e[u].storageLocation,
+						active: e[u].ActiveIndicator,
+						itemVisibility: e[u].itemVisibility
+					}
 				}
-				results.push(object);
+				p.push(y)
 			}
-			if (tab === "ReturnsTab" || tab === "Returns") {
-				var payload = {
-					"d": {
-						"orderType": orderType,
-						"distChannel": invoiceSearchModel.getData().distChnl,
-						"salesOrg": invoiceSearchModel.getData().salesOrgNo,
-						"division": invoiceSearchModel.getData().Division,
-						"soldToParty": baseModel.getData().returnSoldTo,
-						"shipToParty": baseModel.getData().returnShipTo,
-						"billToParty": baseModel.getData().returnBillTo,
-						"payer": baseModel.getData().returnPayer,
-						"roType": this.ROtypeCode,
-						"flag": flag,
-						"navToPriceItem": {
-							"results": results
+			if (o === "ReturnsTab" || o === "Returns") {
+				var v = {
+					d: {
+						orderType: g,
+						distChannel: l.getData().distChnl,
+						salesOrg: l.getData().salesOrgNo,
+						division: l.getData().Division,
+						soldToParty: i.getData().returnSoldTo,
+						shipToParty: i.getData().returnShipTo,
+						billToParty: i.getData().returnBillTo,
+						payer: i.getData().returnPayer,
+						roType: this.ROtypeCode,
+						flag: c,
+						navToPriceItem: {
+							results: p
 						},
-						"navToPriceConditions": {
-							"results": []
+						navToPriceConditions: {
+							results: []
 						}
 					}
-				};
+				}
 			} else {
-				var payload = {
-					"d": {
-						"orderType": orderType,
-						"distChannel": invoiceSearchModel.getData().distChnl,
-						"salesOrg": invoiceSearchModel.getData().salesOrgNo,
-						"division": invoiceSearchModel.getData().Division,
-						"soldToParty": baseModel.getData().exSoldTo,
-						"shipToParty": baseModel.getData().exShipTo,
-						"billToParty": baseModel.getData().exBillTo,
-						"payer": baseModel.getData().exPayer,
-						"roType": this.ROtypeCode,
-						"flag": flag,
-						"navToPriceItem": {
-							"results": results
+				var v = {
+					d: {
+						orderType: g,
+						distChannel: l.getData().distChnl,
+						salesOrg: l.getData().salesOrgNo,
+						division: l.getData().Division,
+						soldToParty: i.getData().exSoldTo,
+						shipToParty: i.getData().exShipTo,
+						billToParty: i.getData().exBillTo,
+						payer: i.getData().exPayer,
+						roType: this.ROtypeCode,
+						flag: c,
+						navToPriceItem: {
+							results: p
 						},
-						"navToPriceConditions": {
-							"results": []
+						navToPriceConditions: {
+							results: []
 						}
 					}
-				};
+				}
 			}
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			var url1 =
-				"/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_ORDERCREATION_SRV/priceSimulationHeaderSet";
-			var token;
+			var D = new sap.m.BusyDialog;
+			D.open();
+			var M = "/DKSHODataService/sap/opu/odata/sap/ZDKSH_CC_RETURNS_ORDERCREATION_SRV/priceSimulationHeaderSet";
+			var b;
 			$.ajax({
-				url: url1,
+				url: M,
 				type: "GET",
-				beforeSend: function (xhr) {
-					xhr.setRequestHeader("X-CSRF-Token", "Fetch");
+				beforeSend: function (e) {
+					e.setRequestHeader("X-CSRF-Token", "Fetch")
 				},
-				complete: function (xhr) {
-					token = xhr.getResponseHeader("X-CSRF-Token");
-
+				complete: function (e) {
+					b = e.getResponseHeader("X-CSRF-Token");
 					$.ajax({
-						url: url,
+						url: d,
 						method: "POST",
 						async: true,
-						data: JSON.stringify(payload),
-						beforeSend: function (xhr) {
-							xhr.setRequestHeader('X-CSRF-Token', token);
+						data: JSON.stringify(v),
+						beforeSend: function (e) {
+							e.setRequestHeader("X-CSRF-Token", b)
 						},
 						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'application/json'
+							Accept: "application/json",
+							"Content-Type": "application/json"
 						},
-						success: function (result, xhr, payload) {
-							busyDialog.close();
-
-							if (tab === "Returns" || tab === "ReturnsDraft") {
-								that._wizard.setCurrentStep(that.byId("ID_WIZARD_RTEX"));
-								var oldROType = baseModel.getProperty("/selectedROTypeCode");
-								var newROType = baseModel.getProperty("/newSelectedROTypeCode");
-								var newROTypeDesc = baseModel.getProperty("/newSelectedROType");
-								if (baseModel.getProperty("/requestor") === undefined || baseModel.getProperty("/requestor") === "") {
-									baseModel.setProperty("/requestor", formatter.concatenateStrings(baseModel.getProperty("/userName"), baseModel.getProperty(
-										"/phone")));
+						success: function (e, l, d) {
+							D.close();
+							if (o === "Returns" || o === "ReturnsDraft") {
+								s._wizard.setCurrentStep(s.byId("ID_WIZARD_RTEX"));
+								var g = i.getProperty("/selectedROTypeCode");
+								var p = i.getProperty("/newSelectedROTypeCode");
+								var c = i.getProperty("/newSelectedROType");
+								if (i.getProperty("/requestor") === undefined || i.getProperty("/requestor") === "") {
+									i.setProperty("/requestor", r.concatenateStrings(i.getProperty("/userName"), i.getProperty("/phone")))
 								}
-								if (newROType) {
-									if (newROType === "TG" || newROType === "TF") {
-										if (oldROType !== newROType) {
-											baseModel.setProperty("/selectedROTypeCode", newROType);
-											baseModel.setProperty("/selectedROType", newROTypeDesc);
-											that.getView().byId("RotypeSegementedBtnID").setSelectedKey(newROType);
-											MessageBox.information(that.resourceBundle.getText("Specialmapping"));
-											// MessageBox.information("Special mapping detected, return type is changed");
+								if (p) {
+									if (p === "TG" || p === "TF") {
+										if (g !== p) {
+											i.setProperty("/selectedROTypeCode", p);
+											i.setProperty("/selectedROType", c);
+											s.getView().byId("RotypeSegementedBtnID").setSelectedKey(p);
+											t.information(s.resourceBundle.getText("Specialmapping"))
 										}
 									}
 								}
-								if (that.docVersion === "SUCCESS") {
-									baseModel.setProperty("/previewBtnVisiblitys", true);
-									baseModel.setProperty(
-										"/submitBtnVisiblitys", false);
+								if (s.docVersion === "SUCCESS") {
+									i.setProperty("/previewBtnVisiblitys", true);
+									i.setProperty("/submitBtnVisiblitys", false)
 								} else {
-									baseModel.setProperty("/previewBtnVisiblitys", true);
-									baseModel.setProperty(
-										"/submitBtnVisiblitys", true);
+									i.setProperty("/previewBtnVisiblitys", true);
+									i.setProperty("/submitBtnVisiblitys", true)
 								}
-								var returnAmountTotal = 0;
-								if (result.d.navToPriceConditions) {
-									for (var i = 0; i < result.d.navToPriceConditions.results.length; i++) {
-										that.returnConditions.push(result.d.navToPriceConditions.results[i]);
+								var u = 0;
+								if (e.d.navToPriceConditions) {
+									for (var h = 0; h < e.d.navToPriceConditions.results.length; h++) {
+										s.returnConditions.push(e.d.navToPriceConditions.results[h])
 									}
-									returnModel.setProperty("/returnConditions", that.returnConditions);
+									a.setProperty("/returnConditions", s.returnConditions)
 								}
-								for (var j = 0; j < result.d.navToPriceItem.results.length; j++) {
-
-									if (result.d.navToPriceItem.results[j].deleted === undefined) {
-										result.d.navToPriceItem.results[j].deleted = "false";
+								for (var m = 0; m < e.d.navToPriceItem.results.length; m++) {
+									if (e.d.navToPriceItem.results[m].deleted === undefined) {
+										e.d.navToPriceItem.results[m].deleted = "false"
 									}
-									/*--- settle borrow goods--*/
-									if (that.docVersion === "SUCCESS") {
-										result.d.navToPriceItem.results[j].editQtyRet = false;
-										result.d.navToPriceItem.results[j].editUOMRet = false;
-										result.d.navToPriceItem.results[j].editSLocRet = false;
-										result.d.navToPriceItem.results[j].editUPRet = false;
-										result.d.navToPriceItem.results[j].editBatchRet = false;
-										result.d.navToPriceItem.results[j].editSerialNoRet = false;
+									if (s.docVersion === "SUCCESS") {
+										e.d.navToPriceItem.results[m].editQtyRet = false;
+										e.d.navToPriceItem.results[m].editUOMRet = false;
+										e.d.navToPriceItem.results[m].editSLocRet = false;
+										e.d.navToPriceItem.results[m].editUPRet = false;
+										e.d.navToPriceItem.results[m].editBatchRet = false;
+										e.d.navToPriceItem.results[m].editSerialNoRet = false
 									} else {
-										if (baseModel.getData().selectedROTypeCode === "TI") {
-											result.d.navToPriceItem.results[j].editQtyRet = true;
-											result.d.navToPriceItem.results[j].editUOMRet = true;
-											result.d.navToPriceItem.results[j].editSLocRet = false;
-											result.d.navToPriceItem.results[j].editUPRet = false;
-											result.d.navToPriceItem.results[j].editBatchRet = false;
-											result.d.navToPriceItem.results[j].editSerialNoRet = false;
-										} else if (baseModel.getData().selectedROTypeCode === "TK") {
-											result.d.navToPriceItem.results[j].editSLocRet = false;
-											result.d.navToPriceItem.results[j].editUPRet = false;
-											result.d.navToPriceItem.results[j].editBatchRet = false;
-											result.d.navToPriceItem.results[j].editSerialNoRet = false;
-											result.d.navToPriceItem.results[j].editQtyRet = false;
-											result.d.navToPriceItem.results[j].editUOMRet = false;
+										if (i.getData().selectedROTypeCode === "TI") {
+											e.d.navToPriceItem.results[m].editQtyRet = true;
+											e.d.navToPriceItem.results[m].editUOMRet = true;
+											e.d.navToPriceItem.results[m].editSLocRet = false;
+											e.d.navToPriceItem.results[m].editUPRet = false;
+											e.d.navToPriceItem.results[m].editBatchRet = false;
+											e.d.navToPriceItem.results[m].editSerialNoRet = false
+										} else if (i.getData().selectedROTypeCode === "TK") {
+											e.d.navToPriceItem.results[m].editSLocRet = false;
+											e.d.navToPriceItem.results[m].editUPRet = false;
+											e.d.navToPriceItem.results[m].editBatchRet = false;
+											e.d.navToPriceItem.results[m].editSerialNoRet = false;
+											e.d.navToPriceItem.results[m].editQtyRet = false;
+											e.d.navToPriceItem.results[m].editUOMRet = false
 										} else {
-											result.d.navToPriceItem.results[j].editSLocRet = true;
-											result.d.navToPriceItem.results[j].editUPRet = true;
-											result.d.navToPriceItem.results[j].editBatchRet = true;
-											result.d.navToPriceItem.results[j].editSerialNoRet = true;
-											result.d.navToPriceItem.results[j].editQtyRet = true;
-											result.d.navToPriceItem.results[j].editUOMRet = true;
+											e.d.navToPriceItem.results[m].editSLocRet = true;
+											e.d.navToPriceItem.results[m].editUPRet = true;
+											e.d.navToPriceItem.results[m].editBatchRet = true;
+											e.d.navToPriceItem.results[m].editSerialNoRet = true;
+											e.d.navToPriceItem.results[m].editQtyRet = true;
+											e.d.navToPriceItem.results[m].editUOMRet = true
 										}
 									}
 								}
-								that.returnItems = result.d.navToPriceItem.results;
-								for (var i = that.returnItems.length - 1; i >= 0; i--) {
-									if (that.returnItems[i].deleted === "true") {
-										that.returnItems.splice(i, 1);
+								s.returnItems = e.d.navToPriceItem.results;
+								for (var h = s.returnItems.length - 1; h >= 0; h--) {
+									if (s.returnItems[h].deleted === "true") {
+										s.returnItems.splice(h, 1)
 									} else {
-										returnAmountTotal = returnAmountTotal + parseFloat(that.returnItems[i].netAmount);
+										u = u + parseFloat(s.returnItems[h].netAmount)
 									}
 								}
-								returnModel.setProperty("/results", that.returnItems);
-								baseModel.setProperty("/originalReturnData", JSON.parse(JSON.stringify(that.returnItems)));
-								returnModel.setProperty("/returnLength", "Returns (" + that.returnItems.length +
-									")");
-								returnModel.setProperty("/returnAmountTotal", returnAmountTotal.toFixed(2) + "(THB)");
-								returnModel.refresh();
-								that.onResetSearchInvoice();
-							} else if (tab === "ReturnsTab") {
-								var returnAmountTotal = 0;
-								var length = 0;
-								var returnRowData = result.d.navToPriceItem.results;
-								var returnData = returnModel.getProperty("/results");
-								for (var i = 0; i < returnRowData.length; i++) {
-
-									for (var j = 0; j < returnData.length; j++) {
-										if (returnRowData[i].refInvoice === returnData[j].refInvoice && returnRowData[i].refItemNumber === returnData[j].refItemNumber) {
-											if (returnData[j].deleted === "false") {
-												returnRowData[i].deleted = "false";
+								a.setProperty("/results", s.returnItems);
+								i.setProperty("/originalReturnData", JSON.parse(JSON.stringify(s.returnItems)));
+								a.setProperty("/returnLength", "Returns (" + s.returnItems.length + ")");
+								a.setProperty("/returnAmountTotal", u.toFixed(2) + "(THB)");
+								a.refresh();
+								s.onResetSearchInvoice()
+							} else if (o === "ReturnsTab") {
+								var u = 0;
+								var y = 0;
+								var P = e.d.navToPriceItem.results;
+								var f = a.getProperty("/results");
+								for (var h = 0; h < P.length; h++) {
+									for (var m = 0; m < f.length; m++) {
+										if (P[h].refInvoice === f[m].refInvoice && P[h].refItemNumber === f[m].refItemNumber) {
+											if (f[m].deleted === "false") {
+												P[h].deleted = "false"
 											} else {
-												returnRowData[i].deleted = "true";
+												P[h].deleted = "true"
 											}
-											returnData[j] = returnRowData[i];
-											if (baseModel.getData().selectedROTypeCode === "TI") {
-												returnData[j].editQtyRet = true;
-												returnData[j].editUOMRet = true;
-												returnData[j].editSLocRet = false;
-												returnData[j].editUPRet = false;
-												returnData[j].editBatchRet = false;
-												returnData[j].editSerialNoRet = false;
-											} else if (baseModel.getData().selectedROTypeCode === "TK") {
-												returnData[j].editSLocRet = false;
-												returnData[j].editUPRet = false;
-												returnData[j].editBatchRet = false;
-												returnData[j].editSerialNoRet = false;
-												returnData[j].editQtyRet = false;
-												returnData[j].editUOMRet = false;
+											f[m] = P[h];
+											if (i.getData().selectedROTypeCode === "TI") {
+												f[m].editQtyRet = true;
+												f[m].editUOMRet = true;
+												f[m].editSLocRet = false;
+												f[m].editUPRet = false;
+												f[m].editBatchRet = false;
+												f[m].editSerialNoRet = false
+											} else if (i.getData().selectedROTypeCode === "TK") {
+												f[m].editSLocRet = false;
+												f[m].editUPRet = false;
+												f[m].editBatchRet = false;
+												f[m].editSerialNoRet = false;
+												f[m].editQtyRet = false;
+												f[m].editUOMRet = false
 											} else {
-												returnData[j].editSLocRet = true;
-												returnData[j].editUPRet = true;
-												returnData[j].editBatchRet = true;
-												returnData[j].editSerialNoRet = true;
-												returnData[j].editQtyRet = true;
-												returnData[j].editUOMRet = true;
+												f[m].editSLocRet = true;
+												f[m].editUPRet = true;
+												f[m].editBatchRet = true;
+												f[m].editSerialNoRet = true;
+												f[m].editQtyRet = true;
+												f[m].editUOMRet = true
 											}
 										}
-
 									}
 								}
-								for (var j = 0; j < returnData.length; j++) {
-									if (returnData[j].deleted === "false") {
-										returnAmountTotal = returnAmountTotal + parseFloat(returnData[j].netAmount);
-										++length;
+								for (var m = 0; m < f.length; m++) {
+									if (f[m].deleted === "false") {
+										u = u + parseFloat(f[m].netAmount);
+										++y
 									}
 								}
-								returnModel.setProperty("/results", returnData);
-								baseModel.setProperty("/originalReturnData", JSON.parse(JSON.stringify(returnData)));
-								// returnModel.setProperty("/results", that._getTotalAmount(returnItems));
-								returnModel.setProperty("/returnLength", "Returns (" + length +
-									")");
-								returnModel.setProperty("/returnAmountTotal", returnAmountTotal.toFixed(2) + "(THB)");
-								returnModel.refresh();
-								if (result.d.navToPriceConditions) {
-									for (var i = 0; i < result.d.navToPriceConditions.results.length; i++) {
-										that.returnConditions.push(result.d.navToPriceConditions.results[i]);
+								a.setProperty("/results", f);
+								i.setProperty("/originalReturnData", JSON.parse(JSON.stringify(f)));
+								a.setProperty("/returnLength", "Returns (" + y + ")");
+								a.setProperty("/returnAmountTotal", u.toFixed(2) + "(THB)");
+								a.refresh();
+								if (e.d.navToPriceConditions) {
+									for (var h = 0; h < e.d.navToPriceConditions.results.length; h++) {
+										s.returnConditions.push(e.d.navToPriceConditions.results[h])
 									}
-									returnModel.setProperty("/returnConditions", that.returnConditions);
+									a.setProperty("/returnConditions", s.returnConditions)
 								}
-							} else if (tab === "Exchange") {
-								that.getView().byId("ID_TAB_BAR_PROV_APP").setSelectedKey("Exchange");
-								baseModel.setProperty("/exchangeTabVisiblity", true);
-								var exchangeAmountTotal = 0;
-								if (result.d.navToPriceConditions) {
-									that.exchangeConditions = result.d.navToPriceConditions.results;
-									exchangeModel.setProperty("/exchangeConditions", that.exchangeConditions);
+							} else if (o === "Exchange") {
+								s.getView().byId("ID_TAB_BAR_PROV_APP").setSelectedKey("Exchange");
+								i.setProperty("/exchangeTabVisiblity", true);
+								var v = 0;
+								if (e.d.navToPriceConditions) {
+									s.exchangeConditions = e.d.navToPriceConditions.results;
+									n.setProperty("/exchangeConditions", s.exchangeConditions)
 								}
-								that.exchangeItems = result.d.navToPriceItem.results;
-								for (var j = 0; j < that.exchangeItems.length; j++) {
-									exchangeAmountTotal = exchangeAmountTotal + parseFloat(that.exchangeItems[j].netAmount);
-									if (that.exchangeItems[j].higherItem !== "000000") {
-										that.exchangeItems[j].editable = false;
-
+								s.exchangeItems = e.d.navToPriceItem.results;
+								for (var m = 0; m < s.exchangeItems.length; m++) {
+									v = v + parseFloat(s.exchangeItems[m].netAmount);
+									if (s.exchangeItems[m].higherItem !== "000000") {
+										s.exchangeItems[m].editable = false
 									} else {
-										that.exchangeItems[j].editable = true;
+										s.exchangeItems[m].editable = true
 									}
-									that.exchangeItems[j].deleted = "false";
-									that.exchangeItems[j].FOCEnabled = false;
-									if (that.exchangeItems[j].refInvoice === "") {
-										if (that.exchangeItems[j].higherItem !== "000000") {
-											that.exchangeItems[j].FOCEnabled = false;
+									s.exchangeItems[m].deleted = "false";
+									s.exchangeItems[m].FOCEnabled = false;
+									if (s.exchangeItems[m].refInvoice === "") {
+										if (s.exchangeItems[m].higherItem !== "000000") {
+											s.exchangeItems[m].FOCEnabled = false
 										} else {
-											that.exchangeItems[j].FOCEnabled = true;
+											s.exchangeItems[m].FOCEnabled = true
 										}
 									} else {
-										that.exchangeItems[j].FOCEnabled = false;
+										s.exchangeItems[m].FOCEnabled = false
 									}
-									if (that.exchangeItems[j].manualFoc === "X") {
-										if (that.docVersion === "SUCCESS") {
-											that.exchangeItems[j].manualFOCCheck = true;
-											that.exchangeItems[j].FOCEnabled = false;
+									if (s.exchangeItems[m].manualFoc === "X") {
+										if (s.docVersion === "SUCCESS") {
+											s.exchangeItems[m].manualFOCCheck = true;
+											s.exchangeItems[m].FOCEnabled = false
 										} else {
-											that.exchangeItems[j].manualFOCCheck = true;
-											that.exchangeItems[j].FOCEnabled = true;
+											s.exchangeItems[m].manualFOCCheck = true;
+											s.exchangeItems[m].FOCEnabled = true
 										}
 									} else {
-										that.exchangeItems[j].manualFOCCheck = false;
+										s.exchangeItems[m].manualFOCCheck = false
 									}
-									/*--- settle borrow goods--*/
-									if (that.docVersion === "SUCCESS") {
-										that.exchangeItems[j].editSLocEx = false;
-										that.exchangeItems[j].editSerialNoEx = false;
-										that.exchangeItems[j].editable = false;
-										that.exchangeItems[j].editExqty = false;
-										that.exchangeItems[j].editBatchEx = false;
-
+									if (s.docVersion === "SUCCESS") {
+										s.exchangeItems[m].editSLocEx = false;
+										s.exchangeItems[m].editSerialNoEx = false;
+										s.exchangeItems[m].editable = false;
+										s.exchangeItems[m].editExqty = false;
+										s.exchangeItems[m].editBatchEx = false
 									} else {
-										if (baseModel.getData().selectedROTypeCode === "TI") {
-											if (baseModel.getProperty("/roTypeSLoc")) {
-												that.exchangeItems[j].storageLocation = baseModel.getProperty("/roTypeSLoc");
+										if (i.getData().selectedROTypeCode === "TI") {
+											if (i.getProperty("/roTypeSLoc")) {
+												s.exchangeItems[m].storageLocation = i.getProperty("/roTypeSLoc")
 											}
-											if (that.exchangeItems[j].refInvoice !== "") {
-												that.exchangeItems[j].editSLocEx = false;
-												that.exchangeItems[j].editSerialNoEx = true;
-												that.exchangeItems[j].editBatchEx = true;
-												that.exchangeItems[j].editBatchEx = true;
-												that.exchangeItems[j].editable = false;
-												that.exchangeItems[j].editExqty = false;
-
+											if (s.exchangeItems[m].refInvoice !== "") {
+												s.exchangeItems[m].editSLocEx = false;
+												s.exchangeItems[m].editSerialNoEx = true;
+												s.exchangeItems[m].editBatchEx = true;
+												s.exchangeItems[m].editBatchEx = true;
+												s.exchangeItems[m].editable = false;
+												s.exchangeItems[m].editExqty = false
 											} else {
-												that.exchangeItems[j].editSLocEx = true;
-												that.exchangeItems[j].editSerialNoEx = true;
-												that.exchangeItems[j].editBatchEx = true;
-												that.exchangeItems[j].editable = false;
-
-												that.exchangeItems[j].editExqty = false;
-
+												s.exchangeItems[m].editSLocEx = true;
+												s.exchangeItems[m].editSerialNoEx = true;
+												s.exchangeItems[m].editBatchEx = true;
+												s.exchangeItems[m].editable = false;
+												s.exchangeItems[m].editExqty = false
 											}
-										} else if (baseModel.getData().selectedROTypeCode === "TK") {
-											if (baseModel.getProperty("/roTypeSLoc")) {
-												that.exchangeItems[j].storageLocation = baseModel.getProperty("/roTypeSLoc");
+										} else if (i.getData().selectedROTypeCode === "TK") {
+											if (i.getProperty("/roTypeSLoc")) {
+												s.exchangeItems[m].storageLocation = i.getProperty("/roTypeSLoc")
 											}
-											if (that.exchangeItems[j].refInvoice !== "") {
-												that.exchangeItems[j].editSLocEx = false;
-												that.exchangeItems[j].editSerialNoEx = false;
-												that.exchangeItems[j].editBatchEx = true;
+											if (s.exchangeItems[m].refInvoice !== "") {
+												s.exchangeItems[m].editSLocEx = false;
+												s.exchangeItems[m].editSerialNoEx = false;
+												s.exchangeItems[m].editBatchEx = true
 											} else {
-												that.exchangeItems[j].editSLocEx = true;
-												that.exchangeItems[j].editBatchEx = true;
+												s.exchangeItems[m].editSLocEx = true;
+												s.exchangeItems[m].editBatchEx = true
 											}
 										} else {
-											that.exchangeItems[j].editSLocEx = true;
-											that.exchangeItems[j].editSerialNoEx = true;
-											that.exchangeItems[j].editBatchEx = true;
+											s.exchangeItems[m].editSLocEx = true;
+											s.exchangeItems[m].editSerialNoEx = true;
+											s.exchangeItems[m].editBatchEx = true
 										}
 									}
 								}
-
-								exchangeModel.setProperty("/results", that.exchangeItems);
-								baseModel.setProperty("/originalExchangeData", JSON.parse(JSON.stringify(that.exchangeItems)));
-								exchangeModel.setProperty("/exchangeLength", "Exchange (" + that.exchangeItems.length +
-									")");
-								exchangeModel.setProperty("/exchangeAmountTotal", exchangeAmountTotal.toFixed(2) + "(THB)");
-								exchangeModel.refresh();
-							} else if (tab === "ExchangeTab") {
-								var exchangeAmountTotal = 0;
-								if (result.d.navToPriceConditions) {
-									that.exchangeConditions = result.d.navToPriceConditions.results;
-									exchangeModel.setProperty("/exchangeConditions", that.exchangeConditions);
+								n.setProperty("/results", s.exchangeItems);
+								i.setProperty("/originalExchangeData", JSON.parse(JSON.stringify(s.exchangeItems)));
+								n.setProperty("/exchangeLength", "Exchange (" + s.exchangeItems.length + ")");
+								n.setProperty("/exchangeAmountTotal", v.toFixed(2) + "(THB)");
+								n.refresh()
+							} else if (o === "ExchangeTab") {
+								var v = 0;
+								if (e.d.navToPriceConditions) {
+									s.exchangeConditions = e.d.navToPriceConditions.results;
+									n.setProperty("/exchangeConditions", s.exchangeConditions)
 								}
-								var exchangeRowData = result.d.navToPriceItem.results;
-								var exchangeData = exchangeModel.getProperty("/results");
-								for (var i = 0; i < exchangeRowData.length; i++) {
-									exchangeAmountTotal = exchangeAmountTotal + parseFloat(exchangeRowData[i].netAmount);
-									if (exchangeRowData[i].higherItem !== "000000") {
-										exchangeRowData[i].editable = false;
+								var M = e.d.navToPriceItem.results;
+								var b = n.getProperty("/results");
+								for (var h = 0; h < M.length; h++) {
+									v = v + parseFloat(M[h].netAmount);
+									if (M[h].higherItem !== "000000") {
+										M[h].editable = false
 									} else {
-										exchangeRowData[i].editable = true;
+										M[h].editable = true
 									}
-									if (exchangeRowData[i].refInvoice === "") {
-										if (exchangeRowData[i].higherItem !== "000000") {
-											exchangeRowData[i].FOCEnabled = false;
+									if (M[h].refInvoice === "") {
+										if (M[h].higherItem !== "000000") {
+											M[h].FOCEnabled = false
 										} else {
-											exchangeRowData[i].FOCEnabled = true;
+											M[h].FOCEnabled = true
 										}
 									} else {
-										exchangeRowData[i].FOCEnabled = false;
+										M[h].FOCEnabled = false
 									}
-									if (exchangeRowData[i].manualFoc === "X") {
-										if (that.docVersion === "SUCCESS") {
-											exchangeRowData[i].manualFOCCheck = true;
-											exchangeRowData[i].FOCEnabled = false;
+									if (M[h].manualFoc === "X") {
+										if (s.docVersion === "SUCCESS") {
+											M[h].manualFOCCheck = true;
+											M[h].FOCEnabled = false
 										} else {
-											exchangeRowData[i].manualFOCCheck = true;
-											exchangeRowData[i].FOCEnabled = true;
+											M[h].manualFOCCheck = true;
+											M[h].FOCEnabled = true
 										}
 									} else {
-										exchangeRowData[i].manualFOCCheck = false;
+										M[h].manualFOCCheck = false
 									}
-									exchangeRowData[i].deleted = "false";
-									if (baseModel.getData().selectedROTypeCode === "TI") {
-										if (exchangeRowData[i].refInvoice !== "") {
-											exchangeRowData[i].editSLocEx = false;
-											exchangeRowData[i].editSerialNoEx = true;
-											exchangeRowData[i].editable = false;
-											exchangeRowData[i].editExqty = false;
+									M[h].deleted = "false";
+									if (i.getData().selectedROTypeCode === "TI") {
+										if (M[h].refInvoice !== "") {
+											M[h].editSLocEx = false;
+											M[h].editSerialNoEx = true;
+											M[h].editable = false;
+											M[h].editExqty = false
 										} else {
-
-											exchangeRowData[i].editSLocEx = true;
-											exchangeRowData[i].editSerialNoEx = true;
-											exchangeRowData[i].editable = false;
-											exchangeRowData[i].editExqty = false;
+											M[h].editSLocEx = true;
+											M[h].editSerialNoEx = true;
+											M[h].editable = false;
+											M[h].editExqty = false
 										}
-									} else if (baseModel.getData().selectedROTypeCode === "TK") {
-										if (exchangeRowData[i].refInvoice !== "") {
-											exchangeRowData[i].editSLocEx = false;
-											exchangeRowData[i].editSerialNoEx = false;
+									} else if (i.getData().selectedROTypeCode === "TK") {
+										if (M[h].refInvoice !== "") {
+											M[h].editSLocEx = false;
+											M[h].editSerialNoEx = false
 										} else {
-
-											exchangeRowData[i].editSLocEx = true;
-											exchangeRowData[i].editSerialNoEx = false;
+											M[h].editSLocEx = true;
+											M[h].editSerialNoEx = false
 										}
 									} else {
-										exchangeRowData[i].editSLocRet = true;
-										exchangeRowData[i].editSerialNoRet = true;
+										M[h].editSLocRet = true;
+										M[h].editSerialNoRet = true
 									}
 								}
-								exchangeModel.setProperty("/results", exchangeRowData);
-								baseModel.setProperty("/originalExchangeData", JSON.parse(JSON.stringify(exchangeRowData)));
-								exchangeModel.setProperty("/exchangeLength", "Exchange (" + exchangeRowData.length +
-									")");
-								exchangeModel.setProperty("/exchangeAmountTotal", exchangeAmountTotal.toFixed(2) + "(THB)");
-								exchangeModel.refresh();
-							} else if (tab === "ExchangeDelete") {
-								var exchangeAmountTotal = 0;
-								that.exchangeConditions = result.d.navToPriceConditions.results;
-								exchangeModel.setProperty("/exchangeConditions", that.exchangeConditions);
-								var exchangeRowData = result.d.navToPriceItem.results;
-								var exchangeData = exchangeModel.getProperty("/results");
-								for (var j = 0; j < exchangeData.length; j++) {
-									for (var i = 0; i < exchangeRowData.length; i++) {
-										exchangeAmountTotal = exchangeAmountTotal + parseFloat(exchangeRowData[i].netAmount);
-										exchangeRowData[i].deleted = "false";
-										if (exchangeRowData[i].higherItem !== "000000") {
-											exchangeRowData[i].editable = false;
-
+								n.setProperty("/results", M);
+								i.setProperty("/originalExchangeData", JSON.parse(JSON.stringify(M)));
+								n.setProperty("/exchangeLength", "Exchange (" + M.length + ")");
+								n.setProperty("/exchangeAmountTotal", v.toFixed(2) + "(THB)");
+								n.refresh()
+							} else if (o === "ExchangeDelete") {
+								var v = 0;
+								s.exchangeConditions = e.d.navToPriceConditions.results;
+								n.setProperty("/exchangeConditions", s.exchangeConditions);
+								var M = e.d.navToPriceItem.results;
+								var b = n.getProperty("/results");
+								for (var m = 0; m < b.length; m++) {
+									for (var h = 0; h < M.length; h++) {
+										v = v + parseFloat(M[h].netAmount);
+										M[h].deleted = "false";
+										if (M[h].higherItem !== "000000") {
+											M[h].editable = false
 										} else {
-											exchangeRowData[i].editable = true;
+											M[h].editable = true
 										}
-										if (exchangeRowData[i].refInvoice === exchangeData[j].refInvoice && exchangeRowData[i].refItemNumber ===
-											exchangeData[
-												j].refItemNumber) {
-											exchangeRowData[i].deleted = "false";
-											exchangeData[j] = exchangeRowData[i];
-										} else if (exchangeRowData[i].refInvoice === exchangeData[j].refInvoice && exchangeRowData[i].refItemNumber ===
-											"000000") {
-											exchangeRowData[i].deleted = "false";
-											exchangeData[j] = exchangeRowData[i];
+										if (M[h].refInvoice === b[m].refInvoice && M[h].refItemNumber === b[m].refItemNumber) {
+											M[h].deleted = "false";
+											b[m] = M[h]
+										} else if (M[h].refInvoice === b[m].refInvoice && M[h].refItemNumber === "000000") {
+											M[h].deleted = "false";
+											b[m] = M[h]
 										}
 									}
 								}
-								exchangeModel.setProperty("/results", exchangeData);
-								baseModel.setProperty("/originalExchangeData", JSON.parse(JSON.stringify(exchangeRowData)));
-								exchangeModel.setProperty("/exchangeLength", "Exchange (" + exchangeRowData.length +
-									")");
-								exchangeModel.setProperty("/exchangeAmountTotal", exchangeAmountTotal.toFixed(2) + "(THB)");
-								exchangeModel.refresh();
+								n.setProperty("/results", b);
+								i.setProperty("/originalExchangeData", JSON.parse(JSON.stringify(M)));
+								n.setProperty("/exchangeLength", "Exchange (" + M.length + ")");
+								n.setProperty("/exchangeAmountTotal", v.toFixed(2) + "(THB)");
+								n.refresh()
 							}
 						},
-						error: function (result, xhr, data) {
-							busyDialog.close();
-							var errorMsg = "";
-							if (result.status === 504) {
-								errorMsg = that.resourceBundle.getText("timeOut");
-								errorMsg = "Request timed-out. Please try again using different search filters or add more search filters.";
-								MessageBox.error(errorMsg);
-								// that.errorMsg(errorMsg);
+						error: function (e, r, o) {
+							D.close();
+							var i = "";
+							if (e.status === 504) {
+								i = s.resourceBundle.getText("timeOut");
+								i = "Request timed-out. Please try again using different search filters or add more search filters.";
+								t.error(i)
 							} else {
-								var generic = "";
-								var detail = "";
-								var errorContent = result.responseJSON.error.innererror.errordetails;
-								for (var i = 0; i < errorContent.length; i++) {
-									if (errorContent[i].severity === "warning") {
-										generic = generic + " " + errorContent[i].message;
+								var a = "";
+								var n = "";
+								var l = e.responseJSON.error.innererror.errordetails;
+								for (var d = 0; d < l.length; d++) {
+									if (l[d].severity === "warning") {
+										a = a + " " + l[d].message
 									} else {
-										detail = detail + " " + errorContent[i].message;
+										n = n + " " + l[d].message
 									}
 								}
-								sap.m.MessageBox.error(generic, {
+								sap.m.MessageBox.error(a, {
 									title: "Error",
 									id: "messageBoxId2",
-									details: detail,
+									details: n,
 									contentWidth: "100px"
-
-								});
+								})
 							}
 						}
-					});
+					})
 				}
-			});
+			})
 		},
-
-		selectUom: function (oEvent) {
-			var that = this;
-			var data = [];
-			if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Return" && (!this.UOMIndex.getObject().MaterialCode)) {
-				this.getView().getModel("returnModel").getData().results[parseInt(this.UOMIndex.getPath().split("/")[2])].salesUnit = oEvent.getParameters()
+		selectUom: function (e) {
+			var t = this;
+			var r = [];
+			if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Return" && !this.UOMIndex.getObject().MaterialCode) {
+				this.getView().getModel("returnModel").getData().results[parseInt(this.UOMIndex.getPath().split("/")[2])].salesUnit = e.getParameters()
 					.selectedContexts[0].getObject().alternateUom;
-				var currentObject = this.UOMIndex.getObject();
-				var returnData = this.getView().getModel("returnModel").getProperty("/results");
-				for (var j = 0; j < returnData.length; j++) {
-					if (returnData[j].refInvoice === currentObject.refInvoice) {
-						data.push(returnData[j]);
+				var o = this.UOMIndex.getObject();
+				var s = this.getView().getModel("returnModel").getProperty("/results");
+				for (var i = 0; i < s.length; i++) {
+					if (s[i].refInvoice === o.refInvoice) {
+						r.push(s[i])
 					}
 				}
-				var returnConditions = this.getView().getModel("returnModel").getProperty("/returnConditions");
-				for (var j = returnConditions.length - 1; j >= 0; j--) {
-					if (returnConditions[j].refInvoice === currentObject.refInvoice) {
-						returnConditions.splice(j, 1);
+				var a = this.getView().getModel("returnModel").getProperty("/returnConditions");
+				for (var i = a.length - 1; i >= 0; i--) {
+					if (a[i].refInvoice === o.refInvoice) {
+						a.splice(i, 1)
 					}
 				}
-				this.getView().getModel("returnModel").setProperty("/returnConditions", returnConditions);
-				this._pricingSimulation(data, "ReturnsTab");
-				this.getView().getModel("returnModel").refresh();
+				this.getView().getModel("returnModel").setProperty("/returnConditions", a);
+				this._pricingSimulation(r, "ReturnsTab");
+				this.getView().getModel("returnModel").refresh()
 			} else if (this.getView().byId("ID_TAB_BAR_PROV_APP").getSelectedKey() === "Exchange") {
-				this.getView().getModel("exchangeModel").getData().results[parseInt(this.UOMIndex.getPath().split("/")[2])].salesUnit = oEvent.getParameters()
+				this.getView().getModel("exchangeModel").getData().results[parseInt(this.UOMIndex.getPath().split("/")[2])].salesUnit = e.getParameters()
 					.selectedContexts[0].getObject().alternateUom;
 				this.currentObject = this.UOMIndex.getObject();
-				var path = parseInt(this.UOMIndex.getPath().split("/")[2]);
-				var exchangeData = this.getView().getModel("exchangeModel").getProperty("/results");
-				for (var j = 0; j < exchangeData.length; j++) {
-					// check if item is foc or manual foc 
-					if ((exchangeData[j].refInvoice === "" && exchangeData[j].higherItem !== "000000" && exchangeData[j].manualFoc !== "X" &&
-							exchangeData[j].higherItem !== "")) {} else {
-						data.push(exchangeData[j]);
+				var n = parseInt(this.UOMIndex.getPath().split("/")[2]);
+				var l = this.getView().getModel("exchangeModel").getProperty("/results");
+				for (var i = 0; i < l.length; i++) {
+					if (l[i].refInvoice === "" && l[i].higherItem !== "000000" && l[i].manualFoc !== "X" && l[i].higherItem !== "") {} else {
+						r.push(l[i])
 					}
 				}
-				this._pricingSimulation(data, "ExchangeTab");
-				this.getView().getModel("exchangeModel").refresh();
-				// }
+				this._pricingSimulation(r, "ExchangeTab");
+				this.getView().getModel("exchangeModel").refresh()
 			} else {
-				this.getView().getModel("invoiceSearchModel").getData().results[parseInt(this.UOMIndex.getPath().split("/")[2])].actualRetUOM =
-					oEvent.getParameters()
+				this.getView().getModel("invoiceSearchModel").getData().results[parseInt(this.UOMIndex.getPath().split("/")[2])].actualRetUOM = e.getParameters()
 					.selectedContexts[0].getObject().alternateUom;
-				var currentObject = this.UOMIndex.getObject();
-				this.getView().getModel("invoiceSearchModel").refresh();
+				var o = this.UOMIndex.getObject();
+				this.getView().getModel("invoiceSearchModel").refresh()
 			}
 		},
-
-		onChangeRetQTY: function (oEvent) {
+		onChangeRetQTY: function (e) {
 			this.RetQtyCount = 0;
-			var data = [];
-			var orgRetData = this.getView().getModel("baseModel").getProperty("/originalReturnData");
-			var currentObject = oEvent.getSource().getBindingContext("returnModel").getObject();
-			var returnData = this.getView().getModel("returnModel").getProperty("/results");
-			if (currentObject.quantity === "") {
-				MessageBox.information(this.resourceBundle.getText("Quantitycannotbeempty"));
-				// MessageBox.information("Quantity cannot be empty");
-				return;
+			var r = [];
+			var o = this.getView().getModel("baseModel").getProperty("/originalReturnData");
+			var s = e.getSource().getBindingContext("returnModel").getObject();
+			var i = this.getView().getModel("returnModel").getProperty("/results");
+			if (s.quantity === "") {
+				t.information(this.resourceBundle.getText("Quantitycannotbeempty"));
+				return
 			}
-			for (var i = 0; i < orgRetData.length; i++) {
-				if (orgRetData[i].refInvoice === currentObject.refInvoice && orgRetData[i].refItemNumber === currentObject.refItemNumber) {
-					if (parseFloat(currentObject.quantity) > parseFloat(orgRetData[i].avlRetQty)) {
+			for (var a = 0; a < o.length; a++) {
+				if (o[a].refInvoice === s.refInvoice && o[a].refItemNumber === s.refItemNumber) {
+					if (parseFloat(s.quantity) > parseFloat(o[a].avlRetQty)) {
 						++this.RetQtyCount;
-						MessageBox.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
-						// MessageBox.information("Return qty cannot be larger than available return Qty");
+						t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
 					} else {
 						if (this.RetQtyCount > 0) {
-							--this.RetQtyCount;
+							--this.RetQtyCount
 						}
-						for (var j = 0; j < returnData.length; j++) {
-							if (returnData[j].refInvoice === currentObject.refInvoice && returnData[j].deleted === "false") {
-								data.push(returnData[j]);
+						for (var n = 0; n < i.length; n++) {
+							if (i[n].refInvoice === s.refInvoice && i[n].deleted === "false") {
+								r.push(i[n])
 							}
 						}
-						var returnConditions = this.getView().getModel("returnModel").getProperty("/returnConditions");
-						for (var j = returnConditions.length - 1; j >= 0; j--) {
-							if (returnConditions[j].refInvoice === currentObject.refInvoice) {
-								returnConditions.splice(j, 1);
+						var l = this.getView().getModel("returnModel").getProperty("/returnConditions");
+						for (var n = l.length - 1; n >= 0; n--) {
+							if (l[n].refInvoice === s.refInvoice) {
+								l.splice(n, 1)
 							}
 						}
-						this.getView().getModel("returnModel").setProperty("/returnConditions", returnConditions);
-						this._pricingSimulation(data, "ReturnsTab");
+						this.getView().getModel("returnModel").setProperty("/returnConditions", l);
+						this._pricingSimulation(r, "ReturnsTab")
 					}
 				}
 			}
 		},
-
-		onChangeExcQty: function (oEvent) {
-
-			var data = [];
-			var orgRetData = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
-			var currentObject = oEvent.getSource().getBindingContext("exchangeModel").getObject();
-			var exchangeData = this.getView().getModel("exchangeModel").getProperty("/results");
-			if (currentObject.quantity === "") {
-				MessageBox.information(this.resourceBundle.getText("Quantitycannotbeempty"));
-				// MessageBox.information("Quantity cannot be empty");
+		onChangeExcQty: function (e) {
+			var r = [];
+			var o = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
+			var s = e.getSource().getBindingContext("exchangeModel").getObject();
+			var i = this.getView().getModel("exchangeModel").getProperty("/results");
+			if (s.quantity === "") {
+				t.information(this.resourceBundle.getText("Quantitycannotbeempty"))
 			} else {
-				for (var j = 0; j < exchangeData.length; j++) {
-					if (exchangeData[j].deleted === "false") {
-						if ((exchangeData[j].refInvoice === "" && exchangeData[j].higherItem !== "000000" && exchangeData[j].manualFoc !== "X" &&
-								exchangeData[j].higherItem !== "")) {} else {
-							data.push(exchangeData[j]);
+				for (var a = 0; a < i.length; a++) {
+					if (i[a].deleted === "false") {
+						if (i[a].refInvoice === "" && i[a].higherItem !== "000000" && i[a].manualFoc !== "X" && i[a].higherItem !== "") {} else {
+							r.push(i[a])
 						}
 					}
 				}
-				this._pricingSimulation(data, "ExchangeTab");
+				this._pricingSimulation(r, "ExchangeTab")
 			}
 		},
-
-		onAddFOC: function (oEvent) {
-			var data = [];
-			var orgRetData = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
-			var index = parseInt(oEvent.getSource().getBindingContext("exchangeModel").sPath.split("/")[2]);
-			var currentObject = oEvent.getSource().getBindingContext("exchangeModel").getObject();
-			var exchangeData = this.getView().getModel("exchangeModel").getProperty("/results");
-			if (exchangeData.length === 1) {
-				if (oEvent.getSource().getSelected() === true) {
-					oEvent.getSource().setSelected(false);
-					MessageBox.information(this.resourceBundle.getText("CannotaddmanualFOC"));
-					// MessageBox.information("Cannot add manual FOC");
+		onAddFOC: function (e) {
+			var r = [];
+			var o = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
+			var s = parseInt(e.getSource().getBindingContext("exchangeModel").sPath.split("/")[2]);
+			var i = e.getSource().getBindingContext("exchangeModel").getObject();
+			var a = this.getView().getModel("exchangeModel").getProperty("/results");
+			if (a.length === 1) {
+				if (e.getSource().getSelected() === true) {
+					e.getSource().setSelected(false);
+					t.information(this.resourceBundle.getText("CannotaddmanualFOC"))
 				}
-
 			} else {
-				var flag = oEvent.getSource().getSelected();
-				if (flag === false) {
-					currentObject.manualFoc = "";
+				var n = e.getSource().getSelected();
+				if (n === false) {
+					i.manualFoc = ""
 				} else {
-					currentObject.manualFoc = "X";
+					i.manualFoc = "X"
 				}
-
-				for (var j = 0; j < exchangeData.length; j++) {
-					if (exchangeData[j].deleted === "false") {
-						if ((exchangeData[j].refInvoice === "" && exchangeData[j].higherItem !== "000000" && exchangeData[j].higherItem !== "" &&
-								exchangeData[j].manualFoc !== "X" && index !== j)) {} else {
-							// if()
-							data.push(exchangeData[j]);
+				for (var l = 0; l < a.length; l++) {
+					if (a[l].deleted === "false") {
+						if (a[l].refInvoice === "" && a[l].higherItem !== "000000" && a[l].higherItem !== "" && a[l].manualFoc !== "X" && s !== l) {} else {
+							r.push(a[l])
 						}
 					}
 				}
-				this._pricingSimulation(data, "ExchangeTab");
+				this._pricingSimulation(r, "ExchangeTab")
 			}
 		},
-
-		onChangeUnitPrice: function (oEvent) {
+		onChangeUnitPrice: function (e) {
 			this.RetUPCount = 0;
-			var data = [];
-			var orgRetData = this.getView().getModel("baseModel").getProperty("/originalReturnData");
-			var currentObject = oEvent.getSource().getBindingContext("returnModel").getObject();
-			var returnData = this.getView().getModel("returnModel").getProperty("/results");
-			if (parseFloat(currentObject.unitPrice) < parseFloat(currentObject.unitPriceInv)) {
-				MessageToast.show(this.resourceBundle.getText("UnitPriceValidation"));
-				// MessageToast.show("Unit Price entered is less Unit Price Inv");
+			var t = [];
+			var r = this.getView().getModel("baseModel").getProperty("/originalReturnData");
+			var s = e.getSource().getBindingContext("returnModel").getObject();
+			var i = this.getView().getModel("returnModel").getProperty("/results");
+			if (parseFloat(s.unitPrice) < parseFloat(s.unitPriceInv)) {
+				o.show(this.resourceBundle.getText("UnitPriceValidation"))
 			}
-
-			for (var j = 0; j < returnData.length; j++) {
-				if (returnData[j].refInvoice === currentObject.refInvoice && returnData[j].deleted === "false") {
-					data.push(returnData[j]);
+			for (var a = 0; a < i.length; a++) {
+				if (i[a].refInvoice === s.refInvoice && i[a].deleted === "false") {
+					t.push(i[a])
 				}
 			}
-			var returnConditions = this.getView().getModel("returnModel").getProperty("/returnConditions");
-			for (var j = returnConditions.length - 1; j >= 0; j--) {
-				if (returnConditions[j].refInvoice === currentObject.refInvoice) {
-					returnConditions.splice(j, 1);
+			var n = this.getView().getModel("returnModel").getProperty("/returnConditions");
+			for (var a = n.length - 1; a >= 0; a--) {
+				if (n[a].refInvoice === s.refInvoice) {
+					n.splice(a, 1)
 				}
 			}
-			this.getView().getModel("returnModel").setProperty("/returnConditions", returnConditions);
-			this._pricingSimulation(data, "ReturnsTab");
-			// }
+			this.getView().getModel("returnModel").setProperty("/returnConditions", n);
+			this._pricingSimulation(t, "ReturnsTab")
 		},
-
-		onChangeExcUP: function (oEvent) {
+		onChangeExcUP: function (e) {
 			this.ExcUPCount = 0;
-			var data = [];
-			var orgExcData = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
-			var currentObject = oEvent.getSource().getBindingContext("exchangeModel").getObject();
-			var exchangeData = this.getView().getModel("exchangeModel").getProperty("/results");
-			if (parseFloat(currentObject.unitPrice) < parseFloat(currentObject.unitPriceInv)) {
-
-				MessageToast.show(this.resourceBundle.getText("UnitPriceValidation"));
+			var t = [];
+			var r = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
+			var s = e.getSource().getBindingContext("exchangeModel").getObject();
+			var i = this.getView().getModel("exchangeModel").getProperty("/results");
+			if (parseFloat(s.unitPrice) < parseFloat(s.unitPriceInv)) {
+				o.show(this.resourceBundle.getText("UnitPriceValidation"))
 			}
-			for (var j = 0; j < exchangeData.length; j++) {
-				if (exchangeData[j].deleted === "false") {
-					if ((exchangeData[j].refInvoice === "" && exchangeData[j].higherItem !== "000000" && exchangeData[j].manualFoc !== "X" &&
-							exchangeData[j].higherItem !== "")) {} else {
-						data.push(exchangeData[j]);
+			for (var a = 0; a < i.length; a++) {
+				if (i[a].deleted === "false") {
+					if (i[a].refInvoice === "" && i[a].higherItem !== "000000" && i[a].manualFoc !== "X" && i[a].higherItem !== "") {} else {
+						t.push(i[a])
 					}
 				}
 			}
-			this._pricingSimulation(data, "ExchangeTab");
+			this._pricingSimulation(t, "ExchangeTab")
 		},
-
-		// tab switch btw return and exchange
-		onTabSelection: function (oEvent) {
+		onTabSelection: function (e) {
 			if (this._oPopover) {
-				this._oPopover = undefined;
+				this._oPopover = undefined
 			}
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/comment", "");
-			baseModel.setProperty("/contactTelephone", "");
-			baseModel.setProperty("/contactDivision", "");
-			baseModel.setProperty("/contactPerson", "");
-			// baseModel.setProperty("/STSNotiValue", "");
-			baseModel.setProperty("/remark", "");
-			baseModel.refresh();
+			var t = this.getView().getModel("baseModel");
+			t.setProperty("/comment", "");
+			t.setProperty("/contactTelephone", "");
+			t.setProperty("/contactDivision", "");
+			t.setProperty("/contactPerson", "");
+			t.setProperty("/remark", "");
+			t.refresh()
 		},
-
 		onCopyItemsToExchange: function () {
-			var that = this;
+			var e = this;
 			if (this._oPopover) {
-				this._oPopover = undefined;
+				this._oPopover = undefined
 			}
 			if (this.RetQtyCount > 0) {
-				MessageBox.information("Entered Qty cannot be greater than Available Return Qty In Returns");
-				return;
+				t.information("Entered Qty cannot be greater than Available Return Qty In Returns");
+				return
 			}
-			var smsInputVisiblity = this.getView().getModel("baseModel").getProperty("/smsInputVisiblity");
-			var emailInputVisiblity = this.getView().getModel("baseModel").getProperty("/emailInputVisiblity");
-			if (smsInputVisiblity === true && (this.getView().getModel("baseModel").getProperty("/phoneNum") === "" || this.getView().getModel(
-					"baseModel").getProperty("/phoneNum") === undefined)) {
-				MessageToast.show(this.resourceBundle.getText("EnterPhoneNumber"));
-				// MessageToast.show("Enter Phone Number");
-				return;
+			var r = this.getView().getModel("baseModel").getProperty("/smsInputVisiblity");
+			var s = this.getView().getModel("baseModel").getProperty("/emailInputVisiblity");
+			if (r === true && (this.getView().getModel("baseModel").getProperty("/phoneNum") === "" || this.getView().getModel("baseModel").getProperty(
+					"/phoneNum") === undefined)) {
+				o.show(this.resourceBundle.getText("EnterPhoneNumber"));
+				return
 			}
-			if (emailInputVisiblity === true && (this.getView().getModel("baseModel").getProperty("/userEmailId") === "" || this.getView().getModel(
-					"baseModel").getProperty("/userEmailId") === undefined)) {
-				MessageToast.show(this.resourceBundle.getText("EnterEmailId"));
-				// MessageToast.show("Enter Email Id");
-				return;
+			if (s === true && (this.getView().getModel("baseModel").getProperty("/userEmailId") === "" || this.getView().getModel("baseModel").getProperty(
+					"/userEmailId") === undefined)) {
+				o.show(this.resourceBundle.getText("EnterEmailId"));
+				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/reasonOwner") === "" || this.getView().getModel("baseModel").getProperty(
 					"/reasonOwner") === undefined) {
-				MessageToast.show(this.resourceBundle.getText("ReasonOwnerisMandatory"));
-				// MessageToast.show("Reason Owner is Mandatory");
-				return;
+				o.show(this.resourceBundle.getText("ReasonOwnerisMandatory"));
+				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/referenceNo") === "" || this.getView().getModel("baseModel").getProperty(
 					"/referenceNo") === undefined) {
-				MessageToast.show(this.resourceBundle.getText("referenceNoisMandatory"));
-				// MessageToast.show("reference No is Mandatory");
-				return;
+				o.show(this.resourceBundle.getText("referenceNoisMandatory"));
+				return
 			}
-			var exchangeItems = [];
-			var returnItems = this.getView().getModel("returnModel").getData().results;
-			var exchangeAmountTotal = 0;
-			for (var i = 0; i < returnItems.length; i++) {
-				if (returnItems[i].deleted === "false") {
-					if (returnItems[i].active !== "E") {
-						exchangeAmountTotal = exchangeAmountTotal + parseFloat(returnItems[i].netAmount);
-						exchangeItems.push(JSON.parse(JSON.stringify(returnItems[i])));
+			var i = [];
+			var a = this.getView().getModel("returnModel").getData().results;
+			var n = 0;
+			for (var l = 0; l < a.length; l++) {
+				if (a[l].deleted === "false") {
+					if (a[l].active !== "E") {
+						n = n + parseFloat(a[l].netAmount);
+						i.push(JSON.parse(JSON.stringify(a[l])));
 						if (this.getView().getModel("baseModel").getData().selectedROTypeCode === "TI" || this.getView().getModel("baseModel").getData()
-							.selectedROTypeCode ===
-							"TK") {} else {}
+							.selectedROTypeCode === "TK") {} else {}
 					} else {
-						MessageToast.show(this.resourceBundle.getText("exchangenotallowed"));
-						// MessageToast.show("Sales/ exchange not allowed");
+						o.show(this.resourceBundle.getText("exchangenotallowed"))
 					}
-
 				}
 			}
-			if (exchangeItems.length > 0) {
-				for (var i = 0; i < exchangeItems.length; i++) {
-					exchangeItems[i].storageLocation = "";
-					exchangeItems[i].batchNumber = "";
-					exchangeItems[i].serialNumber = "";
-					exchangeItems[i].manualFoc = "";
+			if (i.length > 0) {
+				for (var l = 0; l < i.length; l++) {
+					i[l].storageLocation = "";
+					i[l].batchNumber = "";
+					i[l].serialNumber = "";
+					i[l].manualFoc = ""
 				}
 				this.selectedItemsforDelete = [];
 				this.deletedItem = [];
-				this._pricingSimulation(exchangeItems, "Exchange");
+				var d = this.getView().getModel("baseModel");
+				d.setProperty("/comment", "");
+				d.setProperty("/contactTelephone", "");
+				d.setProperty("/contactDivision", "");
+				d.setProperty("/contactPerson", "");
+				d.setProperty("/remark", "");
+				d.setProperty("/exSoldTo", d.getProperty("/returnSoldTo"));
+				d.setProperty("/exSoldToDesc", d.getProperty("/returnSoldToDesc"));
+				d.setProperty("/exShipTo", d.getProperty("/returnShipTo"));
+				d.setProperty("/exShipToDesc", d.getProperty("/shipToDesc"));
+				d.setProperty("/exBillTo", d.getProperty("/returnBillTo"));
+				d.setProperty("/exBillToDesc", d.getProperty("/returnBillToDesc"));
+				d.setProperty("/exPayer", d.getProperty("/returnPayer"));
+				d.setProperty("/exPayerDesc", d.getProperty("/returnPayerDesc"));
+				d.refresh();
+				this._pricingSimulation(i, "Exchange");
 				if (this.getView().getModel("baseModel").getProperty("/exchangeTabVisiblity") === false) {
 					this._getPersonalizationDetails("keyExchange", "Before");
-					this.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", true);
+					this.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", true)
 				}
 				this.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", true);
 				this.getView().getModel("baseModel").refresh();
-				if (exchangeItems.length > 10) {
-					this.getView().getModel("baseModel").setProperty("/exchangeTableLength", "60vh");
+				if (i.length > 10) {
+					this.getView().getModel("baseModel").setProperty("/exchangeTableLength", "60vh")
 				} else {
-					this.getView().getModel("baseModel").setProperty("/exchangeTableLength", "");
+					this.getView().getModel("baseModel").setProperty("/exchangeTableLength", "")
 				}
 			} else {
 				if (this.getView().getModel("baseModel").getProperty("/exchangeTabVisiblity") === false) {
 					this._getPersonalizationDetails("keyExchange", "Before");
 				}
+				var d = this.getView().getModel("baseModel");
 				this.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", true);
+				d.setProperty("/exSoldTo", d.getProperty("/returnSoldTo"));
+				d.setProperty("/exSoldToDesc", d.getProperty("/returnSoldToDesc"));
+				d.setProperty("/exShipTo", d.getProperty("/returnShipTo"));
+				d.setProperty("/exShipToDesc", d.getProperty("/shipToDesc"));
+				d.setProperty("/exBillTo", d.getProperty("/returnBillTo"));
+				d.setProperty("/exBillToDesc", d.getProperty("/returnBillToDesc"));
+				d.setProperty("/exPayer", d.getProperty("/returnPayer"));
+				d.setProperty("/exPayerDesc", d.getProperty("/returnPayerDesc"));
+				d.refresh();
 				this.getView().byId("ID_TAB_BAR_PROV_APP").setSelectedKey("Exchange");
-				this.getView().getModel("baseModel").refresh();
+				this.getView().getModel("baseModel").refresh()
 			}
 			if (this._oPopover) {
-				this._oPopover = undefined;
+				this._oPopover = undefined
 			}
 			this._shipToDropdown();
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/comment", "");
-			baseModel.setProperty("/contactTelephone", "");
-			baseModel.setProperty("/contactDivision", "");
-			baseModel.setProperty("/contactPerson", "");
-			baseModel.setProperty("/remark", "");
-			baseModel.setProperty("/exSoldTo", baseModel.getProperty("/returnSoldTo"));
-			baseModel.setProperty("/exSoldToDesc", baseModel.getProperty("/returnSoldToDesc"));
-			baseModel.setProperty("/exShipTo", baseModel.getProperty("/returnShipTo"));
-			baseModel.setProperty("/exShipToDesc", baseModel.getProperty("/shipToDesc"));
-			baseModel.setProperty("/exBillTo", baseModel.getProperty("/returnBillTo"));
-			baseModel.setProperty("/exBillToDesc", baseModel.getProperty("/returnBillToDesc"));
-			baseModel.setProperty("/exPayer", baseModel.getProperty("/returnPayer"));
-			baseModel.setProperty("/exPayerDesc", baseModel.getProperty("/returnPayerDesc"));
-			baseModel.refresh();
-		},
 
-		valueHelpRequestShipTo: function (oEvent) {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var baseModel = this.getView().getModel("baseModel");
-			that.ShipTO = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.ShipTO", that);
-			that.getView().addDependent(that.ShipTO);
-			var oDataModel = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, baseModel.getProperty("/exSoldTo")),
-					new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/salesOrgNo")),
-					new sap.ui.model.Filter("DistChnl", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/distChnl")),
-					new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/Division"))
+		},
+		valueHelpRequestShipTo: function (e) {
+			var t = this;
+			var r = this.getView().getModel("invoiceSearchModel");
+			var o = this.getView().getModel("baseModel");
+			t.ShipTO = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.ShipTO", t);
+			t.getView().addDependent(t.ShipTO);
+			var s = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
+			var i = [];
+			var a = new sap.ui.model.Filter({
+				filters: [new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, o.getProperty("/exSoldTo")), new sap.ui.model.Filter(
+					"SalesOrg", sap.ui.model.FilterOperator.EQ, r.getProperty("/salesOrgNo")), new sap.ui.model.Filter("DistChnl", sap.ui.model.FilterOperator
+					.EQ, r.getProperty("/distChnl")), new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, r.getProperty(
+					"/Division"))],
+				and: true
+			});
+			i.push(a);
+			var n = new sap.m.BusyDialog;
+			n.open();
+			s.read("/ShipToPartySet", {
+				async: false,
+				filters: i,
+				success: function (e, r) {
+					n.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results
+					});
+					t.ShipTO.setModel(o, "shipToModel");
+					t.ShipTO.open()
+				},
+				error: function (e) {
+					n.close();
+					var r = "";
+					if (e.statusCode === 504) {
+						r = t.resourceBundle.getText("timeOut");
+						t.errorMsg(r)
+					} else {
+						r = JSON.parse(e.responseText);
+						r = r.error.message.value;
+						t.errorMsg(r)
+					}
+				}
+			})
+		},
+		valueHelpRequestBillTo: function (e) {
+			var t = this;
+			var r = this.getView().getModel("invoiceSearchModel");
+			var o = this.getView().getModel("baseModel");
+			t.BillTo = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.BillTo", t);
+			t.getView().addDependent(t.BillTo);
+			var s = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
+			var i = [];
+			var a = new sap.ui.model.Filter({
+				filters: [new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, o.getProperty("/exSoldTo")), new sap.ui.model.Filter(
+					"SalesOrg", sap.ui.model.FilterOperator.EQ, r.getProperty("/salesOrgNo")), new sap.ui.model.Filter("DistChnl", sap.ui.model.FilterOperator
+					.EQ, r.getProperty("/distChnl")), new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, r.getProperty(
+					"/Division"))],
+				and: true
+			});
+			i.push(a);
+			var n = new sap.m.BusyDialog;
+			n.open();
+			s.read("/BillToPartySet", {
+				async: false,
+				filters: i,
+				success: function (e, r) {
+					n.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results
+					});
+					t.BillTo.setModel(o, "billToModel");
+					t.BillTo.open()
+				},
+				error: function (e) {
+					n.close();
+					var r = "";
+					if (e.statusCode === 504) {
+						r = t.resourceBundle.getText("timeOut");
+						t.errorMsg(r)
+					} else {
+						r = JSON.parse(e.responseText);
+						r = r.error.message.value;
+						t.errorMsg(r)
+					}
+				}
+			})
+		},
+		valueHelpRequestPayer: function (e) {
+			var t = this;
+			var r = this.getView().getModel("invoiceSearchModel");
+			var o = this.getView().getModel("baseModel");
+			t.Payer = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Payer", t);
+			t.getView().addDependent(t.Payer);
+			var s = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
+			var i = [];
+			var a = new sap.ui.model.Filter({
+				filters: [new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, o.getProperty("/exSoldTo")), new sap.ui.model.Filter(
+					"SalesOrg", sap.ui.model.FilterOperator.EQ, r.getProperty("/salesOrgNo")), new sap.ui.model.Filter("DistChnl", sap.ui.model.FilterOperator
+					.EQ, r.getProperty("/distChnl")), new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, r.getProperty(
+					"/Division"))],
+				and: true
+			});
+			i.push(a);
+			var n = new sap.m.BusyDialog;
+			n.open();
+			s.read("/PayerSet", {
+				async: false,
+				filters: i,
+				success: function (e, r) {
+					n.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results
+					});
+					t.Payer.setModel(o, "payerModel");
+					t.Payer.open()
+				},
+				error: function (e) {
+					n.close();
+					var r = "";
+					if (e.statusCode === 504) {
+						r = t.resourceBundle.getText("timeOut");
+						t.errorMsg(r)
+					} else {
+						r = JSON.parse(e.responseText);
+						r = r.error.message.value;
+						t.errorMsg(r)
+					}
+				}
+			})
+		},
+		_loadCity: function (e) {
+			var t = this;
+			var r = this.getView().getModel("invoiceSearchModel");
+			var o = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var s = [];
+			var invoiceData = this.selectedReturnItems;
+			if (invoiceData[0].soldToAddress) {
+				var invLanguage = invoiceData[0].soldToAddress.language;
+			} else {
+				var invLanguage = this.getView().getModel("baseModel").getProperty("/invRetLanguage");
+			}
+			var language = "";
+			if (invLanguage === "TH" || invLanguage === "2") {
+				language = "2";
+			} else {
+				language = "E";
+			}
+			var i = new sap.ui.model.Filter({
+				filters: [new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, r.getProperty("/salesOrgNo")),
+					new sap.ui.model.Filter("languageKey", sap.ui.model.FilterOperator.EQ, language)
 				],
 				and: true
 			});
-			filters.push(oFilter);
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/ShipToPartySet", {
+			s.push(i);
+			var a = new sap.m.BusyDialog;
+			a.open();
+			o.read("/cityLookupSet", {
 				async: false,
-				filters: filters,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var shipToModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results
+				filters: s,
+				success: function (e, r) {
+					a.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results
 					});
-					that.ShipTO.setModel(shipToModel, "shipToModel");
-					that.ShipTO.open();
+					t.getView().setModel(o, "cityModel")
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						// errorMsg = "Request timed-out. Please try again!";
-						errorMsg = that.resourceBundle.getText("timeOut");
-						that.errorMsg(errorMsg);
+				error: function (e) {
+					a.close();
+					var r = "";
+					if (e.statusCode === 504) {
+						r = t.resourceBundle.getText("timeOut");
+						t.errorMsg(r)
 					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
+						r = JSON.parse(e.responseText);
+						r = r.error.message.value;
+						t.errorMsg(r)
 					}
 				}
-			});
+			})
 		},
 
-		valueHelpRequestBillTo: function (oEvent) {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var baseModel = this.getView().getModel("baseModel");
-			that.BillTo = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.BillTo", that);
-			that.getView().addDependent(that.BillTo);
-			var oDataModel = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, baseModel.getProperty("/exSoldTo")),
-					new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/salesOrgNo")),
-					new sap.ui.model.Filter("DistChnl", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/distChnl")),
-					new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/Division"))
-				],
-				and: true
-			});
-			filters.push(oFilter);
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/BillToPartySet", {
-				async: false,
-				filters: filters,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var billToModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results
-					});
-					that.BillTo.setModel(billToModel, "billToModel");
-					that.BillTo.open();
-				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						// errorMsg = "Request timed-out. Please try again!";
-						errorMsg = that.resourceBundle.getText("timeOut");
-						that.errorMsg(errorMsg);
-					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
-					}
-				}
-			});
+		onCityChange: function (e) {
+			var selectedObject = e.getSource().getSelectedItem().getBindingContext("cityModel").getObject();
+			this.getView().getModel("baseModel").setProperty("/invCountry", selectedObject.country);
+			this.getView().getModel("baseModel").setProperty("/invLanguage", selectedObject.languageKey);
+			this.getView().getModel("baseModel").setProperty("/invRegion", selectedObject.region);
 		},
 
-		valueHelpRequestPayer: function (oEvent) {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var baseModel = this.getView().getModel("baseModel");
-			that.Payer = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Payer", that);
-			that.getView().addDependent(that.Payer);
-			var oDataModel = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, baseModel.getProperty("/exSoldTo")),
-					new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/salesOrgNo")),
-					new sap.ui.model.Filter("DistChnl", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/distChnl")),
-					new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/Division"))
-				],
-				and: true
-			});
-			filters.push(oFilter);
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/PayerSet", {
-				async: false,
-				filters: filters,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var payerModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results
-					});
-					that.Payer.setModel(payerModel, "payerModel");
-					that.Payer.open();
-				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						// errorMsg = "Request timed-out. Please try again!";
-						errorMsg = that.resourceBundle.getText("timeOut");
-						that.errorMsg(errorMsg);
-					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
-					}
-				}
-			});
-		},
-
-		_loadCity: function (oEvent) {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var oDataModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getProperty("/salesOrgNo")),
-				],
-				// and: true
-			});
-			filters.push(oFilter);
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/cityLookupSet", {
-				async: false,
-				filters: filters,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var cityModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results
-					});
-					that.getView().setModel(cityModel, "cityModel");
-				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						// errorMsg = "Request timed-out. Please try again!";
-						errorMsg = that.resourceBundle.getText("timeOut");
-						that.errorMsg(errorMsg);
-					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
-					}
-				}
-			});
-		},
-
-		//  stip to for exchange header
-		_shipToDropdown: function (oEvent) {
-			var that = this,
-				aPayload = this.getView().getModel("baseModel").getData(),
-				afilters = [];
-			afilters.push(new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, this.getView().getModel("invoiceSearchModel").getData()
-				.soldToParty));
-			afilters.push(new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.EQ, that.distrChannelDataAccess));
-			afilters.push(new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, that.divisionDataAccess));
-			afilters.push(new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, that.salesOrgDataAccess));
-			afilters.push(new sap.ui.model.Filter("languageID", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getProperty(
+		_shipToDropdown: function (e) {
+			var t = this,
+				r = this.getView().getModel("baseModel").getData(),
+				o = [];
+			o.push(new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, this.getView().getModel("invoiceSearchModel").getData().soldToParty));
+			o.push(new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.EQ, t.distrChannelDataAccess));
+			o.push(new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, t.divisionDataAccess));
+			o.push(new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, t.salesOrgDataAccess));
+			o.push(new sap.ui.model.Filter("languageID", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getProperty(
 				"/languageID")));
-			var oDataModel = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/ZSoldToPartySH", {
+			var s = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
+			var i = new sap.m.BusyDialog;
+			i.open();
+			s.read("/ZSoldToPartySH", {
 				async: false,
-				filters: afilters,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var shipToListSet = new sap.ui.model.json.JSONModel({
-						"results": oData.results
+				filters: o,
+				success: function (e, r) {
+					i.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results
 					});
-					that.getView().setModel(shipToListSet, "shipToListSet");
+					t.getView().setModel(o, "shipToListSet")
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						errorMsg = that.resourceBundle.getText("timeOut");
-						// errorMsg = "Request timed-out. Please try again!";
-						that.errorMsg(errorMsg);
+				error: function (e) {
+					i.close();
+					var r = "";
+					if (e.statusCode === 504) {
+						r = t.resourceBundle.getText("timeOut");
+						t.errorMsg(r)
 					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
+						r = JSON.parse(e.responseText);
+						r = r.error.message.value;
+						t.errorMsg(r)
 					}
 				}
-			});
+			})
 		},
-
-		onSelectReturnReason: function (oEvent) {
+		onSelectReturnReason: function (e) {
 			if (this.getView().getModel("baseModel").getProperty("/selectedROType") === undefined || this.getView().getModel("baseModel").getProperty(
 					"/selectedROType") === "") {
-				MessageToast.show(this.resourceBundle.getText("SelectROTypefirst"));
-				// MessageToast.show("Select RO Type first");
-				this.getView().getModel("baseModel").setProperty("/selectedReturnReason", "");
-				// return;
+				o.show(this.resourceBundle.getText("SelectROTypefirst"));
+				this.getView().getModel("baseModel").setProperty("/selectedReturnReason", "")
 			} else {
-				this.retReasonCode = oEvent.getSource().getSelectedKey();
+				this.retReasonCode = e.getSource().getSelectedKey();
 				this.getView().getModel("baseModel").setProperty("/step1Validation", true);
 				this.getView().byId("RotypeSegementedBtnID").setEnabled(false);
 				this.getView().getModel("baseModel").setProperty("/enableReturnReason", true);
 				this._getReasonOwner();
-				var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-				var baseModel = this.getView().getModel("baseModel");
-				invoiceSearchModel.setProperty("/salesOrgNo", baseModel.getData().selectedSalesOrg);
-				invoiceSearchModel.setProperty("/salesOrgDesc", baseModel.getData().selectedSalesOrgDesc);
-				invoiceSearchModel.setProperty("/distChnl", baseModel.getData().selectedDistChl);
-				invoiceSearchModel.setProperty("/distChnlDesc", baseModel.getData().selectedDistChlDesc);
-				invoiceSearchModel.setProperty("/soldToParty", baseModel.getData().selectedSoldtoParty);
-				invoiceSearchModel.setProperty("/soldToPartyDesc", baseModel.getData().selectedSoldtoPartyDesc);
-				// this._wizard.goToStep(this.byId("ID_WIZARD_SEL_CUST"));
-				this._wizard.setCurrentStep(this.byId("ID_WIZARD_SEL_CUST"));
+				var t = this.getView().getModel("invoiceSearchModel");
+				var r = this.getView().getModel("baseModel");
+				t.setProperty("/salesOrgNo", r.getData().selectedSalesOrg);
+				t.setProperty("/salesOrgDesc", r.getData().selectedSalesOrgDesc);
+				t.setProperty("/distChnl", r.getData().selectedDistChl);
+				t.setProperty("/distChnlDesc", r.getData().selectedDistChlDesc);
+				t.setProperty("/soldToParty", r.getData().selectedSoldtoParty);
+				t.setProperty("/soldToPartyDesc", r.getData().selectedSoldtoPartyDesc);
+				this._wizard.setCurrentStep(this.byId("ID_WIZARD_SEL_CUST"))
 			}
-
 		},
-
 		valueHelpRequestSalesOrg: function () {
-			var that = this;
-			if (that.salesOrgDataAccess === "No Access") {
-				MessageToast.show(this.resourceBundle.getText("NoDataAccess"));
-				// MessageToast.show("No Data Access");
+			var e = this;
+			if (e.salesOrgDataAccess === "No Access") {
+				o.show(this.resourceBundle.getText("NoDataAccess"))
 			} else {
-				this.salesOrg.open();
+				this.salesOrg.open()
 			}
 		},
-
 		handleWizardCancel: function () {
-			var that = this;
+			var e = this;
 			sap.m.MessageBox.confirm(this.resourceBundle.getText("progress"), {
-				onClose: function (sAction) {
-					if (sAction === MessageBox.Action.OK) {
-						that._discardChanges();
-						that._wizard.discardProgress(that._wizard.getSteps()[0]);
-						var router = sap.ui.core.UIComponent.getRouterFor(that);
-						router.navTo("DraftRecord");
+				onClose: function (r) {
+					if (r === t.Action.OK) {
+						e._discardChanges();
+						e._wizard.discardProgress(e._wizard.getSteps()[0]);
+						var o = sap.ui.core.UIComponent.getRouterFor(e);
+						o.navTo("DraftRecord")
 					}
 				}
-			});
+			})
 		},
-
 		_discardChanges: function () {
-			var that = this;
+			var e = this;
 			this.discard = true;
 			this.selectedRetObjects = [];
 			this.returnItems = [];
@@ -3332,2015 +2923,1736 @@ sap.ui.define([
 			this.exchangeItems = [];
 			this.exchangeConditions = [];
 			this.selectedObjects = [];
-			var attachmentObject = [];
+			var t = [];
 			this.changeSoldToParty = undefined;
 			this.getView().byId("RotypeSegementedBtnID").setEnabled(true);
-			var exchangeModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(exchangeModel, "exchangeModel");
-			var returnModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(returnModel, "returnModel");
-			this.getView().getModel("returnModel").setProperty("/attachmentObject", attachmentObject);
-			var baseModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(baseModel, "baseModel");
-			var baseModel = this.getView().getModel("baseModel");
-			var invoiceSearchModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(invoiceSearchModel, "invoiceSearchModel");
-			var PersonalizationModel = new sap.ui.model.json.JSONModel();
-			this.getView().setModel(PersonalizationModel, "PersonalizationModel");
-			baseModel.setProperty("/enableReturnReason", true);
+			var r = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(r, "exchangeModel");
+			var o = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(o, "returnModel");
+			this.getView().getModel("returnModel").setProperty("/attachmentObject", t);
+			var s = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(s, "baseModel");
+			var s = this.getView().getModel("baseModel");
+			var i = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(i, "invoiceSearchModel");
+			var a = new sap.ui.model.json.JSONModel;
+			this.getView().setModel(a, "PersonalizationModel");
+			s.setProperty("/enableReturnReason", true);
 			this.docVersion = undefined;
-			that.docVersion = undefined;
-			baseModel.setProperty("/step1Validation", false);
-			baseModel.setProperty("/step2Validation", false);
-			baseModel.setProperty("/step3Validation", false);
-			baseModel.setProperty("/step4Validation", false);
-			baseModel.setProperty("/step5Validation", false);
-			baseModel.setProperty("/phone", "");
+			e.docVersion = undefined;
+			s.setProperty("/step1Validation", false);
+			s.setProperty("/step2Validation", false);
+			s.setProperty("/step3Validation", false);
+			s.setProperty("/step4Validation", false);
+			s.setProperty("/step5Validation", false);
+			s.setProperty("/phone", "");
 			this.getView().byId("RotypeSegementedBtnID").setSelectedKey("");
 			this.getView().byId("RotypeSegementedBtnID").setSelectedButton("None");
 			this._wizard = this.byId("ID_WIZARD_RETURN");
 			this._oNavContainer = this.byId("ID_RETURN_NAVCON");
 			this._oWizardContentPage = this.byId("ID_RETURN_PAGE");
-			baseModel.setProperty("/cancelBtnVisiblitys", true);
-			baseModel.setProperty("/submitBtnVisiblitys", false);
+			s.setProperty("/cancelBtnVisiblitys", true);
+			s.setProperty("/submitBtnVisiblitys", false);
 			this.getView().getModel("baseModel").setProperty("/EXaddressVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/addressFieldEnable", true);
-			baseModel.setProperty("/EXOneTimeCustomer", "");
-			baseModel.setProperty("/oneTimeCustomer", "");
-			baseModel.setProperty("/previewBtnVisiblitys", false);
-			baseModel.setProperty("/exchangeBtnVisiblitys", false);
-			baseModel.setProperty("/saveAsDraftBtnVisiblitys", true);
-			baseModel.setProperty("/addressVisiblity", false);
-			baseModel.setProperty("/billingTypeEnable", true);
-			baseModel.setProperty("/salesOrgEditable", true);
-			baseModel.setProperty("/distChnlEditable", true);
-			baseModel.setProperty("/exchangeTabVisiblity", false);
-			baseModel.setProperty("/smsInputVisiblity", false);
-			baseModel.setProperty("/emailInputVisiblity", false);
-			baseModel.setProperty("/commentsLength", 2);
-			baseModel.setProperty("/attachmentLength", 0);
-			baseModel.setProperty("/referenceNo", "");
-			baseModel.setProperty("/reasonOwner", "");
-			baseModel.setProperty("/customerPONumber", "");
-			baseModel.setProperty("/customerPONumberEx", "");
-			baseModel.setProperty("/selectedSalesOrg", "");
-			baseModel.setProperty("/selectedSalesOrgDesc", "");
-			baseModel.setProperty("/selectedDistChnl", "");
-			baseModel.setProperty("/selectedDistChlDesc", "");
-			baseModel.setProperty("/selectedSoldtoParty", "");
-			baseModel.setProperty("/selectedSoldtoPartyDesc", "");
-			baseModel.setProperty("/completedDelivery", false);
-			baseModel.setProperty("/selectedReturnReason", "");
-			baseModel.setProperty("/phoneNumFlag", false);
-			baseModel.setProperty("/emailFlag", false);
-			baseModel.setProperty("/phoneNum", "");
-			baseModel.setProperty("/userEmailId", "");
-			baseModel.setProperty("/retDivEditablity", true);
-			baseModel.setProperty("/retSalesOrgEditablity", true);
-			baseModel.setProperty("/retDistChnlEditablity", true);
-			baseModel.setProperty("/saveAsDraftBtnVisiblitys", false);
+			s.setProperty("/EXOneTimeCustomer", "");
+			s.setProperty("/oneTimeCustomer", "");
+			s.setProperty("/previewBtnVisiblitys", false);
+			s.setProperty("/exchangeBtnVisiblitys", false);
+			s.setProperty("/saveAsDraftBtnVisiblitys", true);
+			s.setProperty("/addressVisiblity", false);
+			s.setProperty("/billingTypeEnable", true);
+			s.setProperty("/salesOrgEditable", true);
+			s.setProperty("/distChnlEditable", true);
+			s.setProperty("/exchangeTabVisiblity", false);
+			s.setProperty("/smsInputVisiblity", false);
+			s.setProperty("/emailInputVisiblity", false);
+			s.setProperty("/commentsLength", 2);
+			s.setProperty("/attachmentLength", 0);
+			s.setProperty("/referenceNo", "");
+			s.setProperty("/reasonOwner", "");
+			s.setProperty("/customerPONumber", "");
+			s.setProperty("/customerPONumberEx", "");
+			s.setProperty("/selectedSalesOrg", "");
+			s.setProperty("/selectedSalesOrgDesc", "");
+			s.setProperty("/selectedDistChnl", "");
+			s.setProperty("/selectedDistChlDesc", "");
+			s.setProperty("/selectedSoldtoParty", "");
+			s.setProperty("/selectedSoldtoPartyDesc", "");
+			s.setProperty("/completedDelivery", false);
+			s.setProperty("/selectedReturnReason", "");
+			s.setProperty("/phoneNumFlag", false);
+			s.setProperty("/emailFlag", false);
+			s.setProperty("/phoneNum", "");
+			s.setProperty("/userEmailId", "");
+			s.setProperty("/retDivEditablity", true);
+			s.setProperty("/retSalesOrgEditablity", true);
+			s.setProperty("/retDistChnlEditablity", true);
+			s.setProperty("/saveAsDraftBtnVisiblitys", false);
 			this.getView().getModel("invoiceSearchModel").setProperty("/billingCategory", "C");
 			this.getView().getModel("invoiceSearchModel").setProperty("/billingCategoryDesc", "Commercial Invoice");
-			// this._getUser();
 			this.selectedReturnItems = [];
-			that.salesOrgDataAccess = "No Access";
-			that.SLOCDataAccess = "No Access";
-			that.distrChannelDataAccess = "No Access";
-			that.divisionDataAccess = "No Access";
-			that.materialGroupDataAccess = "No Access";
-			that.materialGroup4DataAccess = "No Access";
-			that.plantDataAccess = "No Access";
-			// this.startDateRange = 4;
-			// this.endDateRange = 3;
+			e.salesOrgDataAccess = "No Access";
+			e.SLOCDataAccess = "No Access";
+			e.distrChannelDataAccess = "No Access";
+			e.divisionDataAccess = "No Access";
+			e.materialGroupDataAccess = "No Access";
+			e.materialGroup4DataAccess = "No Access";
+			e.plantDataAccess = "No Access";
 			if (sap.ui.getCore().getConfiguration().getLanguage() === "en-US") {
-
-				baseModel.setProperty("/language", "TH");
+				s.setProperty("/language", "TH")
 			} else {
-				baseModel.setProperty("/language", sap.ui.getCore().getConfiguration().getLanguage());
+				s.setProperty("/language", sap.ui.getCore().getConfiguration().getLanguage())
 			}
-			baseModel.setProperty("/languageID", "E");
-			baseModel.setProperty("/invoiceTableLength", "");
-			baseModel.setProperty("/returnTableLength", "");
-			baseModel.setProperty("/exchangeTableLength", "");
-			baseModel.setProperty("/disableSoldToParty", true);
+			s.setProperty("/languageID", "E");
+			s.setProperty("/invoiceTableLength", "");
+			s.setProperty("/returnTableLength", "");
+			s.setProperty("/exchangeTableLength", "");
+			s.setProperty("/disableSoldToParty", true);
 			this.onResetSoldToParty();
 			this.onResetSearchInvoice();
 			if (this.getView().getModel("OrderReasonSet")) {
-				this.getView().getModel("OrderReasonSet").setData("");
+				this.getView().getModel("OrderReasonSet").setData("")
 			}
 			if (sap.ui.getCore().getModel("draftItemModel")) {
-				sap.ui.getCore().setModel("draftItemModel", undefined);
+				sap.ui.getCore().setModel("draftItemModel", undefined)
 			}
-			baseModel.setProperty("/InvCollapseVisiblity", true);
-			baseModel.setProperty("/InvOpenVisiblity", false);
-			baseModel.setProperty("/InvSearchBar", true);
-			baseModel.setProperty("/ExcCollapseVisiblity", true);
-			baseModel.setProperty("/ExcOpenVisiblity", false);
-			baseModel.setProperty("/ExcSearchBar", true);
-			baseModel.setProperty("/PrevCollapseVisiblity", true);
-			baseModel.setProperty("/PrevopenVisiblity", false);
-			baseModel.setProperty("/PrevSearchBar", true);
-			baseModel.setProperty("/RetCollapseVisiblity", true);
-			baseModel.setProperty("/RetOpenVisiblity", false);
-			baseModel.setProperty("/ReturnSeacrhBar", true);
+			s.setProperty("/InvCollapseVisiblity", true);
+			s.setProperty("/InvOpenVisiblity", false);
+			s.setProperty("/InvSearchBar", true);
+			s.setProperty("/ExcCollapseVisiblity", true);
+			s.setProperty("/ExcOpenVisiblity", false);
+			s.setProperty("/ExcSearchBar", true);
+			s.setProperty("/PrevCollapseVisiblity", true);
+			s.setProperty("/PrevopenVisiblity", false);
+			s.setProperty("/PrevSearchBar", true);
+			s.setProperty("/RetCollapseVisiblity", true);
+			s.setProperty("/RetOpenVisiblity", false);
+			s.setProperty("/ReturnSeacrhBar", true)
 		},
-
 		valueHelpRequestDistChan: function () {
-			var that = this;
-			if (that.distrChannelDataAccess === "No Access") {
-				MessageToast.show(this.resourceBundle.getText("NoDataAccess"));
-				// MessageToast.show("No Data Access");
+			var e = this;
+			if (e.distrChannelDataAccess === "No Access") {
+				o.show(this.resourceBundle.getText("NoDataAccess"))
 			} else {
-				this.DistChnl.open();
+				this.DistChnl.open()
 			}
 		},
-
-		onSelectSalesOrg: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel");
-
-			baseModel.setProperty("/SalesOrg", oEvent.getSource().getSelectedItem().getText().split(" ")[0]);
-			baseModel.setProperty("/selectedSalesOrg", oEvent.getSource().getSelectedItem().getText().split(" ")[0]);
-
-			baseModel.setProperty("/Salesorg", oEvent.getSource().getSelectedItem().getText().split(" ")[0]);
-			baseModel.setProperty("/selectedSalesOrgDesc", oEvent.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
-			baseModel.setProperty("/SalesOrgDesc", oEvent.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
-			if (baseModel.getData().selectedSoldtoParty !== undefined && baseModel.getData().selectedSoldtoParty !== "") {
-				baseModel.setProperty("/step2Validation", true);
-				// this._wizard.goToStep(this.byId("ID_WIZARD_INV_SRCH"));
-				this._wizard.setCurrentStep(this.byId("ID_WIZARD_INV_SRCH"));
-
+		onSelectSalesOrg: function (e) {
+			var t = this.getView().getModel("baseModel");
+			t.setProperty("/SalesOrg", e.getSource().getSelectedItem().getText().split(" ")[0]);
+			t.setProperty("/selectedSalesOrg", e.getSource().getSelectedItem().getText().split(" ")[0]);
+			t.setProperty("/Salesorg", e.getSource().getSelectedItem().getText().split(" ")[0]);
+			t.setProperty("/selectedSalesOrgDesc", e.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
+			t.setProperty("/SalesOrgDesc", e.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
+			if (t.getData().selectedSoldtoParty !== undefined && t.getData().selectedSoldtoParty !== "") {
+				t.setProperty("/step2Validation", true);
+				this._wizard.setCurrentStep(this.byId("ID_WIZARD_INV_SRCH"))
 			}
-			baseModel.refresh();
+			t.refresh()
 		},
-
-		onchangeDistChnl: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/selectedDistChnl", oEvent.getSource().getSelectedItem().getText().split(" ")[0]);
-			baseModel.setProperty("/DistChan", oEvent.getSource().getSelectedItem().getText().split(" ")[0]);
-			baseModel.setProperty("/selectedDistChlDesc", oEvent.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
-			baseModel.refresh();
+		onchangeDistChnl: function (e) {
+			var t = this.getView().getModel("baseModel");
+			t.setProperty("/selectedDistChnl", e.getSource().getSelectedItem().getText().split(" ")[0]);
+			t.setProperty("/DistChan", e.getSource().getSelectedItem().getText().split(" ")[0]);
+			t.setProperty("/selectedDistChlDesc", e.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
+			t.refresh()
 		},
-
-		onSelectReasonOwner: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/reasonOwner", oEvent.getSource().getSelectedItem().getText().split(" ")[0] + " " + oEvent.getSource().getSelectedItem()
-				.getText().split(" ")[1]);
-			baseModel.refresh();
+		onSelectReasonOwner: function (e) {
+			var t = this.getView().getModel("baseModel");
+			t.setProperty("/reasonOwner", e.getSource().getSelectedItem().getText().split(" ")[0] + " " + e.getSource().getSelectedItem().getText()
+				.split(" ")[1]);
+			t.refresh()
 		},
-
-		onChangeShipTo: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/exShipTo", oEvent.getSource().getSelectedItem().getText().split(" ")[0]);
-			baseModel.setProperty("/exShipToDesc", oEvent.getSource().getSelectedItem().getText().split("(")[1].split(")")[0]);
+		onChangeShipTo: function (e) {
+			var t = this.getView().getModel("baseModel");
+			t.setProperty("/exShipTo", e.getSource().getSelectedItem().getText().split(" ")[0]);
+			t.setProperty("/exShipToDesc", e.getSource().getSelectedItem().getText().split("(")[1].split(")")[0])
 		},
-
-		onLiveChangeDistChan: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("DistChl", sap.ui.model.FilterOperator.Contains, value)
-			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+		onLiveChangeDistChan: function (e) {
+			var t = e.getParameters().value;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter(
+				"DistChl", sap.ui.model.FilterOperator.Contains, t)]);
+			r.push(o);
+			var s = e.getSource().getBinding("items");
+			s.filter(r)
 		},
-
-		onLiveChangeName4: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 40) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthName4", (40 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthName4", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
+		onLiveChangeName4: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthName4", 40 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeStreet2: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 40) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet2", (40 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet2", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
+		onLiveChangeStreet2: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet2", 40 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeStreet3: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 40) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet3", (40 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet3", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
+		onLiveChangeStreet3: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet3", 40 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeStreet5: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 40) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet5", (40 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet5", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
+		onLiveChangeStreet5: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthAddressStreet5", 40 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeDistrict: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 40) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthDistrict", (40 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthDistrict", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
+		onLiveChangeDistrict: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthDistrict", 40 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeDifferentCity: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 40) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthDifferentCity", (40 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthDifferentCity", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
+		onLiveChangeDifferentCity: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthDifferentCity", 40 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangePostalCode: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			if (value.length > 5) {
-				this.getView().getModel("baseModel").setProperty("/postalCode", value.substring(0, 5));
-				oEvent.getSource().setValue(value.substring(0, 5));
+		onLiveChangePostalCode: function (e) {
+			var t = e.getParameters().value;
+			if (t.length > 5) {
+				this.getView().getModel("baseModel").setProperty("/postalCode", t.substring(0, 5));
+				var a = t.substring(0, 5);
+				e.getSource().setValue("");
+				e.getSource().setValue(a);
+				this.getView().getModel("baseModel").refresh()
+			} else {
+				this.getView().getModel("baseModel").setProperty("/maxLengthPostalCode", 5 - t.length + " Char remainaing")
+			}
+			this.getView().getModel("baseModel").refresh()
+		},
+		onLiveChangeTelephone: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthtelephone", 30 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
+		},
+		onLiveChangeMobilePhone: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthmobileNumber", 30 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
+		},
+		onLiveChangeTaxID: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthtaxId", 13 - t.length + " Char remainaing");
+			this.getView().getModel("baseModel").refresh()
+		},
+		onLiveChangeBCODE: function (e) {
+			var t = e.getParameters().value;
+			if (t.length > 5) {
+				this.getView().getModel("baseModel").setProperty("/bCode", t.substring(0, 5));
+				var a = t.substring(0, 5);
+				e.getSource().setValue("");
+				e.getSource().setValue(a);
 				this.getView().getModel("baseModel").refresh();
 			} else {
-
-				this.getView().getModel("baseModel").setProperty("/maxLengthPostalCode", (5 - value.length) + " Char remainaing");
+				this.getView().getModel("baseModel").setProperty("/maxLengthbCode", 5 - t.length + " Char remainaing");
 			}
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthPostalCode", "");
+			// if (this.getView().getModel("baseModel").getProperty("/bpNummr") === "N" || this.getView().getModel("baseModel").getProperty(
+			// 		"/bpNummr") === "H") {
+			// 	this.getView().getModel("baseModel").setProperty("/bCode", "00000");
+			// 	e.getSource().setValue("00000")
 			// }
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeTelephone: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 30) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthtelephone", (30 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthtelephone", "");
-			// }
+		onLiveChangeBPNUMMR: function (e) {
+			var t = e.getParameters().value;
+			this.getView().getModel("baseModel").setProperty("/maxLengthbpNummr", 1 - t.length + " Char remainaing");
+			var r = this.getView().getModel("baseModel").getProperty("/bpNummr");
 			this.getView().getModel("baseModel").refresh();
-		},
-
-		onLiveChangeMobilePhone: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 30) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthmobileNumber", (30 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthmobileNumber", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
-		},
-
-		onLiveChangeTaxID: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 13) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthtaxId", (13 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthtaxId", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
-		},
-
-		onLiveChangeBCODE: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 5) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthbCode", (5 - value.length) + " Char remainaing");
-			if (this.getView().getModel("baseModel").getProperty("/bpNummr") === "N" || this.getView().getModel("baseModel").getProperty(
-					"/bpNummr") === "H") {
-				this.getView().getModel("baseModel").setProperty("/bCode", "00000");
-				oEvent.getSource().setValue("00000");
-			}
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthbCode", "");
-			// }
-			this.getView().getModel("baseModel").refresh();
-		},
-
-		onLiveChangeBPNUMMR: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			// if (value.length < 1) {
-			this.getView().getModel("baseModel").setProperty("/maxLengthbpNummr", (1 - value.length) + " Char remainaing");
-			// } else {
-			// this.getView().getModel("baseModel").setProperty("/maxLengthbpNummr", "");
-			// }
-			var previousVal = this.getView().getModel("baseModel").getProperty("/bpNummr");
-			this.getView().getModel("baseModel").refresh();
-			if (value === "N" || value === "H") {
-				this.getView().getModel("baseModel").setProperty("/bCode", "00000");
-			} else if (value === "") {
-				this.getView().getModel("baseModel").setProperty("/bCode", "");
-			} else {
+			// if (t === "N" || t === "H") {
+			// 	this.getView().getModel("baseModel").setProperty("/bCode", "00000")
+			// } else if (t === "") {
+			// 	// this.getView().getModel("baseModel").setProperty("/bCode", "")
+			// } 
+			if (t !== "" && t !== "N" && t !== "H") {
 				this.getView().getModel("baseModel").setProperty("/bpNummr", "");
-				oEvent.getSource().setValue("");
-				MessageToast.show("Invalid Input");
+				e.getSource().setValue("");
+				o.show("Invalid Input")
 			}
 		},
-
-		onSearchSoldToParty: function (oEvent) {
-			var that = this,
-				aPayload = this.getView().getModel("baseModel").getData(),
-				afilters = [];
-			if (that.allAccess === false) {
-				MessageToast.show(this.resourceBundle.getText("NoDataAccess"));
-				return;
+		onSearchSoldToParty: function (e) {
+			var r = this,
+				s = this.getView().getModel("baseModel").getData(),
+				i = [];
+			if (r.allAccess === false) {
+				o.show(this.resourceBundle.getText("NoDataAccess"));
+				return
 			}
-			if ((aPayload.SoldtoParty === "" || aPayload.SoldtoParty === undefined) && (aPayload.SoldTopartyName === "" || aPayload.SoldTopartyName ===
-					undefined) && (aPayload.Division === "" || aPayload.Division === undefined) && (aPayload.SalesOrg === "" || aPayload.SalesOrg ===
-					undefined) &&
-				(aPayload.DistChan === "" || aPayload.DistChan === undefined)) {
-				MessageBox.information(this.resourceBundle.getText("Selectatleastoneinputcriteria"));
-				// MessageBox.information("Select at least one input criteria");
-				return;
+			if ((s.SoldtoParty === "" || s.SoldtoParty === undefined) && (s.SoldTopartyName === "" || s.SoldTopartyName === undefined) && (s.Division ===
+					"" || s.Division === undefined) && (s.SalesOrg === "" || s.SalesOrg === undefined) && (s.DistChan === "" || s.DistChan ===
+					undefined)) {
+				t.information(this.resourceBundle.getText("Selectatleastoneinputcriteria"));
+				return
 			}
-			if (aPayload.SoldtoParty !== "" && aPayload.SoldtoParty !== undefined) {
-				afilters.push(new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, aPayload.SoldtoParty));
+			if (s.SoldtoParty !== "" && s.SoldtoParty !== undefined) {
+				i.push(new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.EQ, s.SoldtoParty))
 			}
-			if (that.custCodeDataAccess !== "*" && that.custCodeDataAccess !== undefined) {
-				afilters.push(new sap.ui.model.Filter("custNumEx", sap.ui.model.FilterOperator.EQ, that.custCodeDataAccess));
+			if (r.custCodeDataAccess !== "*" && r.custCodeDataAccess !== undefined) {
+				i.push(new sap.ui.model.Filter("custNumEx", sap.ui.model.FilterOperator.EQ, r.custCodeDataAccess))
 			}
-			// if(customerCodeDac)
-
-			if (aPayload.DistChan !== "" && aPayload.DistChan !== undefined) {
-				afilters.push(new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.EQ, aPayload.DistChan));
+			if (s.DistChan !== "" && s.DistChan !== undefined) {
+				i.push(new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.EQ, s.DistChan))
 			} else {
-				afilters.push(new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.EQ, that.distrChannelDataAccess));
+				i.push(new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.EQ, r.distrChannelDataAccess))
 			}
-			if (aPayload.Division !== "" && aPayload.Division !== undefined) {
-				afilters.push(new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, aPayload.Division));
+			if (s.Division !== "" && s.Division !== undefined) {
+				i.push(new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, s.Division))
 			} else {
-				afilters.push(new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, that.divisionDataAccess));
+				i.push(new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, r.divisionDataAccess))
 			}
-			if (aPayload.SalesOrg !== "" && aPayload.SalesOrg !== undefined) {
-				afilters.push(new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, aPayload.SalesOrg));
+			if (s.SalesOrg !== "" && s.SalesOrg !== undefined) {
+				i.push(new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, s.SalesOrg))
 			} else {
-				afilters.push(new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, that.salesOrgDataAccess));
+				i.push(new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.EQ, r.salesOrgDataAccess))
 			}
-			// if (this {\
 			if (this.getView().getModel("baseModel").getProperty("/languageID") === "E") {
-				if (aPayload.SoldTopartyName !== "" && aPayload.SoldTopartyName !== undefined) {
-					afilters.push(new sap.ui.model.Filter("Name1", sap.ui.model.FilterOperator.EQ, "*" + aPayload.SoldTopartyName.toUpperCase() +
-						"*"));
+				if (s.SoldTopartyName !== "" && s.SoldTopartyName !== undefined) {
+					i.push(new sap.ui.model.Filter("Name1", sap.ui.model.FilterOperator.EQ, "*" + s.SoldTopartyName.toUpperCase() + "*"))
 				}
 			} else {
-				if (aPayload.SoldTopartyName !== "" && aPayload.SoldTopartyName !== undefined) {
-					afilters.push(new sap.ui.model.Filter("Name2", sap.ui.model.FilterOperator.EQ, "*" + aPayload.SoldTopartyName.toUpperCase() +
-						"*"));
+				if (s.SoldTopartyName !== "" && s.SoldTopartyName !== undefined) {
+					i.push(new sap.ui.model.Filter("Name2", sap.ui.model.FilterOperator.EQ, "*" + s.SoldTopartyName.toUpperCase() + "*"))
 				}
 			}
-			afilters.push(new sap.ui.model.Filter("languageID", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getProperty(
+			i.push(new sap.ui.model.Filter("languageID", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getProperty(
 				"/languageID")));
-			// } else {
-			// 	afilters.push(new sap.ui.model.Filter("languageID", sap.ui.model.FilterOperator.EQ, "E"));
-			// }
-			var oDataModel = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
+			var a = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
+			var n = new sap.m.BusyDialog;
+			n.open();
 			if (this._wizard.getCurrentStep() === "__xmlview1--ID_WIZARD_RTEX" || this._wizard.getCurrentStep() ===
 				"__xmlview0--ID_WIZARD_RTEX") {
-				var entity = "/ZSoldToPartySet";
+				var l = "/ZSoldToPartySet"
 			} else {
-				var entity = "/ZSoldToPartySH";
+				var l = "/ZSoldToPartySH"
 			}
-			oDataModel.read(entity, {
+			a.read(l, {
 				async: false,
-				filters: afilters,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var SoldToPartyListSet = new sap.ui.model.json.JSONModel({
-						"results": oData.results
+				filters: i,
+				success: function (e, t) {
+					n.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results
 					});
-					that.SoldtoParty.setModel(SoldToPartyListSet, "SoldToPartyListSet");
-					that.SoldtoParty.getModel("SoldToPartyListSet").setProperty("/length", "Sold to (" + oData.results.length + ")");
-
-					// that.CustCodeFrag.getModel("SoldToPartyListSet").setData({
-					// 	"results": oData.d.results
-					// });
-
+					r.SoldtoParty.setModel(o, "SoldToPartyListSet");
+					r.SoldtoParty.getModel("SoldToPartyListSet").setProperty("/length", "Sold to (" + e.results.length + ")")
 				},
-				error: function (error) {
-					busyDialog.close();
-					// MessageBox.error(JSON.parse(error.responseText).error.message.value);
-					// that.busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						errorMsg = that.resourceBundle.getText("timeOut");
-						// errorMsg = "Request timed-out. Please try again!";
-						// errorMsg = that.i18nModel.getProperty("connectionFailToFetchTheData");
-						that.errorMsg(errorMsg);
+				error: function (e) {
+					n.close();
+					var t = "";
+					if (e.statusCode === 504) {
+						t = r.resourceBundle.getText("timeOut");
+						r.errorMsg(t)
 					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
+						t = JSON.parse(e.responseText);
+						t = t.error.message.value;
+						r.errorMsg(t)
 					}
 				}
-			});
-
+			})
 		},
-
 		onSortPress: function () {
 			if (!this.SortFrag) {
 				this.SortFrag = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.sort", this);
-				this.getView().addDependent(this.SortFrag);
+				this.getView().addDependent(this.SortFrag)
 			}
-			this.SortFrag.open();
+			this.SortFrag.open()
 		},
-
-		handleSortDialogConfirm: function (oEvent) {
-			var oTable = sap.ui.getCore().byId("idSoldtoPartyTable"),
-				mParams = oEvent.getParameters(),
-				oBinding = oTable.getBinding("items"),
-				sPath,
-				bDescending,
-				aSorters = [];
-			sPath = mParams.sortItem.getKey();
-			bDescending = mParams.sortDescending;
-			aSorters.push(new Sorter(sPath, bDescending));
-
-			// apply the selected sort and group settings
-			oBinding.sort(aSorters);
+		handleSortDialogConfirm: function (e) {
+			var t = sap.ui.getCore().byId("idSoldtoPartyTable"),
+				r = e.getParameters(),
+				o = t.getBinding("items"),
+				s, i, n = [];
+			s = r.sortItem.getKey();
+			i = r.sortDescending;
+			n.push(new a(s, i));
+			o.sort(n)
 		},
-
-		// on click of submit of sold-to-party f4 help
-		onSubmitSoldtoParty: function (oEvent) {
-			var oTable = sap.ui.getCore().byId("idSoldtoPartyTable");
-			if (oTable.getItems().length > 0 && oTable.getSelectedContextPaths().length > 0) {
-				var oBinding = oTable.getSelectedItem().getBindingContext("SoldToPartyListSet");
-				var baseModel = this.getView().getModel("baseModel").getData();
+		onSubmitSoldtoParty: function (e) {
+			var r = sap.ui.getCore().byId("idSoldtoPartyTable");
+			if (r.getItems().length > 0 && r.getSelectedContextPaths().length > 0) {
+				var s = r.getSelectedItem().getBindingContext("SoldToPartyListSet");
+				var i = this.getView().getModel("baseModel").getData();
 				if (this._wizard.getCurrentStep().includes("ID_WIZARD_RTEX") === true) {
-					//=== "__xmlview1--ID_WIZARD_RTEX"
 					if (this.getView().getModel("exchangeModel") && this.getView().getModel("exchangeModel").getProperty("/results").length > 0) {
 						this.changeSoldToParty = true;
-						baseModel.exSoldTo = oBinding.getProperty("CustCode");
-						baseModel.exSoldToDesc = oBinding.getProperty("Name1");
-						baseModel.exShipTo = oBinding.getProperty("shipToParty");
-						baseModel.exShipToDesc = oBinding.getProperty("shipToPartyName");
-						baseModel.exPayer = oBinding.getProperty("payer");
-						baseModel.exPayerDesc = oBinding.getProperty("payerName");
-						baseModel.partnerName = oBinding.getProperty("payerName");
-						baseModel.exBillTo = oBinding.getProperty("billToParty");
-						baseModel.exBillToDesc = oBinding.getProperty("billToPartyName");
-						this.getView().getModel("baseModel").setProperty(
-							"/EXOneTimeCustomer", oBinding.getProperty("oneTimeCustomer"));
+						i.exSoldTo = s.getProperty("CustCode");
+						i.exSoldToDesc = s.getProperty("Name1");
+						i.exShipTo = s.getProperty("shipToParty");
+						i.exShipToDesc = s.getProperty("shipToPartyName");
+						i.exPayer = s.getProperty("payer");
+						i.exPayerDesc = s.getProperty("payerName");
+						i.partnerName = s.getProperty("payerName");
+						i.exBillTo = s.getProperty("billToParty");
+						i.exBillToDesc = s.getProperty("billToPartyName");
+						this.getView().getModel("baseModel").setProperty("/EXOneTimeCustomer", s.getProperty("oneTimeCustomer"));
 						this.getView().getModel("baseModel").refresh();
 						this.onResetSoldToParty();
 						this.SoldtoParty.close();
-
-						this._pricingSimulation(this.getView().getModel("exchangeModel")
-							.getProperty(
-								"/results"), "Exchange");
+						this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange")
 					} else {
-						MessageToast.show("Add items for exchange");
+						o.show("Add items for exchange")
 					}
 				} else {
-					baseModel.selectedSoldtoParty = oBinding.getProperty("CustCode");
-					baseModel.selectedSoldtoPartyDesc = oBinding.getProperty("Name1");
-					baseModel.selectedDistChnl = oBinding.getProperty("Distchl");
-					baseModel.DistChan = oBinding.getProperty("Distchl");
-					baseModel.selectedDistChan = oBinding.getProperty("Distchl");
-					baseModel.SalesOrg = oBinding.getProperty("SalesOrg");
-					baseModel.selectedSalesOrg = oBinding.getProperty("SalesOrg");
-					baseModel.selectedDistChlDesc = oBinding.getProperty("DCName");
-					baseModel.selectedSalesOrg = oBinding.getProperty("SalesOrg");
-					baseModel.selectedSalesOrgDesc = oBinding.getProperty("SOrgName");
-					baseModel.Division = oBinding.getProperty("Division");
-					baseModel.selectedDivisionDesc = oBinding.getProperty("DName");
-					baseModel.shipTo = oBinding.getProperty("shipToParty");
-					baseModel.shipToDesc = oBinding.getProperty("shipToPartyName");
-					baseModel.exShipTo = oBinding.getProperty("shipToParty");
-					baseModel.exShipToDesc = oBinding.getProperty("shipToPartyName");
-					baseModel.billTo = oBinding.getProperty("billToParty");
-					baseModel.billToDesc = oBinding.getProperty("billToPartyName");
-					baseModel.payer = oBinding.getProperty("payer");
-					baseModel.payerDesc = oBinding.getProperty("payerName");
-					var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-					invoiceSearchModel.setProperty("/salesOrgNo", baseModel.selectedSalesOrg);
-					invoiceSearchModel.setProperty("/salesOrgDesc", baseModel.selectedSalesOrgDesc);
-					invoiceSearchModel.setProperty("/distChnl", baseModel.DistChan);
-					invoiceSearchModel.setProperty("/distChnlDesc", baseModel.selectedDistChlDesc);
-					invoiceSearchModel.setProperty("/soldToParty", baseModel.selectedSoldtoParty);
-					invoiceSearchModel.setProperty("/Division", baseModel.Division);
-					invoiceSearchModel.setProperty("/soldToPartyDesc", baseModel.selectedSoldtoPartyDesc);
-					invoiceSearchModel.setProperty("/shipTo", oBinding.getProperty("shipToParty"));
-					invoiceSearchModel.setProperty("/billTo", oBinding.getProperty("billToParty"));
-					invoiceSearchModel.setProperty("/payer", oBinding.getProperty("payer"));
-					this.getView().getModel("baseModel").setProperty("/oneTimeCustomer", oBinding.getProperty("oneTimeCustomer"));
+					i.selectedSoldtoParty = s.getProperty("CustCode");
+					i.selectedSoldtoPartyDesc = s.getProperty("Name1");
+					i.selectedDistChnl = s.getProperty("Distchl");
+					i.DistChan = s.getProperty("Distchl");
+					i.selectedDistChan = s.getProperty("Distchl");
+					i.SalesOrg = s.getProperty("SalesOrg");
+					i.selectedSalesOrg = s.getProperty("SalesOrg");
+					i.selectedDistChlDesc = s.getProperty("DCName");
+					i.selectedSalesOrg = s.getProperty("SalesOrg");
+					i.selectedSalesOrgDesc = s.getProperty("SOrgName");
+					i.Division = s.getProperty("Division");
+					i.selectedDivisionDesc = s.getProperty("DName");
+					i.shipTo = s.getProperty("shipToParty");
+					i.shipToDesc = s.getProperty("shipToPartyName");
+					i.exShipTo = s.getProperty("shipToParty");
+					i.exShipToDesc = s.getProperty("shipToPartyName");
+					i.billTo = s.getProperty("billToParty");
+					i.billToDesc = s.getProperty("billToPartyName");
+					i.payer = s.getProperty("payer");
+					i.payerDesc = s.getProperty("payerName");
+					var a = this.getView().getModel("invoiceSearchModel");
+					a.setProperty("/salesOrgNo", i.selectedSalesOrg);
+					a.setProperty("/salesOrgDesc", i.selectedSalesOrgDesc);
+					a.setProperty("/distChnl", i.DistChan);
+					a.setProperty("/distChnlDesc", i.selectedDistChlDesc);
+					a.setProperty("/soldToParty", i.selectedSoldtoParty);
+					a.setProperty("/Division", i.Division);
+					a.setProperty("/soldToPartyDesc", i.selectedSoldtoPartyDesc);
+					a.setProperty("/shipTo", s.getProperty("shipToParty"));
+					a.setProperty("/billTo", s.getProperty("billToParty"));
+					a.setProperty("/payer", s.getProperty("payer"));
+					this.getView().getModel("baseModel").setProperty("/oneTimeCustomer", s.getProperty("oneTimeCustomer"));
 					this.getView().getModel("baseModel").refresh();
 					this.onResetSoldToParty();
 					this.SoldtoParty.close();
 					this.getView().getModel("baseModel").setProperty("/salesOrgEditable", false);
 					this.getView().getModel("baseModel").setProperty("/distChnlEditable", false);
 					this.getView().getModel("baseModel").setProperty("/step2Validation", true);
-
-					this._wizard.setCurrentStep(
-						this.byId("ID_WIZARD_INV_SRCH"));
-					this._getSalesOrgForOrderID();
+					this._wizard.setCurrentStep(this.byId("ID_WIZARD_INV_SRCH"));
+					this._getSalesOrgForOrderID()
 				}
 			} else {
-				MessageBox.information(this.resourceBundle.getText("Selectatleastoneitem"));
-				// MessageBox.information("Select at least one item");
+				t.information(this.resourceBundle.getText("Selectatleastoneitem"))
 			}
-
 		},
-
 		_getSalesOrgForOrderID: function () {
-			var that = this;
-			var selectedSalesOrg = this.getView().getModel("baseModel").getProperty("/selectedSalesOrg");
+			var e = this;
+			var t = this.getView().getModel("baseModel").getProperty("/selectedSalesOrg");
 			if (this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV")) {
-				var oDataModel = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
-				var filters = [];
-				var lang = "";
+				var r = this.getView().getModel("ZDKSH_CC_DAC_SOLDTOPARTY_SRV");
+				var o = [];
+				var s = "";
 				if (sap.ushell) {
 					if (sap.ui.getCore().getConfiguration().getLanguage() === "th") {
-						lang = "2";
+						s = "2"
 					} else {
-						lang = "EN";
+						s = "EN"
 					}
 				} else {
-					lang = "EN";
+					s = "EN"
 				}
-				lang = lang.toUpperCase();
-				var oFilter = new sap.ui.model.Filter({
-					filters: [
-						// new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"),
-						new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, selectedSalesOrg)
-					],
-					// and: true
+				s = s.toUpperCase();
+				var i = new sap.ui.model.Filter({
+					filters: [new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, t)]
 				});
-				filters.push(oFilter);
-				var busyDialog = new sap.m.BusyDialog();
-				busyDialog.open();
-				oDataModel.read("/TransactionNumSet", {
-					filters: filters,
+				o.push(i);
+				var a = new sap.m.BusyDialog;
+				a.open();
+				r.read("/TransactionNumSet", {
+					filters: o,
 					async: false,
-					success: function (oData, oResponse) {
-						busyDialog.close();
-						that.getView().getModel("baseModel").setProperty("/salesOrgForRO", oData.results[0].mappingID);
+					success: function (t, r) {
+						a.close();
+						e.getView().getModel("baseModel").setProperty("/salesOrgForRO", t.results[0].mappingID)
 					},
-					error: function (error) {
-						busyDialog.close();
-						var errorMsg = "";
-						if (error.statusCode === 504) {
-							errorMsg = that.resourceBundle.getText("timeOut");
-							// errorMsg = "Request timed-out. Please try again!";
-							that.errorMsg(errorMsg);
+					error: function (t) {
+						a.close();
+						var r = "";
+						if (t.statusCode === 504) {
+							r = e.resourceBundle.getText("timeOut");
+							e.errorMsg(r)
 						} else {
-							errorMsg = JSON.parse(error.responseText);
-							errorMsg = errorMsg.error.message.value;
-							that.errorMsg(errorMsg);
+							r = JSON.parse(t.responseText);
+							r = r.error.message.value;
+							e.errorMsg(r)
 						}
 					}
-				});
+				})
 			}
 		},
-
 		onResetSoldToParty: function () {
-			var baseModel = this.getView().getModel("baseModel");
+			var e = this.getView().getModel("baseModel");
 			if (this._wizard.getCurrentStep() === "__xmlview1--ID_WIZARD_RTEX" || this._wizard.getCurrentStep() ===
 				"__xmlview0--ID_WIZARD_RTEX") {
-				baseModel.setProperty("/SoldtoParty", "");
-				baseModel.setProperty("/SoldTopartyName", "");
+				e.setProperty("/SoldtoParty", "");
+				e.setProperty("/SoldTopartyName", "")
 			} else {
-				baseModel.setProperty("/SoldtoParty", "");
-				baseModel.setProperty("/SoldTopartyName", "");
-				baseModel.setProperty("/Division", "");
-				baseModel.setProperty("/DistChan", "");
-				baseModel.setProperty("/DivisionDesc", "");
-				baseModel.setProperty("/SalesOrgDesc", "");
-				baseModel.setProperty("/DistChanDesc", "");
-				baseModel.setProperty("/SalesOrg", "");
+				e.setProperty("/SoldtoParty", "");
+				e.setProperty("/SoldTopartyName", "");
+				e.setProperty("/Division", "");
+				e.setProperty("/DistChan", "");
+				e.setProperty("/DivisionDesc", "");
+				e.setProperty("/SalesOrgDesc", "");
+				e.setProperty("/DistChanDesc", "");
+				e.setProperty("/SalesOrg", "")
 			}
-
 			if (this.SoldtoParty) {
 				if (this.SoldtoParty.getModel("SoldToPartyListSet") !== undefined) {
-					this.SoldtoParty.getModel("SoldToPartyListSet").setData("");
+					this.SoldtoParty.getModel("SoldToPartyListSet").setData("")
 				}
 			}
-			baseModel.refresh();
+			e.refresh()
 		},
-
 		onCancelSoldtoParty: function () {
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/SoldtoParty", "");
-			baseModel.setProperty("/SoldTopartyName", "");
-			baseModel.setProperty("/Division", "");
-			baseModel.setProperty("/DivisionDesc", "");
-			baseModel.setProperty("/SalesOrgDesc", "");
-			baseModel.setProperty("/DistChanDesc", "");
-			baseModel.setProperty("/DistChan", "");
-			baseModel.setProperty("/SalesOrg", "");
+			var e = this.getView().getModel("baseModel");
+			e.setProperty("/SoldtoParty", "");
+			e.setProperty("/SoldTopartyName", "");
+			e.setProperty("/Division", "");
+			e.setProperty("/DivisionDesc", "");
+			e.setProperty("/SalesOrgDesc", "");
+			e.setProperty("/DistChanDesc", "");
+			e.setProperty("/DistChan", "");
+			e.setProperty("/SalesOrg", "");
 			if (this.SoldtoParty.getModel("SoldToPartyListSet") !== undefined) {
-				this.SoldtoParty.getModel("SoldToPartyListSet").setData("");
+				this.SoldtoParty.getModel("SoldToPartyListSet").setData("")
 			}
-			baseModel.refresh();
-			this.SoldtoParty.close();
+			e.refresh();
+			this.SoldtoParty.close()
 		},
-
-		onLiveChangeSoldToParty: function (oEvent) {
-			var value = oEvent.getParameters().newValue;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([
-				new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("Name1", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("DName", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("DCName", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("SOrgName", sap.ui.model.FilterOperator.Contains, value)
+		onLiveChangeSoldToParty: function (e) {
+			var t = e.getParameters().newValue;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("CustCode", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter(
+					"Name1", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter("Distchl", sap.ui.model.FilterOperator.Contains, t),
+				new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter("SalesOrg", sap.ui.model.FilterOperator
+					.Contains, t), new sap.ui.model.Filter("DName", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter("DCName", sap
+					.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter("SOrgName", sap.ui.model.FilterOperator.Contains, t)
 			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getParent().getParent().getBinding("items");
-			oBinding.filter(filters);
+			r.push(o);
+			var s = e.getSource().getParent().getParent().getBinding("items");
+			s.filter(r)
 		},
-
-		onBillDateSelectionFrom: function (oEvent) {
-
-			var startDate = formatter.dateTimeFormat(oEvent.getParameters().value);
-			this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateFrom", oEvent.getParameters().value);
-			// var endDate = formatter.dateTimeFormat(oEvent.getParameters().value.split("-")[1]);
-			// this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateTo", endDate);
+		onBillDateSelectionFrom: function (e) {
+			var n = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: "MM-dd-yyyy",
+				calendarType: "Gregorian"
+			});
+			var date = e.getParameters().value.split("-")[0];
+			var month = e.getParameters().value.split("-")[1];
+			var year = e.getParameters().value.split("-")[2];
+			var string = year + "-" + month + "-" + date;
+			var i = n.format(new Date(string));
+			var t = r.dateTimeFormat1(i);
+			// this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateFrom", e.getParameters().value)
+			this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateFrom", t);
 		},
-
-		onBillDateSelectionTo: function (oEvent) {
+		onBillDateSelectionTo: function (e) {
 			if (this.invoiceDetail) {
-				var startDate = this.invoiceDetail.getModel("invoiceSearchModel").getProperty("/billingDateFrom");
-				// this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateFrom", startDate);
-				if (startDate === "" || startDate === undefined) {
-					// MessageToast.show("Select 'From' Date");
-					return;
+				var t = this.invoiceDetail.getModel("invoiceSearchModel").getProperty("/billingDateFrom");
+				if (t === "" || t === undefined) {
+					return
 				} else {
-					var endDate = formatter.dateTimeFormat(oEvent.getParameters().value);
-					this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateTo", oEvent.getParameters().value);
+					var n = sap.ui.core.format.DateFormat.getDateInstance({
+						pattern: "MM-dd-yyyy",
+						calendarType: "Gregorian"
+					});
+					var date = e.getParameters().value.split("-")[0];
+					var month = e.getParameters().value.split("-")[1];
+					var year = e.getParameters().value.split("-")[2];
+					var string = year + "-" + month + "-" + date;
+					var i = n.format(new Date(string));
+					var o = r.dateTimeFormat1(i);
+					// this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateTo", e.getParameters().value)
+					this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingDateTo", o);
 				}
 			}
 		},
-
-		onConfirmChangeBillingType: function (oEvent) {
-			var billingType = oEvent.getParameters().selectedContexts[0].getObject().domvalueL;
-			this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingCategory", billingType);
-			this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingCategoryDesc", oEvent.getParameters().selectedContexts[
-					0]
-				.getObject()
+		onConfirmChangeBillingType: function (e) {
+			var t = e.getParameters().selectedContexts[0].getObject().domvalueL;
+			this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingCategory", t);
+			this.invoiceDetail.getModel("invoiceSearchModel").setProperty("/billingCategoryDesc", e.getParameters().selectedContexts[0].getObject()
 				.ddtext);
-			this.invoiceDetail.getModel("invoiceSearchModel").refresh();
+			this.invoiceDetail.getModel("invoiceSearchModel").refresh()
 		},
-
 		onSearchInvoice: function () {
 			if (this.getView().getModel("returnModel").getData().results && this.getView().getModel("returnModel").getData().results.length >
 				0) {
-				var returnsItems = this.getView().getModel("returnModel").getData().results;
-				for (var j = this.selectedReturnItems.length - 1; j >= 0; j--) {
-					var count = 0;
-					for (var i = returnsItems.length - 1; i >= 0; i--) {
-
-						if (this.selectedReturnItems[j].InvoiceNum === returnsItems[i].refInvoice && this.selectedReturnItems[j].InvoiceLineItem ===
-							returnsItems[i].refItemNumber) {
-							// this.selectedReturnItems.splice(j, 1);
-							count++;
-						} else {
-
-						}
+				var e = this.getView().getModel("returnModel").getData().results;
+				for (var o = this.selectedReturnItems.length - 1; o >= 0; o--) {
+					var s = 0;
+					for (var i = e.length - 1; i >= 0; i--) {
+						if (this.selectedReturnItems[o].InvoiceNum === e[i].refInvoice && this.selectedReturnItems[o].InvoiceLineItem === e[i].refItemNumber) {
+							s++
+						} else {}
 					}
-					if (count === 0) {
-						this.selectedReturnItems.splice(j, 1);
+					if (s === 0) {
+						this.selectedReturnItems.splice(o, 1)
 					}
-
 				}
 			} else {
-				this.selectedReturnItems = [];
+				this.selectedReturnItems = []
 			}
 			this.selectedInvoice = [];
-			var that = this;
-			var invoiceSearchModel = this.invoiceDetail.getModel("invoiceSearchModel");
-			var url = "$filter=";
-			var oDataModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV"),
-				aPayload = this.invoiceDetail.getModel("invoiceSearchModel").getData(),
-				afilters = [];
-			if ((aPayload.invoiceNo === "" || aPayload.invoiceNo === undefined) && (aPayload.materialNo === "" || aPayload.materialNo ===
-					undefined) && (aPayload.batchNo === "" || aPayload.batchNo === undefined) && (aPayload.SerialNum === "" || aPayload.SerialNum ===
-					undefined)) {
-				MessageBox.information(this.resourceBundle.getText("Enteratleastoninputcriteria"));
-				// MessageBox.information("Enter at least one input criteria");
-				return;
+			var a = this;
+			var n = this.invoiceDetail.getModel("invoiceSearchModel");
+			var l = "$filter=";
+			var d = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV"),
+				g = this.invoiceDetail.getModel("invoiceSearchModel").getData(),
+				p = [];
+			if ((g.invoiceNo === "" || g.invoiceNo === undefined) && (g.materialNo === "" || g.materialNo === undefined) && (g.batchNo === "" ||
+					g.batchNo === undefined) && (g.SerialNum === "" || g.SerialNum === undefined)) {
+				t.information(this.resourceBundle.getText("Enteratleastoninputcriteria"));
+				return
 			} else {
-				if (aPayload.invoiceNo !== "" && aPayload.invoiceNo !== undefined) {
-					if (url.length === 8) {
-						url = url + "invoiceNum eq " + "'" + aPayload.invoiceNo + "'";
+				if (g.invoiceNo !== "" && g.invoiceNo !== undefined) {
+					if (l.length === 8) {
+						l = l + "invoiceNum eq " + "'" + g.invoiceNo + "'"
 					} else {
-						url = url + " and " + "invoiceNum eq " + "'" + aPayload.invoiceNo + "'";
+						l = l + " and " + "invoiceNum eq " + "'" + g.invoiceNo + "'"
 					}
 				}
-				if (aPayload.materialNo !== "" && aPayload.materialNo !== undefined) {
-					if (url.length === 8) {
-						url = url + "materialCode eq " + "'" + aPayload.materialNo + "'";
+				if (g.materialNo !== "" && g.materialNo !== undefined) {
+					if (l.length === 8) {
+						l = l + "materialCode eq " + "'" + g.materialNo + "'"
 					} else {
-						url = url + " and " + "materialCode eq " + "'" + aPayload.materialNo + "'";
+						l = l + " and " + "materialCode eq " + "'" + g.materialNo + "'"
 					}
 				}
-				if (aPayload.batchNo !== "" && aPayload.batchNo !== undefined) {
-					if (url.length === 8) {
-						url = url + "batchNumber eq " + "'" + aPayload.batchNo + "'";
+				if (g.batchNo !== "" && g.batchNo !== undefined) {
+					if (l.length === 8) {
+						l = l + "batchNumber eq " + "'" + g.batchNo + "'"
 					} else {
-						url = url + " and " + "batchNumber eq " + "'" + aPayload.batchNo + "'";
+						l = l + " and " + "batchNumber eq " + "'" + g.batchNo + "'"
 					}
 				}
-				if (aPayload.salesOrgNo !== "" && aPayload.salesOrgNo !== undefined) {
-					if (url.length === 8) {
-						url = url + "salesOrg eq " + "'" + aPayload.salesOrgNo + "'";
+				if (g.salesOrgNo !== "" && g.salesOrgNo !== undefined) {
+					if (l.length === 8) {
+						l = l + "salesOrg eq " + "'" + g.salesOrgNo + "'"
 					} else {
-						url = url + " and " + "salesOrg eq " + "'" + aPayload.salesOrgNo + "'";
+						l = l + " and " + "salesOrg eq " + "'" + g.salesOrgNo + "'"
 					}
 				}
-				if (aPayload.distChnl !== "" && aPayload.distChnl !== undefined) {
-					if (url.length === 8) {
-						url = url + "distChannel eq " + "'" + aPayload.distChnl + "'";
+				if (g.distChnl !== "" && g.distChnl !== undefined) {
+					if (l.length === 8) {
+						l = l + "distChannel eq " + "'" + g.distChnl + "'"
 					} else {
-						url = url + " and " + "distChannel eq " + "'" + aPayload.distChnl + "'";
+						l = l + " and " + "distChannel eq " + "'" + g.distChnl + "'"
 					}
 				}
-				if (aPayload.soldToParty !== "" && aPayload.soldToParty !== undefined) {
-					if (url.length === 8) {
-						url = url + "soldToParty eq " + "'" + aPayload.soldToParty + "'";
+				if (g.soldToParty !== "" && g.soldToParty !== undefined) {
+					if (l.length === 8) {
+						l = l + "soldToParty eq " + "'" + g.soldToParty + "'"
 					} else {
-						url = url + " and " + "soldToParty eq " + "'" + aPayload.soldToParty + "'";
+						l = l + " and " + "soldToParty eq " + "'" + g.soldToParty + "'"
 					}
 				}
-				var baseModel = this.getView().getModel("baseModel").getData();
-				if (aPayload.Division !== "" && aPayload.Division !== undefined) {
-					if (url.length === 8) {
-						url = url + "division eq " + "'" + aPayload.Division + "'";
+				var c = this.getView().getModel("baseModel").getData();
+				if (g.Division !== "" && g.Division !== undefined) {
+					if (l.length === 8) {
+						l = l + "division eq " + "'" + g.Division + "'"
 					} else {
-						url = url + " and " + "division eq " + "'" + aPayload.Division + "'";
+						l = l + " and " + "division eq " + "'" + g.Division + "'"
 					}
 				}
-				if (aPayload.billingDateFrom !== "" && aPayload.billingDateFrom !== undefined) {
-					aPayload.billingDateFrom = formatter.dateTimeFormat(aPayload.billingDateFrom);
-					if (url.length === 8) {
-						url = url + "billingDateFrom eq datetime" + "'" + aPayload.billingDateFrom + "'";
+				if (g.billingDateFrom !== "" && g.billingDateFrom !== undefined) {
+					g.billingDateFrom = r.dateTimeFormat(g.billingDateFrom);
+					if (l.length === 8) {
+						l = l + "billingDateFrom eq datetime" + "'" + g.billingDateFrom + "'"
 					} else {
-						url = url + " and " + "billingDateFrom eq datetime" + "'" + aPayload.billingDateFrom + "'";
+						l = l + " and " + "billingDateFrom eq datetime" + "'" + g.billingDateFrom + "'"
 					}
 				} else {
-					if (aPayload.invoiceNo !== "" && aPayload.invoiceNo !== undefined) {
-						var billingDateFrom = "";
+					if (g.invoiceNo !== "" && g.invoiceNo !== undefined) {
+						var u = ""
 					} else {
-						var billingDateFrom = formatter.dateTimeFormat(new Date("2016/01/01"));
-						if (url.length === 8) {
-							url = url + "billingDateFrom eq datetime" + "'" + billingDateFrom + "'";
+						var u = r.dateTimeFormat(new Date("2016/01/01"));
+						if (l.length === 8) {
+							l = l + "billingDateFrom eq datetime" + "'" + u + "'"
 						} else {
-							url = url + " and " + "billingDateFrom eq datetime" + "'" + billingDateFrom + "'";
+							l = l + " and " + "billingDateFrom eq datetime" + "'" + u + "'"
 						}
 					}
 				}
-				if (aPayload.billingDateTo !== "" && aPayload.billingDateTo !== undefined) {
-					aPayload.billingDateTo = formatter.dateTimeFormat(aPayload.billingDateTo);
-					if (url.length === 8) {
-						url = url + "billingDateTo eq datetime" + "'" + aPayload.billingDateTo + "'";
+				if (g.billingDateTo !== "" && g.billingDateTo !== undefined) {
+					g.billingDateTo = r.dateTimeFormat(g.billingDateTo);
+					if (l.length === 8) {
+						l = l + "billingDateTo eq datetime" + "'" + g.billingDateTo + "'"
 					} else {
-						url = url + " and " + "billingDateTo eq datetime" + "'" + aPayload.billingDateTo + "'";
+						l = l + " and " + "billingDateTo eq datetime" + "'" + g.billingDateTo + "'"
 					}
 				} else {
-					if (aPayload.invoiceNo !== "" && aPayload.invoiceNo !== undefined) {
-						var billingDateTo = "";
+					if (g.invoiceNo !== "" && g.invoiceNo !== undefined) {
+						var h = ""
 					} else {
-						var billingDateTo = formatter.dateTimeFormat(new Date("2017/12/31"));
-						if (url.length === 8) {
-							url = url + "billingDateTo eq datetime" + "'" + billingDateTo + "'";
+						var h = r.dateTimeFormat(new Date("2017/12/31"));
+						if (l.length === 8) {
+							l = l + "billingDateTo eq datetime" + "'" + h + "'"
 						} else {
-							url = url + " and " + "billingDateTo eq datetime" + "'" + billingDateTo + "'";
+							l = l + " and " + "billingDateTo eq datetime" + "'" + h + "'"
 						}
 					}
 				}
-				if (that.materialGroupDataAccess !== "No Access") {
-					if (url.length === 8) {
-						url = url + "materialGroup eq " + "'" + that.materialGroupDataAccess + "'";
+				if (a.materialGroupDataAccess !== "No Access") {
+					if (l.length === 8) {
+						l = l + "materialGroup eq " + "'" + a.materialGroupDataAccess + "'"
 					} else {
-						url = url + " and " + "materialGroup eq " + "'" + that.materialGroupDataAccess + "'";
+						l = l + " and " + "materialGroup eq " + "'" + a.materialGroupDataAccess + "'"
 					}
 				}
-				if (that.materialGroup4DataAccess !== "" && that.materialGroup4DataAccess !== undefined) {
-					if (url.length === 8) {
-						url = url + "materialGroup4 eq " + "'" + that.materialGroup4DataAccess + "'";
+				if (a.materialGroup4DataAccess !== "" && a.materialGroup4DataAccess !== undefined) {
+					if (l.length === 8) {
+						l = l + "materialGroup4 eq " + "'" + a.materialGroup4DataAccess + "'"
 					} else {
-						url = url + " and " + "materialGroup4 eq " + "'" + that.materialGroup4DataAccess + "'";
+						l = l + " and " + "materialGroup4 eq " + "'" + a.materialGroup4DataAccess + "'"
 					}
 				}
-				if (aPayload.displayBySno !== "" && aPayload.displayBySno !== undefined) {
-					if (url.length === 8) {
-						url = url + "displayBySno eq " + "'" + aPayload.displayBySno + "'";
+				if (g.displayBySno !== "" && g.displayBySno !== undefined) {
+					if (l.length === 8) {
+						l = l + "displayBySno eq " + "'" + g.displayBySno + "'"
 					} else {
-						url = url + " and " + "displayBySno eq " + "'" + aPayload.displayBySno + "'";
+						l = l + " and " + "displayBySno eq " + "'" + g.displayBySno + "'"
 					}
 				}
-				if (aPayload.SerialNum !== "" && aPayload.SerialNum !== undefined) {
-					if (url.length === 8) {
-						url = url + "serialNum eq " + "'" + aPayload.SerialNum + "'";
+				if (g.SerialNum !== "" && g.SerialNum !== undefined) {
+					if (l.length === 8) {
+						l = l + "serialNum eq " + "'" + g.SerialNum + "'"
 					} else {
-						url = url + " and " + "serialNum eq " + "'" + aPayload.SerialNum + "'";
+						l = l + " and " + "serialNum eq " + "'" + g.SerialNum + "'"
 					}
 				}
-				if (aPayload.billingCategory !== "" && aPayload.billingCategory !== undefined) {
-					if (url.length === 8) {
-						url = url + "invCategory eq " + "'" + aPayload.billingCategory + "'";
+				if (g.billingCategory !== "" && g.billingCategory !== undefined) {
+					if (l.length === 8) {
+						l = l + "invCategory eq " + "'" + g.billingCategory + "'"
 					} else {
-						url = url + " and " + "invCategory eq " + "'" + aPayload.billingCategory + "'";
+						l = l + " and " + "invCategory eq " + "'" + g.billingCategory + "'"
 					}
 				}
-				if (that.materialDataAccess !== "*" && that.materialDataAccess !== undefined) {
-					if (url.length === 8) {
-						url = url + "materialCodeDac eq " + "'" + that.materialDataAccess + "'";
+				if (a.materialDataAccess !== "*" && a.materialDataAccess !== undefined) {
+					if (l.length === 8) {
+						l = l + "materialCodeDac eq " + "'" + a.materialDataAccess + "'"
 					} else {
-						url = url + " and " + "materialCodeDac eq " + "'" + that.materialDataAccess + "'";
+						l = l + " and " + "materialCodeDac eq " + "'" + a.materialDataAccess + "'"
 					}
 				}
-				if (that.custCodeDataAccess !== "*" && that.custCodeDataAccess !== undefined) {
-					if (url.length === 8) {
-						url = url + "customerCodeDac eq " + "'" + that.custCodeDataAccess + "'";
+				if (a.custCodeDataAccess !== "*" && a.custCodeDataAccess !== undefined) {
+					if (l.length === 8) {
+						l = l + "customerCodeDac eq " + "'" + a.custCodeDataAccess + "'"
 					} else {
-						url = url + " and " + "customerCodeDac eq " + "'" + that.custCodeDataAccess + "'";
+						l = l + " and " + "customerCodeDac eq " + "'" + a.custCodeDataAccess + "'"
 					}
 				}
-				url = url + " and " + "roType eq " + "'" + this.ROtypeCode + "'";
-				var busyDialog = new sap.m.BusyDialog();
-				busyDialog.open();
-				oDataModel.read("/billingDocumentSet", {
+				l = l + " and " + "roType eq " + "'" + this.ROtypeCode + "'";
+				var m = new sap.m.BusyDialog;
+				m.open();
+				d.read("/billingDocumentSet", {
 					async: false,
-					urlParameters: url + "&$expand=billingDocItemSerialNav,billingDocToBusiPartners&$format=json",
-					success: function (oData, oResponse) {
-						busyDialog.close();
-						that.getView().byId("InvoiceTableId").removeSelections();
-
-						if ((aPayload.invoiceNo === "" || aPayload.invoiceNo === undefined) && (aPayload.billingDateFrom === "" || aPayload.billingDateFrom ===
-								undefined)) {
-							aPayload.billingDateTo = "2017-12-31";
-							aPayload.billingDateFrom = "2016-01-01";
+					urlParameters: l + "&$expand=billingDocItemSerialNav,billingDocToBusiPartners&$format=json",
+					success: function (e, t) {
+						m.close();
+						a.getView().byId("InvoiceTableId").removeSelections();
+						if ((g.invoiceNo === "" || g.invoiceNo === undefined) && (g.billingDateFrom === "" || g.billingDateFrom === undefined)) {
+							g.billingDateTo = "2017-12-31";
+							g.billingDateFrom = "2016-01-01"
 						}
-						if (aPayload.billingDateFrom !== "" && aPayload.billingDateFrom !== undefined) {
-							aPayload.billingDateFrom = formatter.dateTimeFormat1(aPayload.billingDateFrom);
+						if (g.billingDateFrom !== "" && g.billingDateFrom !== undefined) {
+							g.billingDateFrom = r.dateTimeFormat1(g.billingDateFrom)
 						}
-						if (aPayload.billingDateTo !== "" && aPayload.billingDateTo !== undefined) {
-							aPayload.billingDateTo = formatter.dateTimeFormat1(aPayload.billingDateTo);
+						if (g.billingDateTo !== "" && g.billingDateTo !== undefined) {
+							g.billingDateTo = r.dateTimeFormat1(g.billingDateTo)
 						}
-
-						that.getView().getModel("baseModel").setProperty("/billingTypeEnable", false);
-						var invoiceData = [];
-						for (var i = 0; i < oData.results.length; i++) {
-							var items = oData.results[i].billingDocItemSerialNav.results;
-							for (var j = 0; j < items.length; j++) {
-								var object = {
-									shipToParty: parseInt(oData.results[i].billingDocToBusiPartners.results[2].partnerNum).toString(),
-									shipToPartyDesc: that.getView().getModel("baseModel").getProperty("/shipToDesc"),
-									billingDateFrom: oData.results[i].billingDateFrom,
-									billingDateTo: oData.results[i].billingDateTo,
-									billingType: oData.results[i].billingType,
-									shipToAddress: oData.results[i].billingDocToBusiPartners.results[3],
-									soldToAddress: oData.results[i].billingDocToBusiPartners.results[0],
-									payerAddress: oData.results[i].billingDocToBusiPartners.results[2],
-									billToAdress: oData.results[i].billingDocToBusiPartners.results[1],
-									Active: items[j].Active,
-									AvailRetQtyBaseUn: items[j].AvailRetQtyBaseUn,
-									AvailRetQtySalesUn: items[j].AvailRetQtySalesUn,
-									BaseUnit: items[j].BaseUnit,
-									BatchNumber: items[j].BatchNumber,
-									BillingQty: items[j].BillingQty,
-									ColorCode: items[j].ColorCode,
-									DiscountAmount: items[j].DiscountAmount,
-									ExpiryDate: items[j].ExpiryDate,
-									InvoiceLineItem: items[j].InvoiceLineItem,
-									InvoiceNum: items[j].InvoiceNum,
-									ItemUsage: items[j].ItemUsage,
-									MaterialCode: items[j].MaterialCode,
-									MaterialDesc: items[j].MaterialDesc,
-									MaterialGroup: items[j].MaterialGroup,
-									MaterialGroup4: items[j].MaterialGroup4,
-									NetPrice: items[j].NetPrice,
-									SalesUnit: items[j].SalesUnit,
-									SerialNum: items[j].SerialNum,
-									UnitPrice: items[j].UnitPrice,
+						a.getView().getModel("baseModel").setProperty("/billingTypeEnable", false);
+						var o = [];
+						for (var s = 0; s < e.results.length; s++) {
+							var i = e.results[s].billingDocItemSerialNav.results;
+							for (var l = 0; l < i.length; l++) {
+								var d = {
+									shipToParty: parseInt(e.results[s].billingDocToBusiPartners.results[2].partnerNum).toString(),
+									shipToPartyDesc: a.getView().getModel("baseModel").getProperty("/shipToDesc"),
+									billingDateFrom: e.results[s].billingDateFrom,
+									billingDateTo: e.results[s].billingDateTo,
+									billingType: e.results[s].billingType,
+									shipToAddress: e.results[s].billingDocToBusiPartners.results[3],
+									soldToAddress: e.results[s].billingDocToBusiPartners.results[0],
+									payerAddress: e.results[s].billingDocToBusiPartners.results[2],
+									billToAdress: e.results[s].billingDocToBusiPartners.results[1],
+									Active: i[l].Active,
+									AvailRetQtyBaseUn: i[l].AvailRetQtyBaseUn,
+									AvailRetQtySalesUn: i[l].AvailRetQtySalesUn,
+									BaseUnit: i[l].BaseUnit,
+									BatchNumber: i[l].BatchNumber,
+									BillingQty: i[l].BillingQty,
+									ColorCode: i[l].ColorCode,
+									DiscountAmount: i[l].DiscountAmount,
+									ExpiryDate: i[l].ExpiryDate,
+									InvoiceLineItem: i[l].InvoiceLineItem,
+									InvoiceNum: i[l].InvoiceNum,
+									ItemUsage: i[l].ItemUsage,
+									MaterialCode: i[l].MaterialCode,
+									MaterialDesc: i[l].MaterialDesc,
+									MaterialGroup: i[l].MaterialGroup,
+									MaterialGroup4: i[l].MaterialGroup4,
+									NetPrice: i[l].NetPrice,
+									SalesUnit: i[l].SalesUnit,
+									SerialNum: i[l].SerialNum,
+									UnitPrice: i[l].UnitPrice,
 									deleted: "false",
-									actualRetQty: items[j].AvailRetQtySalesUn,
-									actualRetUOM: items[j].SalesUnit,
+									actualRetQty: i[l].AvailRetQtySalesUn,
+									actualRetUOM: i[l].SalesUnit,
 									editablity: true,
-									ListPrice: items[j].ListPrice,
-									HigherLvlItem: items[j].HigherLvlItem,
-									ItemGroup: items[j].ItemGroup,
-									docCurrency: items[j].docCurrency,
-									ActiveIndicator: items[j].ActiveIndicator
+									ListPrice: i[l].ListPrice,
+									HigherLvlItem: i[l].HigherLvlItem,
+									ItemGroup: i[l].ItemGroup,
+									docCurrency: i[l].docCurrency,
+									ActiveIndicator: i[l].ActiveIndicator
 								};
-
-								invoiceData.push(object);
+								o.push(d)
 							}
 						}
-						invoiceSearchModel.setSizeLimit(invoiceData.length);
-						invoiceSearchModel.setProperty("/billingType", oData.results[0].billingType);
-						invoiceSearchModel.setProperty("/results", invoiceData);
-						that.getView().getModel("baseModel").setProperty("/originalInvoiceData", JSON.parse(JSON.stringify(invoiceData)));
-						if (invoiceData.length > 10) {
-							that.getView().getModel("baseModel").setProperty("/invoiceTableLength", "60vh");
+						n.setSizeLimit(o.length);
+						n.setProperty("/billingType", e.results[0].billingType);
+						n.setProperty("/results", o);
+						a.getView().getModel("baseModel").setProperty("/originalInvoiceData", JSON.parse(JSON.stringify(o)));
+						if (o.length > 10) {
+							a.getView().getModel("baseModel").setProperty("/invoiceTableLength", "60vh")
 						} else {
-							that.getView().getModel("baseModel").setProperty("/invoiceTableLength", "");
+							a.getView().getModel("baseModel").setProperty("/invoiceTableLength", "")
 						}
-						invoiceSearchModel.setProperty("/invoiceItemsLength", "Invoice (" + invoiceData.length + ")");
-						invoiceSearchModel.refresh();
-						that.getView().byId("InvoiceTableId").removeSelections();
+						n.setProperty("/invoiceItemsLength", "Invoice (" + o.length + ")");
+						n.refresh();
+						a.getView().byId("InvoiceTableId").removeSelections()
 					},
-					error: function (error) {
-						busyDialog.close();
-						that.getView().byId("InvoiceTableId").removeSelections();
-						if ((aPayload.invoiceNo === "" || aPayload.invoiceNo === undefined) && (aPayload.billingDateFrom === "" || aPayload.billingDateFrom ===
-								undefined)) {
-							aPayload.billingDateTo = "2017-12-31";
-							aPayload.billingDateFrom = "2016-01-01";
+					error: function (e) {
+						m.close();
+						a.getView().byId("InvoiceTableId").removeSelections();
+						if ((g.invoiceNo === "" || g.invoiceNo === undefined) && (g.billingDateFrom === "" || g.billingDateFrom === undefined)) {
+							g.billingDateTo = "2017-12-31";
+							g.billingDateFrom = "2016-01-01"
 						}
-						if (aPayload.billingDateFrom !== "" && aPayload.billingDateFrom !== undefined) {
-							aPayload.billingDateFrom = formatter.dateTimeFormat1(aPayload.billingDateFrom);
+						if (g.billingDateFrom !== "" && g.billingDateFrom !== undefined) {
+							g.billingDateFrom = r.dateTimeFormat1(g.billingDateFrom)
 						}
-						if (aPayload.billingDateTo !== "" && aPayload.billingDateTo !== undefined) {
-							aPayload.billingDateTo = formatter.dateTimeFormat1(aPayload.billingDateTo);
+						if (g.billingDateTo !== "" && g.billingDateTo !== undefined) {
+							g.billingDateTo = r.dateTimeFormat1(g.billingDateTo)
 						}
-						if (invoiceSearchModel.getProperty("/results")) {
-							invoiceSearchModel.setProperty("/results", "");
-							invoiceSearchModel.setProperty("/invoiceItemsLength", "");
+						if (n.getProperty("/results")) {
+							n.setProperty("/results", "");
+							n.setProperty("/invoiceItemsLength", "")
 						}
-
-						that.getView().getModel("baseModel").setProperty("/billingTypeEnable", false);
-						that.getView().getModel("baseModel").setProperty("/invoiceTableLength", "");
-						that.getView().getModel("baseModel").refresh();
-						invoiceSearchModel.refresh();
-						// if (aPayload.invoiceNo == "") {
-						// 	aPayload.billingDateTo = "2017-12-31";
-						// 	aPayload.billingDateFrom = "2016-01-01";
-						// }
-						var errorMsg = "";
-						if (error.statusCode === 504) {
-							errorMsg = that.resourceBundle.getText("timeOut");
-							// errorMsg = "Request timed-out. Please try again!";
-							that.errorMsg(errorMsg);
+						a.getView().getModel("baseModel").setProperty("/billingTypeEnable", false);
+						a.getView().getModel("baseModel").setProperty("/invoiceTableLength", "");
+						a.getView().getModel("baseModel").refresh();
+						n.refresh();
+						var t = "";
+						if (e.statusCode === 504) {
+							t = a.resourceBundle.getText("timeOut");
+							a.errorMsg(t)
 						} else {
-							errorMsg = JSON.parse(error.responseText);
-							errorMsg = errorMsg.error.message.value;
-							that.errorMsg(errorMsg);
+							t = JSON.parse(e.responseText);
+							t = t.error.message.value;
+							a.errorMsg(t)
 						}
 					}
-				});
+				})
 			}
 		},
-
 		onResetSearchInvoice: function () {
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			invoiceSearchModel.setProperty("/results", "");
-			invoiceSearchModel.setProperty("/invoiceNo", "");
-			invoiceSearchModel.setProperty("/selectedSerialNum", false);
-			invoiceSearchModel.setProperty("/billingDateFrom", "");
-			invoiceSearchModel.setProperty("/billingDateTo", "");
-			invoiceSearchModel.setProperty("/SerialNum", "");
+			var e = this.getView().getModel("invoiceSearchModel");
+			e.setProperty("/results", "");
+			e.setProperty("/invoiceNo", "");
+			e.setProperty("/selectedSerialNum", false);
+			e.setProperty("/billingDateFrom", "");
+			e.setProperty("/billingDateTo", "");
+			e.setProperty("/SerialNum", "");
 			if (this.docVersion === "SUCCESS") {
-				this.getView().getModel("baseModel").setProperty("/billingTypeEnable", false);
+				this.getView().getModel("baseModel").setProperty("/billingTypeEnable", false)
 			} else {
-				this.getView().getModel("baseModel").setProperty("/billingTypeEnable", true);
+				this.getView().getModel("baseModel").setProperty("/billingTypeEnable", true)
 			}
 			if (this.ROtypeCode === "TI") {
-				invoiceSearchModel.setProperty("/billingCategory", "B");
-				invoiceSearchModel.setProperty("/billingCategoryDesc", "Consignment Fill Up");
+				e.setProperty("/billingCategory", "B");
+				e.setProperty("/billingCategoryDesc", "Consignment Fill Up")
 			} else {
-				invoiceSearchModel.setProperty("/billingCategory", "C");
-				invoiceSearchModel.setProperty("/billingCategoryDesc", "Commercial Invoice");
+				e.setProperty("/billingCategory", "C");
+				e.setProperty("/billingCategoryDesc", "Commercial Invoice")
 			}
-			invoiceSearchModel.setProperty("/batchNo", "");
-			invoiceSearchModel.setProperty("/materialNo", "");
-			invoiceSearchModel.setProperty("/results", "");
-			invoiceSearchModel.setProperty("/invoiceItemsLength", "");
-			invoiceSearchModel.refresh();
+			e.setProperty("/batchNo", "");
+			e.setProperty("/materialNo", "");
+			e.setProperty("/results", "");
+			e.setProperty("/invoiceItemsLength", "");
+			e.refresh();
 			if (this.getView().getModel("returnModel").getData().results && this.getView().getModel("returnModel").getData().results.length >
 				0) {
-				var returnsItems = this.getView().getModel("returnModel").getData().results;
-				for (var j = this.selectedReturnItems.length - 1; j >= 0; j--) {
-					var count = 0;
-					for (var i = returnsItems.length - 1; i >= 0; i--) {
-
-						if (this.selectedReturnItems[j].InvoiceNum === returnsItems[i].refInvoice && this.selectedReturnItems[j].InvoiceLineItem ===
-							returnsItems[i].refItemNumber) {
-							// this.selectedReturnItems.splice(j, 1);
-							count++;
-						} else {
-
-						}
+				var t = this.getView().getModel("returnModel").getData().results;
+				for (var r = this.selectedReturnItems.length - 1; r >= 0; r--) {
+					var o = 0;
+					for (var s = t.length - 1; s >= 0; s--) {
+						if (this.selectedReturnItems[r].InvoiceNum === t[s].refInvoice && this.selectedReturnItems[r].InvoiceLineItem === t[s].refItemNumber) {
+							o++
+						} else {}
 					}
-					if (count === 0) {
-						this.selectedReturnItems.splice(j, 1);
+					if (o === 0) {
+						this.selectedReturnItems.splice(r, 1)
 					}
-
 				}
 			} else {
-				this.selectedReturnItems = [];
+				this.selectedReturnItems = []
 			}
 		},
-
 		onPressPreviousRange: function () {
-			var prevFromDate = this.getView().getModel("invoiceSearchModel").getData().billingDateFrom;
-			var PrevToDate = this.getView().getModel("invoiceSearchModel").getData().billingDateTo;
-			var today = new Date();
-			var currentFrom = new Date(prevFromDate);
-			currentFrom.setYear(currentFrom.getFullYear() - 2);
-			var currentTo = new Date(PrevToDate);
-			currentTo.setYear(currentTo.getFullYear() - 2);
-			if (currentFrom.getFullYear() === currentTo.getFullYear()) {
-				currentTo.setYear(currentFrom.getFullYear() + 2);
+			var e = this.getView().getModel("invoiceSearchModel").getData().billingDateFrom;
+			var t = this.getView().getModel("invoiceSearchModel").getData().billingDateTo;
+			var r = new Date;
+			var o = new Date(e);
+			o.setYear(o.getFullYear() - 2);
+			var s = new Date(t);
+			s.setYear(s.getFullYear() - 2);
+			if (o.getFullYear() === s.getFullYear()) {
+				s.setYear(o.getFullYear() + 2)
 			}
-			// this.startDateRange = this.startDateRange + 2;
-			// this.endDateRange = this.endDateRange + 2;
-			var startDate = new Date(currentFrom);
-			var endDate = new Date(currentTo);
-			// var dateFormat = DateFormat.getDateInstance({
-			// 	pattern: "MMM dd,yyyy",
-			// 	calendarType: "Gregorian"
-			// });
-			var dateFormat = sap.ui.core.format.DateFormat
-				.getDateInstance({
-					pattern: "MM.dd.yyyy",
-					calendarType: "Gregorian"
-				});
-			startDate = dateFormat.format(startDate);
-			endDate = dateFormat.format(endDate);
-			var billingDate = startDate + " - " + endDate;
-
-			// this.getView().getModel("invoiceSearchModel").setProperty("/billingDate", billingDate);
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", startDate);
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", endDate);
-
+			var i = new Date(o);
+			var a = new Date(s);
+			var n = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: "MM-dd-yyyy",
+				calendarType: "Gregorian"
+			});
+			i = n.format(i);
+			a = n.format(a);
+			var l = i + " - " + a;
+			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", i);
+			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", a)
 		},
-
 		onPressNextRange: function () {
-			var prevFromDate = this.getView().getModel("invoiceSearchModel").getData().billingDateFrom;
-			var PrevToDate = this.getView().getModel("invoiceSearchModel").getData().billingDateTo;
-			var today = new Date();
-			var currentFrom = new Date(prevFromDate);
-			currentFrom.setYear(currentFrom.getFullYear() + 2);
-			var currentTo = new Date(PrevToDate);
-			currentTo.setYear(currentTo.getFullYear() + 2);
-			if (currentFrom.getFullYear() === currentTo.getFullYear()) {
-				currentTo.setYear(currentFrom.getFullYear() + 2);
+			var e = this.getView().getModel("invoiceSearchModel").getData().billingDateFrom;
+			var t = this.getView().getModel("invoiceSearchModel").getData().billingDateTo;
+			var r = new Date;
+			var o = new Date(e);
+			o.setYear(o.getFullYear() + 2);
+			var s = new Date(t);
+			s.setYear(s.getFullYear() + 2);
+			if (o.getFullYear() === s.getFullYear()) {
+				s.setYear(o.getFullYear() + 2)
 			}
-			// this.startDateRange = this.startDateRange + 2;
-			// this.endDateRange = this.endDateRange + 2;
-			var startDate = new Date(currentFrom);
-			var endDate = new Date(currentTo);
-			var dateFormat = sap.ui.core.format.DateFormat
-				.getDateInstance({
-					pattern: "MM.dd.yyyy",
-					calendarType: "Gregorian"
-				});
-			// var dateFormat = DateFormat.getDateInstance({
-			// 	pattern: "MMM dd,yyyy",
-			// 	calendarType: "Gregorian"
-			// });
-			startDate = dateFormat.format(startDate);
-			endDate = dateFormat.format(endDate);
-			var billingDate = startDate + " - " + endDate;
-
-			// this.getView().getModel("invoiceSearchModel").setProperty("/billingDate", billingDate);
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", startDate);
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", endDate);
+			var i = new Date(o);
+			var a = new Date(s);
+			var n = sap.ui.core.format.DateFormat.getDateInstance({
+				pattern: "MM-dd-yyyy",
+				calendarType: "Gregorian"
+			});
+			i = n.format(i);
+			a = n.format(a);
+			var l = i + " - " + a;
+			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", i);
+			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", a)
 		},
-
 		onCompleteStep3: function () {
 			if (this.docVersion === "SUCCESS") {
 				this.getView().getModel("baseModel").setProperty("/saveAsDraftBtnVisiblitys", false);
 				this.getView().getModel("baseModel").setProperty("/exchangeBtnVisiblitys", false);
-				this.getView().getModel("baseModel").setProperty("/submitBtnVisiblitys", false);
+				this.getView().getModel("baseModel").setProperty("/submitBtnVisiblitys", false)
 			} else {
 				this.getView().getModel("baseModel").setProperty("/saveAsDraftBtnVisiblitys", true);
 				this.getView().getModel("baseModel").setProperty("/exchangeBtnVisiblitys", true);
 				this.getView().getModel("baseModel").refresh();
-				this._getPersonalizationDetails("keyReturn", "Before");
+				this._getPersonalizationDetails("keyReturn", "Before")
 			}
 		},
-
-		onPressAddress: function (oEvent) {
-			var addressData = oEvent.getSource().getBindingContext("invoiceSearchModel").getObject();
-			var addressModel = new sap.ui.model.json.JSONModel({
-				"shipToAddress": addressData.shipToAddress,
-				"soldToAddress": addressData.soldToAddress,
-				"payerAddress": addressData.payerAddress,
-				"billToAdress": addressData.billToAdress
+		onPressAddress: function (e) {
+			var t = e.getSource().getBindingContext("invoiceSearchModel").getObject();
+			var r = new sap.ui.model.json.JSONModel({
+				shipToAddress: t.shipToAddress,
+				soldToAddress: t.soldToAddress,
+				payerAddress: t.payerAddress,
+				billToAdress: t.billToAdress
 			});
-			this.getView().setModel(addressModel, "addressModel");
+			this.getView().setModel(r, "addressModel");
 			this.getView().getModel("baseModel").setProperty("/invoiceTableVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/addressVisiblity", true);
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").refresh()
 		},
-
 		onPressNavBackToItems: function () {
 			this.getView().getModel("baseModel").setProperty("/invoiceTableVisiblity", true);
 			this.getView().getModel("baseModel").setProperty("/addressVisiblity", false);
-			this.getView().getModel("baseModel").refresh();
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		// onPress2: function () {
-		// 	this.getView().getModel("baseModel").setProperty("/step1Validation", false);
-		// },
-
 		valueHelpRequestSoldtoParty: function () {
-			var baseModel = this.getView().getModel("baseModel");
-			if (baseModel.getProperty("/selectedSalesOrg") !== undefined) {
-				baseModel.setProperty("/SalesOrg", baseModel.getProperty(
-					"/selectedSalesOrg"));
-				baseModel.setProperty("/SalesOrgDesc", baseModel.getProperty(
-					"/selectedSalesOrgDesc"));
+			var e = this.getView().getModel("baseModel");
+			if (e.getProperty("/selectedSalesOrg") !== undefined) {
+				e.setProperty("/SalesOrg", e.getProperty("/selectedSalesOrg"));
+				e.setProperty("/SalesOrgDesc", e.getProperty("/selectedSalesOrgDesc"))
 			}
-			if (baseModel.getProperty("/selectedDistChnl") !== undefined) {
-				baseModel.setProperty("/DistChan", baseModel.getProperty(
-					"/selectedDistChnl"));
-				baseModel.setProperty("/DistChanDesc", baseModel.getProperty(
-					"/selectedDistChlDesc"));
+			if (e.getProperty("/selectedDistChnl") !== undefined) {
+				e.setProperty("/DistChan", e.getProperty("/selectedDistChnl"));
+				e.setProperty("/DistChanDesc", e.getProperty("/selectedDistChlDesc"))
 			}
 			if (this._wizard.getCurrentStep().includes("ID_WIZARD_RTEX") === true) {
-				baseModel.setProperty("/Division", this.getView().getModel("invoiceSearchModel").getProperty("/Division"));
-				baseModel.setProperty("/DivisionDesc", baseModel.getProperty("/selectedDivisionDesc"));
-				baseModel.setProperty("/retDivEditablity", false);
-				baseModel.setProperty("/retSalesOrgEditablity", false);
-				baseModel.setProperty(
-					"/retDistChnlEditablity", false);
+				e.setProperty("/Division", this.getView().getModel("invoiceSearchModel").getProperty("/Division"));
+				e.setProperty("/DivisionDesc", e.getProperty("/selectedDivisionDesc"));
+				e.setProperty("/retDivEditablity", false);
+				e.setProperty("/retSalesOrgEditablity", false);
+				e.setProperty("/retDistChnlEditablity", false)
 			} else {
-				baseModel.setProperty("/Division", "");
-				baseModel.setProperty("/DivisionDesc", "");
-				baseModel.setProperty("/retDivEditablity", true);
-				baseModel.setProperty("/retSalesOrgEditablity", true);
-				baseModel.setProperty("/retDistChnlEditablity", true);
+				e.setProperty("/Division", "");
+				e.setProperty("/DivisionDesc", "");
+				e.setProperty("/retDivEditablity", true);
+				e.setProperty("/retSalesOrgEditablity", true);
+				e.setProperty("/retDistChnlEditablity", true)
 			}
-			var that = this;
-			if (!that.SoldtoParty) {
-				that.SoldtoParty = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.SoldtoParty", this);
-				that.getView().addDependent(that.SoldtoParty);
-				that.SoldtoParty.addStyleClass("sapUiSizeCompact");
+			var t = this;
+			if (!t.SoldtoParty) {
+				t.SoldtoParty = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.SoldtoParty", this);
+				t.getView().addDependent(t.SoldtoParty);
+				t.SoldtoParty.addStyleClass("sapUiSizeCompact")
 			}
-			// sap.ui.getCore().byId("idFrgCustID").setValueState(sap.ui.core.ValueState.None);
-			// sap.ui.getCore().byId("idSearchSoldToParty").setValue("");
-			that.SoldtoParty.open();
+			t.SoldtoParty.open()
 		},
-
-		onDownloadAttachment: function (oEvent) {
-			var selectedObj = oEvent.getSource().getSelectedContexts()[0].getObject();
-			var that = this;
-
+		onDownloadAttachment: function (e) {
+			var t = e.getSource().getSelectedContexts()[0].getObject();
+			var r = this;
 			if (this.docVersion === "SUCCESS" || this.docVersion === "DRAFT") {
-				// if (selectedObj.docId) {
-				// 	// if (window.location.href.includes("https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com")) {
-				// 	// var link = "https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com/connect_client_phase-II/Attachment/downloadFile/" +
-				// 	// 	selectedObj.docId;
-				// 	// }
-				// 	var link = "https://" + window.location.href.split("/")[2] + "/connect_client_phase-II/Attachment/downloadFile/" + selectedObj.docId;
-				// 	// else if()
-				// 	window.open(link, "_self");
-				// } else {
-				// 	MessageToast.show(this.resourceBundle.getText("Attachmentcannotbedownloaded"));
-				// 	// MessageToast.show("Attachment cannot be downloaded");
-				// }
 				if (window.location.href.includes("https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com")) {
-					var link =
+					var o =
 						"https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
-						selectedObj.docId;
+						t.docId
 				} else {
-					var link =
+					var o =
 						"https://flpnwc-cdd660bcb.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
-						selectedObj.docId;
+						t
+						.docId
 				}
-				window.open(link, "_self");
-			} else {
-
-			}
-
-			// https: //flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com/connect_client_phase-II/Attachment/downloadFile/5f7287c8-6380-410e-bf3f-881299462771
-			// https: //dkshsoservicesuk81qreeol.ap1.hana.ondemand.com/connect_client_phase-II/Attachment/downloadFile/5f7287c8-6380-410e-bf3f-881299462771
+				window.open(o, "_self")
+			} else {}
 		},
-
-		onPressAttachment: function (oEvent) {
+		onPressAttachment: function (e) {
 			this.attachemntMode = "Add";
-			if (oEvent.getSource().getTooltip() === "Cannot add Files") {
-				this.attachmentName = "Preview";
+			if (e.getSource().getTooltip() === "Cannot add Files") {
+				this.attachmentName = "Preview"
 			} else {
-				this.attachmentName = "Return";
+				this.attachmentName = "Return"
 			}
-			var that = this;
-			if (!that.attachment) {
-				that.attachment = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.attachment", this);
-				that.getView().addDependent(that.attachment);
-				that.attachment.addStyleClass("sapUiSizeCompact");
+			var t = this;
+			if (!t.attachment) {
+				t.attachment = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.attachment", this);
+				t.getView().addDependent(t.attachment);
+				t.attachment.addStyleClass("sapUiSizeCompact")
 			}
 			this.getView().getModel("baseModel").setProperty("/attachmentVisiblity", true);
 			this.getView().getModel("baseModel").setProperty("/attachmentDelEnable", true);
-			that.attachment.open();
-
+			t.attachment.open()
 		},
-
-		onViewAttachment: function (oEvent) {
+		onViewAttachment: function (e) {
 			this.attachemntMode = "View";
-			if (oEvent.getSource().getTooltip() === "Cannot add Files") {
-				this.attachmentName = "Preview";
+			if (e.getSource().getTooltip() === "Cannot add Files") {
+				this.attachmentName = "Preview"
 			} else {
-				this.attachmentName = "Return";
+				this.attachmentName = "Return"
 			}
-			var that = this;
-			if (!that.attachment) {
-				that.attachment = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.attachment", this);
-				that.getView().addDependent(that.attachment);
-				that.attachment.addStyleClass("sapUiSizeCompact");
+			var t = this;
+			if (!t.attachment) {
+				t.attachment = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.attachment", this);
+				t.getView().addDependent(t.attachment);
+				t.attachment.addStyleClass("sapUiSizeCompact")
 			}
 			this.getView().getModel("baseModel").setProperty("/attachmentVisiblity", false);
 			this.getView().getModel("baseModel").setProperty("/attachmentDelEnable", false);
-			that.attachment.open();
+			t.attachment.open()
 		},
-
 		okAttachment: function () {
 			if (this.docVersion === "SUCCESS") {
-				this.attachment.close();
+				this.attachment.close()
 			} else {
-				if (this.getView().getModel("returnModel").getData().attachmentObject === undefined || this.getView().getModel("returnModel")
-					.getData()
+				if (this.getView().getModel("returnModel").getData().attachmentObject === undefined || this.getView().getModel("returnModel").getData()
 					.attachmentObject.length === 0) {
-					MessageBox.information(this.resourceBundle.getText("Addatleastonfile"));
-					// MessageBox.information("Add at least on file");
+					t.information(this.resourceBundle.getText("Addatleastonfile"))
 				} else {
 					this.getView().getModel("baseModel").setProperty("/attachmentValue", "");
-					this.attachment.close();
+					this.attachment.close()
 				}
 			}
 		},
-
 		cancelAttachment: function () {
 			if (this.docVersion === "SUCCESS") {
 				this.attachment.close();
-				return;
+				return
 			} else if (this.docVersion === "DRAFT") {
 				if (this.attachemntMode === "View") {
-					this.attachment.close();
+					this.attachment.close()
 				} else {
-					// if (this.getView().getModel("returnModel").getData().attachmentObject.length > 0) {
-					// 	var attachmentList = this.getView().getModel("returnModel").getData().attachmentObject;
-					// 	for (var i = attachmentList.length - 1; i >= 0; i--) {
-					// 		if (attachmentList[i].docId === "") {
-					// 			attachmentList.splice(i, 1);
-					// 		}
-					// 	}
-					// 	this.getView().getModel("returnModel").setProperty("/attachmentObject", attachmentList);
-					// }
 					if (this.getView().getModel("returnModel").getData().attachmentObject.length === 0) {
-						this.getView().getModel("returnModel").setProperty("/enableViewAttachment", false);
+						this.getView().getModel("returnModel").setProperty("/enableViewAttachment", false)
 					}
-					this.attachment.close();
+					this.attachment.close()
 				}
 			} else {
 				if (this.attachemntMode = "View") {
-					this.attachment.close();
+					this.attachment.close()
 				} else {
-					// this.getView().getModel("returnModel").getData().attachmentObject = [];
 					this.getView().getModel("returnModel").refresh(true);
 					this.getView().getModel("baseModel").setProperty("/attachmentValue", "");
-					this.attachment.close();
+					this.attachment.close()
 				}
 			}
 		},
-
 		valueHelpBillingType: function () {
-			var that = this;
-			if (!that.BillingType) {
-				that.BillingType = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.BillingType", that);
-				that.getView().addDependent(that.BillingType);
-				var oDataModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-				var busyDialog = new sap.m.BusyDialog();
-				busyDialog.open();
-				oDataModel.read("/billingTypeLookUpSet", {
+			var e = this;
+			if (!e.BillingType) {
+				e.BillingType = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.BillingType", e);
+				e.getView().addDependent(e.BillingType);
+				var t = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+				var r = new sap.m.BusyDialog;
+				r.open();
+				t.read("/billingTypeLookUpSet", {
 					async: false,
-					success: function (oData, oResponse) {
-						busyDialog.close();
-						var billingTypeModel = new sap.ui.model.json.JSONModel({
-							"results": oData.results
+					success: function (t, o) {
+						r.close();
+						var s = new sap.ui.model.json.JSONModel({
+							results: t.results
 						});
-						if (oData.results.length === 1) {
-
-						}
-						that.BillingType.setModel(billingTypeModel, "billingTypeModel");
-						that.BillingType.open();
+						if (t.results.length === 1) {}
+						e.BillingType.setModel(s, "billingTypeModel");
+						e.BillingType.open()
 					},
-					error: function (error) {
-						busyDialog.close();
-						var errorMsg = "";
-						if (error.statusCode === 504) {
-							errorMsg = that.resourceBundle.getText("timeOut");
-							// errorMsg = "Request timed-out. Please try again!";
-							that.errorMsg(errorMsg);
+					error: function (t) {
+						r.close();
+						var o = "";
+						if (t.statusCode === 504) {
+							o = e.resourceBundle.getText("timeOut");
+							e.errorMsg(o)
 						} else {
-							errorMsg = JSON.parse(error.responseText);
-							errorMsg = errorMsg.error.message.value;
-							that.errorMsg(errorMsg);
+							o = JSON.parse(t.responseText);
+							o = o.error.message.value;
+							e.errorMsg(o)
 						}
 					}
-				});
+				})
 			} else {
-				that.BillingType.open();
+				e.BillingType.open()
 			}
 		},
-
-		valueHelpUOM: function (oEvent) {
-
-			// this.excTab = "ExchangeTab";
-			if (oEvent.getSource().getBindingContext("exchangeModel") !== undefined) {
-				this.UOMIndex = oEvent.getSource().getBindingContext("exchangeModel");
-			} else if (oEvent.getSource().getBindingContext("invoiceSearchModel") !== undefined) {
-				this.UOMIndex = oEvent.getSource().getBindingContext("invoiceSearchModel");
+		valueHelpUOM: function (e) {
+			if (e.getSource().getBindingContext("exchangeModel") !== undefined) {
+				this.UOMIndex = e.getSource().getBindingContext("exchangeModel")
+			} else if (e.getSource().getBindingContext("invoiceSearchModel") !== undefined) {
+				this.UOMIndex = e.getSource().getBindingContext("invoiceSearchModel")
 			} else {
-				this.UOMIndex = oEvent.getSource().getBindingContext("returnModel");
-
+				this.UOMIndex = e.getSource().getBindingContext("returnModel")
 			}
-
-			var that = this;
-			// var material = oEvent.getSource().getValue();
-			if (oEvent.getSource().getBindingContext("exchangeModel") !== undefined) {
-				var bindingModel = oEvent.getSource().getBindingContext("exchangeModel");
-			} else if (oEvent.getSource().getBindingContext("invoiceSearchModel") !== undefined) {
-				var bindingModel = oEvent.getSource().getBindingContext("invoiceSearchModel");
+			var r = this;
+			if (e.getSource().getBindingContext("exchangeModel") !== undefined) {
+				var o = e.getSource().getBindingContext("exchangeModel")
+			} else if (e.getSource().getBindingContext("invoiceSearchModel") !== undefined) {
+				var o = e.getSource().getBindingContext("invoiceSearchModel")
 			} else {
-				var bindingModel = oEvent.getSource().getBindingContext("returnModel");
+				var o = e.getSource().getBindingContext("returnModel")
 			}
-			var path = parseInt(bindingModel.getPath().split("/")[2]);
-			this.currentRowObject = bindingModel.getObject();
-
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var filters = [];
-			if (oEvent.getSource().getBindingContext("invoiceSearchModel") !== undefined) {
-				var oFilter = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter("materialNum", sap.ui.model.FilterOperator.EQ, this.currentRowObject.MaterialCode),
-						new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().salesOrgNo),
-						new sap.ui.model.Filter("distChannel", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().distChnl),
-						new sap.ui.model.Filter("division", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().division),
-						new sap.ui.model.Filter("shipToParty", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().shipToParty),
-						new sap.ui.model.Filter("soldToParty", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().soldToParty),
-						new sap.ui.model.Filter("orderType", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getData().exchangeOrderType),
-						new sap.ui.model.Filter("materialGroup", sap.ui.model.FilterOperator.EQ, this.currentRowObject.MaterialGroup),
-						new sap.ui.model.Filter("materialGroup4", sap.ui.model.FilterOperator.EQ, this.currentRowObject.MaterialGroup4),
-						new sap.ui.model.Filter("quantity", sap.ui.model.FilterOperator.EQ, this.currentRowObject.actualRetQty)
+			var s = parseInt(o.getPath().split("/")[2]);
+			this.currentRowObject = o.getObject();
+			var i = this.getView().getModel("invoiceSearchModel");
+			var a = [];
+			if (e.getSource().getBindingContext("invoiceSearchModel") !== undefined) {
+				var n = new sap.ui.model.Filter({
+					filters: [new sap.ui.model.Filter("materialNum", sap.ui.model.FilterOperator.EQ, this.currentRowObject.MaterialCode), new sap
+						.ui
+						.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, i.getData().salesOrgNo), new sap.ui.model.Filter("distChannel",
+							sap
+							.ui.model.FilterOperator.EQ, i.getData().distChnl), new sap.ui.model.Filter("division", sap.ui.model.FilterOperator.EQ, i.getData()
+							.division), new sap.ui.model.Filter("shipToParty", sap.ui.model.FilterOperator.EQ, i.getData().shipToParty), new sap.ui.model
+						.Filter("soldToParty", sap.ui.model.FilterOperator.EQ, i.getData().soldToParty), new sap.ui.model.Filter("orderType", sap.ui
+							.model
+							.FilterOperator.EQ, this.getView().getModel("baseModel").getData().exchangeOrderType), new sap.ui.model.Filter(
+							"materialGroup", sap.ui.model.FilterOperator.EQ, this.currentRowObject.MaterialGroup), new sap.ui.model.Filter(
+							"materialGroup4", sap.ui.model.FilterOperator.EQ, this.currentRowObject.MaterialGroup4), new sap.ui.model.Filter(
+							"quantity",
+							sap.ui.model.FilterOperator.EQ, this.currentRowObject.actualRetQty)
 					],
 					and: true
-				});
+				})
 			} else {
 				if (this.currentRowObject.matNumber === "") {
-					MessageBox.information(this.resourceBundle.getText("Materialcannotbeempty"));
-					// MessageBox.information("Material cannot be empty");
-					return;
+					t.information(this.resourceBundle.getText("Materialcannotbeempty"));
+					return
 				} else {
-					var oFilter = new sap.ui.model.Filter({
-						filters: [
-							new sap.ui.model.Filter("materialNum", sap.ui.model.FilterOperator.EQ, this.currentRowObject.matNumber),
-							new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().salesOrgNo),
-							new sap.ui.model.Filter("distChannel", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().distChnl),
-							new sap.ui.model.Filter("division", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().division),
-							new sap.ui.model.Filter("shipToParty", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().shipToParty),
-							new sap.ui.model.Filter("soldToParty", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().soldToParty),
-							new sap.ui.model.Filter("orderType", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getData().exchangeOrderType),
-							new sap.ui.model.Filter("materialGroup", sap.ui.model.FilterOperator.EQ, this.currentRowObject.materialGroup),
-							new sap.ui.model.Filter("materialGroup4", sap.ui.model.FilterOperator.EQ, this.currentRowObject.materialGroup4),
-							new sap.ui.model.Filter("quantity", sap.ui.model.FilterOperator.EQ, this.currentRowObject.quantity)
+					var n = new sap.ui.model.Filter({
+						filters: [new sap.ui.model.Filter("materialNum", sap.ui.model.FilterOperator.EQ, this.currentRowObject.matNumber), new sap.ui
+							.model
+							.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, i.getData().salesOrgNo), new sap.ui.model.Filter("distChannel", sap.ui
+								.model
+								.FilterOperator.EQ, i.getData().distChnl), new sap.ui.model.Filter("division", sap.ui.model.FilterOperator.EQ, i.getData()
+								.division),
+							new sap.ui.model.Filter("shipToParty", sap.ui.model.FilterOperator.EQ, i.getData().shipToParty), new sap.ui.model.Filter(
+								"soldToParty", sap.ui.model.FilterOperator.EQ, i.getData().soldToParty), new sap.ui.model.Filter("orderType", sap.ui.model
+								.FilterOperator
+								.EQ, this.getView().getModel("baseModel").getData().exchangeOrderType), new sap.ui.model.Filter("materialGroup", sap.ui.model
+								.FilterOperator.EQ, this.currentRowObject.materialGroup), new sap.ui.model.Filter("materialGroup4", sap.ui.model.FilterOperator
+								.EQ, this.currentRowObject.materialGroup4), new sap.ui.model.Filter("quantity", sap.ui.model.FilterOperator.EQ, this.currentRowObject
+								.quantity)
 						],
 						and: true
-					});
+					})
 				}
 			}
-			filters.push(oFilter);
-			var oDataModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			// if (!that.UOM) {
-			that.UOM = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.UOM", that);
-			that.getView().addDependent(that.BillingType);
-			var oDataModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/materialDataSet", {
+			a.push(n);
+			var l = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			r.UOM = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.UOM", r);
+			r.getView().addDependent(r.BillingType);
+			var l = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var d = new sap.m.BusyDialog;
+			d.open();
+			l.read("/materialDataSet", {
 				async: false,
-				filters: filters,
+				filters: a,
 				urlParameters: "&$expand=materialDataToMaterialAltUom,materialDataToMatPricingScale,materialDataToMatBonusGoods&$format=json",
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var UOMModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results[0].materialDataToMaterialAltUom.results
+				success: function (e, t) {
+					d.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: e.results[0].materialDataToMaterialAltUom.results
 					});
-					that.UOM.setModel(UOMModel, "UOMModel");
-					that.UOM.getModel("UOMModel").refresh();
-					that.UOM.open();
+					r.UOM.setModel(o, "UOMModel");
+					r.UOM.getModel("UOMModel").refresh();
+					r.UOM.open()
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = "";
-					if (error.statusCode === 504) {
-						errorMsg = that.resourceBundle.getText("timeOut");
-						errorMsg = "Request timed-out. Please try again!";
-						that.errorMsg(errorMsg);
+				error: function (e) {
+					d.close();
+					var t = "";
+					if (e.statusCode === 504) {
+						t = r.resourceBundle.getText("timeOut");
+						t = "Request timed-out. Please try again!";
+						r.errorMsg(t)
 					} else {
-						errorMsg = JSON.parse(error.responseText);
-						errorMsg = errorMsg.error.message.value;
-						that.errorMsg(errorMsg);
+						t = JSON.parse(e.responseText);
+						t = t.error.message.value;
+						r.errorMsg(t)
 					}
 				}
-			});
-			// }
+			})
 		},
-
-		// sales Org odata service call
-		_salesOrgList: function (oEvent) {
-			var that = this;
+		_salesOrgList: function (e) {
+			var t = this;
 			if (this.getView().getModel("ZDKSH_CC_INVENTORY_HDRLOOKUP_SRV")) {
-				var oDataModel = this.getView().getModel("ZDKSH_CC_INVENTORY_HDRLOOKUP_SRV");
-				var filters = [];
-				var lang = "";
+				var r = this.getView().getModel("ZDKSH_CC_INVENTORY_HDRLOOKUP_SRV");
+				var o = [];
+				var s = "";
 				if (sap.ushell) {
 					if (sap.ui.getCore().getConfiguration().getLanguage() === "th") {
-						lang = "2";
+						s = "2"
 					} else {
-						lang = "EN";
+						s = "EN"
 					}
 				} else {
-					lang = "EN";
+					s = "EN"
 				}
-				lang = lang.toUpperCase();
-				var oFilter = new sap.ui.model.Filter({
-					filters: [
-						new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"),
-						new sap.ui.model.Filter("Salesorg", sap.ui.model.FilterOperator.EQ, that.salesOrgDataAccess)
-					],
+				s = s.toUpperCase();
+				var i = new sap.ui.model.Filter({
+					filters: [new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"), new sap.ui.model.Filter("Salesorg", sap.ui
+						.model.FilterOperator.EQ, t.salesOrgDataAccess)],
 					and: true
 				});
-				filters.push(oFilter);
-				var busyDialog = new sap.m.BusyDialog();
-				busyDialog.open();
-				oDataModel.read("/ZSearchHelp_SalesOrgSet", {
-					filters: filters,
+				o.push(i);
+				var a = new sap.m.BusyDialog;
+				a.open();
+				r.read("/ZSearchHelp_SalesOrgSet", {
+					filters: o,
 					async: false,
-					success: function (oData, oResponse) {
-						busyDialog.close();
-						var salesOrgModel = new sap.ui.model.json.JSONModel({
-							"results": oData.results
+					success: function (e, r) {
+						a.close();
+						var o = new sap.ui.model.json.JSONModel({
+							results: e.results
 						});
-						salesOrgModel.setSizeLimit(salesOrgModel.getData().results.length);
-						that.getView().setModel(salesOrgModel, "salesOrgModel");
-
-						if (oData.results.length === 1) {
-							that.getView().getModel("baseModel").setProperty("/selectedSalesOrg", oData.results[0].Salesorg);
-							that.getView().getModel("baseModel").setProperty("/selectedSalesOrgDesc", oData.results[0].SalesorgDesc);
+						o.setSizeLimit(o.getData().results.length);
+						t.getView().setModel(o, "salesOrgModel");
+						if (e.results.length === 1) {
+							t.getView().getModel("baseModel").setProperty("/selectedSalesOrg", e.results[0].Salesorg);
+							t.getView().getModel("baseModel").setProperty("/selectedSalesOrgDesc", e.results[0].SalesorgDesc)
 						}
-						if (!that.salesOrg) {
-							that.salesOrg = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.SalesOrg", that);
-							that.getView().addDependent(that.salesOrg);
-							var salesOrgModel = new sap.ui.model.json.JSONModel({
-								"results": oData.results
+						if (!t.salesOrg) {
+							t.salesOrg = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.SalesOrg", t);
+							t.getView().addDependent(t.salesOrg);
+							var o = new sap.ui.model.json.JSONModel({
+								results: e.results
 							});
-							that.salesOrg.setModel(salesOrgModel, "salesOrgModel");
+							t.salesOrg.setModel(o, "salesOrgModel")
 						}
 					},
-					error: function (error) {
-						busyDialog.close();
-						var errorMsg = "";
-						if (error.statusCode === 504) {
-							errorMsg = that.resourceBundle.getText("timeOut");
-							// errorMsg = "Request timed-out. Please try again!";
-							that.errorMsg(errorMsg);
+					error: function (e) {
+						a.close();
+						var r = "";
+						if (e.statusCode === 504) {
+							r = t.resourceBundle.getText("timeOut");
+							t.errorMsg(r)
 						} else {
-							errorMsg = JSON.parse(error.responseText);
-							errorMsg = errorMsg.error.message.value;
-							that.errorMsg(errorMsg);
+							r = JSON.parse(e.responseText);
+							r = r.error.message.value;
+							t.errorMsg(r)
 						}
 					}
-				});
+				})
 			}
 		},
-		// general show error message function
-		errorMsg: function (errorMsg) {
-			sap.m.MessageBox.show(
-				errorMsg, {
-					styleClass: 'sapUiSizeCompact',
-					icon: sap.m.MessageBox.Icon.ERROR,
-					title: "Error",
-					actions: [sap.m.MessageBox.Action.OK],
-					onClose: function (oAction) {}
-				}
-			);
+		errorMsg: function (e) {
+			sap.m.MessageBox.show(e, {
+				styleClass: "sapUiSizeCompact",
+				icon: sap.m.MessageBox.Icon.ERROR,
+				title: "Error",
+				actions: [sap.m.MessageBox.Action.OK],
+				onClose: function (e) {}
+			})
 		},
-
 		_distChannelList: function () {
-			var that = this;
-			if (that.distrChannelDataAccess === "No Access") {
-				MessageToast.show(this.resourceBundle.getText("NoDataAccess"));
+			var e = this;
+			if (e.distrChannelDataAccess === "No Access") {
+				o.show(this.resourceBundle.getText("NoDataAccess"))
 			} else {
 				if (this.getView().getModel("ZDKSH_CC_HDR_LOOKUP_SRV")) {
-					var oDataModel = this.getView().getModel("ZDKSH_CC_HDR_LOOKUP_SRV");
-					var filters = [];
-					var lang = "";
-					// if (sap.ushell.Container) {
-					// 	lang = sap.ui.getCore().getConfiguration().getLanguage();
-					// } else {
-					// 	lang = "EN";
-					// }
-					lang = lang.toUpperCase();
-					var oFilter = new sap.ui.model.Filter({
-						filters: [
-							new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"),
-							new sap.ui.model.Filter("DistChl", sap.ui.model.FilterOperator.EQ, that.distrChannelDataAccess)
-						],
+					var t = this.getView().getModel("ZDKSH_CC_HDR_LOOKUP_SRV");
+					var r = [];
+					var s = "";
+					s = s.toUpperCase();
+					var i = new sap.ui.model.Filter({
+						filters: [new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"), new sap.ui.model.Filter("DistChl", sap.ui
+							.model.FilterOperator.EQ, e.distrChannelDataAccess)],
 						and: true
 					});
-					filters.push(oFilter);
-					var busyDialog = new sap.m.BusyDialog();
-					busyDialog.open();
-					oDataModel.read("/ZDISTCHLLOOKUPSet", {
+					r.push(i);
+					var a = new sap.m.BusyDialog;
+					a.open();
+					t.read("/ZDISTCHLLOOKUPSet", {
 						async: false,
-						filters: filters,
-						success: function (oData, oResponse) {
-							busyDialog.close();
-							var DistChanModel = new sap.ui.model.json.JSONModel({
-								"results": oData.results
+						filters: r,
+						success: function (t, r) {
+							a.close();
+							var o = new sap.ui.model.json.JSONModel({
+								results: t.results
 							});
-							that.getView().setModel(DistChanModel, "DistChanSet");
-							if (oData.results.length === 1) {
-								that.getView().getModel("baseModel").setProperty("/selectedDistChnl", oData.results[0].DistChl);
-								that.getView().getModel("baseModel").setProperty("/selectedDistChlDesc", oData.results[0].Name);
+							e.getView().setModel(o, "DistChanSet");
+							if (t.results.length === 1) {
+								e.getView().getModel("baseModel").setProperty("/selectedDistChnl", t.results[0].DistChl);
+								e.getView().getModel("baseModel").setProperty("/selectedDistChlDesc", t.results[0].Name)
 							}
-							if (!that.DistChnl) {
-								that.DistChnl = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.DistChnl", that);
-								that.getView().addDependent(that.DistChnl);
-								var DivisionModel = new sap.ui.model.json.JSONModel({
-									"results": oData.results
+							if (!e.DistChnl) {
+								e.DistChnl = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.DistChnl", e);
+								e.getView().addDependent(e.DistChnl);
+								var s = new sap.ui.model.json.JSONModel({
+									results: t.results
 								});
-								that.DistChnl.setModel(DivisionModel, "DistChanSet");
-								// that.DivisionFrag.open();
+								e.DistChnl.setModel(s, "DistChanSet")
 							}
-
 						},
-						error: function (error) {
-							busyDialog.close();
-							var errorMsg = "";
-							if (error.statusCode === 504) {
-								errorMsg = that.resourceBundle.getText("timeOut");
-								// errorMsg = "Request timed-out. Please try again!";
-								that.errorMsg(errorMsg);
+						error: function (t) {
+							a.close();
+							var r = "";
+							if (t.statusCode === 504) {
+								r = e.resourceBundle.getText("timeOut");
+								e.errorMsg(r)
 							} else {
-								errorMsg = JSON.parse(error.responseText);
-								errorMsg = errorMsg.error.message.value;
-								that.errorMsg(errorMsg);
+								r = JSON.parse(t.responseText);
+								r = r.error.message.value;
+								e.errorMsg(r)
 							}
 						}
-					});
+					})
 				}
 			}
 		},
-
 		valueHelpRequestDivision: function () {
-			var that = this;
-			if (that.divisionDataAccess === "No Access") {
-				MessageToast.show(this.resourceBundle.getText("NoDataAccess"));
+			var e = this;
+			if (e.divisionDataAccess === "No Access") {
+				o.show(this.resourceBundle.getText("NoDataAccess"))
 			} else {
-				if (!that.Division) {
-					that.Division = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Division", that);
-					that.getView().addDependent(that.Division);
-					var oDataModel = this.getView().getModel("ZDKSH_CC_HDR_LOOKUP_SRV");
-					var filters = [];
-					var oFilter = new sap.ui.model.Filter({
-						filters: [
-							new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"),
-							new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.EQ, that.divisionDataAccess)
-						],
+				if (!e.Division) {
+					e.Division = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Division", e);
+					e.getView().addDependent(e.Division);
+					var t = this.getView().getModel("ZDKSH_CC_HDR_LOOKUP_SRV");
+					var r = [];
+					var s = new sap.ui.model.Filter({
+						filters: [new sap.ui.model.Filter("Language", sap.ui.model.FilterOperator.EQ, "EN"), new sap.ui.model.Filter("Division", sap
+							.ui
+							.model.FilterOperator.EQ, e.divisionDataAccess)],
 						and: true
 					});
-					filters.push(oFilter);
-					var busyDialog = new sap.m.BusyDialog();
-					busyDialog.open();
-					oDataModel.read("/ZDIVISIONLOOKUPSet", {
+					r.push(s);
+					var i = new sap.m.BusyDialog;
+					i.open();
+					t.read("/ZDIVISIONLOOKUPSet", {
 						async: false,
-						filters: filters,
-						success: function (oData, oResponse) {
-							busyDialog.close();
-							var DivisionModel = new sap.ui.model.json.JSONModel({
-								"results": oData.results
+						filters: r,
+						success: function (t, r) {
+							i.close();
+							var o = new sap.ui.model.json.JSONModel({
+								results: t.results
 							});
-							that.Division.setModel(DivisionModel, "DivisionSet");
-							that.Division.open();
+							e.Division.setModel(o, "DivisionSet");
+							e.Division.open()
 						},
-						error: function (error) {
-							busyDialog.close();
-							var errorMsg = "";
-							if (error.statusCode === 504) {
-								// errorMsg = "Request timed-out. Please try again!";
-								errorMsg = that.resourceBundle.getText("timeOut");
-								that.errorMsg(errorMsg);
+						error: function (t) {
+							i.close();
+							var r = "";
+							if (t.statusCode === 504) {
+								r = e.resourceBundle.getText("timeOut");
+								e.errorMsg(r)
 							} else {
-								errorMsg = JSON.parse(error.responseText);
-								errorMsg = errorMsg.error.message.value;
-								that.errorMsg(errorMsg);
+								r = JSON.parse(t.responseText);
+								r = r.error.message.value;
+								e.errorMsg(r)
 							}
 						}
-					});
+					})
 				} else {
-					that.Division.open();
+					e.Division.open()
 				}
 			}
 		},
-
-		onConfirmChangeSalesOrg: function (oEvent) {
-			oEvent.getSource().getBinding("items").filter([]);
+		onConfirmChangeSalesOrg: function (e) {
+			e.getSource().getBinding("items").filter([]);
 			this.getView().getModel("baseModel").setProperty("/salesOrgContainer", "soldToPartyFrag");
-			this.getView().getModel("baseModel").setProperty("/SalesOrg", oEvent.getParameters().selectedContexts[0].getObject().Salesorg);
-			this.getView().getModel("baseModel").setProperty("/SalesOrgDesc", oEvent.getParameters().selectedContexts[0].getObject().SalesorgDesc);
-			this.getView().getModel("baseModel").setProperty("/selectedSalesOrg", oEvent.getParameters().selectedContexts[0].getObject().Salesorg);
-			this.getView().getModel("baseModel").refresh();
-			// console.log();
+			this.getView().getModel("baseModel").setProperty("/SalesOrg", e.getParameters().selectedContexts[0].getObject().Salesorg);
+			this.getView().getModel("baseModel").setProperty("/SalesOrgDesc", e.getParameters().selectedContexts[0].getObject().SalesorgDesc);
+			this.getView().getModel("baseModel").setProperty("/selectedSalesOrg", e.getParameters().selectedContexts[0].getObject().Salesorg);
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onLiveChangeSalesOrg: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("SalesorgDesc", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("Salesorg", sap.ui.model.FilterOperator.Contains, value)
+		onLiveChangeSalesOrg: function (e) {
+			var t = e.getParameters().value;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("SalesorgDesc", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model
+				.Filter("Salesorg", sap.ui.model.FilterOperator.Contains, t)
 			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+			r.push(o);
+			var s = e.getSource().getBinding("items");
+			s.filter(r)
 		},
-
-		onLiveChangeShipTo: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("ShipToPartyCode", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("ShipToPartyName", sap.ui.model.FilterOperator.Contains, value)
+		onLiveChangeShipTo: function (e) {
+			var t = e.getParameters().value;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("ShipToPartyCode", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model
+				.Filter("ShipToPartyName", sap.ui.model.FilterOperator.Contains, t)
 			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+			r.push(o);
+			var s = e.getSource().getBinding("items");
+			s.filter(r)
 		},
-
-		onLiveChangeBillTo: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("BillToPartyCode", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("BillToPartyName", sap.ui.model.FilterOperator.Contains, value)
+		onLiveChangeBillTo: function (e) {
+			var t = e.getParameters().value;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("BillToPartyCode", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model
+				.Filter("BillToPartyName", sap.ui.model.FilterOperator.Contains, t)
 			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+			r.push(o);
+			var s = e.getSource().getBinding("items");
+			s.filter(r)
 		},
-
-		onLiveChangePayer: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("PayerCode", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("PayerName", sap.ui.model.FilterOperator.Contains, value)
-			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+		onLiveChangePayer: function (e) {
+			var t = e.getParameters().value;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("PayerCode", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter(
+				"PayerName", sap.ui.model.FilterOperator.Contains, t)]);
+			r.push(o);
+			var s = e.getSource().getBinding("items");
+			s.filter(r)
 		},
-
-		onConfirmChangePayer: function (oEvent) {
-			oEvent.getSource().getBinding("items").filter([]);
+		onConfirmChangePayer: function (e) {
+			e.getSource().getBinding("items").filter([]);
 			if (this.getView().getModel("exchangeModel") && this.getView().getModel("exchangeModel").getProperty("/results").length > 0) {
-				this.getView().getModel("baseModel").setProperty("/exPayer", oEvent.getParameters().selectedContexts[0].getObject().PayerCode);
-				this.getView().getModel("baseModel").setProperty("/exPayerDesc", oEvent.getParameters().selectedContexts[0].getObject().PayerName);
+				this.getView().getModel("baseModel").setProperty("/exPayer", e.getParameters().selectedContexts[0].getObject().PayerCode);
+				this.getView().getModel("baseModel").setProperty("/exPayerDesc", e.getParameters().selectedContexts[0].getObject().PayerName);
 				this.getView().getModel("baseModel").refresh();
-				this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange");
+				this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange")
 			} else {
-				MessageToast.show("Add items for exchange");
+				o.show("Add items for exchange")
 			}
 		},
-
-		onConfirmChangeBillTo: function (oEvent) {
-			oEvent.getSource().getBinding("items").filter([]);
+		onConfirmChangeBillTo: function (e) {
+			e.getSource().getBinding("items").filter([]);
 			if (this.getView().getModel("exchangeModel") && this.getView().getModel("exchangeModel").getProperty("/results").length > 0) {
-				this.getView().getModel("baseModel").setProperty("/exBillTo", oEvent.getParameters().selectedContexts[0].getObject().BillToPartyCode);
-				this.getView().getModel("baseModel").setProperty("/exBillToDesc", oEvent.getParameters().selectedContexts[0].getObject().BillToPartyName);
+				this.getView().getModel("baseModel").setProperty("/exBillTo", e.getParameters().selectedContexts[0].getObject().BillToPartyCode);
+				this.getView().getModel("baseModel").setProperty("/exBillToDesc", e.getParameters().selectedContexts[0].getObject().BillToPartyName);
 				this.getView().getModel("baseModel").refresh();
-				this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange");
+				this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange")
 			} else {
-				MessageToast.show("Add items for exchange");
-			}
-
-		},
-
-		onConfirmChangeShipTo: function (oEvent) {
-			oEvent.getSource().getBinding("items").filter([]);
-			if (this.getView().getModel("exchangeModel") && this.getView().getModel("exchangeModel").getProperty("/results").length > 0) {
-				this.getView().getModel("baseModel").setProperty("/exShipTo", oEvent.getParameters().selectedContexts[0].getObject().ShipToPartyCode);
-				this.getView().getModel("baseModel").setProperty("/exShipToDesc", oEvent.getParameters().selectedContexts[0].getObject().ShipToPartyName);
-				this.getView().getModel("baseModel").refresh();
-				this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange");
-			} else {
-				MessageToast.show("Add items for exchange");
+				o.show("Add items for exchange")
 			}
 		},
-
-		handleAddDivision: function (oEvent) {
-			oEvent.getSource().getBinding("items").filter([]);
-			// this.getView().getModel("baseModel").setProperty("/salesOrgContainer", "soldToPartyFrag");
-			this.getView().getModel("baseModel").setProperty("/Division", oEvent.getParameters().selectedContexts[0].getObject().Division);
-			this.getView().getModel("baseModel").setProperty("/DivisionDesc", oEvent.getParameters().selectedContexts[0].getObject().Name);
-			// this.getView().getModel("baseModel").setProperty("/Division", oEvent.getParameters().selectedContexts[0].getObject().Name);
-			this.getView().getModel("baseModel").refresh();
-			// console.log();
+		onConfirmChangeShipTo: function (e) {
+			e.getSource().getBinding("items").filter([]);
+			if (this.getView().getModel("exchangeModel") && this.getView().getModel("exchangeModel").getProperty("/results").length > 0) {
+				this.getView().getModel("baseModel").setProperty("/exShipTo", e.getParameters().selectedContexts[0].getObject().ShipToPartyCode);
+				this.getView().getModel("baseModel").setProperty("/exShipToDesc", e.getParameters().selectedContexts[0].getObject().ShipToPartyName);
+				this.getView().getModel("baseModel").refresh();
+				this._pricingSimulation(this.getView().getModel("exchangeModel").getProperty("/results"), "Exchange")
+			} else {
+				o.show("Add items for exchange")
+			}
 		},
-
-		onLiveChangeDivision: function (oEvent) {
-			var value = oEvent.getParameters().value;
-			var filters = new Array();
-			var oFilter = new sap.ui.model.Filter([new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, value),
-				new sap.ui.model.Filter("Division", sap.ui.model.FilterOperator.Contains, value)
-			]);
-			filters.push(oFilter);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter(filters);
+		handleAddDivision: function (e) {
+			e.getSource().getBinding("items").filter([]);
+			this.getView().getModel("baseModel").setProperty("/Division", e.getParameters().selectedContexts[0].getObject().Division);
+			this.getView().getModel("baseModel").setProperty("/DivisionDesc", e.getParameters().selectedContexts[0].getObject().Name);
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onClickROType: function (oEvent) {
-			var that = this;
-			var baseModel = this.getView().getModel("baseModel");
-			var selectedROType = oEvent.getSource().getBindingContext("ROTypeListModel").getObject();
-			this.ROtypeCode = selectedROType.roType;
-			baseModel.setProperty("/selectedROType", selectedROType.roTypeDesc);
-			baseModel.setProperty("/selectedROTypeCode", this.ROtypeCode);
+		onLiveChangeDivision: function (e) {
+			var t = e.getParameters().value;
+			var r = new Array;
+			var o = new sap.ui.model.Filter([new sap.ui.model.Filter("Name", sap.ui.model.FilterOperator.Contains, t), new sap.ui.model.Filter(
+				"Division", sap.ui.model.FilterOperator.Contains, t)]);
+			r.push(o);
+			var s = e.getSource().getBinding("items");
+			s.filter(r)
+		},
+		onClickROType: function (e) {
+			var t = this;
+			var r = this.getView().getModel("baseModel");
+			var o = e.getSource().getBindingContext("ROTypeListModel").getObject();
+			this.ROtypeCode = o.roType;
+			r.setProperty("/selectedROType", o.roTypeDesc);
+			r.setProperty("/selectedROTypeCode", this.ROtypeCode);
 			if (this.ROtypeCode === "TI") {
 				this.getView().getModel("invoiceSearchModel").setProperty("/billingCategory", "B");
 				this.getView().getModel("invoiceSearchModel").setProperty("/billingCategoryDesc", "Consignment Fill Up");
-				baseModel.setProperty("/visiblityROTypeSel", false);
-				baseModel.setProperty("/visiblityROTypeText", true);
+				r.setProperty("/visiblityROTypeSel", false);
+				r.setProperty("/visiblityROTypeText", true)
 			} else {
 				this.getView().getModel("invoiceSearchModel").setProperty("/billingCategory", "C");
 				this.getView().getModel("invoiceSearchModel").setProperty("/billingCategoryDesc", "Commercial Invoice");
-				baseModel.setProperty("/visiblityROTypeSel", true);
-				baseModel.setProperty("/visiblityROTypeText", false);
+				r.setProperty("/visiblityROTypeSel", true);
+				r.setProperty("/visiblityROTypeText", false)
 			}
-			baseModel.refresh();
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode);
-			filters.push(oFilter);
-			var oDataModel = that.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/roTypeReturnReasonSet", {
-				filters: filters,
+			r.refresh();
+			var s = [];
+			var i = new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode);
+			s.push(i);
+			var a = t.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var n = new sap.m.BusyDialog;
+			n.open();
+			a.read("/roTypeReturnReasonSet", {
+				filters: s,
 				async: false,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-
-					that.reasonModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results
+				success: function (e, r) {
+					n.close();
+					t.reasonModel = new sap.ui.model.json.JSONModel({
+						results: e.results
 					});
-					that.getView().setModel(that.reasonModel, "OrderReasonSet");
-					that._getSLoc();
+					t.getView().setModel(t.reasonModel, "OrderReasonSet");
+					t._getSLoc()
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = JSON.parse(error.responseText);
-					errorMsg = errorMsg.error.message.value;
-					that.errorMsg(errorMsg);
+				error: function (e) {
+					n.close();
+					var r = JSON.parse(e.responseText);
+					r = r.error.message.value;
+					t.errorMsg(r)
 				}
-
-			});
+			})
 		},
-
 		_getSLoc: function () {
-			var that = this;
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode);
-			filters.push(oFilter);
-			var oDataModel = that.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/roTypeSlocSet", {
-				filters: filters,
+			var e = this;
+			var r = [];
+			var o = new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode);
+			r.push(o);
+			var s = e.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var i = new sap.m.BusyDialog;
+			i.open();
+			s.read("/roTypeSlocSet", {
+				filters: r,
 				async: false,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					if (oData.results.length > 0) {
-						if (that.selectedReturnItems) {
-							for (var i = 0; i < that.selectedReturnItems.length; i++) {
-								that.selectedReturnItems[i].storageLocation = oData.results[0].Sloc;
+				success: function (r, o) {
+					i.close();
+					if (r.results.length > 0) {
+						if (e.selectedReturnItems) {
+							for (var s = 0; s < e.selectedReturnItems.length; s++) {
+								e.selectedReturnItems[s].storageLocation = r.results[0].Sloc
 							}
 						}
-						that.getView().getModel("baseModel").setProperty("/roTypeSLoc", oData.results[0].Sloc);
+						e.getView().getModel("baseModel").setProperty("/roTypeSLoc", r.results[0].Sloc)
 					} else {
-						MessageBox.error(that.resourceBundle.getText("NoSLocAvailablefor") + this.ROtypeCode);
+						t.error(e.resourceBundle.getText("NoSLocAvailablefor") + this.ROtypeCode)
 					}
-					that._getOrderType();
+					e._getOrderType()
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = JSON.parse(error.responseText);
-					errorMsg = errorMsg.error.message.value;
-					that.errorMsg(errorMsg);
+				error: function (t) {
+					i.close();
+					var r = JSON.parse(t.responseText);
+					r = r.error.message.value;
+					e.errorMsg(r)
 				}
-
-			});
+			})
 		},
-
 		_getRoTypeList: function () {
-			var that = this;
-			var oModel = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var busyDialog = new sap.m.BusyDialog;
-			busyDialog.open();
-			oModel.read("/returnTypeSet", {
+			var e = this;
+			var t = this.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var r = new sap.m.BusyDialog;
+			r.open();
+			t.read("/returnTypeSet", {
 				async: true,
-				success: function (success) {
-					busyDialog.close();
-					var list = success.results;
-					var sortedROType = [];
-					// sortedROType.push()
-					for (var i = 0; i < list.length; i++) {
-						if (list[i].roType === "TG") {
-							var obj = {
-								"roType": list[i].roType,
-								"icon": "sap-icon://inspect"
-							}
-							sortedROType.splice(0, 0, obj);
+				success: function (t) {
+					r.close();
+					var o = t.results;
+					var s = [];
+					for (var i = 0; i < o.length; i++) {
+						if (o[i].roType === "TG") {
+							var a = {
+								roType: o[i].roType,
+								icon: "sap-icon://inspect"
+							};
+							s.splice(0, 0, a)
 						}
-						if (list[i].roType === "TF") {
-							var obj = {
-								"roType": list[i].roType,
-								"icon": "sap-icon://inspect-down"
-							}
-							sortedROType.splice(1, 0, obj);
+						if (o[i].roType === "TF") {
+							var a = {
+								roType: o[i].roType,
+								icon: "sap-icon://inspect-down"
+							};
+							s.splice(1, 0, a)
 						}
-						if (list[i].roType === "TI") {
-							var obj = {
-								"roType": list[i].roType,
-								"icon": "sap-icon://paid-leave"
-							}
-							sortedROType.splice(2, 0, obj);
+						if (o[i].roType === "TI") {
+							var a = {
+								roType: o[i].roType,
+								icon: "sap-icon://paid-leave"
+							};
+							s.splice(2, 0, a)
 						}
-						if (list[i].roType === "TK") {
-							var obj = {
-								"roType": list[i].roType,
-								"icon": "sap-icon://activity-2"
-							}
-							sortedROType.splice(3, 0, obj);
+						if (o[i].roType === "TK") {
+							var a = {
+								roType: o[i].roType,
+								icon: "sap-icon://activity-2"
+							};
+							s.splice(3, 0, a)
 						}
 					}
-					// sortedROType.sort();
-					// var sortedList = [];
-					for (var i = 0; i < sortedROType.length; i++) {
-						for (var j = 0; j < list.length; j++) {
-							if (list[j].roType === sortedROType[i].roType) {
-								sortedROType[i].roTypeDesc = list[j].roTypeDesc;
+					for (var i = 0; i < s.length; i++) {
+						for (var n = 0; n < o.length; n++) {
+							if (o[n].roType === s[i].roType) {
+								s[i].roTypeDesc = o[n].roTypeDesc
 							}
 						}
-						// sortedList.push(object);
 					}
-					var ROTypeListModel = new sap.ui.model.json.JSONModel({
-						"results": sortedROType
+					var l = new sap.ui.model.json.JSONModel({
+						results: s
 					});
-					that.getView().setModel(ROTypeListModel, "ROTypeListModel");
-
+					e.getView().setModel(l, "ROTypeListModel")
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = JSON.parse(error.responseText);
-					errorMsg = errorMsg.error.message.value;
-					that.errorMsg(errorMsg);
+				error: function (t) {
+					r.close();
+					var o = JSON.parse(t.responseText);
+					o = o.error.message.value;
+					e.errorMsg(o)
 				}
-			});
+			})
 		},
-
 		_getReasonOwner: function () {
-			var that = this;
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode),
-					new sap.ui.model.Filter("returnReasonCode", sap.ui.model.FilterOperator.EQ, this.retReasonCode)
-				],
+			var e = this;
+			var t = [];
+			var r = new sap.ui.model.Filter({
+				filters: [new sap.ui.model.Filter("roType", sap.ui.model.FilterOperator.EQ, this.ROtypeCode), new sap.ui.model.Filter(
+					"returnReasonCode", sap.ui.model.FilterOperator.EQ, this.retReasonCode)],
 				and: true
 			});
-			filters.push(oFilter);
-			var oDataModel = that.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/reasonOwnerSet", {
-				filters: filters,
+			t.push(r);
+			var o = e.getView().getModel("ZDKSH_CC_RETURNS_MANAGEMENT_SRV");
+			var s = new sap.m.BusyDialog;
+			s.open();
+			o.read("/reasonOwnerSet", {
+				filters: t,
 				async: false,
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var reasonOwnerModel = new sap.ui.model.json.JSONModel({
-						"results": oData.results
+				success: function (t, r) {
+					s.close();
+					var o = new sap.ui.model.json.JSONModel({
+						results: t.results
 					});
-					that.getView().setModel(reasonOwnerModel, "reasonOwnerModel");
+					e.getView().setModel(o, "reasonOwnerModel")
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = JSON.parse(error.responseText);
-					errorMsg = errorMsg.error.message.value;
-					that.errorMsg(errorMsg);
+				error: function (t) {
+					s.close();
+					var r = JSON.parse(t.responseText);
+					r = r.error.message.value;
+					e.errorMsg(r)
 				}
-
-			});
+			})
 		},
-
-		onPressShowAddress: function (oEvent) {
-			var oButton = oEvent.getSource();
-			// create popover
+		onPressShowAddress: function (e) {
+			var t = e.getSource();
 			if (!this._oPopover) {
-				Fragment.load({
+				s.load({
 					name: "incture.com.Inventory.Fragments.popoverTable",
 					controller: this
-				}).then(function (pPopover) {
-					this._oPopover = pPopover;
+				}).then(function (e) {
+					this._oPopover = e;
 					this.getView().addDependent(this._oPopover);
 					this._oPopover.bindElement("");
 					if (sap.ui.Device.system.phone === true) {
 						this._oPopover.setPlacement("Bottom");
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(t)
 					} else {
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(t)
 					}
-				}.bind(this));
+				}.bind(this))
 			} else {
 				if (sap.ui.Device.system.phone === true) {
 					this._oPopover.setPlacement("Bottom");
-					this._oPopover.openBy(oButton);
+					this._oPopover.openBy(t)
 				} else {
-					this._oPopover.openBy(oButton);
+					this._oPopover.openBy(t)
 				}
 			}
 		},
-
-		handleAddDistChan: function (oEvent) {
-			oEvent.getSource().getBinding("items").filter([]);
-			this.getView().getModel("baseModel").setProperty("/DistChan", oEvent.getParameters().selectedContexts[0].getObject().DistChl);
-			this.getView().getModel("baseModel").setProperty("/selectedDistChnl", oEvent.getParameters().selectedContexts[0].getObject().DistChl);
-			this.getView().getModel("baseModel").setProperty("/DistChanDesc", oEvent.getParameters().selectedContexts[0].getObject().Name);
-			this.getView().getModel("baseModel").refresh();
+		handleAddDistChan: function (e) {
+			e.getSource().getBinding("items").filter([]);
+			this.getView().getModel("baseModel").setProperty("/DistChan", e.getParameters().selectedContexts[0].getObject().DistChl);
+			this.getView().getModel("baseModel").setProperty("/selectedDistChnl", e.getParameters().selectedContexts[0].getObject().DistChl);
+			this.getView().getModel("baseModel").setProperty("/DistChanDesc", e.getParameters().selectedContexts[0].getObject().Name);
+			this.getView().getModel("baseModel").refresh()
 		},
-
-		onEditMaterial: function (oEvent) {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var baseModel = this.getView().getModel("baseModel");
-			var filters = [];
-			var oFilter = new sap.ui.model.Filter({
-				filters: [
-					new sap.ui.model.Filter("materialNum", sap.ui.model.FilterOperator.EQ, that.getView().getModel("baseModel").getProperty(
-						"/newMaterial")),
-					new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().salesOrgNo),
-					new sap.ui.model.Filter("distChannel", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().distChnl),
-					new sap.ui.model.Filter("division", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().Division),
-					new sap.ui.model.Filter("shipToParty", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().shipTo),
-					new sap.ui.model.Filter("soldToParty", sap.ui.model.FilterOperator.EQ, invoiceSearchModel.getData().soldToParty),
-					new sap.ui.model.Filter("orderType", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getData().exchangeOrderType),
-					new sap.ui.model.Filter("materialGroup", sap.ui.model.FilterOperator.EQ, that.materialGroupDataAccess),
-					new sap.ui.model.Filter("materialGroup4", sap.ui.model.FilterOperator.EQ, that.materialGroup4DataAccess),
-					new sap.ui.model.Filter("customerCodeDac", sap.ui.model.FilterOperator.EQ, that.custCodeDataAccess),
-					new sap.ui.model.Filter("materialCodeDac", sap.ui.model.FilterOperator.EQ, that.materialDataAccess)
+		onEditMaterial: function (e) {
+			var t = this;
+			var r = this.getView().getModel("invoiceSearchModel");
+			var s = this.getView().getModel("baseModel");
+			var i = [];
+			var a = new sap.ui.model.Filter({
+				filters: [new sap.ui.model.Filter("materialNum", sap.ui.model.FilterOperator.EQ, t.getView().getModel("baseModel").getProperty(
+						"/newMaterial")), new sap.ui.model.Filter("salesOrg", sap.ui.model.FilterOperator.EQ, r.getData().salesOrgNo), new sap.ui.model
+					.Filter("distChannel", sap.ui.model.FilterOperator.EQ, r.getData().distChnl), new sap.ui.model.Filter("division", sap.ui.model
+						.FilterOperator.EQ, r.getData().Division), new sap.ui.model.Filter("shipToParty", sap.ui.model.FilterOperator.EQ, r.getData()
+						.shipTo), new sap.ui.model.Filter("soldToParty", sap.ui.model.FilterOperator.EQ, r.getData().soldToParty), new sap.ui.model
+					.Filter(
+						"orderType", sap.ui.model.FilterOperator.EQ, this.getView().getModel("baseModel").getData().exchangeOrderType), new sap.ui.model
+					.Filter("materialGroup", sap.ui.model.FilterOperator.EQ, t.materialGroupDataAccess), new sap.ui.model.Filter(
+						"materialGroup4",
+						sap.ui.model.FilterOperator.EQ, t.materialGroup4DataAccess), new sap.ui.model.Filter("customerCodeDac", sap.ui.model.FilterOperator
+						.EQ, t.custCodeDataAccess), new sap.ui.model.Filter("materialCodeDac", sap.ui.model.FilterOperator.EQ, t.materialDataAccess)
 				],
 				and: true
 			});
-			filters.push(oFilter);
-
-			var oDataModel = this.getView().getModel("ZDKSH_cc_returns_management_SRV");
-			var busyDialog = new sap.m.BusyDialog();
-			busyDialog.open();
-			oDataModel.read("/materialDataSet", {
+			i.push(a);
+			var n = this.getView().getModel("ZDKSH_cc_returns_management_SRV");
+			var l = new sap.m.BusyDialog;
+			l.open();
+			n.read("/materialDataSet", {
 				async: false,
-				filters: filters,
+				filters: i,
 				urlParameters: "&$expand=materialDataToMaterialAltUom,materialDataToMatPricingScale,materialDataToMatBonusGoods&$format=json",
-				success: function (oData, oResponse) {
-					busyDialog.close();
-					var oData = oData.results[0];
-					// var oData = oData.results[0];
-					if (oData.active === "E") {
-						MessageToast.show(that.resourceBundle.getText("exchangenotallowed"));
-						// MessageToast.show("Sales/ exchange not allowed");
+				success: function (e, r) {
+					l.close();
+					var e = e.results[0];
+					if (e.active === "E") {
+						o.show(t.resourceBundle.getText("exchangenotallowed"))
 					} else {
-						if (that.getView().getModel("exchangeModel")) {
-							var tableData = that.getView().byId("ExchangeTableId").getModel("exchangeModel").getData().results;
+						if (t.getView().getModel("exchangeModel").getData().results) {
+							var s = t.getView().byId("ExchangeTableId").getModel("exchangeModel").getData().results
 						} else {
-							var exchangeModel = new sap.ui.model.json.JSONModel();
-							that.getView().setModel(exchangeModel, "exchangeModel");
-							that.getView().getModel("exchangeModel").setProperty("/results", []);
-							var tableData = that.getView().byId("ExchangeTableId").getModel("exchangeModel").getData().results;
+							var i = new sap.ui.model.json.JSONModel;
+							t.getView().setModel(i, "exchangeModel");
+							t.getView().getModel("exchangeModel").setProperty("/results", []);
+							var s = t.getView().byId("ExchangeTableId").getModel("exchangeModel").getData().results
 						}
-						var newRow = {
+						var a = {
 							Active: "",
 							itemNumber: "",
-							matNumber: oData.materialNum,
-							itemShortText: oData.materialDesc,
-							materialGroup: oData.materialGroup,
-							materialGroup4: oData.materialGroup4,
+							matNumber: e.materialNum,
+							itemShortText: e.materialDesc,
+							materialGroup: e.materialGroup,
+							materialGroup4: e.materialGroup4,
 							avlRetQty: "",
-							quantity: oData.quantity,
-							salesUnit: oData.uom,
-							unitPrice: oData.unitPrice,
+							quantity: e.quantity,
+							salesUnit: e.uom,
+							unitPrice: e.unitPrice,
 							unitPriceInv: "",
 							discountAmount: "",
 							netAmount: "",
@@ -5352,1654 +4664,1607 @@ sap.ui.define([
 							refItemNumber: "",
 							billingDate: "",
 							serialNumber: "",
-							listPrice: oData.listPrice,
-							// shipToParty: "",
+							listPrice: e.listPrice,
 							deleted: "false",
-							manualFOC: "",
+							manualFOC: ""
 						};
-						tableData.push(newRow);
-						that.getView().getModel("exchangeModel").setProperty("/results", tableData);
-						that.getView().getModel("exchangeModel").refresh();
-						that.getView().getModel("baseModel").setProperty("/newMaterial", "");
-						that.getView().getModel("baseModel").refresh();
-						that.AddMaterial.close();
+						s.push(a);
+						t.getView().getModel("exchangeModel").setProperty("/results", s);
+						t.getView().getModel("exchangeModel").refresh();
+						t.getView().getModel("baseModel").setProperty("/newMaterial", "");
+						t.getView().getModel("baseModel").refresh();
+						t.AddMaterial.close()
 					}
 				},
-				error: function (error) {
-					busyDialog.close();
-					var errorMsg = JSON.parse(error.responseText);
-					errorMsg = errorMsg.error.message.value;
-					that.errorMsg(errorMsg);
-					that.AddMaterial.close();
+				error: function (e) {
+					l.close();
+					var r = JSON.parse(e.responseText);
+					r = r.error.message.value;
+					t.errorMsg(r);
+					t.AddMaterial.close()
 				}
-			});
-
+			})
 		},
-
-		onPressInvoiceDetail: function (oEvent) {
+		onPressInvoiceDetail: function (e) {
 			if (sap.ui.Device.system.phone === true) {
-				var results = oEvent.getSource().getBindingContext("invoiceSearchModel").getObject();
-				var oButton = oEvent.getSource();
-				// create popover
+				var t = e.getSource().getBindingContext("invoiceSearchModel").getObject();
+				var r = e.getSource();
 				if (!this._oPopover) {
-					Fragment.load({
+					s.load({
 						name: "incture.com.ConnectClient_ReturnCreate.Fragments.InvoicePopover",
 						controller: this
-					}).then(function (pPopover) {
-						this._oPopover = pPopover;
+					}).then(function (e) {
+						this._oPopover = e;
 						this.getView().addDependent(this._oPopover);
-						var invoiceSearchPopoverModel = new sap.ui.model.json.JSONModel({
-							"results": results
+						var o = new sap.ui.model.json.JSONModel({
+							results: t
 						});
-						// var  = new sap.ui.model.json.JSONModel();
-						this._oPopover.setModel(invoiceSearchPopoverModel, "invoiceSearchPopoverModel");
+						this._oPopover.setModel(o, "invoiceSearchPopoverModel");
 						this._oPopover.getModel("invoiceSearchPopoverModel").refresh();
 						this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 						this._oPopover.getModel("PersonalizationModel").refresh();
-						// this._oPopover.bindElement("/ATPOverviewTableModel/oEvent.getSource().getBindingContext("ATPOverviewTableModel").getPath()");
 						if (sap.ui.Device.system.phone === true) {
 							this._oPopover.setPlacement("Bottom");
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						} else {
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						}
-
-					}.bind(this));
+					}.bind(this))
 				} else {
-					var invoiceSearchPopoverModel = new sap.ui.model.json.JSONModel({
-						"results": results
+					var o = new sap.ui.model.json.JSONModel({
+						results: t
 					});
-					this._oPopover.setModel(invoiceSearchPopoverModel, "invoiceSearchPopoverModel");
+					this._oPopover.setModel(o, "invoiceSearchPopoverModel");
 					this._oPopover.getModel("invoiceSearchPopoverModel").refresh();
 					this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 					this._oPopover.getModel("PersonalizationModel").refresh();
-					// this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
-					// this._oPopover.getModel("PersonalizationModel").refresh();
 					if (sap.ui.Device.system.phone === true) {
 						this._oPopover.setPlacement("Bottom");
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					} else {
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					}
 				}
 			}
 		},
-
-		onPressReturnDetail: function (oEvent) {
+		onPressReturnDetail: function (e) {
 			if (sap.ui.Device.system.phone === true) {
-				var results = oEvent.getSource().getBindingContext("returnModel").getObject();
-				var oButton = oEvent.getSource();
-				// create popover
+				var t = e.getSource().getBindingContext("returnModel").getObject();
+				var r = e.getSource();
 				if (!this._oPopover) {
-					Fragment.load({
+					s.load({
 						name: "incture.com.ConnectClient_ReturnCreate.Fragments.ReturnPopover",
 						controller: this
-					}).then(function (pPopover) {
-						this._oPopover = pPopover;
+					}).then(function (e) {
+						this._oPopover = e;
 						this.getView().addDependent(this._oPopover);
-						var returnPopoverModel = new sap.ui.model.json.JSONModel({
-							"results": results
+						var o = new sap.ui.model.json.JSONModel({
+							results: t
 						});
-						// var  = new sap.ui.model.json.JSONModel();
-						this._oPopover.setModel(returnPopoverModel, "returnPopoverModel");
+						this._oPopover.setModel(o, "returnPopoverModel");
 						this._oPopover.getModel("returnPopoverModel").refresh();
 						this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 						this._oPopover.getModel("PersonalizationModel").refresh();
-						// this._oPopover.bindElement("/ATPOverviewTableModel/oEvent.getSource().getBindingContext("ATPOverviewTableModel").getPath()");
 						if (sap.ui.Device.system.phone === true) {
 							this._oPopover.setPlacement("Bottom");
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						} else {
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						}
-
-					}.bind(this));
+					}.bind(this))
 				} else {
-					var returnPopoverModel = new sap.ui.model.json.JSONModel({
-						"results": results
+					var o = new sap.ui.model.json.JSONModel({
+						results: t
 					});
-					this._oPopover.setModel(returnPopoverModel, "returnPopoverModel");
+					this._oPopover.setModel(o, "returnPopoverModel");
 					this._oPopover.getModel("returnPopoverModel").refresh();
 					this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 					this._oPopover.getModel("PersonalizationModel").refresh();
-					// this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
-					// this._oPopover.getModel("PersonalizationModel").refresh();
 					if (sap.ui.Device.system.phone === true) {
 						this._oPopover.setPlacement("Bottom");
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					} else {
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					}
 				}
 			}
 		},
-
-		onPressReturnDetailPopover: function (oEvent) {
+		onPressReturnDetailPopover: function (e) {
 			if (sap.ui.Device.system.phone === true) {
-				var results = oEvent.getSource().getBindingContext("returnPreviewModel").getObject();
-				var oButton = oEvent.getSource();
-				// create popover
+				var t = e.getSource().getBindingContext("returnPreviewModel").getObject();
+				var r = e.getSource();
 				if (!this._oPopover) {
-					Fragment.load({
+					s.load({
 						name: "incture.com.ConnectClient_ReturnCreate.Fragments.ReturnPreviewPopover",
 						controller: this
-					}).then(function (pPopover) {
-						this._oPopover = pPopover;
+					}).then(function (e) {
+						this._oPopover = e;
 						this.getView().addDependent(this._oPopover);
-						var returnPreviewPopoverModel = new sap.ui.model.json.JSONModel({
-							"results": results
+						var o = new sap.ui.model.json.JSONModel({
+							results: t
 						});
-						// var  = new sap.ui.model.json.JSONModel();
-						this._oPopover.setModel(returnPreviewPopoverModel, "returnPreviewPopoverModel");
+						this._oPopover.setModel(o, "returnPreviewPopoverModel");
 						this._oPopover.getModel("returnPreviewPopoverModel").refresh();
 						this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 						this._oPopover.getModel("PersonalizationModel").refresh();
-						// this._oPopover.bindElement("/ATPOverviewTableModel/oEvent.getSource().getBindingContext("ATPOverviewTableModel").getPath()");
 						if (sap.ui.Device.system.phone === true) {
 							this._oPopover.setPlacement("Bottom");
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						} else {
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						}
-
-					}.bind(this));
+					}.bind(this))
 				} else {
-					var returnPreviewPopoverModel = new sap.ui.model.json.JSONModel({
-						"results": results
+					var o = new sap.ui.model.json.JSONModel({
+						results: t
 					});
-					this._oPopover.setModel(returnPreviewPopoverModel, "returnPreviewPopoverModel");
+					this._oPopover.setModel(o, "returnPreviewPopoverModel");
 					this._oPopover.getModel("returnPreviewPopoverModel").refresh();
 					this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 					this._oPopover.getModel("PersonalizationModel").refresh();
-					// this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
-					// this._oPopover.getModel("PersonalizationModel").refresh();
 					if (sap.ui.Device.system.phone === true) {
 						this._oPopover.setPlacement("Bottom");
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					} else {
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					}
 				}
 			}
 		},
-
-		onPressExchangeDetailPopover: function (oEvent) {
+		onPressExchangeDetailPopover: function (e) {
 			if (sap.ui.Device.system.phone === true) {
-				var results = oEvent.getSource().getBindingContext("exchangePreviewModel").getObject();
-				var oButton = oEvent.getSource();
-				// create popover
+				var t = e.getSource().getBindingContext("exchangePreviewModel").getObject();
+				var r = e.getSource();
 				if (!this._oPopover) {
-					Fragment.load({
+					s.load({
 						name: "incture.com.ConnectClient_ReturnCreate.Fragments.ExchangePreviewPopover",
 						controller: this
-					}).then(function (pPopover) {
-						this._oPopover = pPopover;
+					}).then(function (e) {
+						this._oPopover = e;
 						this.getView().addDependent(this._oPopover);
-						var exchangePreviewPopoverModel = new sap.ui.model.json.JSONModel({
-							"results": results
+						var o = new sap.ui.model.json.JSONModel({
+							results: t
 						});
-						// var  = new sap.ui.model.json.JSONModel();
-						this._oPopover.setModel(exchangePreviewPopoverModel, "exchangePreviewPopoverModel");
+						this._oPopover.setModel(o, "exchangePreviewPopoverModel");
 						this._oPopover.getModel("exchangePreviewPopoverModel").refresh();
 						this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 						this._oPopover.getModel("PersonalizationModel").refresh();
-						// this._oPopover.bindElement("/ATPOverviewTableModel/oEvent.getSource().getBindingContext("ATPOverviewTableModel").getPath()");
 						if (sap.ui.Device.system.phone === true) {
 							this._oPopover.setPlacement("Bottom");
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						} else {
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						}
-
-					}.bind(this));
+					}.bind(this))
 				} else {
-					var exchangePreviewPopoverModel = new sap.ui.model.json.JSONModel({
-						"results": results
+					var o = new sap.ui.model.json.JSONModel({
+						results: t
 					});
-					this._oPopover.setModel(exchangePreviewPopoverModel, "exchangePreviewPopoverModel");
+					this._oPopover.setModel(o, "exchangePreviewPopoverModel");
 					this._oPopover.getModel("exchangePreviewPopoverModel").refresh();
 					this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 					this._oPopover.getModel("PersonalizationModel").refresh();
-					// this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
-					// this._oPopover.getModel("PersonalizationModel").refresh();
 					if (sap.ui.Device.system.phone === true) {
 						this._oPopover.setPlacement("Bottom");
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					} else {
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					}
 				}
 			}
 		},
-
-		onPressExchangeDetail: function (oEvent) {
+		onPressExchangeDetail: function (e) {
 			if (sap.ui.Device.system.phone === true) {
-				var results = oEvent.getSource().getBindingContext("exchangeModel").getObject();
-				var oButton = oEvent.getSource();
-				// create popover
+				var t = e.getSource().getBindingContext("exchangeModel").getObject();
+				var r = e.getSource();
 				if (!this._oPopover) {
-					Fragment.load({
+					s.load({
 						name: "incture.com.ConnectClient_ReturnCreate.Fragments.ExchangePopover",
 						controller: this
-					}).then(function (pPopover) {
-						this._oPopover = pPopover;
+					}).then(function (e) {
+						this._oPopover = e;
 						this.getView().addDependent(this._oPopover);
-						var exchangePopoverModel = new sap.ui.model.json.JSONModel({
-							"results": results
+						var o = new sap.ui.model.json.JSONModel({
+							results: t
 						});
-						// var  = new sap.ui.model.json.JSONModel();
-						this._oPopover.setModel(exchangePopoverModel, "exchangePopoverModel");
+						this._oPopover.setModel(o, "exchangePopoverModel");
 						this._oPopover.getModel("exchangePopoverModel").refresh();
 						this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 						this._oPopover.getModel("PersonalizationModel").refresh();
-						// this._oPopover.bindElement("/ATPOverviewTableModel/oEvent.getSource().getBindingContext("ATPOverviewTableModel").getPath()");
 						if (sap.ui.Device.system.phone === true) {
 							this._oPopover.setPlacement("Bottom");
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						} else {
-							this._oPopover.openBy(oButton);
+							this._oPopover.openBy(r)
 						}
-
-					}.bind(this));
+					}.bind(this))
 				} else {
-					var exchangePopoverModel = new sap.ui.model.json.JSONModel({
-						"results": results
+					var o = new sap.ui.model.json.JSONModel({
+						results: t
 					});
-					this._oPopover.setModel(exchangePopoverModel, "exchangePopoverModel");
+					this._oPopover.setModel(o, "exchangePopoverModel");
 					this._oPopover.getModel("exchangePopoverModel").refresh();
 					this._oPopover.setModel(this.getView().getModel("PersonalizationModel"), "PersonalizationModel");
 					this._oPopover.getModel("PersonalizationModel").refresh();
 					if (sap.ui.Device.system.phone === true) {
 						this._oPopover.setPlacement("Bottom");
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					} else {
-						this._oPopover.openBy(oButton);
+						this._oPopover.openBy(r)
 					}
 				}
 			}
 		},
-
-		onFileUploadChange: function (oEvent) {
-			var that = this;
-			var event = oEvent.getSource();
+		onFileUploadChange: function (e) {
+			var t = this;
+			var r = e.getSource();
 			if (this.docVersion === "SUCCESS" || this.attachmentName === "Preview") {
-
-				MessageToast.show(this.resourceBundle.getText("CannotUpload"));
-				// MessageToast.show("Cannot Upload");
-				return;
+				o.show(this.resourceBundle.getText("CannotUpload"));
+				return
 			}
-			this.file = oEvent.getParameter("files")[0];
+			this.file = e.getParameter("files")[0];
 			if (this.file) {
-
-				var reader = new FileReader();
-				let fileByteArray = [];
-
-				reader.onload = function (readerEvt) {
-					var binaryString;
-					if (!readerEvt) {
-						binaryString = reader.content;
+				var s = new FileReader;
+				let e = [];
+				s.onload = function (t) {
+					var r;
+					if (!t) {
+						r = s.content
 					} else {
-						binaryString = readerEvt.target.result;
+						r = t.target.result
 					}
-					if (readerEvt.target.readyState == FileReader.DONE) {
-						let arrayBuffer = readerEvt.target.result,
-							array = new Uint8Array(arrayBuffer);
-						for (var byte of array) {
-							fileByteArray.push(byte);
+					if (t.target.readyState == FileReader.DONE) {
+						let r = t.target.result,
+							o = new Uint8Array(r);
+						for (var i of o) {
+							e.push(i)
 						}
 					}
-					var length = 0;
-					var attachmentData = {};
-					attachmentData["fileName"] = this.file.name;
-					attachmentData["fileSize"] = this.file.size;
-					attachmentData["fileType"] = this.file.type;
-					attachmentData["fileDoc"] = fileByteArray;
-					attachmentData["compressedFile"] = attachmentData["fileDoc"];
-					attachmentData["returnReqNum"] = "";
-					attachmentData["docId"] = "";
-					// this.attachmentObject.push(attachmentData);
-					for (var i = 0; i < this.getView().getModel("returnModel").getData().attachmentObject.length; i++) {
-						if (this.file.name === this.getView().getModel("returnModel").getData().attachmentObject[i].fileName) {
-							MessageToast.show(this.resourceBundle.getText("sameFileValidation"));
-							// MessageToast.show("Cannot add files with same name");
-							return;
+					var a = 0;
+					var n = {};
+					n["fileName"] = this.file.name;
+					n["fileSize"] = this.file.size;
+					n["fileType"] = this.file.type;
+					n["fileDoc"] = e;
+					n["compressedFile"] = n["fileDoc"];
+					n["returnReqNum"] = "";
+					n["docId"] = "";
+					for (var l = 0; l < this.getView().getModel("returnModel").getData().attachmentObject.length; l++) {
+						if (this.file.name === this.getView().getModel("returnModel").getData().attachmentObject[l].fileName) {
+							o.show(this.resourceBundle.getText("sameFileValidation"));
+							return
 						}
-						length = length + this.getView().getModel("returnModel").getData().attachmentObject[i].fileSize;
-
+						a = a + this.getView().getModel("returnModel").getData().attachmentObject[l].fileSize
 					}
-					// if()
-					if (length + this.file.size > 1048576) {
-						MessageToast.show(this.resourceBundle.getText("fileSizeValidation"));
-						// MessageToast.show("File exceeding the size limit");
-						return;
+					if (a + this.file.size > 1048576) {
+						o.show(this.resourceBundle.getText("fileSizeValidation"));
+						return
 					}
-					this.getView().getModel("returnModel").getData().attachmentObject.push(attachmentData);
+					this.getView().getModel("returnModel").getData().attachmentObject.push(n);
 					this.getView().getModel("baseModel").setProperty("/attachmentLength", this.getView().getModel("returnModel").getData().attachmentObject
 						.length);
 					this.getView().getModel("returnModel").refresh();
 					this.getView().getModel("baseModel").setProperty("/enableViewAttachment", true);
 					this.getView().getModel("baseModel").setProperty("/attachmentTableVisiblity", true);
-					this.getView().getModel("baseModel").refresh();
-				}.bind(this);
+					this.getView().getModel("baseModel").refresh()
+				}.bind(this)
 			}
-			reader.readAsArrayBuffer(this.file);
-			event.clear();
+			s.readAsArrayBuffer(this.file);
+			r.clear()
 		},
-
-		onRemoveAttachmennt: function (oEvent) {
-			var that = this;
-			var tokenKey = oEvent.getSource().getBindingContext("returnModel").getObject().fileName;
-			var attachmentData = this.getView().getModel("returnModel").getData().attachmentObject;
-			for (var i = 0; i < attachmentData.length; i++) {
-				if (attachmentData[i].fileName === tokenKey) {
-					var docId = attachmentData[i].docId;
+		onRemoveAttachmennt: function (e) {
+			var t = this;
+			var r = e.getSource().getBindingContext("returnModel").getObject().fileName;
+			var o = this.getView().getModel("returnModel").getData().attachmentObject;
+			for (var s = 0; s < o.length; s++) {
+				if (o[s].fileName === r) {
+					var i = o[s].docId
 				}
 			}
-			if (docId !== "" && docId !== undefined) {
-				var oModel = new sap.ui.model.json.JSONModel();
-				that.getView().setModel(oModel, "oModel");
-				var busyDialog = new sap.m.BusyDialog();
-				busyDialog.open();
-				var oHeader = {
+			if (i !== "" && i !== undefined) {
+				var a = new sap.ui.model.json.JSONModel;
+				t.getView().setModel(a, "oModel");
+				var n = new sap.m.BusyDialog;
+				n.open();
+				var l = {
 					"Content-Type": "application/json;charset=utf-8"
 				};
-				oModel.loadData("/DKSHJavaService/Attachment/deleteAttachment/" + docId, null, true, "DELETE", false, false, oHeader);
-				oModel.attachRequestCompleted(function (oEvent) {
-					busyDialog.close();
-					for (var i = 0; i < attachmentData.length; i++) {
-						if (attachmentData[i].fileName === tokenKey) {
-							returnModel.getData().attachmentObject.splice(i, 1);
-							returnModel.refresh();
+				a.loadData("/DKSHJavaService/Attachment/deleteAttachment/" + i, null, true, "DELETE", false, false, l);
+				a.attachRequestCompleted(function (e) {
+					n.close();
+					for (var t = 0; t < o.length; t++) {
+						if (o[t].fileName === r) {
+							returnModel.getData().attachmentObject.splice(t, 1);
+							returnModel.refresh()
 						}
-						if (tokenKey === this.file.name) {
-							this.getView().getModel("dashBoardModel").getData().attachmentValue = "";
+						if (r === this.file.name) {
+							this.getView().getModel("dashBoardModel").getData().attachmentValue = ""
 						}
 					}
-					// that.getView().byId("idTMFileUploader").setValue("");
 				});
-				oModel.attachRequestFailed(function (oEvent) {
-					busyDialog.close();
-				});
+				a.attachRequestFailed(function (e) {
+					n.close()
+				})
 			} else {
-				for (var i = 0; i < attachmentData.length; i++) {
-					if (attachmentData[i].fileName === tokenKey) {
-						this.getView().getModel("returnModel").getData().attachmentObject.splice(i, 1);
-						this.getView().getModel("returnModel").refresh();
+				for (var s = 0; s < o.length; s++) {
+					if (o[s].fileName === r) {
+						this.getView().getModel("returnModel").getData().attachmentObject.splice(s, 1);
+						this.getView().getModel("returnModel").refresh()
 					}
 				}
-				// this.getView().byId("idTMFileUploader").setValue("");
 			}
 			if (this.getView().getModel("returnModel").getData().attachmentObject.length === 0) {
 				this.getView().getModel("baseModel").setProperty("/enableViewAttachment", false);
-				this.getView().getModel("baseModel").setProperty("/attachmentTableVisiblity", false);
+				this.getView().getModel("baseModel").setProperty("/attachmentTableVisiblity", false)
 			}
 		},
-
-		addRow: function (oEvent) {
-
+		addRow: function (e) {
 			if (!this.AddMaterial) {
 				this.AddMaterial = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.AddMaterial", this);
 				this.getView().addDependent(this.AddMaterial);
-				this.AddMaterial.addStyleClass("sapUiSizeCompact");
+				this.AddMaterial.addStyleClass("sapUiSizeCompact")
 			}
-			this.AddMaterial.open();
+			this.AddMaterial.open()
 		},
 		closeAddMaterialFrag: function () {
 			this.getView().getModel("baseModel").setProperty("/newMaterial", "");
-			// this._editMaterial();
-			this.AddMaterial.close();
+			this.AddMaterial.close()
 		},
-
-		addMaterial: function (oEvent) {
-			this.onEditMaterial();
+		addMaterial: function (e) {
+			this.onEditMaterial()
 		},
-
-		returnDeleteRow: function (oEvent) {
-			var returnAmountTotal = 0;
-			var count = 0;
-			this.selectedRetItemsforDelete = (JSON.parse(JSON.stringify(this.getView().byId("ReturnTableId").getSelectedContextPaths())));
+		returnDeleteRow: function (e) {
+			var t = 0;
+			var r = 0;
+			this.selectedRetItemsforDelete = JSON.parse(JSON.stringify(this.getView().byId("ReturnTableId").getSelectedContextPaths()));
 			if (this.selectedRetItemsforDelete.length > 0) {
-				var tableData = this.getView().getModel("returnModel").getData().results;
-				var conditions = this.getView().getModel("returnModel").getData().returnConditions;
+				var s = this.getView().getModel("returnModel").getData().results;
+				var i = this.getView().getModel("returnModel").getData().returnConditions;
 				this.getView().byId("ReturnTableId").getSelectedItems()[0].getBindingContext("returnModel").getObject();
-				for (var j = this.selectedRetItemsforDelete.length - 1; j >= 0; j--) {
-					var index = parseInt(this.selectedRetItemsforDelete[j].split("/")[2]);
-					tableData[index].deleted = "true";
-					this.getView().byId("ReturnTableId").getItems()[index].setSelected(false);
-					MessageToast.show(this.resourceBundle.getText("ItemDeleted"));
-					// MessageToast.show("Item Deleted");
-					for (var k = this.selectedReturnItems.length - 1; k >= 0; k--) {
-						if (this.selectedReturnItems[k].InvoiceLineItem === tableData[index].refItemNumber && this.selectedReturnItems[k].InvoiceNum ===
-							tableData[index].refInvoice) {
-							this.selectedReturnItems.splice(k, 1);
+				for (var a = this.selectedRetItemsforDelete.length - 1; a >= 0; a--) {
+					var n = parseInt(this.selectedRetItemsforDelete[a].split("/")[2]);
+					s[n].deleted = "true";
+					this.getView().byId("ReturnTableId").getItems()[n].setSelected(false);
+					o.show(this.resourceBundle.getText("ItemDeleted"));
+					for (var l = this.selectedReturnItems.length - 1; l >= 0; l--) {
+						if (this.selectedReturnItems[l].InvoiceLineItem === s[n].refItemNumber && this.selectedReturnItems[l].InvoiceNum === s[n].refInvoice) {
+							this.selectedReturnItems.splice(l, 1)
 						}
-						for (var i = 0; i < conditions.length; i++) {
-							if (tableData[index].refInvoice === conditions[i].refInvoice && tableData[index].itemNumber ===
-								conditions[
-									i].itemNumber) {
-								conditions[i].deleted = "true";
+						for (var d = 0; d < i.length; d++) {
+							if (s[n].refInvoice === i[d].refInvoice && s[n].itemNumber === i[d].itemNumber) {
+								i[d].deleted = "true"
 							}
 						}
 					}
-					this.getView().getModel("returnModel").setProperty("/returnConditions", conditions);
-					// this.getView().byId("ReturnTableId").getItems()[parseInt(this.selectedItemsforDelete[j].split("/")[2])].setSelected(false);
+					this.getView().getModel("returnModel").setProperty("/returnConditions", i)
 				}
-				for (var i = 0; i < tableData.length; i++) {
-					if (tableData[i].deleted === "false") {
-						returnAmountTotal = returnAmountTotal + parseFloat(tableData[i].netAmount);
-						++count;
+				for (var d = 0; d < s.length; d++) {
+					if (s[d].deleted === "false") {
+						t = t + parseFloat(s[d].netAmount);
+						++r
 					}
 				}
-				if (count === 0) {
+				if (r === 0) {
 					if (this.getView().getModel("exchangeModel").getData().results !== undefined && this.getView().getModel("exchangeModel").getData()
 						.results.length > 0) {
 						this.getView().getModel("exchangeModel").getData().results = "";
 						this.getView().getModel("baseModel").setProperty("/exchangeLength", "Exchange " + "(0)");
 						this.getView().getModel("baseModel").setProperty("/exchangeAmountTotal", "0.00 (THB)");
-						// this.getView().getModel("exchangeModel").setData("");
-						this.getView().getModel("exchangeModel").refresh();
+						this.getView().getModel("exchangeModel").refresh()
 					}
 					this.getView().getModel("baseModel").setProperty("/disableSoldToParty", true);
-					this.getView().getModel("baseModel").refresh();
+					this.getView().getModel("baseModel").refresh()
 				}
-				this.getView().getModel("returnModel").setProperty("/results", tableData);
-				var oFilter = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
-				var oBinding = [];
-				oBinding = this.getView().byId("ReturnTableId").getBinding("items");
-				oBinding.filter([oFilter]);
-				this.getView().getModel("returnModel").setProperty("/returnAmountTotal", returnAmountTotal.toFixed(2) + "(THB)");
-				this.getView().getModel("returnModel").setProperty("/returnLength", "Return (" + count + ")");
-				// if (this.selectedRetItemsforDelete.length === tableData.length) {
-				// 	this.getView().getModel("returnModel").getData().results = [];
-				// 	this.returnItems = [];
-				// }
-				this.getView().getModel("returnModel").refresh(true);
-				// this.getView().byId("ReturnTableId").removeSelections();
+				this.getView().getModel("returnModel").setProperty("/results", s);
+				var g = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
+				var p = [];
+				p = this.getView().byId("ReturnTableId").getBinding("items");
+				p.filter([g]);
+				this.getView().getModel("returnModel").setProperty("/returnAmountTotal", t.toFixed(2) + "(THB)");
+				this.getView().getModel("returnModel").setProperty("/returnLength", "Return (" + r + ")");
+				this.getView().getModel("returnModel").refresh(true)
 			} else {
-				MessageToast.show(this.resourceBundle.getText("selectItemValidation"));
-				// MessageToast.show("Select at least one item to delete");
+				o.show(this.resourceBundle.getText("selectItemValidation"))
 			}
-
 		},
-
-		deleteRow: function (oEvent) {
-			var exchangeAmountTotal = 0;
-			var count = 0;
+		deleteRow: function (e) {
+			var t = 0;
+			var r = 0;
 			this.deletedItem = [];
-			this.selectedItemsforDelete = (JSON.parse(JSON.stringify(this.getView().byId("ExchangeTableId").getSelectedContextPaths())));
+			this.selectedItemsforDelete = JSON.parse(JSON.stringify(this.getView().byId("ExchangeTableId").getSelectedContextPaths()));
 			if (this.selectedItemsforDelete.length > 0) {
-				var tableData = this.getView().getModel("exchangeModel").getData().results;
-				for (var j = 0; j < this.selectedItemsforDelete.length; j++) {
-					var index = parseInt(this.selectedItemsforDelete[j].split("/")[2]);
-					tableData[index].deleted = "true";
-					this.deletedItem.push(tableData[index]);
-					this.getView().byId("ExchangeTableId").getItems()[index].setSelected(false);
-					MessageToast.show(this.resourceBundle.getText("ItemDeleted"));
-					// MessageToast.show("Item Deleted");
+				var s = this.getView().getModel("exchangeModel").getData().results;
+				for (var i = 0; i < this.selectedItemsforDelete.length; i++) {
+					var a = parseInt(this.selectedItemsforDelete[i].split("/")[2]);
+					s[a].deleted = "true";
+					this.deletedItem.push(s[a]);
+					this.getView().byId("ExchangeTableId").getItems()[a].setSelected(false);
+					o.show(this.resourceBundle.getText("ItemDeleted"))
 				}
-				var data = [];
-				for (var i = 0; i < tableData.length; i++) {
-					if (tableData[i].deleted === "false") {
-						exchangeAmountTotal = exchangeAmountTotal + parseFloat(tableData[i].netAmount);
-						++count;
-						if ((tableData[i].refInvoice === "" && tableData[i].higherItem !== "000000" && tableData[i].higherItem !== "" && tableData[
-									i]
-								.manualFoc !==
-								"X")) {} else {
-							data.push(tableData[i]);
+				var n = [];
+				for (var l = 0; l < s.length; l++) {
+					if (s[l].deleted === "false") {
+						t = t + parseFloat(s[l].netAmount);
+						++r;
+						if (s[l].refInvoice === "" && s[l].higherItem !== "000000" && s[l].higherItem !== "" && s[l].manualFoc !== "X") {} else {
+							n.push(s[l])
 						}
-						// data.push(tableData[i]);
 					} else {
-						for (var j = 0; j < tableData.length; j++) {
-							if (tableData[i].itemNumber === tableData[j].higherItem) {
-								tableData[j].deleted = "true";
-								// this.deletedItem.push(tableData[j]);
+						for (var i = 0; i < s.length; i++) {
+							if (s[l].itemNumber === s[i].higherItem) {
+								s[i].deleted = "true"
 							}
 						}
 					}
 				}
-				if (data.length > 0) {
-					this._pricingSimulation(data, "ExchangeTab");
+				if (n.length > 0) {
+					this._pricingSimulation(n, "ExchangeTab")
 				}
-
-				this.getView().getModel("exchangeModel").setProperty("/results", tableData);
-				var oFilter = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
-				var oBinding = [];
-				oBinding = this.getView().byId("ExchangeTableId").getBinding("items");
-				oBinding.filter([oFilter]);
-				this.getView().getModel("exchangeModel").setProperty("/exchangeAmountTotal", exchangeAmountTotal.toFixed(2) + "(THB)");
-				this.getView().getModel("exchangeModel").setProperty("/exchangeLength", "Exchange (" + count + ")");
+				this.getView().getModel("exchangeModel").setProperty("/results", s);
+				var d = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
+				var g = [];
+				g = this.getView().byId("ExchangeTableId").getBinding("items");
+				g.filter([d]);
+				this.getView().getModel("exchangeModel").setProperty("/exchangeAmountTotal", t.toFixed(2) + "(THB)");
+				this.getView().getModel("exchangeModel").setProperty("/exchangeLength", "Exchange (" + r + ")");
 				this.getView().getModel("exchangeModel").refresh(true);
-				if (this.selectedItemsforDelete.length === tableData.length) {
-					this.getView().byId("ID_TAB_BAR_PROV_APP").setSelectedKey("Return");
+				if (this.selectedItemsforDelete.length === s.length) {
+					this.getView().byId("ID_TAB_BAR_PROV_APP").setSelectedKey("Return")
 				}
 			} else {
-				MessageToast.show(this.resourceBundle.getText("selectItemValidation"));
-				// MessageToast.show("Select at least one item to delete");
+				o.show(this.resourceBundle.getText("selectItemValidation"))
 			}
 		},
-
-		returnUndoDelete: function (oEvent) {
-			var returnAmountTotal = 0;
-			var count = 0;
-
-			// this.selectedRetItemsforDelete = this.getView().byId("ReturnTableId").getSelectedContextPaths();
+		returnUndoDelete: function (e) {
+			var t = 0;
+			var r = 0;
 			if (this.selectedRetItemsforDelete !== undefined && this.selectedRetItemsforDelete.length > 0) {
-				var tableData = this.getView().getModel("returnModel").getData().results;
-				for (var j = 0; j < this.selectedRetItemsforDelete.length; j++) {
-					var index = parseInt(this.selectedRetItemsforDelete[j].split("/")[2]);
-					tableData[index].deleted = "false";
-					var obj = {
-						"InvoiceLineItem": tableData[index].refItemNumber,
-						"InvoiceNum": tableData[index].refInvoice
+				var s = this.getView().getModel("returnModel").getData().results;
+				for (var i = 0; i < this.selectedRetItemsforDelete.length; i++) {
+					var a = parseInt(this.selectedRetItemsforDelete[i].split("/")[2]);
+					s[a].deleted = "false";
+					var n = {
+						InvoiceLineItem: s[a].refItemNumber,
+						InvoiceNum: s[a].refInvoice
 					};
-
-					this.selectedReturnItems.push(obj);
-					var conditions = this.getView().getModel("returnModel").getProperty("/returnConditions");
-					for (var i = 0; i < conditions.length; i++) {
-						if (tableData[index].refInvoice === conditions[i].refInvoice && tableData[index].itemNumber === conditions[
-								i].itemNumber) {
-							conditions[i].deleted = "false";
+					this.selectedReturnItems.push(n);
+					var l = this.getView().getModel("returnModel").getProperty("/returnConditions");
+					for (var d = 0; d < l.length; d++) {
+						if (s[a].refInvoice === l[d].refInvoice && s[a].itemNumber === l[d].itemNumber) {
+							l[d].deleted = "false"
 						}
 					}
-					this.getView().getModel("returnModel").setProperty("/returnConditions", conditions);
+					this.getView().getModel("returnModel").setProperty("/returnConditions", l)
 				}
-				for (var i = 0; i < tableData.length; i++) {
-					if (tableData[i].deleted === "false") {
-						returnAmountTotal = returnAmountTotal + parseFloat(tableData[i].netAmount);
-						++count;
+				for (var d = 0; d < s.length; d++) {
+					if (s[d].deleted === "false") {
+						t = t + parseFloat(s[d].netAmount);
+						++r
 					}
 				}
-				var oFilter = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
-				var oBinding = [];
-				oBinding = this.getView().byId("ReturnTableId").getBinding("items");
-				oBinding.filter([oFilter]);
-				this.getView().getModel("returnModel").setProperty("/returnAmountTotal", returnAmountTotal.toFixed(2) + "(THB)");
-				this.getView().getModel("returnModel").setProperty("/returnLength", "Return (" + count + ")");
-				// this.getView().getModel("returnModel").setProperty("/returnLength", "Returns (" + oFilter.length + ")");
+				var g = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
+				var p = [];
+				p = this.getView().byId("ReturnTableId").getBinding("items");
+				p.filter([g]);
+				this.getView().getModel("returnModel").setProperty("/returnAmountTotal", t.toFixed(2) + "(THB)");
+				this.getView().getModel("returnModel").setProperty("/returnLength", "Return (" + r + ")");
 				this.getView().getModel("returnModel").refresh(true);
-				this.selectedRetItemsforDelete = undefined;
+				this.selectedRetItemsforDelete = undefined
 			} else {
-				MessageToast.show(this.resourceBundle.getText("undoValidation"));
-				// MessageToast.show("No deleted row to undo");
+				o.show(this.resourceBundle.getText("undoValidation"))
 			}
 		},
-
-		undoDelete: function (oEvent) {
-
-			var exchangeAmountTotal = 0;
-			var count = 0;
-			// this.selectedItemsforDelete = this.getView().byId("ExchangeTableId").getSelectedContextPaths();
+		undoDelete: function (e) {
+			var t = 0;
+			var r = 0;
 			if (this.deletedItem !== undefined && this.deletedItem.length > 0) {
-				var tableData = this.getView().getModel("exchangeModel").getData().results;
-				// for (var j = 0; j < this.selectedItemsforDelete.length; j++) {
-				// 	var index = parseInt(this.selectedItemsforDelete[j].split("/")[2]);
-				// 	tableData[index].deleted = "false";
-				// }
-				for (var j = 0; j < this.selectedItemsforDelete.length; j++) {
-					var index = parseInt(this.selectedItemsforDelete[j].split("/")[2]);
-					tableData.splice(index, 0, this.deletedItem[j]);
-					tableData[index].deleted = "false";
-					for (var k = 0; k < tableData.length; k++) {
-						if (tableData[index].itemNumber === tableData[k].higherItem) {
-							tableData[k].deleted = "false";
+				var s = this.getView().getModel("exchangeModel").getData().results;
+				for (var i = 0; i < this.selectedItemsforDelete.length; i++) {
+					var a = parseInt(this.selectedItemsforDelete[i].split("/")[2]);
+					s.splice(a, 0, this.deletedItem[i]);
+					s[a].deleted = "false";
+					for (var n = 0; n < s.length; n++) {
+						if (s[a].itemNumber === s[n].higherItem) {
+							s[n].deleted = "false"
 						}
 					}
 				}
-				var data = [];
-				for (var i = 0; i < tableData.length; i++) {
-					if (tableData[i].deleted === "false") {
-						if ((tableData[i].higherItem !== "000000" && tableData[i].higherItem !== "" && tableData[i].manualFoc !== "X")) {} else {
-							data.push(tableData[i]);
+				var l = [];
+				for (var d = 0; d < s.length; d++) {
+					if (s[d].deleted === "false") {
+						if (s[d].higherItem !== "000000" && s[d].higherItem !== "" && s[d].manualFoc !== "X") {} else {
+							l.push(s[d])
 						}
-						exchangeAmountTotal = exchangeAmountTotal + parseFloat(tableData[i].netAmount);
-						++count;
+						t = t + parseFloat(s[d].netAmount);
+						++r
 					}
 				}
-				var oFilter = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
-				var oBinding = [];
-				oBinding = this.getView().byId("ExchangeTableId").getBinding("items");
-				oBinding.filter([oFilter]);
-				this.getView().getModel("exchangeModel").setProperty("/exchangeAmountTotal", exchangeAmountTotal.toFixed(2) + "(THB)");
-				this.getView().getModel("exchangeModel").setProperty("/exchangeLength", "Exchange (" + count + ")");
+				var g = new sap.ui.model.Filter("deleted", sap.ui.model.FilterOperator.Contains, "false");
+				var p = [];
+				p = this.getView().byId("ExchangeTableId").getBinding("items");
+				p.filter([g]);
+				this.getView().getModel("exchangeModel").setProperty("/exchangeAmountTotal", t.toFixed(2) + "(THB)");
+				this.getView().getModel("exchangeModel").setProperty("/exchangeLength", "Exchange (" + r + ")");
 				this.getView().getModel("exchangeModel").refresh(true);
-				this._pricingSimulation(data, "ExchangeTab");
-				this.deletedItem = [];
+				this._pricingSimulation(l, "ExchangeTab");
+				this.deletedItem = []
 			} else {
-				MessageToast.show(this.resourceBundle.getText("undoValidation"));
-				// MessageToast.show("No deleted row to undo");
+				o.show(this.resourceBundle.getText("undoValidation"))
 			}
 		},
-
 		onpressPreview: function () {
 			if (this._oPopover) {
-				this._oPopover = undefined;
+				this._oPopover = undefined
 			}
-			var returns = [];
-			var exchange = [];
-			var exchangeAmount = 0;
-			var returnAmount = 0;
-
-			var returnItems = this.getView().getModel("returnModel").getProperty("/results");
-
-			var exchangeItems = this.getView().getModel("exchangeModel").getProperty("/results");
-			if (exchangeItems !== undefined && exchangeItems.length > 0) {
-				for (var i = 0; i < exchangeItems.length; i++) {
-					if (exchangeItems[i].deleted === "false") {
-						exchange.push(JSON.parse(JSON.stringify(exchangeItems[i])));
-						if (exchangeItems[i].netAmount === "" || exchangeItems[i].netAmount === undefined) {
-							exchangeItems[i].netAmount = 0.00;
+			var e = [];
+			var r = [];
+			var o = 0;
+			var s = 0;
+			var i = this.getView().getModel("returnModel").getProperty("/results");
+			var a = this.getView().getModel("exchangeModel").getProperty("/results");
+			if (a !== undefined && a.length > 0) {
+				for (var n = 0; n < a.length; n++) {
+					if (a[n].deleted === "false") {
+						r.push(JSON.parse(JSON.stringify(a[n])));
+						if (a[n].netAmount === "" || a[n].netAmount === undefined) {
+							a[n].netAmount = 0
 						}
-						exchangeAmount = exchangeAmount + parseFloat(exchangeItems[i].netAmount);
+						o = o + parseFloat(a[n].netAmount)
 					}
 				}
-				this.getView().getModel("exchangePreviewModel").setProperty("/exchangeAmount", exchangeAmount + "(THB)");
-				this.getView().getModel("exchangePreviewModel").setProperty("/results", exchange); // exchange
-				this.getView().getModel("exchangePreviewModel").setProperty("/exchangePreviewLength", "Exchange (" + exchange.length + ")");
+				this.getView().getModel("exchangePreviewModel").setProperty("/exchangeAmount", o + "(THB)");
+				this.getView().getModel("exchangePreviewModel").setProperty("/results", r);
+				this.getView().getModel("exchangePreviewModel").setProperty("/exchangePreviewLength", "Exchange (" + r.length + ")")
 			}
-			if (returnItems !== undefined && returnItems.length > 0) {
+			if (i !== undefined && i.length > 0) {
 				this._wizard.setCurrentStep(this.byId("ID_WIZARD_PREVIEW"));
-				for (var j = 0; j < returnItems.length; j++) {
-					if (returnItems[j].deleted === "false") {
-						returns.push(JSON.parse(JSON.stringify(returnItems[j])));
-						if (returnItems[j].netAmount === "" || returnItems[j].netAmount === undefined) {
-							returnItems[j].netAmount = 0.00;
+				for (var l = 0; l < i.length; l++) {
+					if (i[l].deleted === "false") {
+						e.push(JSON.parse(JSON.stringify(i[l])));
+						if (i[l].netAmount === "" || i[l].netAmount === undefined) {
+							i[l].netAmount = 0
 						}
-						returnAmount = returnAmount + parseFloat(returnItems[j].netAmount);
+						s = s + parseFloat(i[l].netAmount)
 					}
-
 				}
-				this.getView().getModel("returnPreviewModel").setProperty("/returnAmount", returnAmount + "(THB)");
-				this.getView().getModel("returnPreviewModel").setProperty("/results", returns); // exchange
-				this.getView().getModel("returnPreviewModel").setProperty("/returnPreviewLength", "Return (" + returns.length + ")");
+				this.getView().getModel("returnPreviewModel").setProperty("/returnAmount", s + "(THB)");
+				this.getView().getModel("returnPreviewModel").setProperty("/results", e);
+				this.getView().getModel("returnPreviewModel").setProperty("/returnPreviewLength", "Return (" + e.length + ")")
 			} else {
-				MessageBox.information(this.resourceBundle.getText("Selectatleastoneitem"));
-				// MessageBox.information("Select at least one item");
+				t.information(this.resourceBundle.getText("Selectatleastoneitem"))
 			}
-			// this._wizard.goToStep(this.byId("ID_WIZARD_PREVIEW"));
 		},
-
-		onPressSave: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel").getData();
-
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel").getData();
-			var returnModel = this.getView().getModel("returnModel");
-			var exchangeModel = this.getView().getModel("exchangeModel");
-			var baseModel = this.getView().getModel("baseModel");
-			baseModel.setProperty("/savePressed", true);
+		onPressSave: function (e) {
+			var r = this.getView().getModel("baseModel").getData();
+			var s = this.getView().getModel("invoiceSearchModel").getData();
+			var i = this.getView().getModel("returnModel");
+			var a = this.getView().getModel("exchangeModel");
+			var r = this.getView().getModel("baseModel");
+			r.setProperty("/savePressed", true);
 			if (this.RetQtyCount > 0) {
-				MessageBox.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
-				return;
+				t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/reasonOwner") === "" || this.getView().getModel("baseModel").getProperty(
 					"/reasonOwner") === undefined) {
-				MessageToast.show(this.resourceBundle.getText("ReasonOwnerisMandatory"));
-				// MessageToast.show("Reason Owner is Mandatory");
-				return;
+				o.show(this.resourceBundle.getText("ReasonOwnerisMandatory"));
+				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/referenceNo") === "" || this.getView().getModel("baseModel").getProperty(
 					"/referenceNo") === undefined) {
-				MessageToast.show(this.resourceBundle.getText("referenceNoisMandatory"));
-				// MessageToast.show("reference No is Mandatory");
-				return;
+				o.show(this.resourceBundle.getText("referenceNoisMandatory"));
+				return
 			}
-			// check for time and 
-			if (baseModel.getProperty("/oneTimeCustomer") === "X" && baseModel.getProperty("/returnSoldTo") !== baseModel.getProperty(
-					"/exSoldTo") && baseModel.getProperty("/EXOneTimeCustomer") === "X") {
+			if (r.getProperty("/oneTimeCustomer") === "X" && r.getProperty("/returnSoldTo") !== r.getProperty("/exSoldTo") && r.getProperty(
+					"/EXOneTimeCustomer") === "X") {
 				if (!this.address) {
 					this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-					this.getView().addDependent(this.address);
+					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
+
 				if (this.getView().getModel("editDraftModel")) {
 					if (this.changeSoldToParty === true) {
-						baseModel.setProperty("/partnerName", "");
-						baseModel.setProperty("/AddressStreet2", "");
-						baseModel.setProperty("/AddressStreet3", "");
-						baseModel.setProperty("/AddressStreet5", "");
-						baseModel.setProperty("/District", "");
-						baseModel.setProperty("/DifferentCity", "");
-						baseModel.setProperty("/postalCode", "");
-						baseModel.setProperty("/city", "");
-						baseModel.setProperty("/telephone", "");
-						baseModel.setProperty("/mobileNumber", "");
-						baseModel.setProperty("/taxId", "");
-						baseModel.setProperty("/bCode", "00000");
-						baseModel.setProperty("/bpNummr", "N");
-						baseModel.setProperty("/partnerName4", "");
-						baseModel.setProperty("/maxLengthName4", "40 char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-						baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-						baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-						baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-						baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-						baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-						baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-						baseModel.setProperty("/maxLengthbCode", "0 char remaining");
-						baseModel.setProperty("/maxLengthbpNummr", "0 char remaining");
+						if (this.selectedReturnItems[0].soldToAddress) {
+							if (this.selectedReturnItems[0].soldToAddress.language === "TH" || this.selectedReturnItems[0].soldToAddress.language === "2") {
+								this.selectedReturnItems[0].soldToAddress.language = "2"
+							} else {
+								this.selectedReturnItems[0].soldToAddress.language = "E"
+							}
+							if (this.selectedReturnItems[0].shipToAddress.language === "TH" || this.selectedReturnItems[0].shipToAddress.language === "2") {
+								this.selectedReturnItems[0].shipToAddress.language = "2"
+							} else {
+								this.selectedReturnItems[0].shipToAddress.language = "E"
+							}
+							if (this.selectedReturnItems[0].billToAdress.language === "TH" || this.selectedReturnItems[0].billToAdress.language === "2") {
+								this.selectedReturnItems[0].billToAdress.language = "2"
+							} else {
+								this.selectedReturnItems[0].billToAdress.language = "E"
+							}
+							if (this.selectedReturnItems[0].payerAddress.language === "TH" || this.selectedReturnItems[0].payerAddress.language === "2") {
+								this.selectedReturnItems[0].payerAddress.language = "2"
+							} else {
+								this.selectedReturnItems[0].payerAddress.language = "E"
+							}
+						}
+						r.setProperty("/partnerName", "");
+						r.setProperty("/AddressStreet2", "");
+						r.setProperty("/AddressStreet3", "");
+						r.setProperty("/AddressStreet5", "");
+						r.setProperty("/District", "");
+						r.setProperty("/DifferentCity", "");
+						r.setProperty("/postalCode", "");
+						r.setProperty("/city", "");
+						r.setProperty("/telephone", "");
+						r.setProperty("/mobileNumber", "");
+						r.setProperty("/invRetCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+						r.setProperty("/invRetRegion", this.selectedReturnItems[0].soldToAddress.region);
+						r.setProperty("/invRetLanguage", this.selectedReturnItems[0].soldToAddress.language);
+						r.setProperty("/taxId", "");
+						r.setProperty("/bCode", "00000");
+						r.setProperty("/bpNummr", "N");
+						r.setProperty("/partnerName4", "");
+						r.setProperty("/maxLengthName4", "40 char remaining");
+						r.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+						r.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+						r.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+						r.setProperty("/maxLengthDistrict", "40 char remaining");
+						r.setProperty("/maxLengthDifferentCity", "40 char remaining");
+						r.setProperty("/maxLengthPostalCode", "5 char remaining");
+						r.setProperty("/maxLengthtelephone", "30 char remaining");
+						r.setProperty("/maxLengthmobileNumber", "30 char remaining");
+						r.setProperty("/maxLengthtaxId", "13 char remaining");
+						r.setProperty("/maxLengthbCode", "0 char remaining");
+						r.setProperty("/maxLengthbpNummr", "0 char remaining");
 						this.address.open();
-						return;
+						return
 					} else {
-						baseModel.setProperty("/maxLengthName4", (40 - baseModel.getProperty("/partnerName4").length) + " char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet2", (40 - baseModel.getProperty("/AddressStreet2").length) + " char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet3", (40 - baseModel.getProperty("/AddressStreet3").length) + " char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet5", (40 - baseModel.getProperty("/AddressStreet5").length) + " char remaining");
-						baseModel.setProperty("/maxLengthDistrict", (40 - baseModel.getProperty("/District").length) + " char remaining");
-						baseModel.setProperty("/maxLengthDifferentCity", (40 - baseModel.getProperty("/DifferentCity").length) + " char remaining");
-						baseModel.setProperty("/maxLengthPostalCode", (5 - baseModel.getProperty("/postalCode").length) + " char remaining");
-						baseModel.setProperty("/maxLengthtelephone", (30 - baseModel.getProperty("/telephone").length) + " char remaining");
-						baseModel.setProperty("/maxLengthmobileNumber", (30 - baseModel.getProperty("/mobileNumber").length) + " char remaining");
-						baseModel.setProperty("/maxLengthtaxId", (13 - baseModel.getProperty("/taxId").length) + " char remaining");
-						baseModel.setProperty("/maxLengthbCode", (5 - baseModel.getProperty("/bCode").length) + " char remaining");
-						baseModel.setProperty("/maxLengthbpNummr", (1 - baseModel.getProperty("/bpNummr").length) + " char remaining");
+						// r.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+						// r.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+						// r.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+						r.setProperty("/maxLengthName4", 40 - r.getProperty("/partnerName4").length + " char remaining");
+						r.setProperty("/maxLengthAddressStreet2", 40 - r.getProperty("/AddressStreet2").length + " char remaining");
+						r.setProperty("/maxLengthAddressStreet3", 40 - r.getProperty("/AddressStreet3").length + " char remaining");
+						r.setProperty("/maxLengthAddressStreet5", 40 - r.getProperty("/AddressStreet5").length + " char remaining");
+						r.setProperty("/maxLengthDistrict", 40 - r.getProperty("/District").length + " char remaining");
+						r.setProperty("/maxLengthDifferentCity", 40 - r.getProperty("/DifferentCity").length + " char remaining");
+						r.setProperty("/maxLengthPostalCode", 5 - r.getProperty("/postalCode").length + " char remaining");
+						r.setProperty("/maxLengthtelephone", 30 - r.getProperty("/telephone").length + " char remaining");
+						r.setProperty("/maxLengthmobileNumber", 30 - r.getProperty("/mobileNumber").length + " char remaining");
+						r.setProperty("/maxLengthtaxId", 13 - r.getProperty("/taxId").length + " char remaining");
+						r.setProperty("/maxLengthbCode", 5 - r.getProperty("/bCode").length + " char remaining");
+						r.setProperty("/maxLengthbpNummr", 1 - r.getProperty("/bpNummr").length + " char remaining");
 						this.address.open();
-						return;
+						return
 					}
 				} else {
-					baseModel.setProperty("/partnerName", "");
-					baseModel.setProperty("/AddressStreet2", "");
-					baseModel.setProperty("/AddressStreet3", "");
-					baseModel.setProperty("/AddressStreet5", "");
-					baseModel.setProperty("/District", "");
-					baseModel.setProperty("/DifferentCity", "");
-					baseModel.setProperty("/postalCode", "");
-					baseModel.setProperty("/city", "");
-					baseModel.setProperty("/telephone", "");
-					baseModel.setProperty("/mobileNumber", "");
-					baseModel.setProperty("/taxId", "");
-					baseModel.setProperty("/bCode", "00000");
-					baseModel.setProperty("/bpNummr", "N");
-					baseModel.setProperty("/partnerName4", "");
-					baseModel.setProperty("/maxLengthName4", "40 char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-					baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-					baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-					baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-					baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-					baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-					baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-					baseModel.setProperty("/maxLengthbCode", "0 char remaining");
-					baseModel.setProperty("/maxLengthbpNummr", "0 char remaining");
+					// r.setProperty("/invRetCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+					// r.setProperty("/invRetRegion", this.selectedReturnItems[0].soldToAddress.region);
+					// r.setProperty("/invRetLanguage", this.selectedReturnItems[0].soldToAddress.language);
+					r.setProperty("/partnerName", "");
+					r.setProperty("/AddressStreet2", "");
+					r.setProperty("/AddressStreet3", "");
+					r.setProperty("/AddressStreet5", "");
+					r.setProperty("/District", "");
+					r.setProperty("/DifferentCity", "");
+					r.setProperty("/postalCode", "");
+					r.setProperty("/city", "");
+					r.setProperty("/telephone", "");
+					r.setProperty("/mobileNumber", "");
+					r.setProperty("/taxId", "");
+					r.setProperty("/bCode", "00000");
+					r.setProperty("/bpNummr", "N");
+					r.setProperty("/partnerName4", "");
+					r.setProperty("/maxLengthName4", "40 char remaining");
+					r.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+					r.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+					r.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+					r.setProperty("/maxLengthDistrict", "40 char remaining");
+					r.setProperty("/maxLengthDifferentCity", "40 char remaining");
+					r.setProperty("/maxLengthPostalCode", "5 char remaining");
+					r.setProperty("/maxLengthtelephone", "30 char remaining");
+					r.setProperty("/maxLengthmobileNumber", "30 char remaining");
+					r.setProperty("/maxLengthtaxId", "13 char remaining");
+					r.setProperty("/maxLengthbCode", "0 char remaining");
+					r.setProperty("/maxLengthbpNummr", "0 char remaining");
 					this.address.open();
-					return;
+					return
 				}
-			} else if ((baseModel.getProperty("/oneTimeCustomer") === "X") && exchangeModel.getData()
-				.results !== undefined && exchangeModel.getData().results
-				.length > 0 && baseModel.getProperty("/returnSoldTo") === baseModel.getProperty("/exSoldTo")) {
+			} else if (r.getProperty("/oneTimeCustomer") === "X" && a.getData().results !== undefined && a.getData().results.length > 0 && r.getProperty(
+					"/returnSoldTo") === r.getProperty("/exSoldTo")) {
 				if (!this.address) {
 					this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-					this.getView().addDependent(this.address);
+					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
 				if (this.docVersion === undefined) {
-					var invoiceItems = this.selectedReturnItems[0];
-					baseModel.setProperty("/partnerName", invoiceItems.soldToAddress.partnerName);
-					baseModel.setProperty("/partnerName4", invoiceItems.soldToAddress.partnerName4);
-					baseModel.setProperty("/AddressStreet2", invoiceItems.soldToAddress.AddressStreet2);
-					baseModel.setProperty("/AddressStreet3", invoiceItems.soldToAddress.AddressStreet3);
-					baseModel.setProperty("/AddressStreet5", invoiceItems.soldToAddress.AddressStreet5);
-					baseModel.setProperty("/District", invoiceItems.soldToAddress.District);
-					baseModel.setProperty("/DifferentCity", invoiceItems.soldToAddress.DifferentCity);
-					baseModel.setProperty("/postalCode", invoiceItems.soldToAddress.postalCode);
-					baseModel.setProperty("/city", invoiceItems.soldToAddress.City);
-					baseModel.setProperty("/telephone", invoiceItems.soldToAddress.telephone);
-					baseModel.setProperty("/mobileNumber", invoiceItems.soldToAddress.mobileNumber);
-					baseModel.setProperty("/taxId", invoiceItems.soldToAddress.taxId);
-					baseModel.setProperty("/bCode", invoiceItems.soldToAddress.bCode);
-					if (invoiceItems.soldToAddress.bpNummr === "N" || invoiceItems.soldToAddress.bpNummr === "H") {
-						baseModel.setProperty("/bCode", "00000");
+					if (this.selectedReturnItems[0].soldToAddress.language === "TH" || this.selectedReturnItems[0].soldToAddress.language === "2") {
+						this.selectedReturnItems[0].soldToAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].soldToAddress.language = "E"
 					}
-					baseModel.setProperty("/bpNummr", invoiceItems.soldToAddress.bpNummr);
-					baseModel.setProperty("/maxLengthName4", (40 - invoiceItems.soldToAddress.partnerName4.length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet2", (40 - invoiceItems.soldToAddress.AddressStreet2.length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet3", (40 - invoiceItems.soldToAddress.AddressStreet3.length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet5", (40 - invoiceItems.soldToAddress.AddressStreet5.length) + " char remaining");
-					baseModel.setProperty("/maxLengthDistrict", (40 - invoiceItems.soldToAddress.District.length) + " char remaining");
-					baseModel.setProperty("/maxLengthDifferentCity", (40 - invoiceItems.soldToAddress.DifferentCity.length) + " char remaining");
-					baseModel.setProperty("/maxLengthPostalCode", (5 - invoiceItems.soldToAddress.postalCode.length) + " char remaining");
-					baseModel.setProperty("/maxLengthtelephone", (30 - invoiceItems.soldToAddress.telephone.length) + " char remaining");
-					baseModel.setProperty("/maxLengthmobileNumber", (30 - invoiceItems.soldToAddress.mobileNumber.length) + " char remaining");
-					baseModel.setProperty("/maxLengthtaxId", (13 - invoiceItems.soldToAddress.taxId.length) + " char remaining");
-					baseModel.setProperty("/maxLengthbCode", (5 - invoiceItems.soldToAddress.bCode.length) + " char remaining");
-					baseModel.setProperty("/maxLengthbpNummr", (1 - invoiceItems.soldToAddress.bpNummr.length) + " char remaining");
-					this.address.setModel(baseModel, "/baseModel");
-					this.address.open();
+					if (this.selectedReturnItems[0].shipToAddress.language === "TH" || this.selectedReturnItems[0].shipToAddress.language === "2") {
+						this.selectedReturnItems[0].shipToAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].shipToAddress.language = "E"
+					}
+					if (this.selectedReturnItems[0].billToAdress.language === "TH" || this.selectedReturnItems[0].billToAdress.language === "2") {
+						this.selectedReturnItems[0].billToAdress.language = "2"
+					} else {
+						this.selectedReturnItems[0].billToAdress.language = "E"
+					}
+					if (this.selectedReturnItems[0].payerAddress.language === "TH" || this.selectedReturnItems[0].payerAddress.language === "2") {
+						this.selectedReturnItems[0].payerAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].payerAddress.language = "E"
+					}
+					var n = this.selectedReturnItems[0];
+					r.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+					r.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+					r.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+					r.setProperty("/partnerName", n.soldToAddress.partnerName);
+					r.setProperty("/partnerName4", n.soldToAddress.partnerName4);
+					r.setProperty("/AddressStreet2", n.soldToAddress.AddressStreet2);
+					r.setProperty("/AddressStreet3", n.soldToAddress.AddressStreet3);
+					r.setProperty("/AddressStreet5", n.soldToAddress.AddressStreet5);
+					r.setProperty("/District", n.soldToAddress.District);
+					r.setProperty("/DifferentCity", n.soldToAddress.DifferentCity);
+					r.setProperty("/postalCode", n.soldToAddress.postalCode);
+					r.setProperty("/city", n.soldToAddress.City);
+					r.setProperty("/telephone", n.soldToAddress.telephone);
+					r.setProperty("/mobileNumber", n.soldToAddress.mobileNumber);
+					r.setProperty("/taxId", n.soldToAddress.taxId);
+					r.setProperty("/bCode", n.soldToAddress.bCode);
+					if (n.soldToAddress.bpNummr === "N" || n.soldToAddress.bpNummr === "H") {
+						r.setProperty("/bCode", "00000")
+					}
+					r.setProperty("/bpNummr", n.soldToAddress.bpNummr);
+					r.setProperty("/maxLengthName4", 40 - n.soldToAddress.partnerName4.length + " char remaining");
+					r.setProperty("/maxLengthAddressStreet2", 40 - n.soldToAddress.AddressStreet2.length + " char remaining");
+					r.setProperty("/maxLengthAddressStreet3", 40 - n.soldToAddress.AddressStreet3.length + " char remaining");
+					r.setProperty("/maxLengthAddressStreet5", 40 - n.soldToAddress.AddressStreet5.length + " char remaining");
+					r.setProperty("/maxLengthDistrict", 40 - n.soldToAddress.District.length + " char remaining");
+					r.setProperty("/maxLengthDifferentCity", 40 - n.soldToAddress.DifferentCity.length + " char remaining");
+					r.setProperty("/maxLengthPostalCode", 5 - n.soldToAddress.postalCode.length + " char remaining");
+					r.setProperty("/maxLengthtelephone", 30 - n.soldToAddress.telephone.length + " char remaining");
+					r.setProperty("/maxLengthmobileNumber", 30 - n.soldToAddress.mobileNumber.length + " char remaining");
+					r.setProperty("/maxLengthtaxId", 13 - n.soldToAddress.taxId.length + " char remaining");
+					r.setProperty("/maxLengthbCode", 5 - r.getProperty("/bCode").length + " char remaining");
+					r.setProperty("/maxLengthbpNummr", 1 - n.soldToAddress.bpNummr.length + " char remaining");
+					this.address.setModel(r, "/baseModel");
+					this.address.open()
 				} else {
-					// baseModel.setProperty("/partnerName", invoiceItems.soldToAddress.partnerName);
-					// baseModel.setProperty("/partnerName4", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/AddressStreet2", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/AddressStreet3", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/AddressStreet5", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/District", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/DifferentCity", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/postalCode", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/city", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/telephone", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/mobileNumber", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/taxId", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/bCode", baseModel.getProperty("/partnerName4"));
-					// baseModel.setProperty("/bpNummr", baseModel.getProperty("/partnerName4"));
-					baseModel.setProperty("/maxLengthName4", (40 - baseModel.getProperty("/partnerName4").length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet2", (40 - baseModel.getProperty("/AddressStreet2").length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet3", (40 - baseModel.getProperty("/AddressStreet3").length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet5", (40 - baseModel.getProperty("/AddressStreet5").length) + " char remaining");
-					baseModel.setProperty("/maxLengthDistrict", (40 - baseModel.getProperty("/District").length) + " char remaining");
-					baseModel.setProperty("/maxLengthDifferentCity", (40 - baseModel.getProperty("/DifferentCity").length) + " char remaining");
-					baseModel.setProperty("/maxLengthPostalCode", (5 - baseModel.getProperty("/postalCode").length) + " char remaining");
-					baseModel.setProperty("/maxLengthtelephone", (30 - baseModel.getProperty("/telephone").length) + " char remaining");
-					baseModel.setProperty("/maxLengthmobileNumber", (30 - baseModel.getProperty("/mobileNumber").length) + " char remaining");
-					baseModel.setProperty("/maxLengthtaxId", (13 - baseModel.getProperty("/taxId").length) + " char remaining");
-					baseModel.setProperty("/maxLengthbCode", (5 - baseModel.getProperty("/bCode").length) + " char remaining");
-					baseModel.setProperty("/maxLengthbpNummr", (1 - baseModel.getProperty("/bpNummr").length) + " char remaining");
-					this.address.open();
+					// r.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+					// r.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+					// r.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+					r.setProperty("/maxLengthName4", 40 - r.getProperty("/partnerName4").length + " char remaining");
+					r.setProperty("/maxLengthAddressStreet2", 40 - r.getProperty("/AddressStreet2").length + " char remaining");
+					r.setProperty("/maxLengthAddressStreet3", 40 - r.getProperty("/AddressStreet3").length + " char remaining");
+					r.setProperty("/maxLengthAddressStreet5", 40 - r.getProperty("/AddressStreet5").length + " char remaining");
+					r.setProperty("/maxLengthDistrict", 40 - r.getProperty("/District").length + " char remaining");
+					r.setProperty("/maxLengthDifferentCity", 40 - r.getProperty("/DifferentCity").length + " char remaining");
+					r.setProperty("/maxLengthPostalCode", 5 - r.getProperty("/postalCode").length + " char remaining");
+					r.setProperty("/maxLengthtelephone", 30 - r.getProperty("/telephone").length + " char remaining");
+					r.setProperty("/maxLengthmobileNumber", 30 - r.getProperty("/mobileNumber").length + " char remaining");
+					r.setProperty("/maxLengthtaxId", 13 - r.getProperty("/taxId").length + " char remaining");
+					r.setProperty("/maxLengthbCode", 5 - r.getProperty("/bCode").length + " char remaining");
+					r.setProperty("/maxLengthbpNummr", 1 - r.getProperty("/bpNummr").length + " char remaining");
+					this.address.open()
 				}
-				return;
-			} else if ((baseModel.getProperty("/EXOneTimeCustomer") === "X") && (baseModel.getProperty("/oneTimeCustomer") === "")) {
+				return
+			} else if (r.getProperty("/EXOneTimeCustomer") === "X" && r.getProperty("/oneTimeCustomer") === "") {
 				if (!this.address) {
 					this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-					this.getView().addDependent(this.address);
+					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
-				baseModel.setProperty("/partnerName", "");
-				baseModel.setProperty("/AddressStreet2", "");
-				baseModel.setProperty("/AddressStreet3", "");
-				baseModel.setProperty("/AddressStreet5", "");
-				baseModel.setProperty("/District", "");
-				baseModel.setProperty("/DifferentCity", "");
-				baseModel.setProperty("/postalCode", "");
-				baseModel.setProperty("/city", "");
-				baseModel.setProperty("/telephone", "");
-				baseModel.setProperty("/mobileNumber", "");
-				baseModel.setProperty("/taxId", "");
-				baseModel.setProperty("/bCode", "00000");
-				baseModel.setProperty("/bpNummr", "N");
-				baseModel.setProperty("/partnerName4", "");
-				baseModel.setProperty("/maxLengthName4", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-				baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-				baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-				baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-				baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-				baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-				baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-				baseModel.setProperty("/maxLengthbCode", "5 char remaining");
-				baseModel.setProperty("/maxLengthbpNummr", "1 char remaining");
-				this.address.open();
-				return;
-			} else if (baseModel.getProperty("/EXOneTimeCustomer") === "" && baseModel.getProperty("/returnSoldTo") !== baseModel.getProperty(
-					"/exSoldTo")) {
-				this._continueSave();
-				return;
-			}
-			this._continueSave();
-
-		},
-
-		onOKAddrerss: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel");
-			if (this.docVersion === undefined || this.docVersion === "DRAFT" ||
-				this.docVersion === "ERROR") {
-				if ((baseModel.getProperty("/partnerName4") === undefined || baseModel.getProperty("/partnerName4") === "") || (baseModel.getProperty(
-						"/AddressStreet2") === undefined || baseModel.getProperty(
-						"/AddressStreet2") === "") || (baseModel.getProperty(
-						"/taxId") === undefined || (baseModel.getProperty(
-						"/taxId") === "")) ||
-					(baseModel.getProperty(
-						"/AddressStreet5") === undefined || baseModel.getProperty(
-						"/AddressStreet5") === "") ||
-					(baseModel.getProperty("/District") === undefined || baseModel.getProperty("/District") === "") || (baseModel.getProperty(
-						"/DifferentCity") === undefined || baseModel.getProperty(
-						"/DifferentCity") === "") ||
-					(baseModel.getProperty("/postalCode") === undefined || baseModel.getProperty("/postalCode") === "") || (baseModel.getProperty(
-						"/city") === undefined || baseModel.getProperty(
-						"/city") === "")) {
-					MessageBox.information("Enter all the mandatory fields");
+				if (this.selectedReturnItems[0].soldToAddress.language === "TH" || this.selectedReturnItems[0].soldToAddress.language === "2") {
+					this.selectedReturnItems[0].soldToAddress.language = "2"
 				} else {
-					if (baseModel.getProperty("/savePressed") === true) {
-						this._continueSave();
+					this.selectedReturnItems[0].soldToAddress.language = "E"
+				}
+				r.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+				r.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+				r.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+				r.setProperty("/partnerName", "");
+				r.setProperty("/AddressStreet2", "");
+				r.setProperty("/AddressStreet3", "");
+				r.setProperty("/AddressStreet5", "");
+				r.setProperty("/District", "");
+				r.setProperty("/DifferentCity", "");
+				r.setProperty("/postalCode", "");
+				r.setProperty("/city", "");
+				r.setProperty("/telephone", "");
+				r.setProperty("/mobileNumber", "");
+				r.setProperty("/taxId", "");
+				r.setProperty("/bCode", "00000");
+				r.setProperty("/bpNummr", "N");
+				r.setProperty("/partnerName4", "");
+				r.setProperty("/maxLengthName4", "40 char remaining");
+				r.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+				r.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+				r.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+				r.setProperty("/maxLengthDistrict", "40 char remaining");
+				r.setProperty("/maxLengthDifferentCity", "40 char remaining");
+				r.setProperty("/maxLengthPostalCode", "5 char remaining");
+				r.setProperty("/maxLengthtelephone", "30 char remaining");
+				r.setProperty("/maxLengthmobileNumber", "30 char remaining");
+				r.setProperty("/maxLengthtaxId", "13 char remaining");
+				r.setProperty("/maxLengthbCode", "5 char remaining");
+				r.setProperty("/maxLengthbpNummr", "1 char remaining");
+				this.address.open();
+				return
+			} else if (r.getProperty("/EXOneTimeCustomer") === "" && r.getProperty("/returnSoldTo") !== r.getProperty("/exSoldTo")) {
+				this._continueSave();
+				return
+			}
+			this._continueSave()
+		},
+		onOKAddrerss: function (e) {
+			var r = this.getView().getModel("baseModel");
+			if (this.docVersion === undefined || this.docVersion === "DRAFT" || this.docVersion === "ERROR") {
+				if (r.getProperty("/partnerName4") === undefined || r.getProperty("/partnerName4") === "" || (r.getProperty("/AddressStreet2") ===
+						undefined || r.getProperty("/AddressStreet2") === "") || (r.getProperty("/taxId") === undefined || r.getProperty("/taxId") ===
+						"") || (r.getProperty("/AddressStreet5") === undefined || r.getProperty("/AddressStreet5") === "") || (r.getProperty(
+							"/District") ===
+						undefined || r.getProperty("/District") === "") || (r.getProperty("/DifferentCity") === undefined || r.getProperty(
+						"/DifferentCity") === "") || (r.getProperty("/postalCode") === undefined || r.getProperty("/postalCode") === "") || (r.getProperty(
+						"/city") === undefined || r.getProperty("/city") === "")) {
+					t.information("Enter all the mandatory fields");
+				} else {
+					if ((r.getProperty("/bpNummr") === "" && r.getProperty("/bCode") === "")) {
+						t.information("Enter BP Number/ BCode");
+						return;
 					} else {
-						this._continueSubmit();
+						if (r.getProperty("/bpNummr") === "N" || r.getProperty("/bpNummr") === "H") {
+							if (r.getProperty("/bCode") !== "00000" && r.getProperty("/bCode") !== "") {
+								t.information("Enter valid BCode");
+								return;
+							}
+						} else if (r.getProperty("/bpNummr") === "") {
+
+						} else {
+							t.information("Enter valid BP Number");
+						}
+					}
+					if (r.getProperty("/savePressed") === true) {
+						this._continueSave()
+					} else {
+						this._continueSubmit()
 					}
 				}
 			} else {
-				this.address.close();
+				this.address.close()
 			}
 		},
-
-		onCancelAddress: function (oEvent) {
-			var baseModel = this.getView().getModel("baseModel");
+		onCancelAddress: function (e) {
+			var t = this.getView().getModel("baseModel");
 			if (this.docVersion === undefined) {
-				baseModel.setProperty("/partnerNum", "");
-				baseModel.setProperty("/partnerName4", "");
-				baseModel.setProperty("/AddressStreet2", "");
-				baseModel.setProperty("/AddressStreet3", "");
-				baseModel.setProperty("/AddressStreet5", "");
-				baseModel.setProperty("/District", "");
-				baseModel.setProperty("/DifferentCity", "");
-				baseModel.setProperty("/postalCode", "");
-				baseModel.setProperty("/city", "");
-				baseModel.setProperty("/telephone", "");
-				baseModel.setProperty("/mobileNumber", "");
-				baseModel.setProperty("/taxId", "");
-				baseModel.setProperty("/bCode", "00000");
-				baseModel.setProperty("/bpNummr", "N");
-				baseModel.setProperty("/maxLengthName4", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-				baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-				baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-				baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-				baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-				baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-				baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-				baseModel.setProperty("/maxLengthbCode", "5 char remainiing");
-				baseModel.setProperty("/maxLengthbpNummr", "1 char remaining");
+				t.setProperty("/partnerNum", "");
+				t.setProperty("/partnerName4", "");
+				t.setProperty("/AddressStreet2", "");
+				t.setProperty("/AddressStreet3", "");
+				t.setProperty("/AddressStreet5", "");
+				t.setProperty("/District", "");
+				t.setProperty("/DifferentCity", "");
+				t.setProperty("/postalCode", "");
+				t.setProperty("/city", "");
+				t.setProperty("/telephone", "");
+				t.setProperty("/mobileNumber", "");
+				t.setProperty("/taxId", "");
+				t.setProperty("/bCode", "00000");
+				t.setProperty("/bpNummr", "N");
+				t.setProperty("/maxLengthName4", "40 char remaining");
+				t.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+				t.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+				t.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+				t.setProperty("/maxLengthDistrict", "40 char remaining");
+				t.setProperty("/maxLengthDifferentCity", "40 char remaining");
+				t.setProperty("/maxLengthPostalCode", "5 char remaining");
+				t.setProperty("/maxLengthtelephone", "30 char remaining");
+				t.setProperty("/maxLengthmobileNumber", "30 char remaining");
+				t.setProperty("/maxLengthtaxId", "13 char remaining");
+				t.setProperty("/maxLengthbCode", "5 char remainiing");
+				t.setProperty("/maxLengthbpNummr", "1 char remaining")
 			}
-			this.address.close();
+			this.address.close()
 		},
-
-		_continueSave: function (oEvent) {
-			var that = this;
-			var baseModel = this.getView().getModel("baseModel").getData();
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel").getData();
-			var returnModel = this.getView().getModel("returnModel");
-			var exchangeModel = this.getView().getModel("exchangeModel");
-			var baseModel = this.getView().getModel("baseModel");
-			var returnItems = [];
-			var exchangeItems = [];
-			if (baseModel.getData().returnReqNum) {
-				var returnReqNum = baseModel.getData().returnReqNum;
+		_continueSave: function (e) {
+			var o = this;
+			var s = this.getView().getModel("baseModel").getData();
+			var i = this.getView().getModel("invoiceSearchModel").getData();
+			var a = this.getView().getModel("returnModel");
+			var n = this.getView().getModel("exchangeModel");
+			var s = this.getView().getModel("baseModel");
+			var l = [];
+			var d = [];
+			if (s.getData().returnReqNum) {
+				var g = s.getData().returnReqNum
 			} else {
-				var returnReqNum = "";
+				var g = ""
 			}
-			if (baseModel.getData().exchangeReqNum) {
-				var exchangeReqNum = baseModel.getData().exchangeReqNum;
+			if (s.getData().exchangeReqNum) {
+				var p = s.getData().exchangeReqNum
 			} else {
-				var exchangeReqNum = "";
+				var p = ""
 			}
-			if (returnModel.getData().results !== undefined || returnModel.getData().results.length > 0) {
-				var returnsData = returnModel.getData().results;
-				for (var i = 0; i < returnsData.length; i++) {
-
-					if (returnsData[i].deleted === undefined || returnsData[i].deleted === "false") {
-						var Items = {
-							"refDocNum": returnsData[i].refInvoice,
-							"refDocItem": returnsData[i].refItemNumber,
-							"returnReqItemid": returnsData[i].itemNumber,
-							"materialGroup": returnsData[i].materialGroup,
-							"materialGroup4": returnsData[i].materialGroup4,
-							"material": returnsData[i].matNumber,
-							"shortText": returnsData[i].itemShortText,
-							"avlReturnQty": returnsData[i].avlRetQty,
-							"avlUom": returnsData[i].salesUnit,
-							"returnQty": returnsData[i].quantity,
-							"returnUom": returnsData[i].salesUnit,
-							"unitPriceCc": returnsData[i].unitPrice,
-							"unitPriceInv": returnsData[i].unitPriceInv,
-							"invoiceTotalAmount": returnModel.getData().returnAmountTotal.split("(")[0],
-							"storageLocation": returnsData[i].storageLocation,
-
-							"higherLevel": returnsData[i].higherItem,
-							"batch": returnsData[i].batchNumber,
-							"referenceInvDate": formatter.dateTimeFormatPS(returnsData[i].billingDate).split("T")[0],
-							"expiryDate": formatter.dateTimeFormatPS(returnsData[i].expiryDate).split("T")[0],
-							"pricingDate": formatter.dateTimeFormatPS(returnsData[i].pricingDate),
-							"serviceRenderedDate": formatter.dateTimeFormatPS(returnsData[i].serviceRenderedDate),
-							"serialNum": returnsData[i].serialNumber,
-							"returnReqNum": returnReqNum,
-							"billingType": invoiceSearchModel.billingType,
-							"sapReturnOrderNum": "",
-							"sapReturnOrderItemNum": "",
-							"overallItemWorkflowStatus": "",
-							"plant": returnsData[i].plant,
-							"paymentTerms": returnsData[i].paymentTerms,
-							"conditionGroup4": returnsData[i].conditionGroup4
+			if (a.getData().results !== undefined || a.getData().results.length > 0) {
+				var c = a.getData().results;
+				for (var u = 0; u < c.length; u++) {
+					if (c[u].deleted === undefined || c[u].deleted === "false") {
+						var h = {
+							refDocNum: c[u].refInvoice,
+							refDocItem: c[u].refItemNumber,
+							returnReqItemid: c[u].itemNumber,
+							materialGroup: c[u].materialGroup,
+							materialGroup4: c[u].materialGroup4,
+							material: c[u].matNumber,
+							shortText: c[u].itemShortText,
+							avlReturnQty: c[u].avlRetQty,
+							avlUom: c[u].salesUnit,
+							returnQty: c[u].quantity,
+							returnUom: c[u].salesUnit,
+							unitPriceCc: c[u].unitPrice,
+							unitPriceInv: c[u].unitPriceInv,
+							invoiceTotalAmount: a.getData().returnAmountTotal.split("(")[0],
+							storageLocation: c[u].storageLocation,
+							higherLevel: c[u].higherItem,
+							batch: c[u].batchNumber,
+							referenceInvDate: r.dateTimeFormatPS(c[u].billingDate).split("T")[0],
+							expiryDate: r.dateTimeFormatPS(c[u].expiryDate).split("T")[0],
+							pricingDate: r.dateTimeFormatPS(c[u].pricingDate),
+							serviceRenderedDate: r.dateTimeFormatPS(c[u].serviceRenderedDate),
+							serialNum: c[u].serialNumber,
+							returnReqNum: g,
+							billingType: i.billingType,
+							sapReturnOrderNum: "",
+							sapReturnOrderItemNum: "",
+							overallItemWorkflowStatus: "",
+							plant: c[u].plant,
+							paymentTerms: c[u].paymentTerms,
+							conditionGroup4: c[u].conditionGroup4
 						};
-						returnItems.push(Items);
+						l.push(h)
 					}
-
 				}
-				if (returnItems.length === 0) {
-					MessageBox.information(this.resourceBundle.getText("ReturnItemscannotbeempty"));
-					// MessageBox.information("Return Items cannot be empty");
-					return;
+				if (l.length === 0) {
+					t.information(this.resourceBundle.getText("ReturnItemscannotbeempty"));
+					return
 				}
 			}
-
-			if (baseModel.getData().userEmailId) {
-				var email = baseModel.getData().userEmailId;
-				var emailTrigger = true;
+			if (s.getData().userEmailId) {
+				var m = s.getData().userEmailId;
+				var y = true
 			} else {
-				var email = "";
-				var emailTrigger = false;
+				var m = "";
+				var y = false
 			}
 			if (this.docVersion === "DRAFT") {
-				var docVersion = "DRAFT";
+				var P = "DRAFT"
 			} else if (this.docVersion === "ERROR") {
-				var docVersion = "ERROR";
+				var P = "ERROR"
 			} else {
-				var docVersion = "DRAFT";
+				var P = "DRAFT"
 			}
-			if (baseModel.getData().requestor === baseModel.getData().userName + " (" + baseModel.getData().phone + ")") {
-				var requestor = "";
+			if (s.getData().requestor === s.getData().userName + " (" + s.getData().phone + ")") {
+				var f = ""
 			} else {
-				var requestor = baseModel.getData().requestor;
+				var f = s.getData().requestor
 			}
-			var payload = {
-				"returns": {
-					"createdAt": new Date(),
-					"customerPo": baseModel.getData().customerPONumber,
-					"mappingId": baseModel.getData().salesOrgForRO,
-					"updatedBy": requestor,
-					"requestorName": baseModel.getData().userId + "(" + baseModel.getData().userName + ")",
-					"requestedBy": baseModel.getData().userId,
-					"roType": baseModel.getData().selectedROTypeCode,
-					"roTypeText": baseModel.getData().selectedROType,
-					"salesOrg": baseModel.getData().selectedSalesOrg,
-					"salesOrgDesc": invoiceSearchModel.salesOrgDesc,
-					"distributionChannel": baseModel.getData().selectedDistChnl,
-					"distributionChannelDesc": invoiceSearchModel.distChnlDesc,
-					"division": invoiceSearchModel.Division,
-					"divisionDesc": baseModel.getData().selectedDivisionDesc,
-					"soldToParty": baseModel.getData().returnSoldTo,
-					"soldToPartyDesc": baseModel.getData().returnSoldToDesc,
-					"shipToParty": baseModel.getData().returnShipTo,
-					"shipToPartyDesc": baseModel.getData().shipToDesc,
-					"billToParty": baseModel.getData().returnBillTo,
-					"billToDesc": baseModel.getData().returnBillToDesc,
-					"payer": baseModel.getData().returnPayer,
-					"payerDesc": baseModel.getData().returnPayerDesc,
-					// "requestedBy": baseModel.getData().userId,
-					"requestorEmail": baseModel.getData().email,
-					"contactPerson": baseModel.getData().userEmailId,
-					"contactDivsion": baseModel.getData().contactDivision,
-					"contactTelephone": baseModel.getData().phoneNum,
-					"referenceNum": baseModel.getData().referenceNo,
-					"requestRemark": baseModel.getData().returnRemark,
-					"oneTimeCustomer": baseModel.getData().oneTimeCustomer,
-					"orderReason": baseModel.getData().selectedReturnReason.split(" ")[0],
-					"orderReasonText": baseModel.getData().selectedReturnReason.split("(")[1].split(")")[0],
-					"reasonOwner": baseModel.getData().reasonOwner.split(" ")[0],
-					"reasonOwnerDesc": baseModel.getData().reasonOwner.split(" ")[1].split("(")[1].split(")")[0],
-					"orderType": baseModel.getData().returnOrderType,
-					"orderTypeText": baseModel.getData().returnOrderType,
-					"returnTotalAmt": returnModel.getData().returnAmountTotal.split("(")[0],
-					"totalRoAmount": this.getView().getModel("returnModel").getData().returnAmountTotal.split("(")[0],
-					"returnReqNum": returnReqNum,
-					"workflowInstance": "",
-					"overallWorkflowStatus": "",
-					"processingStatus": "",
-					"logisticalStatus": "",
-					"docVersion": docVersion,
-					"flagRoSo": "R",
-					"emailTrigger": emailTrigger,
-					"exchangeOrderType": baseModel.getData().exchangeOrderType,
-					// "distributionChannel": invoiceSearchModel.getData().distChnl,
-					// "address": [],
-					// "items": retItemsArray,
-					// "attachment": [],
-					// "orderCondition": retConditionsArray
-					// "address": addressModel,
-					"items": returnItems,
-
+			var v = {
+				returns: {
+					createdAt: new Date,
+					customerPo: s.getData().customerPONumber,
+					mappingId: s.getData().salesOrgForRO,
+					updatedBy: f,
+					requestorName: s.getData().userId + "(" + s.getData().userName + ")",
+					requestedBy: s.getData().userId,
+					roType: s.getData().selectedROTypeCode,
+					roTypeText: s.getData().selectedROType,
+					salesOrg: s.getData().selectedSalesOrg,
+					salesOrgDesc: i.salesOrgDesc,
+					distributionChannel: s.getData().selectedDistChnl,
+					distributionChannelDesc: i.distChnlDesc,
+					division: i.Division,
+					divisionDesc: s.getData().selectedDivisionDesc,
+					soldToParty: s.getData().returnSoldTo,
+					soldToPartyDesc: s.getData().returnSoldToDesc,
+					shipToParty: s.getData().returnShipTo,
+					shipToPartyDesc: s.getData().shipToDesc,
+					billToParty: s.getData().returnBillTo,
+					billToDesc: s.getData().returnBillToDesc,
+					payer: s.getData().returnPayer,
+					payerDesc: s.getData().returnPayerDesc,
+					requestorEmail: s.getData().email,
+					contactPerson: s.getData().userEmailId,
+					contactDivsion: s.getData().contactDivision,
+					contactTelephone: s.getData().phoneNum,
+					referenceNum: s.getData().referenceNo,
+					requestRemark: s.getData().returnRemark,
+					oneTimeCustomer: s.getData().oneTimeCustomer,
+					orderReason: s.getData().selectedReturnReason.split(" ")[0],
+					orderReasonText: s.getData().selectedReturnReason.split("(")[1].split(")")[0],
+					reasonOwner: s.getData().reasonOwner.split(" ")[0],
+					reasonOwnerDesc: s.getData().reasonOwner.split(" ")[1].split("(")[1].split(")")[0],
+					orderType: s.getData().returnOrderType,
+					orderTypeText: s.getData().returnOrderType,
+					returnTotalAmt: a.getData().returnAmountTotal.split("(")[0],
+					totalRoAmount: this.getView().getModel("returnModel").getData().returnAmountTotal.split("(")[0],
+					returnReqNum: g,
+					workflowInstance: "",
+					overallWorkflowStatus: "",
+					processingStatus: "",
+					logisticalStatus: "",
+					docVersion: P,
+					flagRoSo: "R",
+					emailTrigger: y,
+					exchangeOrderType: s.getData().exchangeOrderType,
+					items: l
 				}
 			};
-			if (baseModel.getProperty("/oneTimeCustomer") === "X") {
+			if (s.getProperty("/oneTimeCustomer") === "X") {
 				if (this.docVersion === undefined) {
-					var invoiceItems = this.selectedReturnItems;
-					var soldToAddress = invoiceItems[0].soldToAddress;
-					var shipToAddress = invoiceItems[0].shipToAddress;
-					var billToAddress = invoiceItems[0].billToAdress;
-					var payerAddress = invoiceItems[0].payerAddress;
-					var address = [{
+					var D = this.selectedReturnItems;
+					var M = D[0].soldToAddress;
+					var b = D[0].shipToAddress;
+					var T = D[0].billToAdress;
+					var S = D[0].payerAddress;
+					var C = [{
 						id: "",
 						returnReqNum: "",
-						zipCode: soldToAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: M.postalCode,
+						refDocNum: D[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "AG",
-						name1: soldToAddress.partnerName,
+						name1: M.partnerName,
 						name2: "",
 						name3: "",
-						name4: soldToAddress.partnerName4,
-						street2: soldToAddress.AddressStreet2,
-						street3: soldToAddress.AddressStreet3,
-						street5: soldToAddress.AddressStreet5,
-						district: soldToAddress.District,
-						differentCity: soldToAddress.DifferentCity,
-						postalCode: soldToAddress.postalCode,
-						city: soldToAddress.City,
-						region: "",
-						country: "",
-						telephone: soldToAddress.telephone,
-						mobilePhone: soldToAddress.mobileNumber,
-						taxId: soldToAddress.taxId,
-						b_Codes: soldToAddress.bCode,
-						bpNummr: soldToAddress.bpNummr,
+						name4: M.partnerName4,
+						street2: M.AddressStreet2,
+						street3: M.AddressStreet3,
+						street5: M.AddressStreet5,
+						district: M.District,
+						differentCity: M.DifferentCity,
+						postalCode: M.postalCode,
+						city: M.City,
+						region: M.region,
+						country: M.countryCode,
+						language: M.language,
+						telephone: M.telephone,
+						mobilePhone: M.mobileNumber,
+						taxId: M.taxId,
+						b_Codes: M.bCode,
+						bpNummr: M.bpNummr
 					}, {
 						id: "",
 						returnReqNum: "",
-						zipCode: shipToAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: b.postalCode,
+						refDocNum: D[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "WE",
-						name1: shipToAddress.partnerName,
+						name1: b.partnerName,
 						name2: "",
 						name3: "",
-						name4: shipToAddress.partnerName4,
-						street2: shipToAddress.AddressStreet2,
-						street3: shipToAddress.AddressStreet3,
-						street5: shipToAddress.AddressStreet5,
-						district: shipToAddress.District,
-						differentCity: shipToAddress.DifferentCity,
-						postalCode: shipToAddress.postalCode,
-						city: shipToAddress.City,
-						region: "",
-						country: "",
-						telephone: shipToAddress.telephone,
-						mobilePhone: shipToAddress.mobileNumber,
-						taxId: shipToAddress.taxId,
-						b_Codes: shipToAddress.bCode,
-						bpNummr: shipToAddress.bpNummr,
+						name4: b.partnerName4,
+						street2: b.AddressStreet2,
+						street3: b.AddressStreet3,
+						street5: b.AddressStreet5,
+						district: b.District,
+						differentCity: b.DifferentCity,
+						postalCode: b.postalCode,
+						city: b.City,
+						region: b.region,
+						country: b.countryCode,
+						language: b.language,
+						telephone: b.telephone,
+						mobilePhone: b.mobileNumber,
+						taxId: b.taxId,
+						b_Codes: b.bCode,
+						bpNummr: b.bpNummr
 					}, {
 						id: "",
 						returnReqNum: "",
-						zipCode: billToAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: T.postalCode,
+						refDocNum: D[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "RE",
-						name1: billToAddress.partnerName,
+						name1: T.partnerName,
 						name2: "",
 						name3: "",
-						name4: billToAddress.partnerName4,
-						street2: billToAddress.AddressStreet2,
-						street3: billToAddress.AddressStreet3,
-						street5: billToAddress.AddressStreet5,
-						district: billToAddress.District,
-						differentCity: billToAddress.DifferentCity,
-						postalCode: billToAddress.postalCode,
-						city: billToAddress.City,
-						region: "",
-						country: "",
-						telephone: billToAddress.telephone,
-						mobilePhone: billToAddress.mobileNumber,
-						taxId: billToAddress.taxId,
-						b_Codes: billToAddress.bCode,
-						bpNummr: billToAddress.bpNummr
+						name4: T.partnerName4,
+						street2: T.AddressStreet2,
+						street3: T.AddressStreet3,
+						street5: T.AddressStreet5,
+						district: T.District,
+						differentCity: T.DifferentCity,
+						postalCode: T.postalCode,
+						city: T.City,
+						region: T.region,
+						country: T.countryCode,
+						language: T.language,
+						telephone: T.telephone,
+						mobilePhone: T.mobileNumber,
+						taxId: T.taxId,
+						b_Codes: T.bCode,
+						bpNummr: T.bpNummr
 					}, {
 						id: "",
 						returnReqNum: "",
-						zipCode: payerAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: S.postalCode,
+						refDocNum: D[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "RG",
-						name1: payerAddress.partnerName,
+						name1: S.partnerName,
 						name2: "",
 						name3: "",
-						name4: payerAddress.partnerName4,
-						street2: payerAddress.AddressStreet2,
-						street3: payerAddress.AddressStreet3,
-						street5: payerAddress.AddressStreet5,
-						district: payerAddress.District,
-						differentCity: payerAddress.DifferentCity,
-						postalCode: payerAddress.postalCode,
-						city: payerAddress.City,
-						region: "",
-						country: "",
-						telephone: payerAddress.telephone,
-						mobilePhone: payerAddress.mobileNumber,
-						taxId: payerAddress.taxId,
-						b_Codes: payerAddress.bCode,
-						bpNummr: payerAddress.bpNummr
+						name4: S.partnerName4,
+						street2: S.AddressStreet2,
+						street3: S.AddressStreet3,
+						street5: S.AddressStreet5,
+						district: S.District,
+						differentCity: S.DifferentCity,
+						postalCode: S.postalCode,
+						city: S.City,
+						region: S.region,
+						country: S.countryCode,
+						language: S.language,
+						telephone: S.telephone,
+						mobilePhone: S.mobileNumber,
+						taxId: S.taxId,
+						b_Codes: S.bCode,
+						bpNummr: S.bpNummr
 					}];
-					payload.returns.address = address;
+					v.returns.address = C
 				} else {
-					payload.returns.address = baseModel.getProperty("/setRetAddress");
+					v.returns.address = s.getProperty("/setRetAddress")
 				}
 			}
-			if (exchangeModel.getData().results !== undefined && exchangeModel.getData().results.length > 0) {
-				var exchangeData = exchangeModel.getData().results;
-				if (exchangeData !== undefined || exchangeData.length === 0) {
-					for (var k = 0; k < exchangeData.length; k++) {
-						if (exchangeData[k].deleted === "false") {
-							var items = {
-								"refDocNum": exchangeData[k].refInvoice,
-								"refDocItem": exchangeData[k].refItemNumber,
-								"exchangeReqItemid": exchangeData[k].itemNumber,
-								"materialGroup": exchangeData[k].materialGroup,
-								"materialGroup4": exchangeData[k].materialGroup4,
-								"material": exchangeData[k].matNumber,
-								"sapMaterialNum": exchangeData[k].matNumber,
-								"shortText": exchangeData[k].itemShortText,
-								"avlReturnQty": exchangeData[k].quantity,
-								"avlUom": exchangeData[k].salesUnit,
-								"returnQty": exchangeData[k].quantity,
-								"returnUom": exchangeData[k].salesUnit,
-								"unitPriceCc": exchangeData[k].unitPrice,
-								"unitPriceInv": exchangeData[k].unitPriceInv,
-								"manualFoc": exchangeData[k].manualFoc,
-								"invoiceTotalAmount": exchangeModel.getData().exchangeAmountTotal.split("(")[0],
-								"totalNetAmount": this.getView().getModel("exchangeModel").getData().exchangeAmountTotal.split("(")[0],
-								"storageLocation": exchangeData[k].storageLocation,
-								"sloc": exchangeData[k].storageLocation,
-								"higherLevel": exchangeData[k].higherItem,
-								"batch": exchangeData[k].batchNumber,
-								"referenceInvDate": formatter.dateTimeFormatPS(exchangeData[k].billingDate).split("T")[0],
-								"expiryDate": formatter.dateTimeFormatPS(exchangeData[k].expiryDate).split("T")[0],
-								"serialNum": exchangeData[k].serialNumber,
-								"returnReqNum": returnReqNum,
-								"exchangeReqNum": exchangeReqNum,
-								"billingType": invoiceSearchModel.billingType,
-								"sapReturnOrderNum": "",
-								"sapReturnOrderItemNum": "",
-								"overallItemWorkflowStatus": "",
-								"plant": exchangeData[k].plant,
-								"paymentTerms": exchangeData[k].paymentTerms,
-								"conditionGroup4": exchangeData[k].conditionGroup4,
-								// "pricingDate": formatter.dateTimeFormatPS(exchangeItems[k].pricingDate).split("T")[0],
-								// "serviceRenderedDate": formatter.dateTimeFormatPS(exchangeItems[k].serviceRenderedDate).split("T")[0]
+			if (n.getData().results !== undefined && n.getData().results.length > 0) {
+				var w = n.getData().results;
+				if (w !== undefined || w.length === 0) {
+					for (var x = 0; x < w.length; x++) {
+						if (w[x].deleted === "false") {
+							var I = {
+								refDocNum: w[x].refInvoice,
+								refDocItem: w[x].refItemNumber,
+								exchangeReqItemid: w[x].itemNumber,
+								materialGroup: w[x].materialGroup,
+								materialGroup4: w[x].materialGroup4,
+								material: w[x].matNumber,
+								sapMaterialNum: w[x].matNumber,
+								shortText: w[x].itemShortText,
+								avlReturnQty: w[x].quantity,
+								avlUom: w[x].salesUnit,
+								returnQty: w[x].quantity,
+								returnUom: w[x].salesUnit,
+								unitPriceCc: w[x].unitPrice,
+								unitPriceInv: w[x].unitPriceInv,
+								manualFoc: w[x].manualFoc,
+								invoiceTotalAmount: n.getData().exchangeAmountTotal.split("(")[0],
+								totalNetAmount: this.getView().getModel("exchangeModel").getData().exchangeAmountTotal.split("(")[0],
+								storageLocation: w[x].storageLocation,
+								sloc: w[x].storageLocation,
+								higherLevel: w[x].higherItem,
+								batch: w[x].batchNumber,
+								referenceInvDate: r.dateTimeFormatPS(w[x].billingDate).split("T")[0],
+								expiryDate: r.dateTimeFormatPS(w[x].expiryDate).split("T")[0],
+								serialNum: w[x].serialNumber,
+								returnReqNum: g,
+								exchangeReqNum: p,
+								billingType: i.billingType,
+								sapReturnOrderNum: "",
+								sapReturnOrderItemNum: "",
+								overallItemWorkflowStatus: "",
+								plant: w[x].plant,
+								paymentTerms: w[x].paymentTerms,
+								conditionGroup4: w[x].conditionGroup4
 							};
-							exchangeItems.push(items);
+							d.push(I)
 						}
 					}
-					if (exchangeItems.length > 0) {
-						var exchange = {
-							"customerPo": baseModel.getData().customerPONumberEx,
-							"roType": baseModel.getData().selectedROTypeCode,
-							"payer": baseModel.getData().payer,
-							"referenceNum": baseModel.getData().referenceNo,
-							"reasonOwner": baseModel.getData().reasonOwner.split(" ")[0],
-							"requestRemark": baseModel.getData().exchangeRemark,
-							"billToParty": baseModel.getData().billTo,
-							"orderCategory": baseModel.getData().exchangeOrderType,
-							"orderType": baseModel.getData().exchangeOrderType,
-							"orderTypeText": baseModel.getData().exchangeOrderType,
-							"salesOrg": baseModel.getData().selectedSalesOrg,
-							"distributionChannel": baseModel.getData().selectedDistChnl,
-							"division": invoiceSearchModel.Division,
-							"soldToParty": baseModel.getData().exSoldTo,
-							"soldToPartyDesc": baseModel.getData().exSoldToDesc,
-							"shipToParty": baseModel.getData().exShipTo,
-							"shipToPartyDesc": baseModel.getData().exShipToDesc,
-							"billToParty": baseModel.getData().exBillTo,
-							"billToDesc": baseModel.getData().exBillToDesc,
-							"billToPartyDesc": baseModel.getData().exBillToDesc,
-							"payer": baseModel.getData().exPayer,
-							"payerDesc": baseModel.getData().exPayerDesc,
-							"payerDescription": baseModel.getData().exPayerDesc,
-							"remarks": baseModel.getData().exchangeRemark,
-							"totalNetAmount": exchangeModel.getData().exchangeAmountTotal.split("(")[0],
-							"delComplete": baseModel.getData().completedDeliveryFLAG,
-							"docCurrency": "",
-							"exoneTimeCustomer": baseModel.getData().EXOneTimeCustomer,
-							"deliveryBlock": "",
-							"billingBlock": "",
-							"overallStatus": "",
-							"rejectionStatus": "",
-							"deliveryStatus": "",
-							"creditStatus": "",
-							"overallWorkflowStatus": "",
-							"flagRoSo": "E",
-							"items": exchangeItems,
-							"returnReqNum": returnReqNum,
-							"exchangeReqNum": exchangeReqNum
+					if (d.length > 0) {
+						var N = {
+							customerPo: s.getData().customerPONumberEx,
+							roType: s.getData().selectedROTypeCode,
+							payer: s.getData().payer,
+							referenceNum: s.getData().referenceNo,
+							reasonOwner: s.getData().reasonOwner.split(" ")[0],
+							requestRemark: s.getData().exchangeRemark,
+							billToParty: s.getData().billTo,
+							orderCategory: s.getData().exchangeOrderType,
+							orderType: s.getData().exchangeOrderType,
+							orderTypeText: s.getData().exchangeOrderType,
+							salesOrg: s.getData().selectedSalesOrg,
+							distributionChannel: s.getData().selectedDistChnl,
+							division: i.Division,
+							soldToParty: s.getData().exSoldTo,
+							soldToPartyDesc: s.getData().exSoldToDesc,
+							shipToParty: s.getData().exShipTo,
+							shipToPartyDesc: s.getData().exShipToDesc,
+							billToParty: s.getData().exBillTo,
+							billToDesc: s.getData().exBillToDesc,
+							billToPartyDesc: s.getData().exBillToDesc,
+							payer: s.getData().exPayer,
+							payerDesc: s.getData().exPayerDesc,
+							payerDescription: s.getData().exPayerDesc,
+							remarks: s.getData().exchangeRemark,
+							totalNetAmount: n.getData().exchangeAmountTotal.split("(")[0],
+							delComplete: s.getData().completedDeliveryFLAG,
+							docCurrency: "",
+							exoneTimeCustomer: s.getData().EXOneTimeCustomer,
+							deliveryBlock: "",
+							billingBlock: "",
+							overallStatus: "",
+							rejectionStatus: "",
+							deliveryStatus: "",
+							creditStatus: "",
+							overallWorkflowStatus: "",
+							flagRoSo: "E",
+							items: d,
+							returnReqNum: g,
+							exchangeReqNum: p
 						};
-
-						payload.exchange = exchange;
-					}
-					// payload.returns.attachment.push(attachmentObject);
-				}
-				if (baseModel.getProperty("/EXOneTimeCustomer") === "X" || baseModel.getProperty("/oneTimeCustomer") === "X") {
-					if (this.docVersion === undefined) {
-						var invoiceItems = this.selectedReturnItems;
-						var address = [{
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "AG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "WE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "RE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "RG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}];
-						payload.exchange.address = address;
+						v.exchange = N
+						if (s.getProperty("/EXOneTimeCustomer") === "X" || s.getProperty("/oneTimeCustomer") === "X") {
+							if (this.docVersion === undefined) {
+								var D = this.selectedReturnItems;
+								var C = [{
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: D[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "AG",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: D[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "WE",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: D[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "RE",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: D[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "RG",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}];
+								v.exchange.address = C
+							} else {
+								var C = [{
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: s.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "AG",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: s.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "WE",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: s.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "RE",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refInvoiceNum: s.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "RG",
+									name1: s.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: s.getProperty("/partnerName4"),
+									street2: s.getProperty("/AddressStreet2"),
+									street3: s.getProperty("/AddressStreet3"),
+									street5: s.getProperty("/AddressStreet5"),
+									district: s.getProperty("/District"),
+									differentCity: s.getProperty("/DifferentCity"),
+									postalCode: s.getProperty("/postalCode"),
+									city: s.getProperty("/city"),
+									region: s.getProperty("/invRegion"),
+									country: s.getProperty("/invCountry"),
+									language: s.getProperty("/invLanguage"),
+									telephone: s.getProperty("/telephone"),
+									mobilePhone: s.getProperty("/mobileNumber"),
+									taxId: s.getProperty("/taxId"),
+									b_Codes: s.getProperty("/bCode"),
+									bpNummr: s.getProperty("/bpNummr")
+								}];
+								v.exchange.address = C
+							}
+						}
 					} else {
-						var address = [{
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "AG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "WE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "RE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refInvoiceNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "RG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}];
-						payload.exchange.address = address;
-
+						if (this.getView().getModel("baseModel").getProperty("/exchangeTabVisiblity") === true) {
+							sap.m.MessageBox.information(this.resourceBundle.getText("discardExchangeItems"), {
+								actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+								onClose: function (e) {
+									if (e === t.Action.OK) {
+										o.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", false);
+										o._continueSave();
+									} else {
+										return;
+									}
+								}
+							});
+							return;
+						}
 					}
 				}
-			}
 
-			if (this.getView().getModel("returnModel").getData().attachmentObject.length > 0) {
-				var attachment = [];
-				var attachmentObject = this.getView().getModel("returnModel").getData().attachmentObject;
-				for (var j = 0; j < attachmentObject.length; j++) {
-					var attach = {
-						"docName": attachmentObject[j].fileName,
-						"docType": attachmentObject[j].fileType,
-						"docData": attachmentObject[j].fileDoc,
-						"docId": attachmentObject[j].docId,
-						"returnReqNum": returnReqNum
-					};
-					attachment.push(attach);
+			} else {
+				if (this.getView().getModel("baseModel").getProperty("/exchangeTabVisiblity") === true) {
+					sap.m.MessageBox.information(this.resourceBundle.getText("discardExchangeItems"), {
+						actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+						onClose: function (e) {
+							if (e === t.Action.OK) {
+								o.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", false);
+								o._continueSave();
+							} else {
+								return;
+							}
+						}
+					});
+					return;
 				}
-				payload.returns.attachment = attachment;
-				// payload.returns.attachment.push(attachment);
 			}
-			var oHeader = {
+			if (this.getView().getModel("returnModel").getData().attachmentObject.length > 0) {
+				var V = [];
+				var R = this.getView().getModel("returnModel").getData().attachmentObject;
+				for (var O = 0; O < R.length; O++) {
+					var A = {
+						docName: R[O].fileName,
+						docType: R[O].fileType,
+						docData: R[O].fileDoc,
+						docId: R[O].docId,
+						returnReqNum: g
+					};
+					V.push(A)
+				}
+				v.returns.attachment = V
+			}
+			var F = {
 				"Content-Type": "application/json;charset=utf-8"
 			};
-			var oBusyDialog = new sap.m.BusyDialog();
-			oBusyDialog.open();
-			var oModel = new sap.ui.model.json.JSONModel();
-			oModel.loadData("/DKSHJavaService/returnRequest/createReturnRequest/saveAsDraft", JSON.stringify(payload), true, "POST",
-				false,
-				false, oHeader);
-			oModel.attachRequestCompleted(function (success) {
-				oBusyDialog.close();
-				if (that.address) {
-					that.address.close();
+			var B = new sap.m.BusyDialog;
+			B.open();
+			var _ = new sap.ui.model.json.JSONModel;
+			_.loadData("/DKSHJavaService/returnRequest/createReturnRequest/saveAsDraft", JSON.stringify(v), true, "POST", false, false, F);
+			_.attachRequestCompleted(function (e) {
+				B.close();
+				if (o.address) {
+					o.address.close()
 				}
 				if (sap.ui.getCore().getModel("submitRequest")) {
-					sap.ui.getCore().getModel("submitRequest").setData("");
+					sap.ui.getCore().getModel("submitRequest").setData("")
 				}
-				var orderNO = success.getSource().getData().name.split(" ")[1];
-
-				that.oDefaultDialog = new sap.m.Dialog({
+				var t = e.getSource().getData().name.split(" ")[1];
+				o.oDefaultDialog = new sap.m.Dialog({
 					type: sap.m.DialogType.Message,
 					title: "Success",
 					styleClass: "sapUiSizeCompact",
 					content: [new sap.m.Text({
-							text: " " + success.getSource().getData().name + "."
-						}),
-						new sap.m.Text({
-							text: " " + that.resourceBundle.getText("Fordetailsclick")
-						}),
-						new sap.m.Link({
-							text: orderNO,
-							target: "_top",
-							press: function (oEvent) {
-								that._wizard.discardProgress(that._wizard.getSteps()[0]);
-								that._discardChanges();
-								var order = {
-									orderNO: orderNO
-								};
-								var oModelTb = new sap.ui.model.json.JSONModel(order);
-								sap.ui.getCore().setModel(oModelTb, "saveDraft");
-								var router = sap.ui.core.UIComponent.getRouterFor(that);
-								router.navTo("DraftRecord");
-							}
-						})
-					],
+						text: " " + e.getSource().getData().name + "."
+					}), new sap.m.Text({
+						text: " " + o.resourceBundle.getText("Fordetailsclick")
+					}), new sap.m.Link({
+						text: t,
+						target: "_top",
+						press: function (e) {
+							o._wizard.discardProgress(o._wizard.getSteps()[0]);
+							o._discardChanges();
+							var r = {
+								orderNO: t
+							};
+							var s = new sap.ui.model.json.JSONModel(r);
+							sap.ui.getCore().setModel(s, "saveDraft");
+							var i = sap.ui.core.UIComponent.getRouterFor(o);
+							i.navTo("DraftRecord")
+						}
+					})],
 					beginButton: new sap.m.Button({
-
-						text: that.resourceBundle.getText("OK"),
+						text: o.resourceBundle.getText("OK"),
 						press: function () {
-							that._wizard.discardProgress(that._wizard.getSteps()[0]);
-							that._discardChanges();
-
-							var router = sap.ui.core.UIComponent.getRouterFor(that);
-							router.navTo("DraftRecord");
-						}.bind(that)
+							o._wizard.discardProgress(o._wizard.getSteps()[0]);
+							o._discardChanges();
+							var e = sap.ui.core.UIComponent.getRouterFor(o);
+							e.navTo("DraftRecord")
+						}.bind(o)
 					}),
 					endButton: new sap.m.Button({
 						text: "Close",
 						press: function () {
-							that._wizard.discardProgress(that._wizard.getSteps()[0]);
-							that._discardChanges();
-
-							var router = sap.ui.core.UIComponent.getRouterFor(that);
-							router.navTo("DraftRecord");
-						}.bind(that)
+							o._wizard.discardProgress(o._wizard.getSteps()[0]);
+							o._discardChanges();
+							var e = sap.ui.core.UIComponent.getRouterFor(o);
+							e.navTo("DraftRecord")
+						}.bind(o)
 					})
 				});
-
-				// to get access to the controller's model
-				that.getView().addDependent(that.oDefaultDialog);
-				that.oDefaultDialog.open();
+				o.getView().addDependent(o.oDefaultDialog);
+				o.oDefaultDialog.open()
 			});
-			oModel.attachRequestFailed(function (oEvent) {
-				oBusyDialog.close();
-				MessageBox.error(oEvent.getParameters().responseText);
-			});
+			_.attachRequestFailed(function (e) {
+				B.close();
+				t.error(e.getParameters().responseText)
+			})
 		},
-
-		onPressSubmit: function (oEvent) {
+		onPressSubmit: function (e) {
 			if (this.RetQtyCount > 0) {
-				MessageBox.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
-				// MessageBox.information("Entered Qty cannot be greater than Available Return Qty In Returns");
-				return;
+				t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/reasonOwner") === "" || this.getView().getModel("baseModel").getProperty(
 					"/reasonOwner") === undefined) {
-				MessageToast.show(this.resourceBundle.getText("ReasonOwnerisMandatory"));
-				// MessageToast.show("Reason Owner is Mandatory");
-				return;
+				o.show(this.resourceBundle.getText("ReasonOwnerisMandatory"));
+				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/referenceNo") === "" || this.getView().getModel("baseModel").getProperty(
 					"/referenceNo") === undefined) {
-				MessageToast.show(this.resourceBundle.getText("referenceNoisMandatory"));
-				// MessageToast.show("reference No is Mandatory");
-				return;
+				o.show(this.resourceBundle.getText("referenceNoisMandatory"));
+				return
 			}
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var returnModel = this.getView().getModel("returnModel");
-			var exchangeModel = this.getView().getModel("exchangeModel");
-			var baseModel = this.getView().getModel("baseModel");
-			this.getView().getModel("baseModel").setProperty("/savePressed", false);
-			this.getView().getModel("baseModel").setProperty("/submitPressed", true);
 			// Start - USer Story STRY0012775 - 30/06/2021
 			if (this.ROtypeCode === "TF" || this.ROtypeCode === "TG") {
 
@@ -7028,1007 +6293,1048 @@ sap.ui.define([
 				this.getView().getModel("baseModel").setProperty("/returnRemark", returnRemarks);
 			}
 			// End - User Story STRY0012775
-			if (exchangeModel.getData().results !== undefined && exchangeModel.getData().results.length > 0) {
-				if (parseFloat(returnModel.getData().returnAmountTotal) !== parseFloat(exchangeModel.getData().exchangeAmountTotal)) {
+			var r = this;
+			var s = this.getView().getModel("invoiceSearchModel");
+			var i = this.getView().getModel("returnModel");
+			var a = this.getView().getModel("exchangeModel");
+			var n = this.getView().getModel("baseModel");
+			this.getView().getModel("baseModel").setProperty("/savePressed", false);
+			this.getView().getModel("baseModel").setProperty("/submitPressed", true);
+			if (a.getData().results !== undefined && a.getData().results.length > 0) {
+				if (parseFloat(i.getData().returnAmountTotal) !== parseFloat(a.getData().exchangeAmountTotal)) {
 					sap.m.MessageBox.information(this.resourceBundle.getText("retrunAmountValidation"), {
 						actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
-						onClose: function (sAction) {
-							if (sAction === MessageBox.Action.OK) {
-								that._checkAddress();
+						onClose: function (e) {
+							if (e === t.Action.OK) {
+								r._checkAddress()
 							}
 						}
-					});
+					})
 				} else {
-					that._checkAddress();
-					// that._continueSubmit();
-
+					r._checkAddress()
 				}
-			} else if (returnModel.getData().results === undefined || returnModel.getData().results.length === 0) {
-				MessageBox.information(this.resourceBundle.getText("ReturnItemscannotbeempty"));
+			} else if (i.getData().results === undefined || i.getData().results.length === 0) {
+				t.information(this.resourceBundle.getText("ReturnItemscannotbeempty"))
 			} else {
-				that._checkAddress();
-				// that._continueSubmit();
+				r._checkAddress()
 			}
-
 		},
-
 		_checkAddress: function () {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var returnModel = this.getView().getModel("returnModel");
-			var exchangeModel = this.getView().getModel("exchangeModel");
-			var baseModel = this.getView().getModel("baseModel");
-			// if (baseModel.getProperty("/oneTimeCustomer") === "X" && exchangeModel.getData().results !== undefined && exchangeModel.getData()
-			// 	.results
-			// 	.length > 0) {
-
-			if (baseModel.getProperty("/oneTimeCustomer") === "X" && baseModel.getProperty("/returnSoldTo") !== baseModel.getProperty(
-					"/exSoldTo") && baseModel.getProperty("/EXOneTimeCustomer") === "X") {
+			var e = this;
+			var t = this.getView().getModel("invoiceSearchModel");
+			var r = this.getView().getModel("returnModel");
+			var o = this.getView().getModel("exchangeModel");
+			var s = this.getView().getModel("baseModel");
+			if (s.getProperty("/oneTimeCustomer") === "X" && s.getProperty("/returnSoldTo") !== s.getProperty("/exSoldTo") && s.getProperty(
+					"/EXOneTimeCustomer") === "X") {
 				if (!this.address) {
 					this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-					this.getView().addDependent(this.address);
+					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
 				if (this.getView().getModel("editDraftModel")) {
 					if (this.changeSoldToParty === true) {
-						baseModel.setProperty("/partnerName", "");
-						baseModel.setProperty("/AddressStreet2", "");
-						baseModel.setProperty("/AddressStreet3", "");
-						baseModel.setProperty("/AddressStreet5", "");
-						baseModel.setProperty("/District", "");
-						baseModel.setProperty("/DifferentCity", "");
-						baseModel.setProperty("/postalCode", "");
-						baseModel.setProperty("/city", "");
-						baseModel.setProperty("/telephone", "");
-						baseModel.setProperty("/mobileNumber", "");
-						baseModel.setProperty("/taxId", "");
-						baseModel.setProperty("/bCode", "00000");
-						baseModel.setProperty("/bpNummr", "N");
-						baseModel.setProperty("/partnerName4", "");
-						baseModel.setProperty("/maxLengthName4", "40 char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-						baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-						baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-						baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-						baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-						baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-						baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-						baseModel.setProperty("/maxLengthbCode", "0 char remaining");
-						baseModel.setProperty("/maxLengthbpNummr", "0 char remaining");
+						// s.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+						// s.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+						// s.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+						s.setProperty("/partnerName", "");
+						s.setProperty("/AddressStreet2", "");
+						s.setProperty("/AddressStreet3", "");
+						s.setProperty("/AddressStreet5", "");
+						s.setProperty("/District", "");
+						s.setProperty("/DifferentCity", "");
+						s.setProperty("/postalCode", "");
+						s.setProperty("/city", "");
+						s.setProperty("/telephone", "");
+						s.setProperty("/mobileNumber", "");
+						s.setProperty("/taxId", "");
+						s.setProperty("/bCode", "00000");
+						s.setProperty("/bpNummr", "N");
+						s.setProperty("/partnerName4", "");
+						s.setProperty("/maxLengthName4", "40 char remaining");
+						s.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+						s.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+						s.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+						s.setProperty("/maxLengthDistrict", "40 char remaining");
+						s.setProperty("/maxLengthDifferentCity", "40 char remaining");
+						s.setProperty("/maxLengthPostalCode", "5 char remaining");
+						s.setProperty("/maxLengthtelephone", "30 char remaining");
+						s.setProperty("/maxLengthmobileNumber", "30 char remaining");
+						s.setProperty("/maxLengthtaxId", "13 char remaining");
+						s.setProperty("/maxLengthbCode", "0 char remaining");
+						s.setProperty("/maxLengthbpNummr", "0 char remaining");
 						this.address.open();
-						return;
+						return
 					} else {
-						baseModel.setProperty("/maxLengthName4", (40 - baseModel.getProperty("/partnerName4").length) + " char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet2", (40 - baseModel.getProperty("/AddressStreet2").length) + " char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet3", (40 - baseModel.getProperty("/AddressStreet3").length) + " char remaining");
-						baseModel.setProperty("/maxLengthAddressStreet5", (40 - baseModel.getProperty("/AddressStreet5").length) + " char remaining");
-						baseModel.setProperty("/maxLengthDistrict", (40 - baseModel.getProperty("/District").length) + " char remaining");
-						baseModel.setProperty("/maxLengthDifferentCity", (40 - baseModel.getProperty("/DifferentCity").length) + " char remaining");
-						baseModel.setProperty("/maxLengthPostalCode", (5 - baseModel.getProperty("/postalCode").length) + " char remaining");
-						baseModel.setProperty("/maxLengthtelephone", (30 - baseModel.getProperty("/telephone").length) + " char remaining");
-						baseModel.setProperty("/maxLengthmobileNumber", (30 - baseModel.getProperty("/mobileNumber").length) + " char remaining");
-						baseModel.setProperty("/maxLengthtaxId", (13 - baseModel.getProperty("/taxId").length) + " char remaining");
-						baseModel.setProperty("/maxLengthbCode", (5 - baseModel.getProperty("/bCode").length) + " char remaining");
-						baseModel.setProperty("/maxLengthbpNummr", (1 - baseModel.getProperty("/bpNummr").length) + " char remaining");
+						// s.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+						// s.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+						// s.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+						s.setProperty("/maxLengthName4", 40 - s.getProperty("/partnerName4").length + " char remaining");
+						s.setProperty("/maxLengthAddressStreet2", 40 - s.getProperty("/AddressStreet2").length + " char remaining");
+						s.setProperty("/maxLengthAddressStreet3", 40 - s.getProperty("/AddressStreet3").length + " char remaining");
+						s.setProperty("/maxLengthAddressStreet5", 40 - s.getProperty("/AddressStreet5").length + " char remaining");
+						s.setProperty("/maxLengthDistrict", 40 - s.getProperty("/District").length + " char remaining");
+						s.setProperty("/maxLengthDifferentCity", 40 - s.getProperty("/DifferentCity").length + " char remaining");
+						s.setProperty("/maxLengthPostalCode", 5 - s.getProperty("/postalCode").length + " char remaining");
+						s.setProperty("/maxLengthtelephone", 30 - s.getProperty("/telephone").length + " char remaining");
+						s.setProperty("/maxLengthmobileNumber", 30 - s.getProperty("/mobileNumber").length + " char remaining");
+						s.setProperty("/maxLengthtaxId", 13 - s.getProperty("/taxId").length + " char remaining");
+						s.setProperty("/maxLengthbCode", 5 - s.getProperty("/bCode").length + " char remaining");
+						s.setProperty("/maxLengthbpNummr", 1 - s.getProperty("/bpNummr").length + " char remaining");
 						this.address.open();
-						return;
+						return
 					}
 				} else {
-					baseModel.setProperty("/partnerName", "");
-					baseModel.setProperty("/AddressStreet2", "");
-					baseModel.setProperty("/AddressStreet3", "");
-					baseModel.setProperty("/AddressStreet5", "");
-					baseModel.setProperty("/District", "");
-					baseModel.setProperty("/DifferentCity", "");
-					baseModel.setProperty("/postalCode", "");
-					baseModel.setProperty("/city", "");
-					baseModel.setProperty("/telephone", "");
-					baseModel.setProperty("/mobileNumber", "");
-					baseModel.setProperty("/taxId", "");
-					baseModel.setProperty("/bCode", "00000");
-					baseModel.setProperty("/bpNummr", "N");
-					baseModel.setProperty("/partnerName4", "");
-					baseModel.setProperty("/maxLengthName4", "40 char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-					baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-					baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-					baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-					baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-					baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-					baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-					baseModel.setProperty("/maxLengthbCode", "0 char remaining");
-					baseModel.setProperty("/maxLengthbpNummr", "0 char remaining");
+					if (this.selectedReturnItems[0].soldToAddress.language === "TH" || this.selectedReturnItems[0].soldToAddress.language === "2") {
+						this.selectedReturnItems[0].soldToAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].soldToAddress.language = "E"
+					}
+					if (this.selectedReturnItems[0].shipToAddress.language === "TH" || this.selectedReturnItems[0].shipToAddress.language === "2") {
+						this.selectedReturnItems[0].shipToAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].shipToAddress.language = "E"
+					}
+					if (this.selectedReturnItems[0].billToAdress.language === "TH" || this.selectedReturnItems[0].billToAdress.language === "2") {
+						this.selectedReturnItems[0].billToAdress.language = "2"
+					} else {
+						this.selectedReturnItems[0].billToAdress.language = "E"
+					}
+					if (this.selectedReturnItems[0].payerAddress.language === "TH" || this.selectedReturnItems[0].payerAddress.language === "2") {
+						this.selectedReturnItems[0].payerAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].payerAddress.language = "E"
+					}
+					r.setProperty("/invRetCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+					r.setProperty("/invRetRegion", this.selectedReturnItems[0].soldToAddress.region);
+					r.setProperty("/invRetLanguage", this.selectedReturnItems[0].soldToAddress.language);
+					s.setProperty("/partnerName", "");
+					s.setProperty("/AddressStreet2", "");
+					s.setProperty("/AddressStreet3", "");
+					s.setProperty("/AddressStreet5", "");
+					s.setProperty("/District", "");
+					s.setProperty("/DifferentCity", "");
+					s.setProperty("/postalCode", "");
+					s.setProperty("/city", "");
+					s.setProperty("/telephone", "");
+					s.setProperty("/mobileNumber", "");
+					s.setProperty("/taxId", "");
+					s.setProperty("/bCode", "00000");
+					s.setProperty("/bpNummr", "N");
+					s.setProperty("/partnerName4", "");
+					s.setProperty("/maxLengthName4", "40 char remaining");
+					s.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+					s.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+					s.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+					s.setProperty("/maxLengthDistrict", "40 char remaining");
+					s.setProperty("/maxLengthDifferentCity", "40 char remaining");
+					s.setProperty("/maxLengthPostalCode", "5 char remaining");
+					s.setProperty("/maxLengthtelephone", "30 char remaining");
+					s.setProperty("/maxLengthmobileNumber", "30 char remaining");
+					s.setProperty("/maxLengthtaxId", "13 char remaining");
+					s.setProperty("/maxLengthbCode", "0 char remaining");
+					s.setProperty("/maxLengthbpNummr", "0 char remaining");
 					this.address.open();
-					return;
+					return
 				}
-			} else if ((baseModel.getProperty("/oneTimeCustomer") === "X") && exchangeModel.getData()
-				.results !== undefined && exchangeModel.getData().results
-				.length > 0 && baseModel.getProperty("/returnSoldTo") === baseModel.getProperty("/exSoldTo")) {
+			} else if (s.getProperty("/oneTimeCustomer") === "X" && o.getData().results !== undefined && o.getData().results.length > 0 && s.getProperty(
+					"/returnSoldTo") === s.getProperty("/exSoldTo")) {
 				if (!this.address) {
 					this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-					this.getView().addDependent(this.address);
+					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
 				if (this.docVersion === undefined) {
-					var invoiceItems = this.selectedReturnItems[0];
-					baseModel.setProperty("/partnerName", invoiceItems.soldToAddress.partnerName);
-					baseModel.setProperty("/partnerName4", invoiceItems.soldToAddress.partnerName4);
-					baseModel.setProperty("/AddressStreet2", invoiceItems.soldToAddress.AddressStreet2);
-					baseModel.setProperty("/AddressStreet3", invoiceItems.soldToAddress.AddressStreet3);
-					baseModel.setProperty("/AddressStreet5", invoiceItems.soldToAddress.AddressStreet5);
-					baseModel.setProperty("/District", invoiceItems.soldToAddress.District);
-					baseModel.setProperty("/DifferentCity", invoiceItems.soldToAddress.DifferentCity);
-					baseModel.setProperty("/postalCode", invoiceItems.soldToAddress.postalCode);
-					baseModel.setProperty("/city", invoiceItems.soldToAddress.City);
-					baseModel.setProperty("/telephone", invoiceItems.soldToAddress.telephone);
-					baseModel.setProperty("/mobileNumber", invoiceItems.soldToAddress.mobileNumber);
-					baseModel.setProperty("/taxId", invoiceItems.soldToAddress.taxId);
-					baseModel.setProperty("/bCode", invoiceItems.soldToAddress.bCode);
-					if (invoiceItems.soldToAddress.bpNummr === "N" || invoiceItems.soldToAddress.bpNummr === "H") {
-						baseModel.setProperty("/bCode", "00000");
+					if (this.selectedReturnItems[0].soldToAddress.language === "TH" || this.selectedReturnItems[0].soldToAddress.language === "2") {
+						this.selectedReturnItems[0].soldToAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].soldToAddress.language = "E"
 					}
-					baseModel.setProperty("/bpNummr", invoiceItems.soldToAddress.bpNummr);
-					baseModel.setProperty("/maxLengthName4", (40 - invoiceItems.soldToAddress.partnerName4.length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet2", (40 - invoiceItems.soldToAddress.AddressStreet2.length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet3", (40 - invoiceItems.soldToAddress.AddressStreet3.length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet5", (40 - invoiceItems.soldToAddress.AddressStreet5.length) + " char remaining");
-					baseModel.setProperty("/maxLengthDistrict", (40 - invoiceItems.soldToAddress.District.length) + " char remaining");
-					baseModel.setProperty("/maxLengthDifferentCity", (40 - invoiceItems.soldToAddress.DifferentCity.length) + " char remaining");
-					baseModel.setProperty("/maxLengthPostalCode", (5 - invoiceItems.soldToAddress.postalCode.length) + " char remaining");
-					baseModel.setProperty("/maxLengthtelephone", (30 - invoiceItems.soldToAddress.telephone.length) + " char remaining");
-					baseModel.setProperty("/maxLengthmobileNumber", (30 - invoiceItems.soldToAddress.mobileNumber.length) + " char remaining");
-					baseModel.setProperty("/maxLengthtaxId", (13 - invoiceItems.soldToAddress.taxId.length) + " char remaining");
-					baseModel.setProperty("/maxLengthbCode", (5 - invoiceItems.soldToAddress.bCode.length) + " char remaining");
-					baseModel.setProperty("/maxLengthbpNummr", (1 - invoiceItems.soldToAddress.bpNummr.length) + " char remaining");
-					this.address.setModel(baseModel, "/baseModel");
-					this.address.open();
+					if (this.selectedReturnItems[0].shipToAddress.language === "TH" || this.selectedReturnItems[0].shipToAddress.language === "2") {
+						this.selectedReturnItems[0].shipToAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].shipToAddress.language = "E"
+					}
+					if (this.selectedReturnItems[0].billToAdress.language === "TH" || this.selectedReturnItems[0].billToAdress.language === "2") {
+						this.selectedReturnItems[0].billToAdress.language = "2"
+					} else {
+						this.selectedReturnItems[0].billToAdress.language = "E"
+					}
+					if (this.selectedReturnItems[0].payerAddress.language === "TH" || this.selectedReturnItems[0].payerAddress.language === "2") {
+						this.selectedReturnItems[0].payerAddress.language = "2"
+					} else {
+						this.selectedReturnItems[0].payerAddress.language = "E"
+					}
+					var i = this.selectedReturnItems[0];
+					s.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+					s.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+					s.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+					s.setProperty("/partnerName", i.soldToAddress.partnerName);
+					s.setProperty("/partnerName4", i.soldToAddress.partnerName4);
+					s.setProperty("/AddressStreet2", i.soldToAddress.AddressStreet2);
+					s.setProperty("/AddressStreet3", i.soldToAddress.AddressStreet3);
+					s.setProperty("/AddressStreet5", i.soldToAddress.AddressStreet5);
+					s.setProperty("/District", i.soldToAddress.District);
+					s.setProperty("/DifferentCity", i.soldToAddress.DifferentCity);
+					s.setProperty("/postalCode", i.soldToAddress.postalCode);
+					s.setProperty("/city", i.soldToAddress.City);
+					s.setProperty("/telephone", i.soldToAddress.telephone);
+					s.setProperty("/mobileNumber", i.soldToAddress.mobileNumber);
+					s.setProperty("/taxId", i.soldToAddress.taxId);
+					s.setProperty("/bCode", i.soldToAddress.bCode);
+					if (i.soldToAddress.bpNummr === "N" || i.soldToAddress.bpNummr === "H") {
+						s.setProperty("/bCode", "00000")
+					}
+					s.setProperty("/bpNummr", i.soldToAddress.bpNummr);
+					s.setProperty("/maxLengthName4", 40 - i.soldToAddress.partnerName4.length + " char remaining");
+					s.setProperty("/maxLengthAddressStreet2", 40 - i.soldToAddress.AddressStreet2.length + " char remaining");
+					s.setProperty("/maxLengthAddressStreet3", 40 - i.soldToAddress.AddressStreet3.length + " char remaining");
+					s.setProperty("/maxLengthAddressStreet5", 40 - i.soldToAddress.AddressStreet5.length + " char remaining");
+					s.setProperty("/maxLengthDistrict", 40 - i.soldToAddress.District.length + " char remaining");
+					s.setProperty("/maxLengthDifferentCity", 40 - i.soldToAddress.DifferentCity.length + " char remaining");
+					s.setProperty("/maxLengthPostalCode", 5 - i.soldToAddress.postalCode.length + " char remaining");
+					s.setProperty("/maxLengthtelephone", 30 - i.soldToAddress.telephone.length + " char remaining");
+					s.setProperty("/maxLengthmobileNumber", 30 - i.soldToAddress.mobileNumber.length + " char remaining");
+					s.setProperty("/maxLengthtaxId", 13 - i.soldToAddress.taxId.length + " char remaining");
+					s.setProperty("/maxLengthbCode", 5 - s.getProperty("/bCode").length + " char remaining");
+					s.setProperty("/maxLengthbpNummr", 1 - i.soldToAddress.bpNummr.length + " char remaining");
+					this.address.setModel(s, "/baseModel");
+					this.address.open()
 				} else {
-					// baseModel.setProperty("/partnerName", invoiceItems.soldToAddress.partnerName);
-					// baseModel.setProperty("/partnerName4", invoiceItems.soldToAddress.partnerName4);
-					// baseModel.setProperty("/AddressStreet2", invoiceItems.soldToAddress.AddressStreet2);
-					// baseModel.setProperty("/AddressStreet3", invoiceItems.soldToAddress.AddressStreet3);
-					// baseModel.setProperty("/AddressStreet5", invoiceItems.soldToAddress.AddressStreet5);
-					// baseModel.setProperty("/District", invoiceItems.soldToAddress.District);
-					// baseModel.setProperty("/DifferentCity", invoiceItems.soldToAddress.DifferentCity);
-					// baseModel.setProperty("/postalCode", invoiceItems.soldToAddress.postalCode);
-					// baseModel.setProperty("/city", invoiceItems.soldToAddress.City);
-					// baseModel.setProperty("/telephone", invoiceItems.soldToAddress.telephone);
-					// baseModel.setProperty("/mobileNumber", invoiceItems.soldToAddress.mobileNumber);
-					// baseModel.setProperty("/taxId", invoiceItems.soldToAddress.taxId);
-					// baseModel.setProperty("/bCode", invoiceItems.soldToAddress.bCode);
-					// baseModel.setProperty("/bpNummr", invoiceItems.soldToAddress.bpNummr);
-					baseModel.setProperty("/maxLengthName4", (40 - baseModel.getProperty("/partnerName4").length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet2", (40 - baseModel.getProperty("/AddressStreet2").length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet3", (40 - baseModel.getProperty("/AddressStreet3").length) + " char remaining");
-					baseModel.setProperty("/maxLengthAddressStreet5", (40 - baseModel.getProperty("/AddressStreet5").length) + " char remaining");
-					baseModel.setProperty("/maxLengthDistrict", (40 - baseModel.getProperty("/District").length) + " char remaining");
-					baseModel.setProperty("/maxLengthDifferentCity", (40 - baseModel.getProperty("/DifferentCity").length) + " char remaining");
-					baseModel.setProperty("/maxLengthPostalCode", (5 - baseModel.getProperty("/postalCode").length) + " char remaining");
-					baseModel.setProperty("/maxLengthtelephone", (30 - baseModel.getProperty("/telephone").length) + " char remaining");
-					baseModel.setProperty("/maxLengthmobileNumber", (30 - baseModel.getProperty("/mobileNumber").length) + " char remaining");
-					baseModel.setProperty("/maxLengthtaxId", (13 - baseModel.getProperty("/taxId").length) + " char remaining");
-					baseModel.setProperty("/maxLengthbCode", (5 - baseModel.getProperty("/bCode").length) + " char remaining");
-					baseModel.setProperty("/maxLengthbpNummr", (1 - baseModel.getProperty("/bpNummr").length) + " char remaining");
-					this.address.setModel(baseModel, "/baseModel");
-					this.address.open();
+					s.setProperty("/maxLengthName4", 40 - s.getProperty("/partnerName4").length + " char remaining");
+					s.setProperty("/maxLengthAddressStreet2", 40 - s.getProperty("/AddressStreet2").length + " char remaining");
+					s.setProperty("/maxLengthAddressStreet3", 40 - s.getProperty("/AddressStreet3").length + " char remaining");
+					s.setProperty("/maxLengthAddressStreet5", 40 - s.getProperty("/AddressStreet5").length + " char remaining");
+					s.setProperty("/maxLengthDistrict", 40 - s.getProperty("/District").length + " char remaining");
+					s.setProperty("/maxLengthDifferentCity", 40 - s.getProperty("/DifferentCity").length + " char remaining");
+					s.setProperty("/maxLengthPostalCode", 5 - s.getProperty("/postalCode").length + " char remaining");
+					s.setProperty("/maxLengthtelephone", 30 - s.getProperty("/telephone").length + " char remaining");
+					s.setProperty("/maxLengthmobileNumber", 30 - s.getProperty("/mobileNumber").length + " char remaining");
+					s.setProperty("/maxLengthtaxId", 13 - s.getProperty("/taxId").length + " char remaining");
+					s.setProperty("/maxLengthbCode", 5 - s.getProperty("/bCode").length + " char remaining");
+					s.setProperty("/maxLengthbpNummr", 1 - s.getProperty("/bpNummr").length + " char remaining");
+					this.address.setModel(s, "/baseModel");
+					this.address.open()
 				}
-				return;
-			} else if ((baseModel.getProperty("/EXOneTimeCustomer") === "X") && (baseModel.getProperty("/oneTimeCustomer") === "")) {
+				return
+			} else if (s.getProperty("/EXOneTimeCustomer") === "X" && s.getProperty("/oneTimeCustomer") === "") {
 				if (!this.address) {
 					this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-					this.getView().addDependent(this.address);
+					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
-				baseModel.setProperty("/partnerName", "");
-				baseModel.setProperty("/AddressStreet2", "");
-				baseModel.setProperty("/AddressStreet3", "");
-				baseModel.setProperty("/AddressStreet5", "");
-				baseModel.setProperty("/District", "");
-				baseModel.setProperty("/DifferentCity", "");
-				baseModel.setProperty("/postalCode", "");
-				baseModel.setProperty("/city", "");
-				baseModel.setProperty("/telephone", "");
-				baseModel.setProperty("/mobileNumber", "");
-				baseModel.setProperty("/taxId", "");
-				baseModel.setProperty("/bCode", "00000");
-				baseModel.setProperty("/bpNummr", "N");
-				baseModel.setProperty("/partnerName4", "");
-				baseModel.setProperty("/maxLengthName4", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet2", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet3", "40 char remaining");
-				baseModel.setProperty("/maxLengthAddressStreet5", "40 char remaining");
-				baseModel.setProperty("/maxLengthDistrict", "40 char remaining");
-				baseModel.setProperty("/maxLengthDifferentCity", "40 char remaining");
-				baseModel.setProperty("/maxLengthPostalCode", "5 char remaining");
-				baseModel.setProperty("/maxLengthtelephone", "30 char remaining");
-				baseModel.setProperty("/maxLengthmobileNumber", "30 char remaining");
-				baseModel.setProperty("/maxLengthtaxId", "13 char remaining");
-				baseModel.setProperty("/maxLengthbCode", "0 char remaining");
-				baseModel.setProperty("/maxLengthbpNummr", "0 char remaining");
+				s.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
+				s.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+				s.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
+				s.setProperty("/partnerName", "");
+				s.setProperty("/AddressStreet2", "");
+				s.setProperty("/AddressStreet3", "");
+				s.setProperty("/AddressStreet5", "");
+				s.setProperty("/District", "");
+				s.setProperty("/DifferentCity", "");
+				s.setProperty("/postalCode", "");
+				s.setProperty("/city", "");
+				s.setProperty("/telephone", "");
+				s.setProperty("/mobileNumber", "");
+				s.setProperty("/taxId", "");
+				s.setProperty("/bCode", "00000");
+				s.setProperty("/bpNummr", "N");
+				s.setProperty("/partnerName4", "");
+				s.setProperty("/maxLengthName4", "40 char remaining");
+				s.setProperty("/maxLengthAddressStreet2", "40 char remaining");
+				s.setProperty("/maxLengthAddressStreet3", "40 char remaining");
+				s.setProperty("/maxLengthAddressStreet5", "40 char remaining");
+				s.setProperty("/maxLengthDistrict", "40 char remaining");
+				s.setProperty("/maxLengthDifferentCity", "40 char remaining");
+				s.setProperty("/maxLengthPostalCode", "5 char remaining");
+				s.setProperty("/maxLengthtelephone", "30 char remaining");
+				s.setProperty("/maxLengthmobileNumber", "30 char remaining");
+				s.setProperty("/maxLengthtaxId", "13 char remaining");
+				s.setProperty("/maxLengthbCode", "0 char remaining");
+				s.setProperty("/maxLengthbpNummr", "0 char remaining");
 				this.address.open();
-				return;
-			} else if (baseModel.getProperty("/EXOneTimeCustomer") === "" && baseModel.getProperty("/returnSoldTo") !== baseModel.getProperty(
-					"/exSoldTo")) {
+				return
+			} else if (s.getProperty("/EXOneTimeCustomer") === "" && s.getProperty("/returnSoldTo") !== s.getProperty("/exSoldTo")) {
 				this._continueSubmit();
-				return;
+				return
 			}
-
-			// }
-			this._continueSubmit();
+			this._continueSubmit()
 		},
-
 		onViewExAddress: function () {
 			if (!this.address) {
 				this.address = sap.ui.xmlfragment("incture.com.ConnectClient_ReturnCreate.Fragments.Address", this);
-				this.getView().addDependent(this.address);
+				this.getView().addDependent(this.address)
 			}
 			this.getView().getModel("baseModel").setProperty("/addressFieldEnable", false);
 			this.getView().getModel("baseModel").refresh();
-			this.address.open();
+			this.address.open()
 		},
-
 		_continueSubmit: function () {
-			var that = this;
-			var invoiceSearchModel = this.getView().getModel("invoiceSearchModel");
-			var returnModel = this.getView().getModel("returnModel");
-			var exchangeModel = this.getView().getModel("exchangeModel");
-			var baseModel = this.getView().getModel("baseModel");
-			// if (baseModel.getData().returnReqNum) {
-			// 	var docVersion = "DRAFT";
-			// } else {
-			// 	var docVersion = "NEW";
-			// }
+			var e = this;
+			var o = this.getView().getModel("invoiceSearchModel");
+			var s = this.getView().getModel("returnModel");
+			var i = this.getView().getModel("exchangeModel");
+			var a = this.getView().getModel("baseModel");
 			if (this.docVersion === "DRAFT") {
-				var docVersion = "DRAFT";
+				var n = "DRAFT"
 			} else if (this.docVersion === "ERROR") {
-				var docVersion = "ERROR";
+				var n = "ERROR"
 			} else {
-				var docVersion = "NEW";
+				var n = "NEW"
 			}
-			var attachment = {
-				"docName": "retunr03",
-				"docType": "pdf",
-				"docData": [
-					0,
-					1
-				]
+			var l = {
+				docName: "retunr03",
+				docType: "pdf",
+				docData: [0, 1]
 			};
-			if (baseModel.getData().returnReqNum) {
-				var returnReqNum = baseModel.getData().returnReqNum;
+			if (a.getData().returnReqNum) {
+				var d = a.getData().returnReqNum
 			} else {
-				var returnReqNum = "";
+				var d = ""
 			}
-			if (baseModel.getData().exchangeReqNum) {
-				var exchangeReqNum = baseModel.getData().exchangeReqNum;
+			if (a.getData().exchangeReqNum) {
+				var g = a.getData().exchangeReqNum
 			} else {
-				var exchangeReqNum = "";
+				var g = ""
 			}
-			var returnItems = returnModel.getData().results;
-			var retItemsArray = [];
-			for (var i = 0; i < returnItems.length; i++) {
-				if (returnItems[i].deleted === "false") {
-					var Items = {
-						"refDocNum": returnItems[i].refInvoice,
-						"refDocItem": returnItems[i].refItemNumber,
-						"returnReqItemid": returnItems[i].itemNumber,
-						"materialGroup": returnItems[i].materialGroup,
-						"materialGroup4": returnItems[i].materialGroup4,
-						"material": returnItems[i].matNumber,
-						"shortText": returnItems[i].itemShortText,
-						"avlReturnQty": returnItems[i].avlRetQty,
-						"avlUom": returnItems[i].salesUnit,
-						"returnQty": returnItems[i].quantity,
-						"returnUom": returnItems[i].salesUnit,
-						"unitPriceCc": returnItems[i].unitPrice,
-						"unitPriceInv": returnItems[i].unitPriceInv,
-						"invoiceTotalAmount": returnModel.getData().returnAmountTotal.split("(")[0],
-						"storageLocation": returnItems[i].storageLocation,
-						"higherLevel": returnItems[i].higherItem,
-						"batch": returnItems[i].batchNumber,
-						"referenceInvDate": formatter.dateTimeFormatPS(returnItems[i].billingDate).split("T")[0],
-						"expiryDate": formatter.dateTimeFormatPS(returnItems[i].expiryDate).split("T")[0],
-						"pricingDate": formatter.dateTimeFormatPS(returnItems[i].pricingDate),
-						"serviceRenderedDate": formatter.dateTimeFormatPS(returnItems[i].serviceRenderedDate),
-						"serialNum": returnItems[i].serialNumber,
-						"billingType": invoiceSearchModel.getData().billingType,
-						"sapReturnOrderNum": "",
-						"sapReturnOrderItemNum": "",
-						"overallItemWorkflowStatus": "",
-						"plant": returnItems[i].plant,
-						"returnReqNum": returnReqNum,
-						"exchangeOrderType": baseModel.getData().exchangeOrderType,
-						"paymentTerms": returnItems[i].paymentTerms,
-						"conditionGroup4": returnItems[i].conditionGroup4
+			var p = s.getData().results;
+			var c = [];
+			for (var u = 0; u < p.length; u++) {
+				if (p[u].deleted === "false") {
+					var h = {
+						refDocNum: p[u].refInvoice,
+						refDocItem: p[u].refItemNumber,
+						returnReqItemid: p[u].itemNumber,
+						materialGroup: p[u].materialGroup,
+						materialGroup4: p[u].materialGroup4,
+						material: p[u].matNumber,
+						shortText: p[u].itemShortText,
+						avlReturnQty: p[u].avlRetQty,
+						avlUom: p[u].salesUnit,
+						returnQty: p[u].quantity,
+						returnUom: p[u].salesUnit,
+						unitPriceCc: p[u].unitPrice,
+						unitPriceInv: p[u].unitPriceInv,
+						invoiceTotalAmount: s.getData().returnAmountTotal.split("(")[0],
+						storageLocation: p[u].storageLocation,
+						higherLevel: p[u].higherItem,
+						batch: p[u].batchNumber,
+						referenceInvDate: r.dateTimeFormatPS(p[u].billingDate).split("T")[0],
+						expiryDate: r.dateTimeFormatPS(p[u].expiryDate).split("T")[0],
+						pricingDate: r.dateTimeFormatPS(p[u].pricingDate),
+						serviceRenderedDate: r.dateTimeFormatPS(p[u].serviceRenderedDate),
+						serialNum: p[u].serialNumber,
+						billingType: o.getData().billingType,
+						sapReturnOrderNum: "",
+						sapReturnOrderItemNum: "",
+						overallItemWorkflowStatus: "",
+						plant: p[u].plant,
+						returnReqNum: d,
+						exchangeOrderType: a.getData().exchangeOrderType,
+						paymentTerms: p[u].paymentTerms,
+						conditionGroup4: p[u].conditionGroup4
 					};
-					retItemsArray.push(Items);
+					c.push(h)
 				}
 			}
-			if (retItemsArray.length === 0) {
-				MessageBox.information(this.resourceBundle.getText("ReturnItemscannotbeempty"));
-				return;
+			if (c.length === 0) {
+				t.information(this.resourceBundle.getText("ReturnItemscannotbeempty"));
+				return
 			}
-
-			if (baseModel.getData().userEmailId) {
-				var email = baseModel.getData().userEmailId;
-				var emailTrigger = true;
+			if (a.getData().userEmailId) {
+				var m = a.getData().userEmailId;
+				var y = true
 			} else {
-				var email = "";
-				var emailTrigger = false;
+				var m = "";
+				var y = false
 			}
-			if (baseModel.getData().phoneNum) {
-				var contactelephone = baseModel.getData().phoneNum;
-				var smsTrigger = true;
-				var smsNumberList = [];
-				smsNumberList.push(contactelephone);
+			if (a.getData().phoneNum) {
+				var P = a.getData().phoneNum;
+				var f = true;
+				var v = [];
+				v.push(P)
 			} else {
-				var contactelephone = "";
-				var smsTrigger = false;
-				var smsNumberList = [];
+				var P = "";
+				var f = false;
+				var v = []
 			}
-			if (retConditionsArray && retConditionsArray.length > 0) {
-				var retCond = retConditionsArray;
+			if (S && S.length > 0) {
+				var D = S
 			} else {
-				var retCond = "";
+				var D = ""
 			}
-			if (baseModel.getData().requestor === baseModel.getData().userName + " (" + baseModel.getData().phone + ")") {
-				var requestor = "";
+			if (a.getData().requestor === a.getData().userName + " (" + a.getData().phone + ")") {
+				var M = ""
 			} else {
-				var requestor = baseModel.getData().requestor;
+				var M = a.getData().requestor
 			}
-			var payload = {
-				"returns": {
-					"customerPo": baseModel.getData().customerPONumber,
-					"contactelephone": contactelephone,
-					"smsNumberList": smsNumberList,
-					"smsTrigger": smsTrigger,
-					"smsFrom": "DKSH-TH",
-					"createdAt": new Date(),
-					"mappingId": baseModel.getData().salesOrgForRO,
-					"updatedBy": requestor,
-					"requestorName": baseModel.getData().userId + "(" + baseModel.getData().userName + ")",
-					"requestedBy": baseModel.getData().userId,
-					"roType": baseModel.getData().selectedROTypeCode,
-					"roTypeText": baseModel.getData().selectedROType,
-					"salesOrg": baseModel.getData().selectedSalesOrg,
-					"salesOrgDesc": invoiceSearchModel.getData().salesOrgDesc,
-					"distributionChannel": baseModel.getData().selectedDistChnl,
-					"distributionChannelDesc": invoiceSearchModel.getData().distChnlDesc,
-					"division": invoiceSearchModel.getData().Division,
-					"divisionDesc": baseModel.getData().selectedDivisionDesc,
-					"soldToParty": baseModel.getData().returnSoldTo,
-					"soldToPartyDesc": baseModel.getData().returnSoldToDesc,
-					"shipToParty": baseModel.getData().returnShipTo,
-					"shipToPartyDesc": baseModel.getData().shipToDesc,
-					"billToParty": baseModel.getData().returnBillTo,
-					"billToDesc": baseModel.getData().returnBillToDesc,
-					"payer": baseModel.getData().returnPayer,
-					"payerDesc": baseModel.getData().returnPayerDesc,
-					"requestorEmail": email,
-					"contactPerson": baseModel.getData().contactPerson,
-					"contactDivsion": baseModel.getData().contactDivision,
-					"contactTelephone": baseModel.getData().phoneNum,
-					"referenceNum": baseModel.getData().referenceNo,
-					"requestRemark": baseModel.getData().returnRemark,
-					"orderReason": baseModel.getData().selectedReturnReason.split(" ")[0],
-					"orderReasonText": baseModel.getData().selectedReturnReason.split("(")[1].split(")")[0],
-					"reasonOwner": baseModel.getData().reasonOwner.split(" ")[0],
-					"reasonOwnerDesc": baseModel.getData().reasonOwner.split(" ")[1],
-					"orderType": baseModel.getData().returnOrderType,
-					"orderTypeText": baseModel.getData().returnOrderType,
-					"returnTotalAmt": returnModel.getData().returnAmountTotal.split("(")[0],
-					"totalRoAmount": this.getView().getModel("returnModel").getData().returnAmountTotal.split("(")[0],
-					"returnReqNum": returnReqNum,
-					"workflowInstance": "",
-					"overallWorkflowStatus": "",
-					"processingStatus": "",
-					"logisticalStatus": "",
-					"oneTimeCustomer": baseModel.getData().oneTimeCustomer,
-					"docVersion": docVersion,
-					"flagRoSo": "R",
-					"emailTrigger": emailTrigger,
-					"exchangeOrderType": baseModel.getData().exchangeOrderType,
-					// "distributionChannel": invoiceSearchModel.getData().distChnl,
-					// "address": [],
-					"items": retItemsArray,
-					// "attachment": [],
-					// "orderCondition": retCond
+			var b = {
+				returns: {
+					customerPo: a.getData().customerPONumber,
+					contactelephone: P,
+					smsNumberList: v,
+					smsTrigger: f,
+					smsFrom: "DKSH-TH",
+					createdAt: new Date,
+					mappingId: a.getData().salesOrgForRO,
+					updatedBy: M,
+					requestorName: a.getData().userId + "(" + a.getData().userName + ")",
+					requestedBy: a.getData().userId,
+					roType: a.getData().selectedROTypeCode,
+					roTypeText: a.getData().selectedROType,
+					salesOrg: a.getData().selectedSalesOrg,
+					salesOrgDesc: o.getData().salesOrgDesc,
+					distributionChannel: a.getData().selectedDistChnl,
+					distributionChannelDesc: o.getData().distChnlDesc,
+					division: o.getData().Division,
+					divisionDesc: a.getData().selectedDivisionDesc,
+					soldToParty: a.getData().returnSoldTo,
+					soldToPartyDesc: a.getData().returnSoldToDesc,
+					shipToParty: a.getData().returnShipTo,
+					shipToPartyDesc: a.getData().shipToDesc,
+					billToParty: a.getData().returnBillTo,
+					billToDesc: a.getData().returnBillToDesc,
+					payer: a.getData().returnPayer,
+					payerDesc: a.getData().returnPayerDesc,
+					requestorEmail: m,
+					contactPerson: a.getData().contactPerson,
+					contactDivsion: a.getData().contactDivision,
+					contactTelephone: a.getData().phoneNum,
+					referenceNum: a.getData().referenceNo,
+					requestRemark: a.getData().returnRemark,
+					orderReason: a.getData().selectedReturnReason.split(" ")[0],
+					orderReasonText: a.getData().selectedReturnReason.split("(")[1].split(")")[0],
+					reasonOwner: a.getData().reasonOwner.split(" ")[0],
+					reasonOwnerDesc: a.getData().reasonOwner.split(" ")[1],
+					orderType: a.getData().returnOrderType,
+					orderTypeText: a.getData().returnOrderType,
+					returnTotalAmt: s.getData().returnAmountTotal.split("(")[0],
+					totalRoAmount: this.getView().getModel("returnModel").getData().returnAmountTotal.split("(")[0],
+					returnReqNum: d,
+					workflowInstance: "",
+					overallWorkflowStatus: "",
+					processingStatus: "",
+					logisticalStatus: "",
+					oneTimeCustomer: a.getData().oneTimeCustomer,
+					docVersion: n,
+					flagRoSo: "R",
+					emailTrigger: y,
+					exchangeOrderType: a.getData().exchangeOrderType,
+					items: c
 				}
 			};
-			if (returnModel.getData().returnConditions) {
-				var retCon = returnModel.getData().returnConditions;
-				var retConditionsArray = [];
-
-				for (var j = 0; j < retCon.length; j++) {
-					if (retCon[j].deleted === undefined || retCon[j].deleted === "false") {
-						var retOrderCondition = {
-							"refDoc": retCon[j].refInvoice,
-							"salesDocument": "",
-							"itemNumber": retCon[j].itemNumber,
-							"stepNumber": retCon[j].stepNumber,
-							"condCounter": retCon[j].condCounter,
-							"condType": retCon[j].condType,
-							"condRate": retCon[j].condRate,
-							"currency": retCon[j].currency,
-							"condUnit": retCon[j].condUnit,
-							"condPricingUnit": retCon[j].condPricingUnit,
-							"calculationType": retCon[j].calculationType,
-							"condFlag": retCon[j].condFlag,
-							"condUpdateFlag": retCon[j].condUpdateFlag
+			if (s.getData().returnConditions) {
+				var T = s.getData().returnConditions;
+				var S = [];
+				for (var C = 0; C < T.length; C++) {
+					if (T[C].deleted === undefined || T[C].deleted === "false") {
+						var w = {
+							refDoc: T[C].refInvoice,
+							salesDocument: "",
+							itemNumber: T[C].itemNumber,
+							stepNumber: T[C].stepNumber,
+							condCounter: T[C].condCounter,
+							condType: T[C].condType,
+							condRate: T[C].condRate,
+							currency: T[C].currency,
+							condUnit: T[C].condUnit,
+							condPricingUnit: T[C].condPricingUnit,
+							calculationType: T[C].calculationType,
+							condFlag: T[C].condFlag,
+							condUpdateFlag: T[C].condUpdateFlag
 						};
-						retConditionsArray.push(retOrderCondition);
+						S.push(w)
 					}
 				}
-				payload.returns.orderCondition = retConditionsArray;
+				b.returns.orderCondition = S
 			}
-			if (baseModel.getProperty("/oneTimeCustomer") === "X") {
+			if (a.getProperty("/oneTimeCustomer") === "X") {
 				if (this.docVersion === undefined) {
-					var invoiceItems = this.selectedReturnItems;
-					var soldToAddress = invoiceItems[0].soldToAddress;
-					var shipToAddress = invoiceItems[0].shipToAddress;
-					var billToAddress = invoiceItems[0].billToAdress;
-					var payerAddress = invoiceItems[0].payerAddress;
-					var address = [{
+					var x = this.selectedReturnItems;
+					var I = x[0].soldToAddress;
+					var N = x[0].shipToAddress;
+					var V = x[0].billToAdress;
+					var R = x[0].payerAddress;
+					var O = [{
 						id: "",
 						returnReqNum: "",
-						zipCode: soldToAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: I.postalCode,
+						refDocNum: x[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "AG",
-						name1: soldToAddress.partnerName,
+						name1: I.partnerName,
 						name2: "",
 						name3: "",
-						name4: soldToAddress.partnerName4,
-						street2: soldToAddress.AddressStreet2,
-						street3: soldToAddress.AddressStreet3,
-						street5: soldToAddress.AddressStreet5,
-						district: soldToAddress.District,
-						differentCity: soldToAddress.DifferentCity,
-						postalCode: soldToAddress.postalCode,
-						city: soldToAddress.City,
-						region: "",
-						country: "",
-						telephone: soldToAddress.telephone,
-						mobilePhone: soldToAddress.mobileNumber,
-						taxId: soldToAddress.taxId,
-						b_Codes: soldToAddress.bCode,
-						bpNummr: soldToAddress.bpNummr,
+						name4: I.partnerName4,
+						street2: I.AddressStreet2,
+						street3: I.AddressStreet3,
+						street5: I.AddressStreet5,
+						district: I.District,
+						differentCity: I.DifferentCity,
+						postalCode: I.postalCode,
+						city: I.City,
+						region: I.region,
+						country: I.countryCode,
+						language: I.language,
+						telephone: I.telephone,
+						mobilePhone: I.mobileNumber,
+						taxId: I.taxId,
+						b_Codes: I.bCode,
+						bpNummr: I.bpNummr
 					}, {
 						id: "",
 						returnReqNum: "",
-						zipCode: shipToAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: N.postalCode,
+						refDocNum: x[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "WE",
-						name1: shipToAddress.partnerName,
+						name1: N.partnerName,
 						name2: "",
 						name3: "",
-						name4: shipToAddress.partnerName4,
-						street2: shipToAddress.AddressStreet2,
-						street3: shipToAddress.AddressStreet3,
-						street5: shipToAddress.AddressStreet5,
-						district: shipToAddress.District,
-						differentCity: shipToAddress.DifferentCity,
-						postalCode: shipToAddress.postalCode,
-						city: shipToAddress.City,
-						region: "",
-						country: "",
-						telephone: shipToAddress.telephone,
-						mobilePhone: shipToAddress.mobileNumber,
-						taxId: shipToAddress.taxId,
-						b_Codess: shipToAddress.bCode,
-						bpNummr: shipToAddress.bpNummr,
+						name4: N.partnerName4,
+						street2: N.AddressStreet2,
+						street3: N.AddressStreet3,
+						street5: N.AddressStreet5,
+						district: N.District,
+						differentCity: N.DifferentCity,
+						postalCode: N.postalCode,
+						city: N.City,
+						region: N.region,
+						country: N.countryCode,
+						language: N.language,
+						telephone: N.telephone,
+						mobilePhone: N.mobileNumber,
+						taxId: N.taxId,
+						b_Codess: N.bCode,
+						bpNummr: N.bpNummr
 					}, {
 						id: "",
 						returnReqNum: "",
-						zipCode: billToAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: V.postalCode,
+						refDocNum: x[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "RE",
-						name1: billToAddress.partnerName,
+						name1: V.partnerName,
 						name2: "",
 						name3: "",
-						name4: billToAddress.partnerName4,
-						street2: billToAddress.AddressStreet2,
-						street3: billToAddress.AddressStreet3,
-						street5: billToAddress.AddressStreet5,
-						district: billToAddress.District,
-						differentCity: billToAddress.DifferentCity,
-						postalCode: billToAddress.postalCode,
-						city: billToAddress.City,
-						region: "",
-						country: "",
-						telephone: billToAddress.telephone,
-						mobilePhone: billToAddress.mobileNumber,
-						taxId: billToAddress.taxId,
-						b_Codess: billToAddress.bCode,
-						bpNummr: billToAddress.bpNummr
+						name4: V.partnerName4,
+						street2: V.AddressStreet2,
+						street3: V.AddressStreet3,
+						street5: V.AddressStreet5,
+						district: V.District,
+						differentCity: V.DifferentCity,
+						postalCode: V.postalCode,
+						city: V.City,
+						region: V.region,
+						country: V.countryCode,
+						language: V.language,
+						telephone: V.telephone,
+						mobilePhone: V.mobileNumber,
+						taxId: V.taxId,
+						b_Codess: V.bCode,
+						bpNummr: V.bpNummr
 					}, {
 						id: "",
 						returnReqNum: "",
-						zipCode: payerAddress.postalCode,
-						refDocNum: invoiceItems[0].InvoiceNum,
+						zipCode: R.postalCode,
+						refDocNum: x[0].InvoiceNum,
 						email: "",
 						salesDocument: "",
 						partnerRole: "RG",
-						name1: payerAddress.partnerName,
+						name1: R.partnerName,
 						name2: "",
 						name3: "",
-						name4: payerAddress.partnerName4,
-						street2: payerAddress.AddressStreet2,
-						street3: payerAddress.AddressStreet3,
-						street5: payerAddress.AddressStreet5,
-						district: payerAddress.District,
-						differentCity: payerAddress.DifferentCity,
-						postalCode: payerAddress.postalCode,
-						city: payerAddress.City,
-						region: "",
-						country: "",
-						telephone: payerAddress.telephone,
-						mobilePhone: payerAddress.mobileNumber,
-						taxId: payerAddress.taxId,
-						b_Codes: payerAddress.bCode,
-						bpNummr: payerAddress.bpNummr
+						name4: R.partnerName4,
+						street2: R.AddressStreet2,
+						street3: R.AddressStreet3,
+						street5: R.AddressStreet5,
+						district: R.District,
+						differentCity: R.DifferentCity,
+						postalCode: R.postalCode,
+						city: R.City,
+						region: R.region,
+						country: R.countryCode,
+						language: R.language,
+						telephone: R.telephone,
+						mobilePhone: R.mobileNumber,
+						taxId: R.taxId,
+						b_Codes: R.bCode,
+						bpNummr: R.bpNummr
 					}];
-					payload.returns.address = address;
+					b.returns.address = O
 				} else {
-					payload.returns.address = baseModel.getProperty("/setRetAddress");
+					b.returns.address = a.getProperty("/setRetAddress")
 				}
 			}
-			if (exchangeModel.getData().results !== undefined && exchangeModel.getData().results.length > 0) {
-				var exchangeItems = exchangeModel.getData().results;
-				var excItemsArray = [];
-				for (var k = 0; k < exchangeItems.length; k++) {
-					if (exchangeItems[k].deleted === "false") {
-
-						var excItems = {
-							"refDocNum": exchangeItems[k].refInvoice,
-							"refDocItem": exchangeItems[k].refItemNumber,
-							"exchangeReqItemid": exchangeItems[k].itemNumber,
-							"materialGroup": exchangeItems[k].materialGroup,
-							"materialGroup4": exchangeItems[k].materialGroup4,
-							"material": exchangeItems[k].matNumber,
-							"shortText": exchangeItems[k].itemShortText,
-							// "avlReturnQty": exchangeItems[k].quantity,
-							// "avlUom": exchangeItems[k].salesUnit,
-							"manualFoc": exchangeItems[k].manualFoc,
-							"returnQty": exchangeItems[k].quantity,
-							"returnUom": exchangeItems[k].salesUnit,
-							"unitPriceCc": exchangeItems[k].unitPrice,
-							"unitPriceInv": exchangeItems[k].unitPriceInv,
-							"invoiceTotalAmount": exchangeModel.getData().exchangeAmountTotal.split("(")[0],
-							"totalNetAmount": this.getView().getModel("exchangeModel").getData().exchangeAmountTotal.split("(")[0],
-							"storageLocation": exchangeItems[k].storageLocation,
-							"higherLevel": exchangeItems[k].higherItem,
-							"batch": exchangeItems[k].batchNumber,
-							"referenceInvDate": formatter.dateTimeFormatPS(exchangeItems[k].billingDate).split("T")[0],
-							"expiryDate": formatter.dateTimeFormatPS(exchangeItems[k].expiryDate).split("T")[0],
-							"serialNum": exchangeItems[k].serialNumber,
-							"returnReqNum": "",
-							"billingType": invoiceSearchModel.getData().billingType,
-							"sapReturnOrderNum": "",
-							"sapReturnOrderItemNum": "",
-							"overallItemWorkflowStatus": "",
-							"plant": exchangeItems[k].plant,
-							"exchangeReqNum": exchangeReqNum,
-							"paymentTerms": exchangeItems[k].paymentTerms,
-							"conditionGroup4": exchangeItems[k].conditionGroup4,
-							// "storageLocation": exchangeItems[k].SLoc,
-							"pricingDate": formatter.dateTimeFormatPS(exchangeItems[k].pricingDate),
-							"serviceRenderedDate": formatter.dateTimeFormatPS(exchangeItems[k].serviceRenderedDate)
-
+			if (i.getData().results !== undefined && i.getData().results.length > 0) {
+				var A = i.getData().results;
+				var F = [];
+				for (var B = 0; B < A.length; B++) {
+					if (A[B].deleted === "false") {
+						var _ = {
+							refDocNum: A[B].refInvoice,
+							refDocItem: A[B].refItemNumber,
+							exchangeReqItemid: A[B].itemNumber,
+							materialGroup: A[B].materialGroup,
+							materialGroup4: A[B].materialGroup4,
+							material: A[B].matNumber,
+							shortText: A[B].itemShortText,
+							manualFoc: A[B].manualFoc,
+							returnQty: A[B].quantity,
+							returnUom: A[B].salesUnit,
+							unitPriceCc: A[B].unitPrice,
+							unitPriceInv: A[B].unitPriceInv,
+							invoiceTotalAmount: i.getData().exchangeAmountTotal.split("(")[0],
+							totalNetAmount: this.getView().getModel("exchangeModel").getData().exchangeAmountTotal.split("(")[0],
+							storageLocation: A[B].storageLocation,
+							higherLevel: A[B].higherItem,
+							batch: A[B].batchNumber,
+							referenceInvDate: r.dateTimeFormatPS(A[B].billingDate).split("T")[0],
+							expiryDate: r.dateTimeFormatPS(A[B].expiryDate).split("T")[0],
+							serialNum: A[B].serialNumber,
+							returnReqNum: "",
+							billingType: o.getData().billingType,
+							sapReturnOrderNum: "",
+							sapReturnOrderItemNum: "",
+							overallItemWorkflowStatus: "",
+							plant: A[B].plant,
+							exchangeReqNum: g,
+							paymentTerms: A[B].paymentTerms,
+							conditionGroup4: A[B].conditionGroup4,
+							pricingDate: r.dateTimeFormatPS(A[B].pricingDate),
+							serviceRenderedDate: r.dateTimeFormatPS(A[B].serviceRenderedDate)
 						};
-						excItemsArray.push(excItems);
+						F.push(_)
 					}
 				}
-				if (excItemsArray.length > 0) {
-
-					if (excCondArray && excCondArray.length > 0) {
-						var exCond = excCondArray;
+				if (F.length > 0) {
+					if (U && U.length > 0) {
+						var E = U
 					} else {
-						var exCond = "";
+						var E = ""
 					}
-					var exchange = {
-						"customerPo": baseModel.getData().customerPONumberEx,
-						"roType": baseModel.getData().selectedROTypeCode,
-						"payer": baseModel.getData().exPayer,
-						"referenceNum": baseModel.getData().referenceNo,
-						"reasonOwner": baseModel.getData().reasonOwner.split(" ")[0],
-						"requestRemark": baseModel.getData().exchangeRemark,
-						"billToParty": baseModel.getData().exBillTo,
-						"billToDesc": baseModel.getData().exBillToDesc,
-						"billToPartyDesc": baseModel.getData().exBillToDesc,
-						"payerDescription": baseModel.getData().exPayerDesc,
-						"payerDesc": baseModel.getData().exPayerDesc,
-						"orderCategory": baseModel.getData().exchangeOrderType,
-						"orderType": baseModel.getData().exchangeOrderType,
-						"orderTypeText": baseModel.getData().exchangeOrderType,
-						"salesOrg": baseModel.getData().selectedSalesOrg,
-						"distributionChannel": baseModel.getData().selectedDistChnl,
-						"division": invoiceSearchModel.getData().Division,
-						"soldToParty": baseModel.getData().exSoldTo,
-						"soldToPartyDesc": baseModel.getData().exSoldToDesc,
-						"shipToParty": baseModel.getData().exShipTo,
-						"shipToPartyDesc": baseModel.getData().exShipToDesc,
-						"remarks": baseModel.getData().exchangeRemark,
-						"totalNetAmount": exchangeModel.getData().exchangeAmountTotal.split("(")[0],
-						"delComplete": baseModel.getData().completedDeliveryFLAG,
-						"docCurrency": "",
-						"deliveryBlock": "",
-						"billingBlock": "",
-						"overallStatus": "",
-						"rejectionStatus": "",
-						"deliveryStatus": "",
-						"creditStatus": "",
-						"overallWorkflowStatus": "",
-						"items": excItemsArray,
-						"flagRoSo": "E",
-						"requestorName": baseModel.getData().userId + "(" + baseModel.getData().userName + ")",
-						"exoneTimeCustomer": baseModel.getData().EXOneTimeCustomer,
-						// "orderCondition": exCond,
-						"exchangeReqNum": exchangeReqNum
-							// "distributionChannel": invoiceSearchModel.getData().distChnl,
+					var L = {
+						customerPo: a.getData().customerPONumberEx,
+						roType: a.getData().selectedROTypeCode,
+						payer: a.getData().exPayer,
+						referenceNum: a.getData().referenceNo,
+						reasonOwner: a.getData().reasonOwner.split(" ")[0],
+						requestRemark: a.getData().exchangeRemark,
+						billToParty: a.getData().exBillTo,
+						billToDesc: a.getData().exBillToDesc,
+						billToPartyDesc: a.getData().exBillToDesc,
+						payerDescription: a.getData().exPayerDesc,
+						payerDesc: a.getData().exPayerDesc,
+						orderCategory: a.getData().exchangeOrderType,
+						orderType: a.getData().exchangeOrderType,
+						orderTypeText: a.getData().exchangeOrderType,
+						salesOrg: a.getData().selectedSalesOrg,
+						distributionChannel: a.getData().selectedDistChnl,
+						division: o.getData().Division,
+						soldToParty: a.getData().exSoldTo,
+						soldToPartyDesc: a.getData().exSoldToDesc,
+						shipToParty: a.getData().exShipTo,
+						shipToPartyDesc: a.getData().exShipToDesc,
+						remarks: a.getData().exchangeRemark,
+						totalNetAmount: i.getData().exchangeAmountTotal.split("(")[0],
+						delComplete: a.getData().completedDeliveryFLAG,
+						docCurrency: "",
+						deliveryBlock: "",
+						billingBlock: "",
+						overallStatus: "",
+						rejectionStatus: "",
+						deliveryStatus: "",
+						creditStatus: "",
+						overallWorkflowStatus: "",
+						items: F,
+						flagRoSo: "E",
+						requestorName: a.getData().userId + "(" + a.getData().userName + ")",
+						exoneTimeCustomer: a.getData().EXOneTimeCustomer,
+						exchangeReqNum: g
 					};
-					payload.exchange = exchange;
-				}
-				if (exchangeModel.getData().exchangeConditions) {
-					var exchangeConditions = exchangeModel.getData().exchangeConditions;
-					var excCondArray = [];
-					for (var l = 0; l < exchangeConditions.length; l++) {
-						var excOrderConditions = {
-							"refDoc": exchangeConditions[l].refInvoice,
-							"salesDocument": "",
-							"itemNumber": exchangeConditions[l].itemNumber,
-							"stepNumber": exchangeConditions[l].stepNumber,
-							"condCounter": exchangeConditions[l].condCounter,
-							"condType": exchangeConditions[l].condType,
-							"condRate": exchangeConditions[l].condRate,
-							"currency": exchangeConditions[l].currency,
-							"condUnit": exchangeConditions[l].condUnit,
-							"condPricingUnit": exchangeConditions[l].condPricingUnit,
-							"calculationType": exchangeConditions[l].calculationType,
-							"condFlag": exchangeConditions[l].condFlag,
-							"condUpdateFlag": exchangeConditions[l].condUpdateFlag
-						};
-						excCondArray.push(excOrderConditions);
+					b.exchange = L
+					if (i.getData().exchangeConditions) {
+						var z = i.getData().exchangeConditions;
+						var U = [];
+						for (var q = 0; q < z.length; q++) {
+							var j = {
+								refDoc: z[q].refInvoice,
+								salesDocument: "",
+								itemNumber: z[q].itemNumber,
+								stepNumber: z[q].stepNumber,
+								condCounter: z[q].condCounter,
+								condType: z[q].condType,
+								condRate: z[q].condRate,
+								currency: z[q].currency,
+								condUnit: z[q].condUnit,
+								condPricingUnit: z[q].condPricingUnit,
+								calculationType: z[q].calculationType,
+								condFlag: z[q].condFlag,
+								condUpdateFlag: z[q].condUpdateFlag
+							};
+							U.push(j)
+						}
+						b.exchange.orderCondition = U
+						if (a.getProperty("/EXOneTimeCustomer") === "X" || a.getProperty("/oneTimeCustomer") === "X") {
+							if (this.docVersion === undefined) {
+								var x = this.selectedReturnItems;
+								var O = [{
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: x[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "AG",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: x[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "WE",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: x[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "RE",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: x[0].InvoiceNum,
+									email: "",
+									salesDocument: "",
+									partnerRole: "RG",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}];
+								b.exchange.address = O
+							} else {
+								var O = [{
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: a.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "AG",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: a.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "WE",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: a.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "RE",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}, {
+									id: "",
+									returnReqNum: "",
+									zipCode: "",
+									refDocNum: a.getProperty("/refDocNum"),
+									email: "",
+									salesDocument: "",
+									partnerRole: "RG",
+									name1: a.getProperty("/partnerName"),
+									name2: "",
+									name3: "",
+									name4: a.getProperty("/partnerName4"),
+									street2: a.getProperty("/AddressStreet2"),
+									street3: a.getProperty("/AddressStreet3"),
+									street5: a.getProperty("/AddressStreet5"),
+									district: a.getProperty("/District"),
+									differentCity: a.getProperty("/DifferentCity"),
+									postalCode: a.getProperty("/postalCode"),
+									city: a.getProperty("/city"),
+									region: a.getProperty("/invRegion"),
+									country: a.getProperty("/invCountry"),
+									language: a.getProperty("/invLanguage"),
+									telephone: a.getProperty("/telephone"),
+									mobilePhone: a.getProperty("/mobileNumber"),
+									taxId: a.getProperty("/taxId"),
+									b_Codes: a.getProperty("/bCode"),
+									bpNummr: a.getProperty("/bpNummr")
+								}];
+								b.exchange.address = O
+							}
+						}
 					}
-					payload.exchange.orderCondition = excCondArray;
+				} else {
+					if (this.getView().getModel("baseModel").getProperty("/exchangeTabVisiblity") === true) {
+						sap.m.MessageBox.information(this.resourceBundle.getText("discardExchangeItems"), {
+							actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+							onClose: function (oEvent) {
+								if (oEvent === t.Action.OK) {
+									e.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", false);
+									e._continueSubmit();
+								} else {
+									return;
+								}
+							}
+						});
+						return;
+					}
 				}
-				if (baseModel.getProperty("/EXOneTimeCustomer") === "X" || baseModel.getProperty("/oneTimeCustomer") === "X") {
-					if (this.docVersion === undefined) {
-						var invoiceItems = this.selectedReturnItems;
-						var address = [{
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "AG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "WE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "RE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: invoiceItems[0].InvoiceNum,
-							email: "",
-							salesDocument: "",
-							partnerRole: "RG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}];
-						payload.exchange.address = address;
-					} else {
-						var address = [{
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "AG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "WE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "RE",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}, {
-							id: "",
-							returnReqNum: "",
-							zipCode: "",
-							refDocNum: baseModel.getProperty("/refDocNum"),
-							email: "",
-							salesDocument: "",
-							partnerRole: "RG",
-							name1: baseModel.getProperty("/partnerName"),
-							name2: "",
-							name3: "",
-							name4: baseModel.getProperty("/partnerName4"),
-							street2: baseModel.getProperty("/AddressStreet2"),
-							street3: baseModel.getProperty("/AddressStreet3"),
-							street5: baseModel.getProperty("/AddressStreet5"),
-							district: baseModel.getProperty("/District"),
-							differentCity: baseModel.getProperty("/DifferentCity"),
-							postalCode: baseModel.getProperty("/postalCode"),
-							city: baseModel.getProperty("/city"),
-							region: "",
-							country: "",
-							telephone: baseModel.getProperty("/telephone"),
-							mobilePhone: baseModel.getProperty("/mobileNumber"),
-							taxId: baseModel.getProperty("/taxId"),
-							b_Codes: baseModel.getProperty("/bCode"),
-							bpNummr: baseModel.getProperty("/bpNummr")
-						}];
-						payload.exchange.address = address;
 
-					}
+			} else {
+				if (this.getView().getModel("baseModel").getProperty("/exchangeTabVisiblity") === true) {
+					sap.m.MessageBox.information(this.resourceBundle.getText("discardExchangeItems"), {
+						actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
+						onClose: function (oEvent) {
+							if (oEvent === t.Action.OK) {
+								e.getView().getModel("baseModel").setProperty("/exchangeTabVisiblity", false);
+								e._continueSubmit();
+							} else {
+								return;
+							}
+						}
+					});
+					return;
 				}
 			}
 			if (this.getView().getModel("returnModel").getData().attachmentObject.length > 0) {
-				var attachment = [];
-				var attachmentObject = this.getView().getModel("returnModel").getData().attachmentObject;
-				for (var j = 0; j < attachmentObject.length; j++) {
-					var attach = {
-						"docName": attachmentObject[j].fileName,
-						"docType": attachmentObject[j].fileType,
-						"docData": attachmentObject[j].fileDoc
+				var l = [];
+				var Q = this.getView().getModel("returnModel").getData().attachmentObject;
+				for (var C = 0; C < Q.length; C++) {
+					var G = {
+						docName: Q[C].fileName,
+						docType: Q[C].fileType,
+						docData: Q[C].fileDoc
 					};
-					attachment.push(attach);
+					l.push(G)
 				}
-
-				payload.returns.attachment = attachment;
-				// payload.returns.attachment.push(attachment);
+				b.returns.attachment = l
 			}
-			var oHeader = {
+			var k = {
 				"Content-Type": "application/json;charset=utf-8"
 			};
-			var oBusyDialog = new sap.m.BusyDialog();
-			oBusyDialog.open();
-			var oModel = new sap.ui.model.json.JSONModel();
-			oModel.loadData("/DKSHJavaService/returnRequestAsync/createReturnRequest", JSON.stringify(payload), true, "POST",
-				false,
-				false, oHeader);
-			oModel.attachRequestCompleted(function (success) {
-				oBusyDialog.close();
-				if (sap.ui.getCore().getModel("saveDraft")) {
-					sap.ui.getCore().getModel("saveDraft").setData("");
+			var J = new sap.m.BusyDialog;
+			J.open();
+			var H = new sap.ui.model.json.JSONModel;
+			H.loadData("/DKSHJavaService/returnRequestAsync/createReturnRequest", JSON.stringify(b), true, "POST", false, false, k);
+			H.attachRequestCompleted(function (t) {
+				J.close();
+				if (e.address) {
+					e.address.close();
 				}
-				if (success.getSource().getData().status) {
-					var orderNO = success.getSource().getData().status.split(" ")[1];
-					that.oDefaultDialog = new sap.m.Dialog({
+				if (sap.ui.getCore().getModel("saveDraft")) {
+					sap.ui.getCore().getModel("saveDraft").setData("")
+				}
+				if (t.getSource().getData().status) {
+					var r = t.getSource().getData().status.split(" ")[1];
+					e.oDefaultDialog = new sap.m.Dialog({
 						type: sap.m.DialogType.Message,
 						title: "Success",
 						content: [new sap.m.Text({
-								text: " " + success.getSource().getData().status + "."
-							}),
-							new sap.m.Text({
-								text: " " + that.resourceBundle.getText("Fordetailsclick")
-							}),
-							new sap.m.Link({
-								text: orderNO,
-								target: "_top",
-								press: function (oEvent) {
-									that._wizard.discardProgress(that._wizard.getSteps()[0]);
-									that._discardChanges();
-									var order = {
-										orderNO: orderNO
-									};
-									var oModelTb = new sap.ui.model.json.JSONModel(order);
-									sap.ui.getCore().setModel(oModelTb, "submitRequest");
-									var router = sap.ui.core.UIComponent.getRouterFor(that);
-									router.navTo("DraftRecord");
-								}
-							})
-						],
+							text: " " + t.getSource().getData().status + "."
+						}), new sap.m.Text({
+							text: " " + e.resourceBundle.getText("Fordetailsclick")
+						}), new sap.m.Link({
+							text: r,
+							target: "_top",
+							press: function (t) {
+								e._wizard.discardProgress(e._wizard.getSteps()[0]);
+								e._discardChanges();
+								var o = {
+									orderNO: r
+								};
+								var s = new sap.ui.model.json.JSONModel(o);
+								sap.ui.getCore().setModel(s, "submitRequest");
+								var i = sap.ui.core.UIComponent.getRouterFor(e);
+								i.navTo("DraftRecord")
+							}
+						})],
 						beginButton: new sap.m.Button({
-
-							text: that.resourceBundle.getText("OK"),
+							text: e.resourceBundle.getText("OK"),
 							press: function () {
-								that._wizard.discardProgress(that._wizard.getSteps()[0]);
-								that._discardChanges();
-								var router = sap.ui.core.UIComponent.getRouterFor(that);
-								router.navTo("DraftRecord");
-							}.bind(that)
+								e._wizard.discardProgress(e._wizard.getSteps()[0]);
+								e._discardChanges();
+								var t = sap.ui.core.UIComponent.getRouterFor(e);
+								t.navTo("DraftRecord")
+							}.bind(e)
 						}),
 						endButton: new sap.m.Button({
-							text: that.resourceBundle.getText("Close"),
+							text: e.resourceBundle.getText("Close"),
 							press: function () {
-								that._wizard.discardProgress(that._wizard.getSteps()[0]);
-								that._discardChanges();
-								var router = sap.ui.core.UIComponent.getRouterFor(that);
-								router.navTo("DraftRecord");
-							}.bind(that)
+								e._wizard.discardProgress(e._wizard.getSteps()[0]);
+								e._discardChanges();
+								var t = sap.ui.core.UIComponent.getRouterFor(e);
+								t.navTo("DraftRecord")
+							}.bind(e)
 						})
 					});
-
-					// to get access to the controller's model
-					that.getView().addDependent(that.oDefaultDialog);
-					that.oDefaultDialog.open();
+					e.getView().addDependent(e.oDefaultDialog);
+					e.oDefaultDialog.open()
 				}
 
-				// }
 			});
-			oModel.attachRequestFailed(function (oEvent) {
-				oBusyDialog.close();
-				MessageBox.error(oEvent.getParameters().responseText);
-			});
+			H.attachRequestFailed(function (e) {
+				J.close();
+				t.error(e.getParameters().responseText)
+			})
 		},
 		onExit: function () {
 			if (this.SoldtoParty) {
-				this.SoldtoParty.destroy();
+				this.SoldtoParty.destroy()
 			}
 			if (sap.ui.getCore().byId("homeBtn")) {
 				sap.ui.getCore().byId("homeBtn").detachPress();
-				sap.ui.getCore().byId("homeBtn").attachPress(function (oData) {
-					var oCrossAppNavigator = sap.ushell.Container.getService("CrossApplicationNavigation");
-					oCrossAppNavigator.toExternal({
+				sap.ui.getCore().byId("homeBtn").attachPress(function (e) {
+					var t = sap.ushell.Container.getService("CrossApplicationNavigation");
+					t.toExternal({
 						target: {
 							shellHash: "#"
 						}
-					});
-				});
+					})
+				})
 			}
-			// 	// {
-			// 
-			// }
+			this._discardChanges();
 		}
-
-	});
-
+	})
 });
