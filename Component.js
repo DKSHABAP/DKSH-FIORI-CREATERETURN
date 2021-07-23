@@ -1,3 +1,4 @@
+// Start: User Story - STRY0012772 12/7/2021
 /*	(function (w, d, s, l, i) {
 		w[l] = w[l] || [];
 		w[l].push({
@@ -24,6 +25,7 @@
 // 	a.src = g;
 // 	m.parentNode.insertBefore(a, m)
 // })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+// End: User Story - STRY0012772 12/7/2021
 sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "incture/com/ConnectClient_ReturnCreate/model/models"], function (e, t, n) {
 	"use strict";
 	return e.extend("incture.com.ConnectClient_ReturnCreate.Component", {
@@ -49,6 +51,7 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "incture/com/ConnectC
 			this.setModel(n.createDeviceModel(), "device");
 			var sAppID = "GTM-WG969CM";
 
+			// Start: User Story - STRY0012772 12/7/2021
 			//Make sure a tracking ID is maintained
 			/*				if (ga) {
 								ga('create', sAppID, 'auto');
@@ -65,6 +68,7 @@ sap.ui.define(["sap/ui/core/UIComponent", "sap/ui/Device", "incture/com/ConnectC
 									ga('send', 'pageview', location.hash);
 								}.bind(this));
 							}*/
+			// End: User Story - STRY0012772 12/7/2021
 		},
 		cleanHash: function (sHash) {
 			//Remove Guids and numbers from the hash to provide clean data
