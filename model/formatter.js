@@ -264,6 +264,18 @@ sap.ui.define([], function () {
 			} else {
 				return ""
 			}
-		}
-	}
+		},
+		// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
+		manipulateDate: function (date, days, operation) {
+				var dateOffset = (24 * 60 * 60 * 1000) * days;
+				var myDate = new Date();
+				if (operation === "sub") {
+					myDate.setTime(date.getTime() - dateOffset);
+				} else if (operation === "add") {
+					myDate.setTime(date.getTime() + dateOffset);
+				}
+				return myDate;
+			}
+			// [+] End STRY0012615: Billing Date shown NaN in Invoice Details Search
+	};
 });

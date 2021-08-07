@@ -84,11 +84,12 @@
 							secondaryCalendarType="Gregorian"/>
 					</fb:control>
 				</fb:FilterItem>
-				<fb:FilterItem name="r" label="{i18n>BillingDocDateTo}" change="onBillDateSelectionTo">
+				<fb:FilterItem name="r" label="{i18n>BillingDocDateTo}" change="onBillDateSelectionTo($event, ${invoiceSearchModel>/billingDateTo})">
 					<fb:control>
 						<!--<DateRangeSelection change="onBillDateSelection" value="{invoiceSearchModel>/billingDate}"/>-->
-						<DatePicker value="{invoiceSearchModel>/billingDateTo}" valueFormat="dd-MM-yyyy" displayFormat="dd-MM-yyyy" change="onBillDateSelectionTo"
-							placeholder="dd-MM-yyyy" editable="{baseModel>/InvDateTo}" displayFormatType="Gregorian" secondaryCalendarType="Gregorian"/>
+						<DatePicker id="idBillDateTo" value="{invoiceSearchModel>/billingDateTo}" valueFormat="dd-MM-yyyy" displayFormat="dd-MM-yyyy"
+							change="onBillDateSelectionTo" placeholder="dd-MM-yyyy" editable="{baseModel>/InvDateTo}" displayFormatType="Gregorian"
+							secondaryCalendarType="Gregorian"/>
 					</fb:control>
 				</fb:FilterItem>
 				<!--<fb:FilterItem name="H" label="">-->
