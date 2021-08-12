@@ -3591,7 +3591,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						l = l + " and " + "division eq " + "'" + g.Division + "'"
 					}
 				}
-				debugger;
 				// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
 				if (g.billingDateFrom) {
 					/*					g.billingDateFrom = r.dateTimeFormat(g.billingDateFrom);
@@ -3985,7 +3984,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var r = new Date;
 			var o = new Date(e);
 			var oDeviceModel = this.getOwnerComponent().getModel("device");
-			debugger;
 			o.setYear(o.getFullYear() + 2);
 			var s = new Date(t);
 			s.setYear(s.getFullYear() + 2);
