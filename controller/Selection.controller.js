@@ -3625,8 +3625,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					} else {
 						// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
 						/*						var u = r.dateTimeFormat(new Date("2016/01/01"));*/
-						// 5 years back up to current date
+						// 5 years back of first of the year
 						var dPrevDate = this.formatter.manipulateDate.call(this, new Date(), 1825, "sub");
+						dPrevDate = new Date(dPrevDate.getFullYear(), 0, 1);
 						if (oDeviceModel.getData().system.phone) {
 							u = sap.ui.core.format.DateFormat.getDateInstance({
 								pattern: "yyyy-MM-ddTHH:mm:ss"
@@ -3671,12 +3672,17 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					} else {
 						// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
 						/*						var h = r.dateTimeFormat(new Date("2017/12/31"));*/
+						var dPrevDate = this.formatter.manipulateDate.call(this, dPrevDate, 730, "add");
 						if (oDeviceModel.getData().system.phone) {
+							/*							h = sap.ui.core.format.DateFormat.getDateInstance({
+															pattern: "yyyy-MM-ddTHH:mm:ss"
+														}).format(new Date());*/
 							h = sap.ui.core.format.DateFormat.getDateInstance({
 								pattern: "yyyy-MM-ddTHH:mm:ss"
-							}).format(new Date());
+							}).format(new Date(dPrevDate));
 						} else {
-							h = r.dateTimeFormat(new Date());
+							/*							h = r.dateTimeFormat(new Date());*/
+							h = r.dateTimeFormat(new Date(dPrevDate));
 						}
 						// [+] End STRY0012615: Billing Date shown NaN in Invoice Details Search
 						if (l.length === 8) {
@@ -3758,6 +3764,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						var oDeviceModel = this.getOwnerComponent().getModel("device");
 						if (!g.invoiceNo && !g.billingDateFrom) {
 							var dPrevDate = this.formatter.manipulateDate.call(this, new Date(), 1825, "sub");
+							dPrevDate = new Date(dPrevDate.getFullYear(), 0, 1);
+							var dTwoYearsDate = this.formatter.manipulateDate.call(this, dPrevDate, 730, "add");
 							if (oDeviceModel.getData().system.phone) {
 								g.billingDateFrom = sap.ui.core.format.DateFormat.getDateInstance({
 									/*									pattern: "dd-MM-yyyy"*/
@@ -3765,10 +3773,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 								}).format(new Date(dPrevDate));
 								g.billingDateTo = sap.ui.core.format.DateFormat.getDateInstance({
 									pattern: "yyyy-MM-dd"
-								}).format(new Date());
+								}).format(new Date(dTwoYearsDate));
 							} else {
 								g.billingDateFrom = r.dateTimeFormat1(dPrevDate);
-								g.billingDateTo = r.dateTimeFormat1(new Date());
+								g.billingDateTo = r.dateTimeFormat1(dTwoYearsDate);
 							};
 						}
 						// [+] End STRY0012615: Billing Date shown NaN in Invoice Details Search
@@ -3850,16 +3858,19 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						var oDeviceModel = this.getOwnerComponent().getModel("device");
 						if (!g.invoiceNo && !g.billingDateFrom) {
 							var dPrevDate = this.formatter.manipulateDate.call(this, new Date(), 1825, "sub");
+							dPrevDate = new Date(dPrevDate.getFullYear(), 0, 1);
+							var dTwoYearsDate = this.formatter.manipulateDate.call(this, dPrevDate, 730, "add");
 							if (oDeviceModel.getData().system.phone) {
 								g.billingDateFrom = sap.ui.core.format.DateFormat.getDateInstance({
+									/*									pattern: "dd-MM-yyyy"*/
 									pattern: "yyyy-MM-dd"
 								}).format(new Date(dPrevDate));
 								g.billingDateTo = sap.ui.core.format.DateFormat.getDateInstance({
 									pattern: "yyyy-MM-dd"
-								}).format(new Date());
+								}).format(new Date(dTwoYearsDate));
 							} else {
 								g.billingDateFrom = r.dateTimeFormat1(dPrevDate);
-								g.billingDateTo = r.dateTimeFormat1(new Date());
+								g.billingDateTo = r.dateTimeFormat1(dTwoYearsDate);
 							};
 						}
 						// [+] End STRY0012615: Billing Date shown NaN in Invoice Details Search
@@ -3932,6 +3943,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var t = this.getView().getModel("invoiceSearchModel").getData().billingDateTo;
 			var r = new Date;
 			var o = new Date(e);
+			var oDeviceModel = this.getOwnerComponent().getModel("device");
 			o.setYear(o.getFullYear() - 2);
 			var s = new Date(t);
 			s.setYear(s.getFullYear() - 2);
@@ -3940,21 +3952,38 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			}
 			var i = new Date(o);
 			var a = new Date(s);
-			var n = sap.ui.core.format.DateFormat.getDateInstance({
-				pattern: "MM-dd-yyyy",
-				calendarType: "Gregorian"
-			});
-			i = n.format(i);
-			a = n.format(a);
-			var l = i + " - " + a;
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", i);
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", a)
+			// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
+			if (oDeviceModel.getData().system.phone) {
+				/*										dPrevDate = new Date(dPrevDate.getFullYear(), 0, 1);
+										if (oDeviceModel.getData().system.phone) {
+											u = sap.ui.core.format.DateFormat.getDateInstance({
+												pattern: "yyyy-MM-ddTHH:mm:ss"
+											}).format(new Date(dPrevDate));*/
+				var sDateFrom = new Date(i).toISOString().substr(0, 10);
+				/*				var sDateFrom = [i.getFullYear(), i.getMonth() + 1, i.getDate()].join("-")*/
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", sDateFrom);
+				var sDateTo = new Date(a).toISOString().substr(0, 10);
+				/*				var sDateTo = [a.getFullYear(), a.getMonth() + 1, a.getDate()].join("-")*/
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", sDateTo)
+			} else {
+				var n = sap.ui.core.format.DateFormat.getDateInstance({
+					pattern: "MM-dd-yyyy",
+					calendarType: "Gregorian"
+				});
+				i = n.format(i);
+				a = n.format(a);
+				var l = i + " - " + a;
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", i);
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", a)
+			}
+			// [+] End STRY0012615: Billing Date shown NaN in Invoice Details Search
 		},
 		onPressNextRange: function () {
 			var e = this.getView().getModel("invoiceSearchModel").getData().billingDateFrom;
 			var t = this.getView().getModel("invoiceSearchModel").getData().billingDateTo;
 			var r = new Date;
 			var o = new Date(e);
+			var oDeviceModel = this.getOwnerComponent().getModel("device");
 			o.setYear(o.getFullYear() + 2);
 			var s = new Date(t);
 			s.setYear(s.getFullYear() + 2);
@@ -3963,15 +3992,26 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			}
 			var i = new Date(o);
 			var a = new Date(s);
-			var n = sap.ui.core.format.DateFormat.getDateInstance({
-				pattern: "MM-dd-yyyy",
-				calendarType: "Gregorian"
-			});
-			i = n.format(i);
-			a = n.format(a);
-			var l = i + " - " + a;
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", i);
-			this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", a)
+			// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
+			if (oDeviceModel.getData().system.phone) {
+				var sDateFrom = new Date(i).toISOString().substr(0, 10);
+				/*				var sDateFrom = [i.getFullYear(), i.getMonth() + 1, i.getDate()].join("-")*/
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", sDateFrom);
+				var sDateTo = new Date(a).toISOString().substr(0, 10);
+				/*				var sDateTo = [a.getFullYear(), a.getMonth() + 1, a.getDate()].join("-")*/
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", sDateTo)
+			} else {
+				var n = sap.ui.core.format.DateFormat.getDateInstance({
+					pattern: "MM-dd-yyyy",
+					calendarType: "Gregorian"
+				});
+				i = n.format(i);
+				a = n.format(a);
+				var l = i + " - " + a;
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateFrom", i);
+				this.getView().getModel("invoiceSearchModel").setProperty("/billingDateTo", a)
+			}
+			// [+] End STRY0012615: Billing Date shown NaN in Invoice Details Search
 		},
 		onCompleteStep3: function () {
 			if (this.docVersion === "SUCCESS") {
