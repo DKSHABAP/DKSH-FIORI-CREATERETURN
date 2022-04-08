@@ -1662,7 +1662,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			} else if (this.getView().getModel("invoiceSearchModel").getProperty("/results") !== "") {
 				if (this.selectedReturnItems.length > 0) {
 					if (this.InvQtyCount > 0) {
-						t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+						//[+] STRY0015934 - modification to throw error/JayamalarJ
+						//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+						t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+						//[+] STRY0015934 - modification to throw error/JayamalarJ
 						return
 					}
 					e.getView().getModel("baseModel").setProperty("/disableSoldToParty", false);
@@ -2407,6 +2410,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			}
 		},
 		onChangeRetQTY: function (e) {
+			debugger;
 			this.RetQtyCount = 0;
 			var r = [];
 			var o = this.getView().getModel("baseModel").getProperty("/originalReturnData");
@@ -2420,7 +2424,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				if (o[a].refInvoice === s.refInvoice && o[a].refItemNumber === s.refItemNumber) {
 					if (parseFloat(s.quantity) > parseFloat(o[a].avlRetQty)) {
 						++this.RetQtyCount;
-						t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
+						//[+] STRY0015934 - modification to throw error/JayamalarJ
+						//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
+						t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
+						//[+] STRY0015934 - modification to throw error/JayamalarJ
 					} else {
 						if (this.RetQtyCount > 0) {
 							--this.RetQtyCount
@@ -5407,7 +5414,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var r = this.getView().getModel("baseModel");
 			r.setProperty("/savePressed", true);
 			if (this.RetQtyCount > 0) {
-				t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				//[+] STRY0015934 - modification to throw error/JayamalarJ
+				//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				//[+] STRY0015934 - modification to throw error/JayamalarJ
 				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/reasonOwner") === "" || this.getView().getModel("baseModel").getProperty(
@@ -6417,7 +6427,10 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 		},
 		onPressSubmit: function (e) {
 			if (this.RetQtyCount > 0) {
-				t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				//[+] STRY0015934 - modification to throw error/JayamalarJ
+				//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"));
+				//[+] STRY0015934 - modification to throw error/JayamalarJ
 				return
 			}
 			if (this.getView().getModel("baseModel").getProperty("/reasonOwner") === "" || this.getView().getModel("baseModel").getProperty(
