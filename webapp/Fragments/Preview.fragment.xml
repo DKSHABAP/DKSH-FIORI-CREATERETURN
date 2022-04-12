@@ -1,0 +1,366 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:fb="sap.ui.comp.filterbar">
+	<VBox>
+		<fb:FilterBar reset="onReset" search="onSearch" showFilterConfiguration="false" useToolbar="true" showGoOnFB="false">
+			<fb:filterItems>
+				<fb:FilterItem name="A" label="Return Type">
+					<fb:control>
+						<Text text="{parts:[{path:'baseModel>/selectedROTypeCode'},{path:'baseModel>/selectedROType'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="B" label="Requestor">
+					<fb:control>
+						<Text text="{parts:[{path:'baseModel>/userName'},{path:'baseModel>/phone'}],formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="I" label="Order Reason">
+					<fb:control>
+						<Text text="{baseModel>/selectedReturnReason}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="C" label="Sales Org">
+					<fb:control>
+						<!-- <Label class="sapUiSmallMarginEnd" width="95%" text="{SaleHdrModelSet>/SalesDocNumInitial}" placeholder="{i18n>tltpFrom}"
+tooltip="{SaleHdrModelSet>/SalesDocNumInitial}" type="Number" liveChange="salesDocValidationHandle"/>-->
+						<Text
+							text="{parts:[{path:'invoiceSearchModel>/salesOrgNo'},{path:'invoiceSearchModel>/salesOrgDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="D" label="Sold to Party">
+					<fb:control>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>/soldToParty'},{path:'invoiceSearchModel>/soldToPartyDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="G" label="Return Order Type">
+					<fb:control>
+						<Text text="{baseModel>/returnOrderType}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="k" label="Exchange Order Type">
+					<fb:control>
+						<Text text="{baseModel>/exchangeOrderType}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="E" label="Bill to">
+					<fb:control>
+						<Text text="{parts: [{path:'baseModel>/billTo'},{path:'baseModel>/billToDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="F" label="Payer">
+					<fb:control>
+						<Text text="{parts: [{path:'baseModel>/payer'},{path:'baseModel>/payerDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="H" label="Division">
+					<fb:control>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>/Division'},{path:'baseModel>/selectedDivisionDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="J" label="Distribution Channel">
+					<fb:control>
+						<Text
+							text="{parts: [{path:'invoiceSearchModel>/distChnl'},{path:'invoiceSearchModel>/distChnlDesc'}], formatter:'.formatter.concatenateStrings'}"
+							wrapping="true"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="K" label="Reference No">
+					<fb:control>
+						<Text text="{baseModel>/referenceNo}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="L" label="Exchange Remarks" visible="{oFilterParametersModel>/data/6/status}">
+					<fb:control>
+						<Text text="{baseModel>/exchangeRemark}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="Z" label="Return Remarks">
+					<fb:control>
+						<Text text="{baseModel>/returnRemark}"/>
+					</fb:control>
+				</fb:FilterItem>
+				<fb:FilterItem name="M" label="Attachment">
+					<fb:control>
+						<!--<HBox wrap="Wrap">-->
+							<!--<Tokenizer tokenUpdate="onRemoveAttachmennt" class="SelectedHierarchyBarToken SelectedHrHover maxWidth ShowOnlyFirst4"-->
+							<!--	tokens="{returnModel>/attachmentObject}">-->
+							<!--	<Token key="{returnModel>fileName}" text="{returnModel>fileName}"/>-->
+							<!--</Tokenizer>-->
+							<!--<VBox wrap="Wrap">-->
+							<!--			<Button text="Add File" press="onPressAttachment" tooltip="Cannot add Files"/>-->
+							<!--		</VBox>-->
+									<HBox alignContent="SpaceAround" width="100%">
+										<!--<Button text="{i18n>AddFile}" press="onPressAttachment"/>-->
+										<!--<Button press="onPressAttachment" icon="sap-icon://add" enabled="{baseModel>/enableAddAttachment}"/>-->
+										<Button press="onViewAttachment" icon="sap-icon://vds-file" enabled="{baseModel>/enableViewAttachment}" tooltip="{i18n>View}"/>
+									</HBox>
+						<!--</HBox>-->
+					</fb:control>
+				</fb:FilterItem>
+			</fb:filterItems>
+		</fb:FilterBar>
+		<IconTabBar expandable="false" expanded="true" select="onTabSelection" showOverflowSelectList="true" id="ID_TAB_BAR_PRVIEW">
+			<items>
+				<IconTabFilter key="Return" text="Return">
+					<OverflowToolbar>
+						<!--<Label text="Return" design="Bold"/>-->
+						<Label text="{returnModel>/returnLength}"/>
+						<Label text="Amount:"/>
+						<Text text="{returnModel>/returnAmountTotal}"/>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="Return Personalization"></Button>
+						<!--<SearchField width="30%" search="onSearchATP" liveChange="liveSearchReturn"></SearchField>-->
+						<!--<Button text="{i18n>excbtntext}" press="onCopyItemsToExchange" visible="{baseModel>/exchangeBtnVisiblitys}" tooltip="{i18n>excbtntext}"-->
+						<!--	type="Emphasized"/>-->
+					</OverflowToolbar>
+					<OverflowToolbar>
+						<Label text="Ship To:"/>
+						<Text text="{parts: [{path:'invoiceSearchModel>/shipTo'},{path:'baseModel>/shipToDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+						<!--<Label text="Order Type:"/>-->
+						<!--<Text text="{baseModel>/returnOrderType}"/>-->
+						<!--<Label text="Remarks:"/>-->
+						<!--<Text text="{baseModel>/returnRemark}"/>-->
+					</OverflowToolbar>
+					<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="false" vertical="true"
+						visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/exchangeTableLength}">
+						<Table items="{returnPreviewModel>/results}" alternateRowColors="true" class="sapUiSizeCompact" popinLayout="GridSmall"
+							sticky="ColumnHeaders">
+							<columns>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/0/status}">
+									<Label text="Item" design="Bold" tooltip="Item"/>
+								</Column>
+								<!--<Column>-->
+								<!--	<Text text="RO Type"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/1/status}">
+									<Label text="Material" wrapping="false" design="Bold" tooltip="Material"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/2/status}">
+									<Label text="MG" wrapping="false" design="Bold" tooltip="MG"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/3/status}">
+									<Label text="MG4" wrapping="false" design="Bold" tooltip="MG4"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="false">-->
+								<!--	<Text text="Product" wrapping="false"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/4/status}" hAlign="Right">
+									<Label text="Avl Ret Qty" wrapping="false" design="Bold" tooltip="Avl Ret Qty"/>
+								</Column>
+								<!--<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">-->
+								<!--	<Text text="Avl UOM"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/5/status}" hAlign="Right">
+									<Label text="Ret Qty" wrapping="false" design="Bold" tooltip="Ret Qty"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/6/status}" hAlign="Right">
+									<Label text="UOM" wrapping="false" design="Bold" tooltip="UOM"/>
+								</Column>
+								<Column minScreenWidth="XSmall" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/7/status}"
+									hAlign="Right">
+									<Label text="Unit Price" wrapping="false" design="Bold" tooltip="Unit Price"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/8/status}" hAlign="Right">
+									<Label text="Unit Price INV" wrapping="false" design="Bold" tooltip="Unit Price INV"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/9/status}" hAlign="Right">
+									<Label text="Disc" wrapping="false" design="Bold" tooltip="Disc"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/10/status}" hAlign="Right">
+									<Label text="CN Amount" wrapping="false" design="Bold" tooltip="CN Amount"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline">-->
+								<!--	<Label text="Amount" wrapping="false" design="Bold" tooltip="CN Amount"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/11/status}">
+									<Label text="SLoc" wrapping="false" design="Bold" tooltip="SLoc"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/12/status}">
+									<Label text="High Level" wrapping="false" design="Bold" tooltip="High Level"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/13/status}">
+									<Label text="Batch No.(Exp)" wrapping="false" design="Bold" tooltip="Batch No.(Exp)"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/14/status}">
+									<Label text="Ref Inv" wrapping="false" design="Bold" tooltip="Ref Inv"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/15/status}">
+									<Label text="Ref Inv Item" wrapping="false" design="Bold" tooltip="Ref Inv Item"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/16/status}">
+									<Label text="Ref Inv Date" wrapping="false" design="Bold" tooltip="Ref Inv Date"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">-->
+								<!--	<Text text="Expiry Date" wrapping="false"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/17/status}">
+									<Label text="Serial No." wrapping="false" design="Bold" tooltip="Serial No."/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="false">-->
+								<!--	<Text text="Return Order No" wrapping="false"/>-->
+								<!--</Column>-->
+							</columns>
+							<ColumnListItem type="Navigation" press="onPressReturnDetailPopover">
+								<Text text="{returnPreviewModel>itemNumber}"/>
+								<Text
+									text="{parts: [{path:'returnPreviewModel>matNumber'},{path:'returnPreviewModel>itemShortText'}], formatter:'.formatter.concatenateStrings'}"/>
+								<Text text="{returnPreviewModel>materialGroup}" wrapping="true"/>
+								<Text text="{returnPreviewModel>materialGroup4}" wrapping="false"/>
+								<Text
+									text="{parts: [{path:'returnPreviewModel>avlRetQty'},{path:'returnPreviewModel>salesUnit'}], formatter:'.formatter.concatenateStrings'}"
+									textAlign="Right"/>
+								<Text text="{returnPreviewModel>quantity}" textAlign="Right"/>
+								<Text text="{returnPreviewModel>salesUnit}"/>
+								<Text text="{returnPreviewModel>unitPrice}" textAlign="Right"/>
+								<Text text="{returnPreviewModel>unitPriceInv}" textAlign="Right"/>
+								<Text text="{returnPreviewModel>discountAmount}" textAlign="Right"/>
+								<Text text="{returnPreviewModel>netAmount}" textAlign="Right"/>
+								<Text text="{returnPreviewModel>storageLocation}"/>
+								<Text text="{returnPreviewModel>higherItem}"/>
+								<Text
+									text="{parts: [{path:'returnPreviewModel>batchNumber'},{path:'returnPreviewModel>expiryDate'}], formatter:'.formatter.batchconcatenateStringsPS'}"
+									wrapping="true"/>
+								<Text text="{returnPreviewModel>refInvoice}" wrapping="true"/>
+								<Text text="{returnPreviewModel>refItemNumber}" wrapping="true"/>
+								<Text text="{path:'returnPreviewModel>billingDate', formatter:'.formatter.datePS'}"/>
+								<Text text="{returnPreviewModel>serialNumber}" wrapping="false"/>
+							</ColumnListItem>
+						</Table>
+					</ScrollContainer>
+				</IconTabFilter>
+				<IconTabFilter key="Exchange" text="Exchange" visible="{baseModel>/exchangeTabVisiblity}">
+					<VBox>
+						<OverflowToolbar>
+							<!--<Label text="Exchange" design="Bold"/>-->
+							<Label text="{exchangeModel>/exchangeLength}"/>
+							<Label text="Amount:"/>
+							<Text text="{exchangeModel>/exchangeAmountTotal}"/>
+							<ToolbarSpacer/>
+							<!--<SearchField width="30%" search="onSearchATP" liveChange="liveSearchExchange"></SearchField>-->
+							<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="Exchange Personalization"></Button>
+						</OverflowToolbar>
+						<!--<infoToolbar >-->
+						<OverflowToolbar>
+							<Label text="Ship To:"/>
+							<Text text="{parts: [{path:'baseModel>/exShipTo'},{path:'baseModel>/exShipToDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+							<!--<Label text="Order Type:"/>-->
+							<!--<Text text="{baseModel>/exchangeOrderType}"/>-->
+							<!--<Label text="Remarks:"/>-->
+							<!--<Text text="{baseModel>/exchangeRemark}"/>-->
+						</OverflowToolbar>
+						<!--</infoToolbar>-->
+						<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="false" vertical="true"
+							visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/exchangeTableLength}">
+							<Table items="{exchangePreviewModel>/results}" alternateRowColors="true" class="sapUiSizeCompact" popinLayout="GridSmall" growing="true"
+								growingThreshold="10" growingScrollToLoad="true" sticky="ColumnHeaders" mode="MultiSelect">
+								<columns>
+									<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/0/status}">
+										<Label text="Item" wrapping="false" design="Bold" tooltip="Item"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/1/status}">
+										<Label text="Material" wrapping="false" design="Bold" tooltip="Material"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">
+										<Label text="MFOC" design="Bold" tooltip="Manual FOC"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/2/status}">
+										<Label text="MG" wrapping="false" design="Bold" tooltip="MG"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/3/status}">
+										<Label text="MG4" wrapping="false" design="Bold" tooltip="MG4"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/4/status}" hAlign="Right">
+										<Label text="Qty" wrapping="false" design="Bold" tooltip="Qty"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/5/status}" hAlign="Right">
+										<Label text="UOM" wrapping="false" design="Bold" tooltip="UOM"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline" hAlign="Right"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/16/status}">
+										<Label text="Unit Price" wrapping="false" design="Bold" tooltip="Unit Price"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/15/status}" hAlign="Right">
+										<Label text="Unit Price INV" wrapping="false" design="Bold" tooltip="Unit Price INV"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/6/status}" hAlign="Right">
+										<Label text="Disc" wrapping="false" design="Bold" tooltip="Disc"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/7/status}" hAlign="Right">
+										<Label text="Net Amount" wrapping="false" design="Bold" tooltip="Net Amount"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/14/status}" hAlign="Right">
+										<Label text="List Price" wrapping="false" design="Bold" tooltip="List Price"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/8/status}">
+										<Label text="SLoc" wrapping="false" design="Bold" tooltip="SLoc"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/9/status}">
+										<Label text="High Level" wrapping="false" design="Bold" tooltip="High Level"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/10/status}">
+										<Label text="Batch No.(Exp)" wrapping="false" design="Bold" tooltip="Batch No.(Exp)"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/11/status}">
+										<Label text="Ref Inv" wrapping="false" design="Bold" tooltip="Ref Inv"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/12/status}">
+										<Label text="Ref Inv Item" wrapping="false" design="Bold" tooltip="Ref Inv Item"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/13/status}">
+										<Label text="Serial No." wrapping="false" design="Bold" tooltip="Serial No."/>
+									</Column>
+								</columns>
+								<ColumnListItem type="Navigation" press="onPressExchangeDetailPopover">
+									<Text text="{exchangePreviewModel>itemNumber}"/>
+									<Text
+										text="{parts: [{path:'exchangePreviewModel>matNumber'},{path:'exchangePreviewModel>itemShortText'}], formatter:'.formatter.concatenateStrings'}"/>
+									<CheckBox  enabled="false" selected="{exchangePreviewModel>manualFOCCheck}"/>
+									<Text text="{exchangePreviewModel>materialGroup}"/>
+									<Text text="{exchangePreviewModel>materialGroup4}"/>
+									<Text text="{exchangePreviewModel>quantity}" textAlign="Right"/>
+									<Text text="{exchangePreviewModel>salesUnit}"/>
+									<Text text="{exchangePreviewModel>unitPrice}" textAlign="Right"/>
+									<Text text="{exchangePreviewModel>unitPriceInv}" textAlign="Right"/>
+									<Text text="{exchangePreviewModel>discountAmount}" textAlign="Right"/>
+									<Text text="{exchangePreviewModel>netAmount}" textAlign="Right"/>
+									<Text text="{exchangePreviewModel>unitPrice}" textAlign="Right"/>
+									<Text text="{exchangePreviewModel>storageLocation}"/>
+									<Text text="{exchangePreviewModel>higherItem}"/>
+									<!--<Text text="{exchangeModel>payer}"/>-->
+									<Text
+										text="{parts: [{path:'exchangePreviewModel>batchNumber'},{path:'exchangePreviewModel>expiryDate'}], formatter:'.formatter.batchconcatenateStringsPS'}"
+										wrapping="true"/>
+									<Text text="{exchangePreviewModel>refInvoice}" wrapping="true"/>
+									<Text text="{exchangePreviewModel>refItemNumber}" wrapping="true"/>
+									<Text text="{exchangePreviewModel>serialNumber}"/>
+								</ColumnListItem>
+							</Table>
+						</ScrollContainer>
+					</VBox>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+	</VBox>
+	<!--<footer>-->
+	<!--</footer>-->
+</core:FragmentDefinition>

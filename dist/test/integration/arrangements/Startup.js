@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/test/Opa5"],function(t){"use strict";return t.extend("dksh.connectclient.CreateReturn.test.integration.arrangements.Startup",{iStartMyApp:function(t){var e=t||{};e.delay=e.delay||50;this.iStartMyUIComponent({componentConfig:{name:"dksh.connectclient.CreateReturn",async:true},hash:e.hash,autoWait:e.autoWait})}})});
