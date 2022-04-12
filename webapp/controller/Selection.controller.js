@@ -521,6 +521,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					t.setProperty("/bpNummr", o.getData().results.exchangeDto.listAddressDo[0].bpNummr);
 					t.setProperty("/invCountry", o.getData().results.exchangeDto.listAddressDo[0].country);
 					t.setProperty("/invRegion", o.getData().results.exchangeDto.listAddressDo[0].region);
+
 					t.setProperty("/invLanguage", o.getData().results.exchangeDto.listAddressDo[0].language);
 				}
 				t.setProperty("/exSoldTo", o.getData().results.exchangeDto.soldToParty);
@@ -2410,7 +2411,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			}
 		},
 		onChangeRetQTY: function (e) {
-			debugger;
+
 			this.RetQtyCount = 0;
 			var r = [];
 			var o = this.getView().getModel("baseModel").getProperty("/originalReturnData");
@@ -2427,7 +2428,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						//[+] STRY0015934 - modification to throw error/JayamalarJ
 						//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
 						t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
-						//[+] STRY0015934 - modification to throw error/JayamalarJ
+							//[+] STRY0015934 - modification to throw error/JayamalarJ
 					} else {
 						if (this.RetQtyCount > 0) {
 							--this.RetQtyCount
@@ -2835,6 +2836,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 		},
 
 		onCityChange: function (e) {
+
 			var selectedObject = e.getSource().getSelectedItem().getBindingContext("cityModel").getObject();
 			this.getView().getModel("baseModel").setProperty("/invCountry", selectedObject.country);
 			this.getView().getModel("baseModel").setProperty("/invLanguage", selectedObject.languageKey);
@@ -3518,6 +3520,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			this.invoiceDetail.getModel("invoiceSearchModel").refresh()
 		},
 		onSearchInvoice: function () {
+
 			var oDeviceModel = this.getOwnerComponent().getModel("device");
 			if (this.getView().getModel("returnModel").getData().results && this.getView().getModel("returnModel").getData().results.length >
 				0) {
@@ -4085,9 +4088,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var t = e.getSource().getSelectedContexts()[0].getObject();
 			var r = this;
 			if (this.docVersion === "SUCCESS" || this.docVersion === "DRAFT") {
-				if (window.location.href.includes("https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com")) {
+				if (window.location.href.includes("https://flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com")) {
 					var o =
-						"https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
+						"https://flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
 						t.docId
 				} else {
 					var o =
@@ -5576,6 +5579,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					var n = this.selectedReturnItems[0];
 					r.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
 					r.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+
 					r.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
 					r.setProperty("/partnerName", n.soldToAddress.partnerName);
 					r.setProperty("/partnerName4", n.soldToAddress.partnerName4);
@@ -5640,6 +5644,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				}
 				r.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
 				r.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+
 				r.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
 				r.setProperty("/partnerName", "");
 				r.setProperty("/AddressStreet2", "");
@@ -6085,6 +6090,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						};
 						v.exchange = N
 						if (s.getProperty("/EXOneTimeCustomer") === "X" || s.getProperty("/oneTimeCustomer") === "X") {
+
 							if (this.docVersion === undefined) {
 								var D = this.selectedReturnItems;
 								var C = [{
@@ -6198,6 +6204,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 								}];
 								v.exchange.address = C
 							} else {
+
 								var C = [{
 									id: "",
 									returnReqNum: "",
@@ -6646,6 +6653,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					var i = this.selectedReturnItems[0];
 					s.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
 					s.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+
 					s.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
 					s.setProperty("/partnerName", i.soldToAddress.partnerName);
 					s.setProperty("/partnerName4", i.soldToAddress.partnerName4);
@@ -6703,6 +6711,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				this._loadCity();
 				s.setProperty("/invCountry", this.selectedReturnItems[0].soldToAddress.countryCode);
 				s.setProperty("/invRegion", this.selectedReturnItems[0].soldToAddress.region);
+
 				s.setProperty("/invLanguage", this.selectedReturnItems[0].soldToAddress.language);
 				s.setProperty("/partnerName", "");
 				s.setProperty("/AddressStreet2", "");
@@ -6927,6 +6936,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				b.returns.orderCondition = S
 			}
 			if (a.getProperty("/oneTimeCustomer") === "X") {
+
 				if (this.docVersion === undefined) {
 					var x = this.selectedReturnItems;
 					var I = x[0].soldToAddress;
@@ -6954,7 +6964,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						city: I.City,
 						region: I.region,
 						country: I.countryCode,
-						language: I.language,
+						// language: I.language,
+						language: (I.language === "TH") ? "2" : I.language, // [+] STRY0016175: One time customer return creation error 
 						telephone: I.telephone,
 						mobilePhone: I.mobileNumber,
 						taxId: I.taxId,
@@ -6981,7 +6992,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						city: N.City,
 						region: N.region,
 						country: N.countryCode,
-						language: N.language,
+						// language: N.language,
+						language: (N.language === "TH") ? "2" : N.language, // [+] STRY0016175: One time customer return creation error 
 						telephone: N.telephone,
 						mobilePhone: N.mobileNumber,
 						taxId: N.taxId,
@@ -7008,7 +7020,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						city: V.City,
 						region: V.region,
 						country: V.countryCode,
-						language: V.language,
+						// language: V.language,
+						language: (V.language === "TH") ? "2" : V.language, // [+] STRY0016175: One time customer return creation error 
 						telephone: V.telephone,
 						mobilePhone: V.mobileNumber,
 						taxId: V.taxId,
@@ -7035,7 +7048,8 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						city: R.City,
 						region: R.region,
 						country: R.countryCode,
-						language: R.language,
+						// language: R.language,
+						language: (R.language === "TH") ? "2" : R.language, // [+] STRY0016175: One time customer return creation error 
 						telephone: R.telephone,
 						mobilePhone: R.mobileNumber,
 						taxId: R.taxId,
@@ -7044,6 +7058,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					}];
 					b.returns.address = O
 				} else {
+
 					b.returns.address = a.getProperty("/setRetAddress")
 				}
 			}
@@ -7157,6 +7172,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						}
 						b.exchange.orderCondition = U
 						if (a.getProperty("/EXOneTimeCustomer") === "X" || a.getProperty("/oneTimeCustomer") === "X") {
+
 							if (this.docVersion === undefined) {
 								var x = this.selectedReturnItems;
 								var O = [{
@@ -7435,6 +7451,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var J = new sap.m.BusyDialog;
 			J.open();
 			var H = new sap.ui.model.json.JSONModel;
+
 			H.loadData("/DKSHJavaService/returnRequestAsync/createReturnRequest", JSON.stringify(b), true, "POST", false, false, k);
 			H.attachRequestCompleted(function (t) {
 				J.close();
