@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Dialog title="{i18n>Users}" class="sapUiSizeCompact" contentWidth="25%">
+		<SearchField search="liveSearchInvoice" liveChange="liveSearchUsers" value="{baseModel>/searchValue}"></SearchField>
+		<Table inset="false" mode="MultiSelect" id="userListTableId" items="{UsetTableSet>/results}">
+			<columns>
+				<Column>
+					<Label text=""/>
+				</Column>
+				<!--<Column >-->
+				<!--	<Label text="Exchange Order"/>-->
+				<!--</Column>-->
+			</columns>
+			<items>
+				<ColumnListItem>
+					<cells >
+					
+							<!--<CheckBox selected="{FilterPersonalization>status}" select="onChangeCheckbox" enabled="{FilterPersonalization>/enableCheckBox}"/>-->
+							<Text text="{parts: [{path:'UsetTableSet>userId'},{path:'UsetTableSet>email'}], formatter:'.formatter.concatenateStrings'}"/>
+					
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+			<buttons>
+			<Button text="{i18n>OK}" press="onOKUsers" tooltip="{i18n>OK}"  />
+			<Button text="{i18n>cancelbtntext}" press="onCancelUsers" tooltip="{i18n>cancelbtntext}"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,176 @@
+{
+    "resources": [
+        {
+            "name": "Fragments/UOM.fragment.xml"
+        },
+        {
+            "name": "i18n/i18n_th.properties",
+            "raw": "i18n/i18n.properties",
+            "locale": "_th"
+        },
+        {
+            "name": "manifest.json"
+        },
+        {
+            "name": "resources/sap-ui-version.json"
+        },
+        {
+            "name": "model/models.js"
+        },
+        {
+            "name": "model/formatter.js"
+        },
+        {
+            "name": "controller/Selection.controller.js"
+        },
+        {
+            "name": "controller/DraftRecord.controller.js"
+        },
+        {
+            "name": "controller/App.controller.js"
+        },
+        {
+            "name": "Component.js"
+        },
+        {
+            "name": "manifest-bundle.zip"
+        },
+        {
+            "name": "Component-preload.js",
+            "merged": true
+        },
+        {
+            "name": "model/models-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "model/formatter-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/Selection-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/DraftRecord-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "controller/App-dbg.controller.js",
+            "isDebug": true
+        },
+        {
+            "name": "Component-dbg.js",
+            "isDebug": true
+        },
+        {
+            "name": "../../../sap-ui-version.json"
+        },
+        {
+            "name": "neo-app.json"
+        },
+        {
+            "name": "di.code-validation.core_issues.json"
+        },
+        {
+            "name": "view/Selection.view.xml"
+        },
+        {
+            "name": "view/DraftRecord.view.xml"
+        },
+        {
+            "name": "view/App.view.xml"
+        },
+        {
+            "name": "css/style.css"
+        },
+        {
+            "name": "Fragments/sort.fragment.xml"
+        },
+        {
+            "name": "Fragments/attachment.fragment.xml"
+        },
+        {
+            "name": "Fragments/UserList.fragment.xml"
+        },
+        {
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
+        },
+        {
+            "name": "Fragments/SoldtoParty.fragment.xml"
+        },
+        {
+            "name": "Fragments/ShipTO.fragment.xml"
+        },
+        {
+            "name": "Fragments/SalesOrg.fragment.xml"
+        },
+        {
+            "name": "Fragments/ReturnReason.fragment.xml"
+        },
+        {
+            "name": "Fragments/ReturnPreviewPopover.fragment.xml"
+        },
+        {
+            "name": "Fragments/ReturnPopover.fragment.xml"
+        },
+        {
+            "name": "Fragments/Return.fragment.xml"
+        },
+        {
+            "name": "Fragments/Remark.fragment.xml"
+        },
+        {
+            "name": "Fragments/Preview.fragment.xml"
+        },
+        {
+            "name": "Fragments/Personalization.fragment.xml"
+        },
+        {
+            "name": "Fragments/Payer.fragment.xml"
+        },
+        {
+            "name": "Fragments/OrderType.fragment.xml"
+        },
+        {
+            "name": "Fragments/InvoicePopover.fragment.xml"
+        },
+        {
+            "name": "Fragments/InvoiceDetail.fragment.xml"
+        },
+        {
+            "name": "Fragments/ExchangePreviewPopover.fragment.xml"
+        },
+        {
+            "name": "Fragments/ExchangePopover.fragment.xml"
+        },
+        {
+            "name": "Fragments/DraftSoldTo.fragment.xml"
+        },
+        {
+            "name": "Fragments/Division.fragment.xml"
+        },
+        {
+            "name": "Fragments/DistChnl.fragment.xml"
+        },
+        {
+            "name": "Fragments/BillingType.fragment.xml"
+        },
+        {
+            "name": "Fragments/BillTo.fragment.xml"
+        },
+        {
+            "name": "Fragments/Address.fragment.xml"
+        },
+        {
+            "name": "Fragments/AddMaterial.fragment.xml"
+        },
+        {
+            "name": "Fragments/ActionPopover.fragment.xml"
+        },
+        {
+            "name": "index.html"
+        }
+    ]
+}

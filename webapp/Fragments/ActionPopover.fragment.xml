@@ -1,0 +1,78 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<!--<Popover placement="Bottom" showHeader="true" title="{actionModel>/returnReqNum}" >-->
+	<Dialog title="{actionModel>/returnReqNum}" class="sapUiSizeCompact custBox" contentWidth="35%">
+		<VBox visible="{actionModel>/message}" class="sapUiTinyMarginBeginEnd" wrap="Wrap">
+			<Label text="{actionModel>/errorMessage}" design="Bold" wrapping="true"/>
+		</VBox>
+		<HBox alignContent="SpaceAround" width="100%">
+			<!--	<VBox visible="{actionModel>/sapReturnVisiblity}" class="sapUiTinyMarginBeginEnd">-->
+			<!--		<Label text="Return Order" design="Bold"/>-->
+			<!--		<VBox items="{actionModel>/sapReturnOrderNum}">-->
+			<!--			<Text text="{actionModel>OrderNo}"/>-->
+			<!--		</VBox>-->
+			<!--	</VBox>-->
+			<!--	<VBox visible="{actionModel>/sapExchangeVisiblity}" class="sapUiTinyMarginBeginEnd">-->
+			<!--		<Label text="Exchange Order" design="Bold"/>-->
+			<!--		<VBox items="{actionModel>/sapExchangeOrderNum}">-->
+			<!--			<Text text="{actionModel>OrderNo}"/>-->
+			<!--		</VBox>-->
+			<!--	</VBox>-->
+			<Table inset="false" items="{actionModel>/sapReturnOrderNum}" visible="{actionModel>/sapReturnVisiblity}">
+				<columns>
+					<Column  hAlign="Center">
+						<Label text="{i18n>Return Order}"/>
+					</Column>
+					<!--<Column >-->
+					<!--	<Label text="Exchange Order"/>-->
+					<!--</Column>-->
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells >
+							<Text text="{actionModel>OrderNo}"/>
+							<!--<Text text="{actionModel>OrderNo}"/>-->
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<Table inset="false" items="{actionModel>/sapExchangeOrderNum}" visible="{actionModel>/sapExchangeVisiblity}">
+				<columns>
+					<!--<Column >-->
+					<!--	<Label text="Return Order"/>-->
+					<!--</Column>-->
+					<Column hAlign="Center">
+						<Label text="{i18n>Exchange Order}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells >
+							<Text text="{actionModel>OrderNo}"/>
+							<!--<Text text="{actionModel>OrderNo}"/>-->
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</HBox>
+		<buttons>
+			<Button text="{i18n>Edit}" press="onEditErrorDraft" tooltip="{i18n>Edit}" visible="{actionModel>/editVisible}"/>
+			<Button text="{i18n>cancelbtntext}" press="onCloseAction" tooltip="{i18n>cancelbtntext}" visible="{actionModel>/cancelVisible}"/>
+		</buttons>
+	</Dialog>
+	<!--</Popover>-->
+	<!--<QuickView>-->
+	<!--	<QuickViewPage-->
+	<!--		title="{title}">-->
+	<!--		<QuickViewGroup heading="{heading}" elements="{ path: 'elements', templateShareable: true }">-->
+	<!--			<QuickViewGroupElement-->
+	<!--				label="{label}"-->
+	<!--				value="{value}"-->
+	<!--				url="{url}"-->
+	<!--				type="{elementType}"-->
+	<!--				pageLinkId="{pageLinkId}"-->
+	<!--				emailSubject="{emailSubject}"-->
+	<!--				target="{target}" />-->
+	<!--		</QuickViewGroup>-->
+	<!--	</QuickViewPage>-->
+	<!--</QuickView>-->
+</core:FragmentDefinition>

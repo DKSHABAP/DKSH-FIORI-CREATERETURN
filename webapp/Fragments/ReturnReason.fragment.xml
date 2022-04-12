@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<SelectDialog title="{i18n>step1RetRsnLabel}" liveChange="onLiveChangeReturnReason" confirm="handleReturnReason"  cancel="handleCancelReturnReason"
+		items="{OrderReasonSet>/results}" class="sapUiSizeCompact">
+		<StandardListItem title="{parts: ['OrderReasonSet>Description','OrderReasonSet>Reason'], formatter:'.formatter.f4ValueBind'}" type="Active"
+			tooltip="{parts: ['OrderReasonSet>Description','OrderReasonSet>Reason'], formatter:'.formatter.f4ValueBind'}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

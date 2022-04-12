@@ -1,0 +1,101 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
+	<Dialog title="{i18n>SoldToParty}" contentWidth="65%" class="sapUiSizeCompact">
+		<f:SimpleForm layout="ResponsiveGridLayout" labelSpanL="4" editable="true" labelSpanM="3" emptySpanL="1" emptySpanM="0" columnsL="2"
+			columnsM="2" class="formCoreClass">
+			<f:content>
+				<core:Title class="formCoreClass"/>
+				<Label text="{i18n>Soldto}" design="Bold"/>
+				<Input tooltip="{baseModel>/SoldtoParty}" value="{baseModel>/SoldtoParty}" liveChange="soldToPartyLiveChange" change="custIdLiveChange"
+					showValueHelp="false" valueHelpRequest="valueHelpRequestCustId" showValueStateMessage="false" valueHelpOnly="true"
+					placeholder="{i18n>EnterSoldTo}"/>
+				<Label text="{i18n>SoldtoName}" design="Bold"/>
+				<Input value="{baseModel>/SoldTopartyName}" liveChange="soldToPartyLiveChange" showValueHelp="false"
+					valueHelpRequest="valueHelpRequestCustName" placeholder="{i18n>EnterSoldToName}"/>
+				<Label text="{i18n>Division}" design="Bold"/>
+				<Input value="{parts: ['baseModel>/Division','baseModel>/DivisionDesc'], formatter:'.formatter.concatenateStrings'}"
+					liveChange="soldToPartyLiveChange" showValueHelp="true" valueHelpRequest="valueHelpRequestDivision" valueHelpOnly="true"
+					placeholder="{i18n>EnterDivision}" editable="{baseModel>/retDivEditablity}"/>
+				<core:Title class="formCoreClass"/>
+				<Label text="{i18n>SalesOrg}" design="Bold"/>
+				<Input value="{parts: ['baseModel>/SalesOrg','baseModel>/SalesOrgDesc'], formatter:'.formatter.concatenateStrings'}"
+					liveChange="soldToPartyLiveChange" showValueHelp="true" valueHelpRequest="valueHelpRequestSalesOrg" valueHelpOnly="true"
+					placeholder="{i18n>EnterSalesOrg}" editable="{baseModel>/retSalesOrgEditablity}"/>
+				<Label text="{i18n>DistributionChannel}" design="Bold"/>
+				<Input value="{parts: ['baseModel>/DistChan','baseModel>/DistChanDesc'], formatter:'.formatter.concatenateStrings'}"
+					liveChange="soldToPartyLiveChange" showValueHelp="true" valueHelpRequest="valueHelpRequestDistChan" valueHelpOnly="true"
+					placeholder="{i18n>EnterDistChannel}" editable="{baseModel>/retDistChnlEditablity}"/>
+				<Label/>
+				<Button icon="sap-icon://search" text="{i18n>Search}" tooltip="{i18n>Search}" type="Accept" press="onSearchSoldToParty">
+					<layoutData>
+						<l:GridData span="XL3 L3 M4 S6"/>
+					</layoutData>
+				</Button>
+				<Button icon="sap-icon://refresh" text="{i18n>Clear}" tooltip="{i18n>Clear}" type="Reject" press="onResetSoldToParty">
+					<layoutData>
+						<l:GridData span="XL3 L3 M4 S6"/>
+					</layoutData>
+				</Button>
+			</f:content>
+		</f:SimpleForm>
+		<Table id="idSoldtoPartyTable" items="{SoldToPartyListSet>/results}" mode="SingleSelectMaster" popinLayout="GridSmall" growing="true"
+			growingThreshold="10" growingScrollToLoad="true" sticky="ColumnHeaders">
+			<headerToolbar>
+				<Toolbar>
+					<Label text="{SoldToPartyListSet>/length}" design="Bold"/>
+					<ToolbarSpacer></ToolbarSpacer>
+					<Button icon="sap-icon://sort" type="Transparent" tooltip="{i18n>Sort}" press="onSortPress"/>
+					<SearchField width="32%" id="idSearchSoldToParty" liveChange="onLiveChangeSoldToParty"></SearchField>
+					<!--search="onLiveChangeSoldToParty"-->
+				</Toolbar>
+			</headerToolbar>
+			<columns>
+				<Column hAlign="Left">
+					<Label design="Bold" text="{i18n>Soldto}" tooltip="{i18n>Soldto}"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+					<Label design="Bold" text="{i18n>SoldtoName}" tooltip="{i18n>SoldtoName}"/>
+				</Column>
+				<!--<Column demandPopin="true" minScreenWidth="Tablet"  popinDisplay="Inline">-->
+				<!--	<Label design="Bold" text="Division"/>-->
+				<!--</Column>-->
+				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+					<Label design="Bold" text="{i18n>DistributionChannel}" tooltip="{i18n>DistributionChannel}"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+					<Label design="Bold" text="{i18n>SalesOrg}" tooltip="{i18n>SalesOrg}"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+					<Label design="Bold" text="{i18n>ShipTo}" tooltip="{i18n>ShipTo}"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+					<Label design="Bold" text="{i18n>BillTo}" tooltip="{i18n>BillTo}"/>
+				</Column>
+				<Column demandPopin="true" minScreenWidth="Desktop" popinDisplay="Inline" hAlign="Left">
+					<Label design="Bold" text="{i18n>Payer}" tooltip="{i18n>Payer}"/>
+				</Column>
+			</columns>
+			<items>
+				<ColumnListItem>
+					<Text text="{SoldToPartyListSet>CustCode}" textAlign="Left"/>
+					<!--<VBox>-->
+					<Text text="{SoldToPartyListSet>Name1}" textAlign="Left" wrapping="true"/>
+					<!--</VBox>-->
+					<!--<Text text="{parts: ['SoldToPartyListSet>Division','SoldToPartyListSet>DName'], formatter:'.formatter.concatenateStrings'}" textAlign="Left"/>-->
+					<Text text="{parts: ['SoldToPartyListSet>Distchl','SoldToPartyListSet>DCName'], formatter:'.formatter.concatenateStrings'}" textAlign="Left"/>
+					<Text text="{parts: ['SoldToPartyListSet>SalesOrg','SoldToPartyListSet>SOrgName'], formatter:'.formatter.concatenateStrings'}"
+						textAlign="Left"/>
+					<Text text="{parts: ['SoldToPartyListSet>shipToParty','SoldToPartyListSet>shipToPartyName'], formatter:'.formatter.concatenateStrings'}"
+						textAlign="Left"/>
+					<Text text="{parts: ['SoldToPartyListSet>billToParty','SoldToPartyListSet>billToPartyName'], formatter:'.formatter.concatenateStrings'}"
+						textAlign="Left"/>
+					<Text text="{parts: ['SoldToPartyListSet>payer','SoldToPartyListSet>payerName'], formatter:'.formatter.concatenateStrings'}"
+						textAlign="Left"/>
+				</ColumnListItem>
+			</items>
+		</Table>
+		<buttons>
+			<Button text="{i18n>OK}" press="onSubmitSoldtoParty"/>
+			<Button text="{i18n>cancelbtntext}" press="onCancelSoldtoParty"/>
+		</buttons>
+	</Dialog>
+</core:FragmentDefinition>

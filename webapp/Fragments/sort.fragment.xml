@@ -1,0 +1,11 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSortDialogConfirm" class="sapUiSizeComact">
+		<sortItems>
+			<!--<ViewSettingsItem text="{i18n>status}" key="status" selected="true" />-->
+			<ViewSettingsItem text="{i18n>ShipTo}" key="shipToParty" selected="false"/>
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

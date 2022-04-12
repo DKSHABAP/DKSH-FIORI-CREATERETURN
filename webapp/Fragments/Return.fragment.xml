@@ -1,0 +1,527 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout"
+	xmlns:fb="sap.ui.comp.filterbar" xmlns:u="sap.ui.unified">
+	<VBox>
+		<!--<OverflowToolbar id="otb1" class="dkshToolbarStyle customTitle">-->
+		<!-- <ToolbarSpacer/>-->
+		<!-- <Button type="Emphasized" text ="Save as Draft" tooltip="{i18n>Refresh}" press="onPressRefresh"/>-->
+		<!-- </OverflowToolbar>-->
+		<IconTabBar expandable="false" id="ID_TAB_BAR_PROV_APP" expanded="true" select="onTabSelection" showOverflowSelectList="true">
+			<items>
+				<IconTabFilter key="Return" text="{i18n>Return}">
+					<OverflowToolbar>
+						<Label text="{i18n>Search}" design="Bold"></Label>
+						<ToolbarSpacer/>
+						<Button text="{i18n>CollapseSearch}" tooltip="{i18n>CollapseSearch}" press="onPressRetCollapse" visible="{baseModel>/RetCollapseVisiblity}"/>
+						<Button text="{i18n>ExpandSearch}" tooltip="{i18n>ExpandSearch}" press="onPressRetOpen" visible="{baseModel>/RetOpenVisiblity}"/>
+					</OverflowToolbar>
+					<fb:FilterBar showFilterConfiguration="false" useToolbar="false" showGoOnFB="false" visible="{baseModel>/ReturnSeacrhBar}">
+						<fb:filterItems>
+							<fb:FilterItem name="A" label="{i18n>step1ReturntypReqTitle}" visible="{oFilterParametersModel>/data/0/status}">
+								<fb:control>
+									<!--<Text text="{baseModel>/selectedROType}"/>-->
+									<VBox>
+										<ComboBox change="onClickROType"
+											value="{parts:[{path:'baseModel>/selectedROTypeCode'},{path:'baseModel>/selectedROType'}], formatter:'.formatter.concatenateStrings'}"
+											selectedKey="{baseModel>/selectedROTypeCode}" visible="{baseModel>/visiblityROTypeSel}" editable="{baseModel>/selRoTypeEdit}">
+											<core:Item key="{i18n>TG}" text="{i18n>TG(Return)}" press="onClickROType"/>
+											<core:Item key="{i18n>TF}" text="{i18n>TF(Unsaleable)}" press="onClickROType"/>
+											<!--<core:Item key="Borrow Goods" text="Borrow Goods" tooltip="Borrow Goods" />-->
+											<!--<core:Item key="Doc. Correction" text="Doc. Correction" tooltip="Doc. Correction"/>-->
+										</ComboBox>
+										<Text text="{parts:[{path:'baseModel>/selectedROTypeCode'},{path:'baseModel>/selectedROType'}], formatter:'.formatter.concatenateStrings'}"
+											visible="{baseModel>/visiblityROTypeText}"/>
+									</VBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="w" label="{i18n>CustomerPO}">
+								<fb:control>
+									<Input value="{baseModel>/customerPONumber}" editable="{baseModel>/RetRefNo}" maxLength="35" placeholder="{i18n>maxLengthPO}"
+										liveChange="onChangeRetPO"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="Q" label="{i18n>OrderType}">
+								<fb:control>
+									<Text text="{baseModel>/returnOrderType}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="H" label="{i18n>OrderReason}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text text="{baseModel>/selectedReturnReason}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="G" label="{i18n>SalesOrg}" visible="{oFilterParametersModel>/data/8/status}">
+								<fb:control>
+									<Text
+										text="{parts:[{path:'invoiceSearchModel>/salesOrgNo'},{path:'invoiceSearchModel>/salesOrgDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="L" label="{i18n>DistributionChannel}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text
+										text="{parts: [{path:'invoiceSearchModel>/distChnl'},{path:'invoiceSearchModel>/distChnlDesc'}], formatter:'.formatter.concatenateStrings'}"
+										wrapping="true"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="M" label="{i18n>Division}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text
+										text="{parts: [{path:'invoiceSearchModel>/Division'},{path:'baseModel>/selectedDivisionDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="I" label="{i18n>SoldTo}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text text="{parts: [{path:'baseModel>/returnSoldTo'},{path:'baseModel>/returnSoldToDesc'}], formatter:'.formatter.concatenateStrings'}"
+										wrapping="true"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="F" label="{i18n>ShipTo}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text text="{parts: [{path:'baseModel>/returnShipTo'},{path:'baseModel>/shipToDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="K" label="{i18n>BillTo}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text text="{parts: [{path:'baseModel>/returnBillTo'},{path:'baseModel>/returnBillToDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="N" label="{i18n>Payer}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Text text="{parts: [{path:'baseModel>/returnPayer'},{path:'baseModel>/returnPayerDesc'}], formatter:'.formatter.concatenateStrings'}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="B" label="{i18n>Requestor}" visible="{oFilterParametersModel>/data/1/status}">
+								<fb:control>
+									<!--<Input value="{parts:[{path:'baseModel>/userName'},{path:'baseModel>/phone'}],formatter:'.formatter.concatenateStrings'}"-->
+									<!--	editable="{baseModel>/RetRequestor}"/>-->
+									<Input value="{baseModel>/requestor}" editable="{baseModel>/RetRequestor}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="S" label="{i18n>ReferenceNo}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<Input value="{baseModel>/referenceNo}" liveChange="reffNoValidation" maxLength="12" editable="{baseModel>/RetRefNo}"/>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="D" label="{i18n>ReasonOwner}">
+								<fb:control>
+									<ComboBox showValueStateMessage="false" value="{baseModel>/reasonOwner}" items="{reasonOwnerModel>/results}"
+										selectedKey="{baseModel>/reasonOwner}" change="onSelectReasonOwner" editable="{baseModel>/RetReasonOwnerEnable}">
+										<core:Item key="{reasonOwnerModel>reasonOwnerCode}"
+											text="{parts:[{path:'reasonOwnerModel>reasonOwnerCode'},{path:'reasonOwnerModel>reasonOwnerText'}],formatter:'.formatter.concatenateStrings'}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="R" label="{i18n>SMS}">
+								<fb:control>
+									<HBox>
+										<CheckBox select="onSelectSms" selected="{baseModel>/phoneNumFlag}" editable="{baseModel>/RetSmsChbx}"/>
+										<Input value="{baseModel>/phoneNum}" visible="{baseModel>/smsInputVisiblity}" editable="{baseModel>/RetPhNoIP}"/>
+									</HBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="y" label="{i18n>Email}" visible="{oFilterParametersModel>/data/6/status}">
+								<fb:control>
+									<HBox>
+										<CheckBox select="onSelectEmail" selected="{baseModel>/emailFlag}" editable="{baseModel>/RetEmailChbxEnable}"/>
+										<Input visible="{baseModel>/emailInputVisiblity}" value="{baseModel>/userEmailId}" type="Email" editable="{baseModel>/RetEmailIPEnable}"/>
+									</HBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="P" label="{i18n>Attachment}">
+								<fb:control>
+									<HBox alignContent="SpaceBetween" width="100%">
+										<!--<Button text="{i18n>AddFile}" press="onPressAttachment"/>-->
+										<Button press="onPressAttachment" icon="sap-icon://add" enabled="{baseModel>/enableAddAttachment}" class="sapUiTinyMarginBegin"
+											tooltip="{i18n>AddFile}"/>
+										<Button press="onViewAttachment" icon="sap-icon://vds-file" enabled="{baseModel>/enableViewAttachment}" class="sapUiTinyMarginBegin"
+											tooltip="{i18n>View}"/>
+									</HBox>
+								</fb:control>
+							</fb:FilterItem>
+							<fb:FilterItem name="O" label="{i18n>Remark}">
+								<fb:control>
+									<HBox width="100%" alignItems="Stretch">
+										<!--<TextArea enabled="true" value="{baseModel>/returnRemark}" width="100%"/>-->
+										<!--<VBox class="sapUiTinyMarginBegin">-->
+										<VBox>
+											<core:Icon src="sap-icon://edit" press="onPressRemarks" class="sapUiTinyMarginBegin" enabled="{baseModel>/RetRemarkEnable}"></core:Icon>
+											<Text text="{baseModel>/returnRemark}" wrapping="true"/>
+										</VBox>
+										<!--<Link press="onPressShow" class="sapUiTinyMarginBegin showCommentTextSize" text="{baseModel>/showMoreText}"-->
+										<!--visible="{path:'baseModel>returnRemark', formatter:'.formatter.getCommentsLength'}"/>-->
+										<!--</VBox>-->
+									</HBox>
+								</fb:control>
+							</fb:FilterItem>
+						</fb:filterItems>
+					</fb:FilterBar>
+					<OverflowToolbar>
+						<Label text="{returnModel>/returnLength}"/>
+						<Label text="{i18n>Amount}"/>
+						<Text text="{returnModel>/returnAmountTotal}"/>
+						<ToolbarSpacer/>
+						<!--<SearchField width="30%" search="onSearchATP" liveChange="liveSearchInvoice"></SearchField>-->
+						<Button icon="sap-icon://less" press="returnDeleteRow" tooltip="{i18n>Delete}" enabled="{baseModel>/RetDel}"></Button>
+						<Button icon="sap-icon://undo" press="returnUndoDelete" tooltip="{i18n>Undo}" enabled="{baseModel>/RetUndo}"></Button>
+						<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="{i18n>ReturnPersonalization}"
+							enabled="{baseModel>/RetSetting}"></Button>
+						<Button text="{i18n>excbtntext}" press="onCopyItemsToExchange" tooltip="{i18n>excbtntext}" type="Emphasized"
+							enabled="{baseModel>/CopyExcbtn}"/>
+					</OverflowToolbar>
+					<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="false" vertical="true"
+						visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/returnTableLength}">
+						<Table items="{returnModel>/results}" alternateRowColors="true" class="sapUiSizeCompact" popinLayout="GridSmall" growing="true"
+							growingScrollToLoad="true" sticky="ColumnHeaders" id="ReturnTableId" mode="{baseModel>/tableSelMode}">
+							<columns>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/0/status}">
+									<Label text="{i18n>Item}" design="Bold" tooltip="{i18n>Item}"/>
+								</Column>
+								<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/1/status}">
+									<Label text="{i18n>Material}" wrapping="false" design="Bold" tooltip="{i18n>Material}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/2/status}">
+									<Label text="{i18n>MG}" wrapping="false" design="Bold" tooltip="{i18n>MG}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/3/status}">
+									<Label text="{i18n>MG4}" wrapping="false" design="Bold" tooltip="{i18n>MG4}"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="false">-->
+								<!--	<Text text="Product" wrapping="false"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/4/status}" hAlign="Right">
+									<Label text="{i18n>AvlRetQty}" wrapping="false" design="Bold" tooltip="{i18n>AvlRetQty}"/>
+								</Column>
+								<!--<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">-->
+								<!--	<Text text="Avl UOM"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/5/status}" hAlign="Right">
+									<Label text="{i18n>RetQty}" wrapping="false" design="Bold" tooltip="{i18n>RetQty}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/6/status}" hAlign="Right">
+									<Label text="{i18n>UOM}" wrapping="false" design="Bold" tooltip="{i18n>UOM}"/>
+								</Column>
+								<Column minScreenWidth="XSmall" demandPopin="true" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/7/status}"
+									hAlign="Right" popinDisplay="Inline">
+									<Label text="{i18n>UnitPrice}" wrapping="false" design="Bold" tooltip="{i18n>UnitPrice}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/8/status}" hAlign="Right">
+									<Label text="{i18n>UnitPriceINV}" wrapping="false" design="Bold" tooltip="{i18n>UnitPriceINV}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/9/status}" hAlign="Right">
+									<Label text="{i18n>Disc}" wrapping="false" design="Bold" tooltip="{i18n>CNAmount}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/10/status}" hAlign="Right">
+									<Label text="{i18n>CNAmount}" wrapping="false" design="Bold" tooltip="{i18n>CNAmount}"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline">-->
+								<!--	<Label text="Amount" wrapping="false" design="Bold" tooltip="CN Amount"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/11/status}">
+									<Label text="{i18n>SLoc}" wrapping="false" design="Bold" tooltip="{i18n>SLoc}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/12/status}">
+									<Label text="{i18n>HighLevel}" wrapping="false" design="Bold" tooltip="{i18n>HighLevel}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/13/status}">
+									<Label text="{i18n>BatchNoExp}" wrapping="false" design="Bold" tooltip="{i18n>BatchNoExp}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/14/status}">
+									<Label text="{i18n>RefInv}" wrapping="false" design="Bold" tooltip="{i18n>RefInv}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/15/status}">
+									<Label text="{i18n>RefInvItem}" wrapping="false" design="Bold" tooltip="{i18n>RefInvDate}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/16/status}">
+									<Label text="{i18n>RefInvDate}" wrapping="false" design="Bold" tooltip="{i18n>RefInvDate}"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline">-->
+								<!--	<Text text="Expiry Date" wrapping="false"/>-->
+								<!--</Column>-->
+								<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+									visible="{PersonalizationModel>/personalizationReturnData/userPersonaDto/17/status}">
+									<Label text="{i18n>SerialNo}" wrapping="false" design="Bold" tooltip="{i18n>SerialNo}"/>
+								</Column>
+								<!--<Column minScreenWidth="Desktop" demandPopin="false">-->
+								<!--	<Text text="Return Order No" wrapping="false"/>-->
+								<!--</Column>-->
+							</columns>
+							<ColumnListItem type="Navigation" press="onPressReturnDetail">
+								<customData>
+									<!--<core:CustomData key="stockBlock" value="{path: 'SalesHeaderModel>itemStockBlock', formatter:'.formatter.setStockBlock'}" writeToDom="true"></core:CustomData>-->
+									<core:CustomData key="visibility" value="{path: 'returnModel>itemVisibility', formatter:'.formatter.setBlurVisibility'}" writeToDom="true"></core:CustomData>
+								</customData>
+								<Text text="{returnModel>itemNumber}"/>
+								<Text text="{parts: [{path:'returnModel>matNumber'},{path:'returnModel>itemShortText'}], formatter:'.formatter.concatenateStrings'}"
+									wrapping="true" maxLines="9"/>
+								<Text text="{returnModel>materialGroup}" wrapping="true"/>
+								<Text text="{returnModel>materialGroup4}" wrapping="false"/>
+								<Text text="{returnModel>avlRetQty}" wrapping="false" textAlign="Right"/>
+								<!--settle borrow goods-->
+								<Input value="{returnModel>quantity}" change="onChangeRetQTY" textAlign="Right" type="Number" editable="{returnModel>editQtyRet}"
+									width="100%"/>
+								<Input value="{returnModel>salesUnit}" valueHelpRequest="valueHelpUOM" showValueHelp="true" editable="{returnModel>editUOMRet}"
+									class="RetUOMClass"/>
+								<!--settle borrow goods-->
+								<Input value="{returnModel>unitPrice}" change="onChangeUnitPrice" textAlign="Right" type="Number" editable="{returnModel>editUPRet}"
+									width="100%" class="retUPClass"/>
+								<Text text="{returnModel>unitPriceInv}" textAlign="Right"/>
+								<Text text="{returnModel>discountAmount}" textAlign="Right"/>
+								<Text text="{returnModel>netAmount}" textAlign="Right"/>
+								<!--settle borrow goods-->
+								<Input value="{returnModel>storageLocation}" editable="{returnModel>editSLocRet}" maxLength="4" width="100%"/>
+								<Text text="{returnModel>higherItem}"/>
+								<Text text="{parts: [{path:'returnModel>batchNumber'},{path:'returnModel>expiryDate'}], formatter:'.formatter.batchconcatenateStringsPS'}"
+									wrapping="false"/>
+								<!--<HBox>-->
+								<!--settle borrow goods-->
+								<!--editable="{returnModel>editBatchRet}"-->
+								<!--	<Text text="{returnModel>batchNumber}"/>-->
+								<!--	<Text text="{path:'returnModel>expiryDate', formatter:'.formatter.datePS'}"/>-->
+								<!--</HBox>-->
+								<Text text="{returnModel>refInvoice}" wrapping="true"/>
+								<Text text="{returnModel>refItemNumber}" wrapping="true"/>
+								<Text text="{path:'returnModel>billingDate', formatter:'.formatter.datePS'}"/>
+								<!--settle borrow goods editable="{returnModel>editSerialNoRet}"-->
+								<Text text="{returnModel>serialNumber}"/>
+							</ColumnListItem>
+						</Table>
+					</ScrollContainer>
+				</IconTabFilter>
+				<IconTabFilter key="Exchange" text="{i18n>Exchange}" visible="{baseModel>/exchangeTabVisiblity}">
+					<VBox>
+						<OverflowToolbar>
+							<Label text="{i18n>Search}" design="Bold"></Label>
+							<ToolbarSpacer/>
+							<Button text="{i18n>CollapseSearch}" tooltip="{i18n>CollapseSearch}" press="onPressExCollapse" visible="{baseModel>/ExcCollapseVisiblity}"/>
+							<Button text="{i18n>ExpandSearch}" tooltip="{i18n>ExpandSearch}" press="onPressExOpen" visible="{baseModel>/ExcOpenVisiblity}"/>
+						</OverflowToolbar>
+						<fb:FilterBar reset="onReset" search="onSearch" showFilterConfiguration="false" useToolbar="false" showGoOnFB="false"
+							visible="{baseModel>/ExcSearchBar}">
+							<fb:filterItems>
+								<fb:FilterItem name="F" label="{i18n>OrderType}">
+									<fb:control>
+										<Text text="{baseModel>/exchangeOrderType}"/>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="C" label="{i18n>step1ReturnTypeLable}" visible="{oFilterParametersModel>/data/2/status}">
+									<fb:control>
+										<Text text="{parts:[{path:'baseModel>/selectedROTypeCode'},{path:'baseModel>/selectedROType'}], formatter:'.formatter.concatenateStrings'}"/>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="w" label="{i18n>CustomerPO}">
+									<fb:control>
+										<Input value="{baseModel>/customerPONumberEx}" editable="{baseModel>/RetRefNo}" maxLength="35" placeholder="{i18n>maxLengthPO}"/>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="A" label="{i18n>Soldto}" visible="{oFilterParametersModel>/data/0/status}">
+									<fb:control>
+										<!--<Text-->
+										<!--	text="{parts: [{path:'invoiceSearchModel>/soldToParty'},{path:'invoiceSearchModel>/soldToPartyDesc'}], formatter:'.formatter.concatenateStrings'}"/>-->
+										<Input showValueHelp="true" valueHelpRequest="valueHelpRequestSoldtoParty"
+											value="{parts: ['baseModel>/exSoldTo','baseModel>/exSoldToDesc'], formatter:'.formatter.concatenateStrings'}" valueHelpOnly="true"
+											tooltip="{parts: ['baseModel>/exSoldTo','baseModel>/exSoldToDesc'], formatter:'.formatter.concatenateStrings'}"
+											placeholder="{i18n>SelectSoldTo}" editable="{baseModel>/RetRefNo}"/>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="B" label="{i18n>Shipto}" visible="{oFilterParametersModel>/data/1/status}">
+									<fb:control>
+										<Input showValueHelp="true" valueHelpRequest="valueHelpRequestShipTo"
+											value="{parts: ['baseModel>/exShipTo','baseModel>/exShipToDesc'], formatter:'.formatter.concatenateStrings'}" valueHelpOnly="true"
+											tooltip="{parts: ['baseModel>/exShipTo','baseModel>/exShipToDesc'], formatter:'.formatter.concatenateStrings'}"
+											placeholder="{i18n>SelectShipTo}" editable="{baseModel>/RetRefNo}"/>
+										<!--<VBox>-->
+										<!--	<ComboBox showValueStateMessage="false" value="{baseModel>/exShipTo}" items="{shipToListSet>/results}" selectedKey="{baseModel>/exShipTo}"-->
+										<!--		selectionChange="onChangeShipTo" editable="{baseModel>/exShipToEnable}">-->
+										<!--		<core:Item key="{shipToListSet>shipToParty}"-->
+										<!--			text="{parts:[{path:'shipToListSet>shipToParty'},{path:'shipToListSet>shipToPartyName'}],formatter:'.formatter.concatenateStrings'}"/>-->
+										<!--	</ComboBox>-->
+										<!--	<Text text="{baseModel>/exShipToDesc}"/>-->
+										<!--</VBox>-->
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="D" label="{i18n>Payer}" visible="{oFilterParametersModel>/data/4/status}">
+									<fb:control>
+										<Input showValueHelp="true" valueHelpRequest="valueHelpRequestPayer"
+											value="{parts: ['baseModel>/exPayer','baseModel>/exPayerDesc'], formatter:'.formatter.concatenateStrings'}" valueHelpOnly="true"
+											tooltip="{parts: ['baseModel>/exPayer','baseModel>/exPayerDesc'], formatter:'.formatter.concatenateStrings'}"
+											placeholder="{i18n>SelectPayer}" editable="{baseModel>/RetRefNo}"/>
+										<!--<Text text="{parts: [{path:'baseModel>/payer'},{path:'baseModel>/payerDesc'}], formatter:'.formatter.concatenateStrings'}"/>-->
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="G" label="{i18n>BillTo}" visible="{oFilterParametersModel>/data/8/status}">
+									<fb:control>
+										<Input showValueHelp="true" valueHelpRequest="valueHelpRequestBillTo"
+											value="{parts: ['baseModel>/exBillTo','baseModel>/exBillToDesc'], formatter:'.formatter.concatenateStrings'}" valueHelpOnly="true"
+											tooltip="{parts: ['baseModel>/exBillTo','baseModel>/exBillToDesc'], formatter:'.formatter.concatenateStrings'}"
+											placeholder="{i18n>SelectBillTo}" editable="{baseModel>/RetRefNo}"/>
+										<!--<Text text="{parts: [{path:'baseModel>/billTo'},{path:'baseModel>/billToDesc'}], formatter:'.formatter.concatenateStrings'}"/>-->
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="p" label="{i18n>Address}" visible="{baseModel>/EXaddressVisiblity}">
+									<fb:control>
+										<core:Icon src="sap-icon://addresses" press="onViewExAddress"/>
+										<!--<Text text=""/>-->
+										<!--<Button icon="sap-icon://addresses" press="onViewExAddress" width="30%"></Button>-->
+										<!--<Text text="{parts: [{path:'baseModel>/billTo'},{path:'baseModel>/billToDesc'}], formatter:'.formatter.concatenateStrings'}"/>-->
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="O" label="{i18n>Remarks}" visible="{oFilterParametersModel>/data/6/status}">
+									<fb:control>
+										<!--<Input value="testtt" showValueHelp="false"/>-->
+										<!--<HBox width="100%" alignItems="Stretch">-->
+										<!--<TextArea enabled="true" value="{baseModel>/exchangeRemark}"/>-->
+										<!--<core:Icon src="sap-icon://edit" press="onPressRemarks" class="sapUiTinyMarginBegin"></core:Icon>-->
+										<!--</HBox>-->
+										<HBox alignItems="Stretch">
+											<!--<TextArea enabled="true" value="{baseModel>/returnRemark}" width="100%"/>-->
+											<!--<VBox class="sapUiTinyMarginBegin">-->
+											<VBox>
+												<core:Icon src="sap-icon://edit" press="onPressRemarks" class="sapUiTinyMarginBegin" enabled="{baseModel>/ExRemarkEnable}"></core:Icon>
+												<Text text="{baseModel>/exchangeRemark}"/>
+												<!--<Link press="onPressShow" class="sapUiTinyMarginBegin showCommentTextSize" text="{baseModel>/showMoreText}" visible="{path:'baseModel>exchangeRemark', formatter:'.formatter.getCommentsLength'}"/>-->
+												<!--</VBox>-->
+											</VBox>
+										</HBox>
+									</fb:control>
+								</fb:FilterItem>
+								<fb:FilterItem name="H" label="{i18n>CompleteDelivery}" visible="{oFilterParametersModel>/data/6/status}">
+									<fb:control>
+										<CheckBox selected="{baseModel>/completedDelivery}" select="onSelectDelivery" enabled="{baseModel>/enableCompltDel}"/>
+									</fb:control>
+								</fb:FilterItem>
+							</fb:filterItems>
+						</fb:FilterBar>
+						<OverflowToolbar>
+							<Label text="{exchangeModel>/exchangeLength}"/>
+							<Label text="{i18n>Amount}"/>
+							<Text text="{exchangeModel>/exchangeAmountTotal}"/>
+							<ToolbarSpacer/>
+							<!--<SearchField width="30%" search="onSearchATP" liveChange="liveSearchExchange"></SearchField>-->
+							<Button icon="sap-icon://add" press="addRow" tooltip="{i18n>AddRow}" enabled="{baseModel>/enableAddMat}"></Button>
+							<Button icon="sap-icon://less" press="deleteRow" tooltip="{i18n>Delete}" enabled="{baseModel>/enableExDel}"></Button>
+							<Button icon="sap-icon://undo" press="undoDelete" tooltip="{i18n>Undo}" enabled="{baseModel>/enableExUndo}"></Button>
+							<Button icon="sap-icon://action-settings" press="personalizationInvDetails" tooltip="{i18n>ExchangePersonalization}"
+								enabled="{baseModel>/enableExSetting}"></Button>
+						</OverflowToolbar>
+						<ScrollContainer class="crtMinListHeight crtScrollBar" horizontal="false" vertical="true"
+							visible="{dashBoardModel>/graphCommentListVisiblity}" height="{baseModel>/exchangeTableLength}">
+							<Table items="{exchangeModel>/results}" alternateRowColors="true" class="sapUiSizeCompact exTableClass" popinLayout="GridSmall"
+								growing="true" growingScrollToLoad="true" sticky="ColumnHeaders" mode="{baseModel>/tableSelMode}" id="ExchangeTableId">
+								<columns>
+									<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/0/status}">
+										<Label text="{i18n>Item}" wrapping="false" design="Bold" tooltip="{i18n>Item}"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/1/status}">
+										<Label text="{i18n>Material}" wrapping="false" design="Bold" tooltip="{i18n>Material}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/17/status}">
+										<Label text="{i18n>MFOC}" design="Bold" tooltip="{i18n>MFOC}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/2/status}">
+										<Label text="{i18n>MG}" wrapping="false" design="Bold" tooltip="{i18n>MG}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/3/status}">
+										<Label text="{i18n>MG4}" wrapping="false" design="Bold" tooltip="{i18n>MG4}"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/4/status}" hAlign="Right">
+										<Label text="{i18n>Qty}" wrapping="false" design="Bold" tooltip="{i18n>Qty}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/5/status}" hAlign="Right">
+										<Label text="{i18n>UOM}" wrapping="false" design="Bold" tooltip="{i18n>UOM}"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline" hAlign="Right"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/6/status}">
+										<Label text="{i18n>UnitPrice}" wrapping="false" design="Bold" tooltip="{i18n>UnitPrice}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/7/status}" hAlign="Right">
+										<Label text="{i18n>UnitPriceINV}" wrapping="false" design="Bold" tooltip="{i18n>UnitPriceINV}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/8/status}" hAlign="Right">
+										<Label text="{i18n>Disc}" wrapping="false" design="Bold" tooltip="{i18n>Disc}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/9/status}" hAlign="Right">
+										<Label text="{i18n>NetAmount}" wrapping="false" design="Bold" tooltip="{i18n>NetAmount}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/10/status}" hAlign="Right">
+										<Label text="{i18n>ListPrice}" wrapping="false" design="Bold" tooltip="{i18n>ListPrice}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/11/status}">
+										<Label text="{i18n>SLoc}" wrapping="false" design="Bold" tooltip="{i18n>SLoc}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/12/status}">
+										<Label text="{i18n>HighLevel}" wrapping="false" design="Bold" tooltip="{i18n>HighLevel}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/13/status}">
+										<Label text="{i18n>BatchNoExp}" wrapping="false" design="Bold" tooltip="{i18n>BatchNoExp}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/14/status}">
+										<Label text="{i18n>RefInv}" wrapping="false" design="Bold" tooltip="{i18n>RefInv}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/15/status}">
+										<Label text="{i18n>RefInvItem}" wrapping="false" design="Bold" tooltip="{i18n>RefInvItem}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="false" visible="{PersonalizationModel>/personalizationExchangeData/userPersonaDto/16/status}">
+										<Label text="{i18n>SerialNo}" wrapping="false" design="Bold" tooltip="{i18n>SerialNo}"/>
+									</Column>
+								</columns>
+								<ColumnListItem type="Navigation" press="onPressExchangeDetail" class="exTableClass">
+									<customData>
+										<!--<core:CustomData key="stockBlock" value="{path: 'SalesHeaderModel>itemStockBlock', formatter:'.formatter.setStockBlock'}" writeToDom="true"></core:CustomData>-->
+										<core:CustomData key="visibility" value="{path: 'exchangeModel>itemVisibility', formatter:'.formatter.setBlurVisibility'}" writeToDom="true"></core:CustomData>
+									</customData>
+									<Text text="{exchangeModel>itemNumber}"/>
+									<Text text="{parts: [{path:'exchangeModel>matNumber'},{path:'exchangeModel>itemShortText'}], formatter:'.formatter.concatenateStrings'}"
+										wrapping="true" maxLines="9"/>
+									<CheckBox select="onAddFOC" enabled="{exchangeModel>FOCEnabled}" selected="{exchangeModel>manualFOCCheck}"/>
+									<Text text="{exchangeModel>materialGroup}"/>
+									<Text text="{exchangeModel>materialGroup4}"/>
+									<Input value="{exchangeModel>quantity}" change="onChangeExcQty" textAlign="Right" type="Number" class="exQtyClass"
+										editable="{exchangeModel>editExqty}"/>
+									<Input value="{exchangeModel>salesUnit}" valueHelpRequest="valueHelpUOM" showValueHelp="true" editable="{exchangeModel>editable}"
+										class="exUomClass"/>
+									<Input value="{exchangeModel>unitPrice}" change="onChangeExcUP" textAlign="Right" type="Number"/>
+									<Text text="{parts: [{path:'exchangeModel>unitPriceInv'},{path:'exchangeModel>currency'}], formatter:'.formatter.concatenateStrings'}"
+										textAlign="Right"/>
+									<Text text="{exchangeModel>discountAmount}" textAlign="Right"/>
+									<Text text="{exchangeModel>netAmount}" textAlign="Right"/>
+									<Text text="{exchangeModel>listPrice}" textAlign="Right"/>
+									<!--settle borrow goods-->
+									<Input value="{exchangeModel>storageLocation}" editable="{exchangeModel>editSLocEx}" maxLength="4" class="exSlocClass" width="100%"/>
+									<Text text="{exchangeModel>higherItem}"/>
+									<!--<Text text="{exchangeModel>payer}"/>-->
+									<!--<VBox>-->
+									<Input value="{exchangeModel>batchNumber}" width="100%" editable="{exchangeModel>editBatchEx}"/>
+									<!--<Text text="{path:'exchangeModel>expiryDate', formatter:'.formatter.datePS'}" wrapping="true"/>-->
+									<!--</VBox>-->
+									<Text text="{exchangeModel>refInvoice}" wrapping="true"/>
+									<Text text="{exchangeModel>refItemNumber}" wrapping="true"/>
+									<!--settle borrow goods-->
+									<Input value="{exchangeModel>serialNumber}" editable="{exchangeModel>editSerialNoEx}" width="100%"/>
+								</ColumnListItem>
+							</Table>
+						</ScrollContainer>
+					</VBox>
+				</IconTabFilter>
+			</items>
+		</IconTabBar>
+	</VBox>
+</core:FragmentDefinition>
