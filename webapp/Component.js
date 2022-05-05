@@ -6,6 +6,7 @@ sap.ui.define([
 	"use strict";
 
 	return UIComponent.extend("dksh.connectclient.CreateReturn.Component", {
+	//return UIComponent.extend("incture.com.ConnectClient_ReturnCreate.Component", {
 
 		metadata: {
 			manifest: "json",
