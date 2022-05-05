@@ -4085,9 +4085,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var t = e.getSource().getSelectedContexts()[0].getObject();
 			var r = this;
 			if (this.docVersion === "SUCCESS" || this.docVersion === "DRAFT") {
-				if (window.location.href.includes("https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com")) {
+				if (window.location.href.includes("https://flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com")) {
 					var o =
-						"https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
+						"https://flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
 						t.docId
 				} else {
 					var o =

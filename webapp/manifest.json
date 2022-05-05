@@ -1,7 +1,7 @@
 {
 	"_version": "1.12.0",
 	"sap.app": {
-		"id": "dksh.connectclient.CreateReturn",
+		"id": "dksh.connectclient.CreateReturn1",
 		"type": "application",
 		"i18n": "i18n/i18n.properties",
 		"applicationVersion": {

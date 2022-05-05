@@ -1,7 +1,7 @@
 {
     "resources": [
         {
-            "name": "Fragments/UOM.fragment.xml"
+            "name": "Fragments/ActionPopover.fragment.xml"
         },
         {
             "name": "i18n/i18n_th.properties",
@@ -94,8 +94,7 @@
             "name": "Fragments/UserList.fragment.xml"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "Fragments/UOM.fragment.xml"
         },
         {
             "name": "Fragments/SoldtoParty.fragment.xml"
@@ -167,7 +166,8 @@
             "name": "Fragments/AddMaterial.fragment.xml"
         },
         {
-            "name": "Fragments/ActionPopover.fragment.xml"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "index.html"

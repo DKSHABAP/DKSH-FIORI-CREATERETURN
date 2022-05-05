@@ -2410,7 +2410,6 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			}
 		},
 		onChangeRetQTY: function (e) {
-			debugger;
 			this.RetQtyCount = 0;
 			var r = [];
 			var o = this.getView().getModel("baseModel").getProperty("/originalReturnData");
@@ -2427,7 +2426,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						//[+] STRY0015934 - modification to throw error/JayamalarJ
 						//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
 						t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
-						//[+] STRY0015934 - modification to throw error/JayamalarJ
+							//[+] STRY0015934 - modification to throw error/JayamalarJ
 					} else {
 						if (this.RetQtyCount > 0) {
 							--this.RetQtyCount
@@ -2449,6 +2448,21 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				}
 			}
 		},
+		//[+] STRY0015934 - modification to throw error/JayamalarJ
+		onChangeInvQty: function (e) {
+			this.InvQtyCount = 0;
+			var o = this.getView().getModel("baseModel").getProperty("/originalInvoiceData");
+			var s = e.getSource().getBindingContext("invoiceSearchModel").getObject();
+			for (var a = 0; a < o.length; a++) {
+				if (o[a].InvoiceNum === s.InvoiceNum && o[a].InvoiceLineItem === s.InvoiceLineItem) {
+					if (parseFloat(s.actualRetQty) > parseFloat(o[a].actualRetQty)) {
+						++this.InvQtyCount;
+						t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
+					} 
+				}
+			}
+		},
+		//[+] STRY0015934 - modification to throw error/JayamalarJ
 		onChangeExcQty: function (e) {
 			var r = [];
 			var o = this.getView().getModel("baseModel").getProperty("/originalExchangeData");
@@ -4085,9 +4099,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var t = e.getSource().getSelectedContexts()[0].getObject();
 			var r = this;
 			if (this.docVersion === "SUCCESS" || this.docVersion === "DRAFT") {
-				if (window.location.href.includes("https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com")) {
+				if (window.location.href.includes("https://flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com")) {
 					var o =
-						"https://flpnwc-xlgtvarz5i.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
+						"https://flpnwc-uk81qreeol.dispatcher.ap1.hana.ondemand.com/sap/fiori/returnprocess/DKSHJavaService/Attachment/downloadFile/" +
 						t.docId
 				} else {
 					var o =
