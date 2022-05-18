@@ -209,9 +209,11 @@
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -223,15 +225,22 @@
 				"controlId": "app",
 				"clearControlAggregation": false
 			},
-			"routes": [{
-				"name": "DraftRecord",
-				"pattern": "",
-				"target": ["DraftRecord"]
-			}, {
-				"name": "Selection",
-				"pattern": "Selection",
-				"target": ["Selection"]
-			}],
+			"routes": [
+				{
+					"name": "DraftRecord",
+					"pattern": "",
+					"target": [
+						"DraftRecord"
+					]
+				},
+				{
+					"name": "Selection",
+					"pattern": "Selection",
+					"target": [
+						"Selection"
+					]
+				}
+			],
 			"targets": {
 				"TargetApp": {
 					"viewType": "XML",

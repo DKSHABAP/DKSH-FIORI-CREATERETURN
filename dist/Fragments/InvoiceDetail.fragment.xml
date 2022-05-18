@@ -242,7 +242,7 @@
 							text="{parts: [{path:'invoiceSearchModel>AvailRetQtySalesUn'},{path:'invoiceSearchModel>SalesUnit'}], formatter:'.formatter.concatenateStrings'}"
 							textAlign="Right"/>
 						<Input value="{invoiceSearchModel>actualRetQty}" editable="{invoiceSearchModel>editablity}" change="onChangeInvQty"
-							tooltip="{invoiceSearchModel>actualRetQty}" textAlign="Right" type="Number"  id="ID_avlRetQty"/>
+							tooltip="{invoiceSearchModel>actualRetQty}" textAlign="Right" type="Number"/>
 						<Input value="{invoiceSearchModel>actualRetUOM}" editable="{invoiceSearchModel>editablity}" change="onChangeInvUOM" showValueHelp="true"
 							valueHelpRequest="valueHelpUOM" tooltip="{invoiceSearchModel>actualRetUOM}"/>
 						<Text text="{invoiceSearchModel>UnitPrice}" wrapping="false" textAlign="Right"/>
