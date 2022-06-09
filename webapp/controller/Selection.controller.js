@@ -2428,7 +2428,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						//[+] STRY0015934 - modification to throw error/JayamalarJ
 						//t.information(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
 						t.error(this.resourceBundle.getText("EnteredReturnedQtycannotbegreaterthanAvailableReturnQty"))
-							//[+] STRY0015934 - modification to throw error/JayamalarJ
+						//[+] STRY0015934 - modification to throw error/JayamalarJ
 					} else {
 						if (this.RetQtyCount > 0) {
 							--this.RetQtyCount
