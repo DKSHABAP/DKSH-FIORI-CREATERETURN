@@ -532,6 +532,11 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				t.setProperty("/exPayerDesc", o.getData().results.exchangeDto.payerDescription);
 				t.setProperty("/exBillTo", o.getData().results.exchangeDto.billToParty);
 				t.setProperty("/exBillToDesc", o.getData().results.exchangeDto.billToPartyDesc);
+				// [+]Begin - STRY0016178 Complete Del flag
+				if (o.getData().results.exchangeDto.delComplete === "X") {
+					t.setProperty("/completedDelivery", true);
+				}
+				// [+]End - STRY0016178 Complete Del flagö
 				var y = [];
 				for (var P = 0; P < m.length; P++) {
 					if (o.getData().results.roType === "TI") {}
