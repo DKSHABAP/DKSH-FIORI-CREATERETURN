@@ -64,7 +64,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/ui/core/Fr
 				var a = [];
 				var o = new sap.m.BusyDialog;
 				o.open();
-				var sURL = "/UserManagement/scim/Users" + '?filter=groups.display co "DKSH_"';
+				var sURL = "/UserManagement/scim/Users" + '?filter=groups.display co "DKSH_CC"';
 				this.getOwnerComponent().getApiModel("CCUsers", sURL, false).then(
 					function (oData) {
 						var i = {
@@ -76,7 +76,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/ui/core/Fr
 								var d = i.resources[n].groups;
 								if (d) {
 									for (var u = 0; u < d.length; u++) {
-										if (d[u].display === "DKSH_RETURN_CREATOR") {
+										if (d[u].display === "DKSH_CC_RETURN_CREATOR") {
 											l.push({
 												userId: i.resources[n]["urn:ietf:params:scim:schemas:extension:sap:2.0:User"].userId,
 												email: i.resources[n].emails[0].value
@@ -171,7 +171,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/ui/core/Fr
 			} else {
 				this.ongetDrafts();
 			}
-			var sURL = "/UserManagement/scim/Users" + '?filter=groups.display co "DKSH_"';
+			var sURL = "/UserManagement/scim/Users" + '?filter=groups.display co "DKSH_CC"';
 			this.getOwnerComponent().getApiModel("CCUsers", sURL, true);
 		},
 		onSearchDraft: function (e) {
