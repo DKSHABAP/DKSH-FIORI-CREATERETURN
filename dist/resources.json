@@ -1,12 +1,11 @@
 {
     "resources": [
         {
-            "name": "Fragments/UOM.fragment.xml"
+            "name": "Component.js"
         },
         {
-            "name": "i18n/i18n_th.properties",
-            "raw": "i18n/i18n.properties",
-            "locale": "_th"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "manifest.json"
@@ -30,7 +29,9 @@
             "name": "controller/App.controller.js"
         },
         {
-            "name": "Component.js"
+            "name": "i18n/i18n_th.properties",
+            "raw": "i18n/i18n.properties",
+            "locale": "_th"
         },
         {
             "name": "manifest-bundle.zip"
@@ -94,8 +95,7 @@
             "name": "Fragments/UserList.fragment.xml"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "Fragments/UOM.fragment.xml"
         },
         {
             "name": "Fragments/SoldtoParty.fragment.xml"
