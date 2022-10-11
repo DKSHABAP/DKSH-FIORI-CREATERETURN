@@ -58,9 +58,9 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "sap/ui/core/Fr
 			if (!e.userList) {
 				e.userList = sap.ui.xmlfragment("dksh.connectclient.CreateReturn.Fragments.UserList", e);
 				e.getView().addDependent(e.userList);
-				var t = new sap.ui.model.json.JSONModel;
-				var e = this;
-				var s, r;
+				// var t = new sap.ui.model.json.JSONModel;
+				// var e = this;
+				// var s, r;
 				var a = [];
 				var o = new sap.m.BusyDialog;
 				o.open();
