@@ -6489,11 +6489,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 					}
 					this.getView().getModel("baseModel").setProperty("/exchangeRemark", exRemarks);
 				}
-				// Reference no
-				if (this.getView().getModel("baseModel").getProperty("/referenceNo")) {
-					remarks = [remarks, refNo].join(" ");
-					returnRemarks = [returnRemarks, refNo].join(" ");
-				}
+				// [+] Begin Modification - STRY0017824
+				// // Reference no
+				// if (this.getView().getModel("baseModel").getProperty("/referenceNo")) {
+				// 	remarks = [remarks, refNo].join(" ");
+				// 	returnRemarks = [returnRemarks, refNo].join(" ");
+				// }
+				//[+] End Modification - STRY0017824
 				this.getView().getModel("baseModel").setProperty("/remark", remarks);
 				this.getView().getModel("baseModel").setProperty("/returnRemark", returnRemarks);
 			}
