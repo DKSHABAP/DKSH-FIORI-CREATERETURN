@@ -56,7 +56,7 @@
       "path": "/UserManagement",
       "target": {
         "type": "destination",
-        "name": "UserManagement_Dest"
+        "name": "IDPService"
       }
     },
     {
