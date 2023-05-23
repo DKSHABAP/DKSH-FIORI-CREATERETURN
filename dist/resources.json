@@ -1,11 +1,12 @@
 {
     "resources": [
         {
-            "name": "index.html"
+            "name": "manifest-bundle.zip"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "i18n/i18n_th.properties",
+            "raw": "i18n/i18n.properties",
+            "locale": "_th"
         },
         {
             "name": "manifest.json"
@@ -32,18 +33,19 @@
             "name": "Component.js"
         },
         {
-            "name": "manifest-bundle.zip"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "Component-preload.js",
             "merged": true
         },
         {
-            "name": "model/formatter-dbg.js",
+            "name": "model/models-dbg.js",
             "isDebug": true
         },
         {
-            "name": "model/models-dbg.js",
+            "name": "model/formatter-dbg.js",
             "isDebug": true
         },
         {
@@ -168,9 +170,7 @@
             "name": "Fragments/ActionPopover.fragment.xml"
         },
         {
-            "name": "i18n/i18n_th.properties",
-            "raw": "i18n/i18n.properties",
-            "locale": "_th"
+            "name": "index.html"
         }
     ]
 }

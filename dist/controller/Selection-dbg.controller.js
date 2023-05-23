@@ -5100,7 +5100,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			this.file = e.getParameter("files")[0];
 			if (this.file) {
 				var s = new FileReader;
-				let e = [];
+				var e = [];
 				s.onload = function (t) {
 					var r;
 					if (!t) {
@@ -5109,7 +5109,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 						r = t.target.result
 					}
 					if (t.target.readyState == FileReader.DONE) {
-						let r = t.target.result,
+						var r = t.target.result,
 							o = new Uint8Array(r);
 						for (var i of o) {
 							e.push(i)
@@ -6532,10 +6532,13 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			var r = this.getView().getModel("returnModel");
 			var o = this.getView().getModel("exchangeModel");
 			var s = this.getView().getModel("baseModel");
+			//[+] STRY0018749 - DFCT0014470 - Fixing
+			var addFrg = "dksh.connectclient.CreateReturn.Fragments.Address";
+			//[+] STRY0018749 - DFCT0014470 - End fixing
 			if (s.getProperty("/oneTimeCustomer") === "X" && s.getProperty("/returnSoldTo") !== s.getProperty("/exSoldTo") && s.getProperty(
 					"/EXOneTimeCustomer") === "X") {
 				if (!this.address) {
-					this.address = sap.ui.xmlfragment("dksh.connectclient.CreateReturn.Fragments.Address", this);
+					this.address = sap.ui.xmlfragment(addFrg, this); //[+] STRY0018749 - DFCT0014470 - Fixing
 					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
@@ -6647,7 +6650,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 			} else if (s.getProperty("/oneTimeCustomer") === "X" && o.getData().results !== undefined && o.getData().results.length > 0 && s.getProperty(
 					"/returnSoldTo") === s.getProperty("/exSoldTo")) {
 				if (!this.address) {
-					this.address = sap.ui.xmlfragment("dksh.connectclient.CreateReturn.Address", this);
+					this.address = sap.ui.xmlfragment(addFrg, this); //[+] STRY0018749 - DFCT0014470 - Fixing
 					this.getView().addDependent(this.address)
 				}
 				this._loadCity();
@@ -6727,7 +6730,7 @@ sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageBox", "../model/forma
 				return
 			} else if (s.getProperty("/EXOneTimeCustomer") === "X" && s.getProperty("/oneTimeCustomer") === "") {
 				if (!this.address) {
-					this.address = sap.ui.xmlfragment("dksh.connectclient.CreateReturn.Fragments.Address", this);
+					this.address = sap.ui.xmlfragment(addFrg, this); //[+] STRY0018749 - DFCT0014470 - Fixing
 					this.getView().addDependent(this.address)
 				}
 				this._loadCity();

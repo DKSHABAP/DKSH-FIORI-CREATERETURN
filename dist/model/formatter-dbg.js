@@ -4,13 +4,13 @@ sap.ui.define([], function () {
 	return {
 		concatenateStrings: function (e, t) {
 			if (e && t) {
-				return e + " (" + t + ") "
+				return e + " (" + t + ") ";
 			} else if (e && !t) {
-				return e
+				return e;
 			} else if (!e && t) {
-				return t
+				return t;
 			} else {
-				return ""
+				return "";
 			}
 		},
 		batchconcatenateStrings: function (e, t) {
@@ -19,17 +19,17 @@ sap.ui.define([], function () {
 					pattern: "dd.MM.yyyy"
 				});
 				var n = new Date(t);
-				return e + " " + "(" + r.format(n) + ")"
+				return e + " " + "(" + r.format(n) + ")";
 			} else if (e && !t) {
-				return e
+				return e;
 			} else if (!e && t) {
 				var r = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "dd.MM.yyyy"
 				});
 				var n = new Date(t);
-				return r.format(n)
+				return r.format(n);
 			} else {
-				return ""
+				return "";
 			}
 		},
 		batchconcatenateStringsPS: function (e, t) {
@@ -39,17 +39,17 @@ sap.ui.define([], function () {
 				});
 				var n = parseInt(t.split("(")[1].split(")")[0]);
 				var a = new Date(n);
-				return e + " " + "(" + r.format(a) + ")"
+				return e + " " + "(" + r.format(a) + ")";
 			} else if (e && !t) {
-				return e
+				return e;
 			} else if (!e && t) {
 				var r = sap.ui.core.format.DateFormat.getDateInstance({
 					pattern: "dd.MM.yyyy"
 				});
 				var a = new Date(t);
-				return r.format(a)
+				return r.format(a);
 			} else {
-				return ""
+				return "";
 			}
 		},
 		datePS: function (e) {
@@ -59,20 +59,20 @@ sap.ui.define([], function () {
 				});
 				var r = parseInt(e.split("(")[1].split(")")[0]);
 				var n = new Date(r);
-				return t.format(n)
+				return t.format(n);
 			} else {
-				return ""
+				return "";
 			}
 		},
 		f4ValueBind: function (e, t) {
 			if (e && t) {
-				return e + " (" + t + ") "
+				return e + " (" + t + ") ";
 			} else if (e && !t) {
-				return e
+				return e;
 			} else if (!e && t) {
-				return t
+				return t;
 			} else {
-				return ""
+				return "";
 			}
 		},
 		dateTimeFormatPS: function (e) {
@@ -83,34 +83,34 @@ sap.ui.define([], function () {
 					pattern: "dd.MM.yyyyTHH:mm:ss"
 				});
 				if (e.getDate().toString().length === 1) {
-					var n = "0" + e.getDate()
+					var n = "0" + e.getDate();
 				} else {
-					var n = e.getDate()
+					var n = e.getDate();
 				}
 				if (e.getMonth().toString().length === 1 && e.getMonth() < 9) {
-					var a = "0" + (e.getMonth() + 1)
+					var a = "0" + (e.getMonth() + 1);
 				} else {
-					var a = e.getMonth() + 1
+					var a = e.getMonth() + 1;
 				}
 				if (e.getHours().toString().length === 1) {
-					var o = "0" + e.getHours()
+					var o = "0" + e.getHours();
 				} else {
-					var o = e.getHours()
+					var o = e.getHours();
 				}
 				if (e.getMinutes().toString().length === 1) {
-					var i = "0" + e.getMinutes()
+					var i = "0" + e.getMinutes();
 				} else {
-					var i = e.getMinutes()
+					var i = e.getMinutes();
 				}
 				if (e.getSeconds().toString().length === 1) {
-					var s = "0" + e.getSeconds()
+					var s = "0" + e.getSeconds();
 				} else {
-					var s = e.getSeconds()
+					var s = e.getSeconds();
 				}
 				var n = e.getFullYear() + "-" + a + "-" + n + "T" + o + ":" + i + ":" + s;
-				return n
+				return n;
 			} else {
-				return ""
+				return "";
 			}
 		},
 		date: function (e) {
@@ -119,23 +119,23 @@ sap.ui.define([], function () {
 					pattern: "dd.MM.yyyy"
 				});
 				var r = new Date(e);
-				return t.format(r)
+				return t.format(r);
 			} else {
-				return ""
+				return "";
 			}
 		},
 		setColor: function (e) {
 			if (e === "B" || e === "b") {
-				return "Success"
+				return "Success";
 			}
 			if (e === "Y" || e === "y") {
-				return "Warning"
+				return "Warning";
 			}
 			if (e === "R" || e === "r") {
-				return "Error"
+				return "Error";
 			}
 			if (e === "") {
-				return "None"
+				return "None";
 			}
 		},
 		dateTimeFormatReport: function (e) {
@@ -145,41 +145,41 @@ sap.ui.define([], function () {
 					pattern: "dd.MM.yyyy HH:mm:ss"
 				});
 				if (e.getDate().toString().length === 1) {
-					var r = "0" + e.getDate()
+					var r = "0" + e.getDate();
 				} else {
-					var r = e.getDate()
+					var r = e.getDate();
 				}
 				if (e.getMonth().toString().length === 1 && e.getMonth() < 9) {
-					var n = "0" + (e.getMonth() + 1)
+					var n = "0" + (e.getMonth() + 1);
 				} else {
-					var n = e.getMonth() + 1
+					var n = e.getMonth() + 1;
 				}
 				if (e.getHours().toString().length === 1) {
-					var a = "0" + e.getHours()
+					var a = "0" + e.getHours();
 				} else {
-					var a = e.getHours()
+					var a = e.getHours();
 				}
 				if (e.getMinutes().toString().length === 1) {
-					var o = "0" + e.getMinutes()
+					var o = "0" + e.getMinutes();
 				} else {
-					var o = e.getMinutes()
+					var o = e.getMinutes();
 				}
 				if (e.getSeconds().toString().length === 1) {
-					var i = "0" + e.getSeconds()
+					var i = "0" + e.getSeconds();
 				} else {
-					var i = e.getSeconds()
+					var i = e.getSeconds();
 				}
 				var r = e.getFullYear() + "-" + n + "-" + r;
-				return t.format(e)
+				return t.format(e);
 			} else {
-				return ""
+				return "";
 			}
 		},
 		enableDownload: function (e) {
 			if (e) {
-				return true
+				return true;
 			} else {
-				return false
+				return false;
 			}
 		},
 		dateTimeFormat1: function (e) {
@@ -190,34 +190,34 @@ sap.ui.define([], function () {
 					calendarType: "Gregorian"
 				});
 				if (e.getDate().toString().length === 1) {
-					var r = "0" + e.getDate()
+					var r = "0" + e.getDate();
 				} else {
-					var r = e.getDate()
+					var r = e.getDate();
 				}
 				if (e.getMonth().toString().length === 1 && e.getMonth() < 9) {
-					var n = "0" + (e.getMonth() + 1)
+					var n = "0" + (e.getMonth() + 1);
 				} else {
-					var n = e.getMonth() + 1
+					var n = e.getMonth() + 1;
 				}
 				if (e.getHours().toString().length === 1) {
-					var a = "0" + e.getHours()
+					var a = "0" + e.getHours();
 				} else {
-					var a = e.getHours()
+					var a = e.getHours();
 				}
 				if (e.getMinutes().toString().length === 1) {
-					var o = "0" + e.getMinutes()
+					var o = "0" + e.getMinutes();
 				} else {
-					var o = e.getMinutes()
+					var o = e.getMinutes();
 				}
 				if (e.getSeconds().toString().length === 1) {
-					var i = "0" + e.getSeconds()
+					var i = "0" + e.getSeconds();
 				} else {
-					var i = e.getSeconds()
+					var i = e.getSeconds();
 				}
 				var r = e.getFullYear() + "-" + n + "-" + r;
-				return r
+				return r;
 			} else {
-				return ""
+				return "";
 			}
 		},
 		dateTimeFormat: function (e) {
@@ -228,41 +228,41 @@ sap.ui.define([], function () {
 					calendarType: "Gregorian"
 				});
 				if (e.getDate().toString().length === 1) {
-					var r = "0" + e.getDate()
+					var r = "0" + e.getDate();
 				} else {
-					var r = e.getDate()
+					var r = e.getDate();
 				}
 				if (e.getMonth().toString().length === 1 && e.getMonth() < 9) {
-					var n = "0" + (e.getMonth() + 1)
+					var n = "0" + (e.getMonth() + 1);
 				} else {
-					var n = e.getMonth() + 1
+					var n = e.getMonth() + 1;
 				}
 				if (e.getHours().toString().length === 1) {
-					var a = "0" + e.getHours()
+					var a = "0" + e.getHours();
 				} else {
-					var a = e.getHours()
+					var a = e.getHours();
 				}
 				if (e.getMinutes().toString().length === 1) {
-					var o = "0" + e.getMinutes()
+					var o = "0" + e.getMinutes();
 				} else {
-					var o = e.getMinutes()
+					var o = e.getMinutes();
 				}
 				if (e.getSeconds().toString().length === 1) {
-					var i = "0" + e.getSeconds()
+					var i = "0" + e.getSeconds();
 				} else {
-					var i = e.getSeconds()
+					var i = e.getSeconds();
 				}
 				var r = e.getFullYear() + "-" + n + "-" + r + "T" + a + ":" + o + ":" + i;
-				return r
+				return r;
 			} else {
-				return ""
+				return "";
 			}
 		},
 		setBlurVisibility: function (e) {
 			if (e === "true") {
-				return "BLUR"
+				return "BLUR";
 			} else {
-				return ""
+				return "";
 			}
 		},
 		// [+] Start STRY0012615: Billing Date shown NaN in Invoice Details Search
