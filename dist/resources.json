@@ -1,7 +1,7 @@
 {
     "resources": [
         {
-            "name": "manifest-bundle.zip"
+            "name": "Fragments/UOM.fragment.xml"
         },
         {
             "name": "i18n/i18n_th.properties",
@@ -33,8 +33,7 @@
             "name": "Component.js"
         },
         {
-            "name": "i18n/i18n.properties",
-            "raw": "i18n/i18n.properties"
+            "name": "manifest-bundle.zip"
         },
         {
             "name": "Component-preload.js",
@@ -95,7 +94,8 @@
             "name": "Fragments/UserList.fragment.xml"
         },
         {
-            "name": "Fragments/UOM.fragment.xml"
+            "name": "i18n/i18n.properties",
+            "raw": "i18n/i18n.properties"
         },
         {
             "name": "Fragments/SoldtoParty.fragment.xml"
